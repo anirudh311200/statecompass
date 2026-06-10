@@ -1,0 +1,64 @@
+---
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import "../styles/styles.css";
+
+interface Props {
+  title?: string;
+  description?: string;
+  showSearch?: boolean;
+  subtitle?: string;
+}
+
+const {
+  title = "StateCompass",
+  description = "Explore how friendly each US state's business climate is. Search or click a state to see its CNBC score and rank.",
+  showSearch = false,
+  subtitle,
+} = Astro.props;
+
+const site = Astro.site ?? new URL("https://statecompass.app");
+const canonical = new URL(Astro.url.pathname, site).href;
+const plausibleDomain = import.meta.env.PUBLIC_PLAUSIBLE_DOMAIN;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml" />
+    <link rel="canonical" href={canonical} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonical} />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Sora:wght@600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="page">
+      <Header showSearch={showSearch} subtitle={subtitle} />
+      <slot />
+      <Footer />
+    </div>
+    {
+      plausibleDomain && (
+        <script
+          defer
+          data-domain={plausibleDomain}
+          src="https://plausible.io/js/script.js"
+        />
+      )
+    }
+  </body>
+</html>

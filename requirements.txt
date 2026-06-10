@@ -1,0 +1,2 @@
+topojson>=1.7
+shapely>=2.0

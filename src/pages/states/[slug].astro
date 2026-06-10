@@ -1,0 +1,78 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Breadcrumbs from "../../components/Breadcrumbs.astro";
+import CategoryChart from "../../components/CategoryChart.astro";
+import { states, dataYear } from "../../lib/states.js";
+import { TIER_LABELS, METHODOLOGY_URL } from "../../scripts/categories.js";
+
+export function getStaticPaths() {
+  return Object.entries(states).map(([abbr, state]) => ({
+    params: { slug: state.slug },
+    props: { abbr, state },
+  }));
+}
+
+const { abbr, state } = Astro.props;
+
+const title = `${state.name} — #${state.rank} | StateCompass CNBC ${dataYear}`;
+const description = `${state.name} ranks #${state.rank} of 50 in CNBC America's Top States for Business ${dataYear}. Score ${state.score100}/100. Full category breakdown.`;
+const compareHref = `/compare?states=${abbr}`;
+const mapHref = `/?state=${abbr}`;
+---
+
+<Layout title={title} description={description}>
+  <main class="page-content">
+    <Breadcrumbs
+      crumbs={[
+        { label: "Map", href: "/" },
+        { label: "States", href: "/rankings" },
+        { label: state.name },
+      ]}
+    />
+
+    <article class="state-detail">
+      <header class="state-hero">
+        <div class="state-hero-main">
+          <p class="state-hero-eyebrow">CNBC {dataYear} · #{state.rank} of 50</p>
+          <h1 class="state-hero-title">{state.name}</h1>
+          <span class={`tier-badge ${state.tier}`}>{TIER_LABELS[state.tier]}</span>
+        </div>
+        <div class="state-hero-score">
+          <span class="score-label">Overall score</span>
+          <div class="score-header">
+            <span class="score-value">{state.score100}</span>
+            <span class="score-max">/100</span>
+          </div>
+          <div class="score-bar-track" aria-hidden="true">
+            <div
+              class={`score-bar-fill ${state.tier}`}
+              style={`width: ${state.score100}%`}
+            />
+          </div>
+          <p class="rank-row">
+            Rank: <span>#{state.rank} of 50</span>
+          </p>
+        </div>
+      </header>
+
+      <section class="panel" aria-labelledby="category-heading">
+        <h2 id="category-heading" class="panel-title">Category breakdown</h2>
+        <p class="panel-helper">
+          All 10 CNBC categories — score out of category max, rank among 50 states.
+        </p>
+        <CategoryChart categories={state.categories} />
+        <p class="category-methodology">
+          <a href={METHODOLOGY_URL} target="_blank" rel="noopener noreferrer">
+            CNBC methodology
+          </a>
+          — 10 categories, 2,500 points max
+        </p>
+      </section>
+
+      <div class="state-cta-row">
+        <a href={compareHref} class="btn btn-primary">Compare with other states</a>
+        <a href={mapHref} class="btn btn-secondary">View on map</a>
+      </div>
+    </article>
+  </main>
+</Layout>

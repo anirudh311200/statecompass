@@ -1,0 +1,28 @@
+---
+import Layout from "../layouts/Layout.astro";
+---
+
+<Layout title="Page not found | StateCompass" description="The page you requested could not be found.">
+  <main class="not-found">
+    <h1>404</h1>
+    <p>This page doesn't exist. Head back to the map to explore state scores.</p>
+    <p><a href="/">Back to map</a></p>
+  </main>
+</Layout>
+
+<style>
+  .not-found {
+    text-align: center;
+    padding: 4rem 1rem;
+  }
+
+  .not-found h1 {
+    font-family: var(--font-display);
+    font-size: 4rem;
+    margin: 0 0 0.5rem;
+  }
+
+  .not-found a {
+    color: var(--accent);
+  }
+</style>

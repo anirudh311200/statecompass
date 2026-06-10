@@ -1,0 +1,50 @@
+---
+import { CATEGORY_ORDER, CATEGORY_LABELS } from "../scripts/categories.js";
+
+interface CategoryEntry {
+  score: number;
+  maxScore: number;
+  rank: number;
+}
+
+interface Props {
+  categories: Record<string, CategoryEntry>;
+}
+
+const { categories } = Astro.props;
+
+const entries = CATEGORY_ORDER.filter((key) => categories[key]).map((key) => {
+  const cat = categories[key];
+  const pct = Math.round((cat.score / cat.maxScore) * 100);
+  return {
+    key,
+    label: CATEGORY_LABELS[key],
+    ...cat,
+    pct,
+  };
+});
+---
+
+<div class="category-chart">
+  {
+    entries.map((entry) => (
+      <div class="category-chart-row">
+        <div class="category-chart-header">
+          <span class="category-chart-label">{entry.label}</span>
+          <span class="category-chart-meta">
+            <span class="category-chart-rank">#{entry.rank}</span>
+            <span class="category-chart-score">
+              {entry.score}/{entry.maxScore}
+            </span>
+          </span>
+        </div>
+        <div class="category-bar-track" aria-hidden="true">
+          <div
+            class="category-bar-fill"
+            style={`width: ${entry.pct}%`}
+          />
+        </div>
+      </div>
+    ))
+  }
+</div>

@@ -1,0 +1,115 @@
+---
+import Layout from "../layouts/Layout.astro";
+---
+
+<Layout
+  showSearch
+  subtitle="Explore how friendly each state's business climate is — search or click a state."
+  description="Explore how friendly each US state's business climate is. Search or click a state to see its CNBC score and rank."
+>
+  <main class="layout">
+    <section class="map-panel" aria-label="United States map">
+      <span id="map-title" hidden>United States business friendliness map</span>
+      <span id="map-desc" hidden>
+        Search or click a state to pin it and see its CNBC ranking and score out of 100.
+      </span>
+      <div id="map-container" aria-hidden="false"></div>
+    </section>
+
+    <aside class="sidebar" id="sidebar">
+      <div class="info-card" id="info-card" aria-live="polite">
+        <div class="info-card-header">
+          <h2>State details</h2>
+          <button type="button" id="clear-pin" class="clear-pin-btn" hidden>
+            Clear
+          </button>
+        </div>
+        <p id="tooltip-default" class="tooltip-prompt">
+          <span class="prompt-dot" aria-hidden="true"></span>
+          Search or click a state on the map to see its score and rank.
+        </p>
+        <div id="tooltip-content" hidden>
+          <p class="state-name" id="state-name"></p>
+          <div class="score-block">
+            <div class="score-header">
+              <span class="score-label">Score</span>
+              <span class="score-value" id="score-value"></span>
+              <span class="score-max">/100</span>
+            </div>
+            <div class="score-bar-track" aria-hidden="true">
+              <div class="score-bar-fill" id="score-bar-fill"></div>
+            </div>
+          </div>
+          <p class="rank-row">
+            Rank: <span id="rank-value"></span>
+          </p>
+          <span class="tier-badge" id="tier-badge"></span>
+
+          <div id="category-breakdown" class="category-breakdown" hidden>
+            <div class="category-group">
+              <h3 class="category-heading">Top strengths</h3>
+              <div id="category-strengths"></div>
+            </div>
+            <div class="category-group">
+              <h3 class="category-heading">Areas to improve</h3>
+              <div id="category-weaknesses"></div>
+            </div>
+            <p class="category-methodology">
+              <a
+                href="https://www.cnbc.com/2025/06/11/how-we-are-choosing-americas-top-states-for-business-in-2025.html"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                CNBC methodology
+              </a>
+              — 10 categories, 2,500 points max
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="legend-card">
+        <h2>Legend</h2>
+        <p class="legend-helper">Based on CNBC 2025 rankings</p>
+        <ul class="legend-list">
+          <li class="legend-item">
+            <span class="swatch green" aria-hidden="true"></span>
+            <div>
+              <span class="legend-label">Green — Very favourable</span>
+              <span class="legend-desc">Ranks 1–17</span>
+            </div>
+          </li>
+          <li class="legend-item">
+            <span class="swatch yellow" aria-hidden="true"></span>
+            <div>
+              <span class="legend-label">Yellow — Moderate</span>
+              <span class="legend-desc">Ranks 18–34</span>
+            </div>
+          </li>
+          <li class="legend-item">
+            <span class="swatch red" aria-hidden="true"></span>
+            <div>
+              <span class="legend-label">Red — Less favourable</span>
+              <span class="legend-desc">Ranks 35–50</span>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </aside>
+  </main>
+
+  <script>
+    import { initMap } from "../scripts/map.js";
+    import { initSearch } from "../scripts/search.js";
+
+    initMap()
+      .then((stateData) => initSearch(stateData))
+      .catch((error) => {
+        console.error(error);
+        const defaultText = document.getElementById("tooltip-default");
+        if (defaultText) {
+          defaultText.textContent = "Unable to load map data. Please refresh the page.";
+        }
+      });
+  </script>
+</Layout>

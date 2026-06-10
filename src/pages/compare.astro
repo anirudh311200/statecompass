@@ -1,0 +1,66 @@
+---
+import Layout from "../layouts/Layout.astro";
+import { dataYear } from "../lib/states.js";
+---
+
+<Layout
+  title={`Compare States — CNBC ${dataYear} | StateCompass`}
+  description="Compare 2–3 US states side by side on CNBC business climate scores and all 10 category rankings."
+  subtitle="Compare up to 3 states on CNBC scores and category ranks."
+>
+  <main class="page-content compare-page">
+    <div class="compare-controls panel">
+      <div class="compare-controls-header">
+        <h1 class="page-title">Compare states</h1>
+        <p class="page-lead">
+          Side-by-side CNBC {dataYear} scores — share the URL with your co-founder.
+        </p>
+      </div>
+
+      <div class="compare-slots" id="compare-slots" aria-live="polite">
+        <div class="compare-slot" data-slot="0">
+          <label class="compare-slot-label" for="compare-select-0">State 1</label>
+          <select id="compare-select-0" class="compare-select">
+            <option value="">Select a state…</option>
+          </select>
+        </div>
+        <div class="compare-slot" data-slot="1">
+          <label class="compare-slot-label" for="compare-select-1">State 2</label>
+          <select id="compare-select-1" class="compare-select">
+            <option value="">Select a state…</option>
+          </select>
+        </div>
+        <div class="compare-slot compare-slot--optional" data-slot="2">
+          <label class="compare-slot-label" for="compare-select-2">State 3 (optional)</label>
+          <select id="compare-select-2" class="compare-select">
+            <option value="">None</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="compare-chips" id="compare-chips" hidden></div>
+    </div>
+
+    <div id="compare-empty" class="compare-empty panel">
+      <p>Select at least two states above to compare scores and categories.</p>
+    </div>
+
+    <div id="compare-results" class="compare-results" hidden>
+      <section class="panel" aria-labelledby="compare-summary-heading">
+        <h2 id="compare-summary-heading" class="panel-title">Overall</h2>
+        <div class="compare-summary-grid" id="compare-summary"></div>
+      </section>
+
+      <section class="panel" aria-labelledby="compare-categories-heading">
+        <h2 id="compare-categories-heading" class="panel-title">By category</h2>
+        <p class="panel-helper">Winner highlighted per category (best rank wins).</p>
+        <div id="compare-categories"></div>
+      </section>
+    </div>
+  </main>
+
+  <script>
+    import { initCompare } from "../scripts/compare.js";
+    initCompare().catch((error) => console.error(error));
+  </script>
+</Layout>

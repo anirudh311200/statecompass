@@ -1,0 +1,98 @@
+---
+import Layout from "../layouts/Layout.astro";
+import { getStateList, dataYear } from "../lib/states.js";
+import { TIER_LABELS } from "../scripts/categories.js";
+
+const stateList = getStateList().sort((a, b) => a.rank - b.rank);
+---
+
+<Layout
+  title={`State Rankings — CNBC ${dataYear} | StateCompass`}
+  description="Full CNBC America's Top States for Business 2025 rankings. Sort and filter all 50 states by rank, score, or tier."
+  subtitle="All 50 states ranked by CNBC business climate score."
+>
+  <main class="page-content rankings-page">
+    <header class="rankings-header">
+      <h1 class="page-title">Rankings</h1>
+      <p class="page-lead">
+        CNBC America's Top States for Business, {dataYear} — click a row for the full breakdown.
+      </p>
+    </header>
+
+    <div class="rankings-toolbar panel">
+      <div class="rankings-filter">
+        <span class="toolbar-label">Filter by tier</span>
+        <div class="tier-filter-group" role="group" aria-label="Filter by tier">
+          <button type="button" class="tier-filter-btn is-active" data-tier="all">
+            All
+          </button>
+          <button type="button" class="tier-filter-btn" data-tier="green">
+            Green
+          </button>
+          <button type="button" class="tier-filter-btn" data-tier="yellow">
+            Yellow
+          </button>
+          <button type="button" class="tier-filter-btn" data-tier="red">
+            Red
+          </button>
+        </div>
+      </div>
+
+      <div class="rankings-sort">
+        <label class="toolbar-label" for="rankings-sort">Sort by</label>
+        <select id="rankings-sort" class="rankings-sort-select">
+          <option value="rank">Rank (default)</option>
+          <option value="score">Score</option>
+          <option value="name">State name</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="panel rankings-table-wrap">
+      <table class="rankings-table" id="rankings-table">
+        <thead>
+          <tr>
+            <th scope="col" data-sort="rank" class="is-sorted">Rank</th>
+            <th scope="col" data-sort="name">State</th>
+            <th scope="col" data-sort="score">Score</th>
+            <th scope="col" data-sort="tier">Tier</th>
+          </tr>
+        </thead>
+        <tbody id="rankings-body">
+          {
+            stateList.map((state) => (
+              <tr
+                class="rankings-row"
+                data-tier={state.tier}
+                data-rank={state.rank}
+                data-score={state.score100}
+                data-name={state.name}
+                data-slug={state.slug}
+                tabindex="0"
+                role="link"
+                aria-label={`${state.name}, rank ${state.rank}, score ${state.score100} out of 100`}
+              >
+                <td class="rankings-rank">#{state.rank}</td>
+                <td class="rankings-name">{state.name}</td>
+                <td class="rankings-score">{state.score100}/100</td>
+                <td>
+                  <span class={`tier-badge tier-badge--sm ${state.tier}`}>
+                    {TIER_LABELS[state.tier]}
+                  </span>
+                </td>
+              </tr>
+            ))
+          }
+        </tbody>
+      </table>
+      <p id="rankings-empty" class="rankings-empty" hidden>
+        No states match this filter.
+      </p>
+    </div>
+  </main>
+
+  <script>
+    import { initRankings } from "../scripts/rankings.js";
+    initRankings();
+  </script>
+</Layout>

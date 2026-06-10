@@ -1,0 +1,63 @@
+---
+interface Props {
+  showSearch?: boolean;
+  subtitle?: string;
+}
+
+const {
+  showSearch = false,
+  subtitle = "Compare states for HQ and expansion — CNBC 2025 rankings.",
+} = Astro.props;
+
+const path = Astro.url.pathname;
+const navItems = [
+  { href: "/", label: "Map", match: (p) => p === "/" },
+  { href: "/rankings", label: "Rankings", match: (p) => p.startsWith("/rankings") },
+  { href: "/compare", label: "Compare", match: (p) => p.startsWith("/compare") },
+];
+---
+
+<header class="site-header">
+  <a href="/" class="brand" aria-label="StateCompass home">
+    <img src="/assets/logo.svg" alt="" class="brand-logo" width="210" height="40" />
+  </a>
+
+  <nav class="site-nav" aria-label="Main">
+    {
+      navItems.map((item) => (
+        <a
+          href={item.href}
+          class:list={["nav-link", { "is-active": item.match(path) }]}
+          aria-current={item.match(path) ? "page" : undefined}
+        >
+          {item.label}
+        </a>
+      ))
+    }
+  </nav>
+
+  <p class="subtitle">{subtitle}</p>
+
+  {
+    showSearch && (
+      <div class="search-wrap">
+        <label for="state-search" class="visually-hidden">
+          Search states
+        </label>
+        <input
+          type="search"
+          id="state-search"
+          class="state-search-input"
+          role="combobox"
+          aria-autocomplete="list"
+          aria-expanded="false"
+          aria-controls="state-search-list"
+          placeholder="Search by state name or abbreviation…"
+          autocomplete="off"
+          spellcheck="false"
+        />
+        <ul id="state-search-list" class="state-search-list" role="listbox" hidden />
+      </div>
+    )
+  }
+</header>

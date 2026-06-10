@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://statecompass.app/sitemap-index.xml
