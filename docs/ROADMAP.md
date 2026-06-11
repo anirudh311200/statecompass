@@ -33,8 +33,8 @@
 |-------|------|--------|
 | **0** | Baseline (explore layer) | **Done** |
 | **1** | Compare & discover | **Done** |
-| **2** | Founder Fit | **Next** |
-| **3** | Share & be found | Pending |
+| **2** | Founder Fit | **Done** |
+| **3** | Share & be found | **Next** |
 | **4** | Founder Snapshot | Pending |
 | **5** | Memory & time | Pending |
 | **6** | Distribution | Pending |
@@ -192,7 +192,7 @@ Lower layers must stay trustworthy before upper layers ship.
 
 ---
 
-## Phase 1 — Compare & discover — **Next**
+## Phase 1 — Compare & discover — **Done**
 
 **Goal:** Turn StateCompass from a map into a **decision tool** — compare states, browse rankings, deep-dive per state.
 
@@ -250,7 +250,7 @@ Lower layers must stay trustworthy before upper layers ship.
 
 ---
 
-## Phase 2 — Founder Fit
+## Phase 2 — Founder Fit — **Done**
 
 **Goal:** Personalized ranking — **"best states for my type of business"** — your derived layer on CNBC data (the "Zestimate moment").
 
@@ -270,11 +270,11 @@ For each profile: compute **Founder Fit score** (weighted sum of category scores
 
 ### Deliverables
 
-- [ ] `src/scripts/founderFit.js` — profiles, weights, scoring (transparent formula in code comments)
-- [ ] Profile selector on home, compare, and/or dedicated `/rankings?profile=tech` view
-- [ ] Rankings table mode: "Overall (CNBC)" vs "Founder Fit: Tech startup"
-- [ ] Copy explains: "Derived from CNBC 2025 category scores — not CNBC's official overall rank"
-- [ ] Unit tests or verify script checks weight sums and score bounds
+- [x] `src/scripts/founderFit.js` — profiles, weights, scoring (transparent formula in code comments)
+- [x] Profile selector on home, compare, and/or dedicated `/rankings?profile=tech` view
+- [x] Rankings table mode: "Overall (CNBC)" vs "Founder Fit: Tech startup"
+- [x] Copy explains: "Derived from CNBC 2025 category scores — not CNBC's official overall rank"
+- [x] Unit tests or verify script checks weight sums and score bounds
 
 ### Exit criteria
 

@@ -3,12 +3,22 @@ import {
   CATEGORY_LABELS,
   TIER_LABELS,
 } from "./categories.js";
+import {
+  FOUNDER_FIT_OVERALL,
+  getFounderFitLookup,
+  getProfileFromUrl,
+  getProfileLabel,
+  syncProfileToUrl,
+  wireFounderFitSelector,
+} from "./founderFit.js";
 
 const MAX_STATES = 3;
 const MIN_STATES = 2;
 
 let stateData = {};
 let selectedAbbrs = ["", "", ""];
+let activeProfile = FOUNDER_FIT_OVERALL;
+let founderFitLookup = null;
 
 function normalizeAbbr(value) {
   if (!value) {
@@ -49,6 +59,12 @@ function syncUrl() {
     url.searchParams.set("states", active[0]);
   } else {
     url.searchParams.delete("states");
+  }
+
+  if (activeProfile && activeProfile !== FOUNDER_FIT_OVERALL) {
+    url.searchParams.set("profile", activeProfile);
+  } else {
+    url.searchParams.delete("profile");
   }
 
   history.replaceState(null, "", url);
@@ -123,9 +139,11 @@ function renderChips() {
 function renderSummary(abbrs) {
   const container = document.getElementById("compare-summary");
   container.replaceChildren();
+  const showFounderFit = activeProfile !== FOUNDER_FIT_OVERALL && founderFitLookup;
 
   abbrs.forEach((abbr) => {
     const info = stateData[abbr];
+    const fit = showFounderFit ? founderFitLookup[abbr] : null;
     const card = document.createElement("div");
     card.className = `compare-summary-card tier-border-${info.tier}`;
     card.innerHTML = `
@@ -137,7 +155,12 @@ function renderSummary(abbrs) {
       <div class="score-bar-track" aria-hidden="true">
         <div class="score-bar-fill ${info.tier}" style="width: ${info.score100}%"></div>
       </div>
-      <p class="compare-meta">Rank <strong>#${info.rank}</strong></p>
+      <p class="compare-meta">CNBC rank <strong>#${info.rank}</strong></p>
+      ${
+        fit
+          ? `<p class="compare-meta compare-founder-fit-meta">Founder Fit (${getProfileLabel(activeProfile)}): <strong>#${fit.founderFitRank}</strong> · ${fit.founderFitScore100}/100</p>`
+          : ""
+      }
       <span class="tier-badge tier-badge--sm ${info.tier}">${TIER_LABELS[info.tier]}</span>
       <a href="/states/${info.slug}" class="compare-detail-link">Full breakdown →</a>
     `;
@@ -270,6 +293,14 @@ function wireControls() {
   });
 }
 
+function setProfile(profileId) {
+  activeProfile = profileId;
+  founderFitLookup =
+    profileId === FOUNDER_FIT_OVERALL ? null : getFounderFitLookup(stateData, profileId);
+  renderCompare();
+  syncUrl();
+}
+
 export async function initCompare() {
   const response = await fetch("/data/states.json");
   if (!response.ok) {
@@ -278,6 +309,18 @@ export async function initCompare() {
 
   const payload = await response.json();
   stateData = payload.states;
+  activeProfile = getProfileFromUrl();
+
+  wireFounderFitSelector({
+    select: document.querySelector("[data-founder-fit-select]"),
+    disclaimer: document.querySelector("[data-founder-fit-disclaimer]"),
+    initialProfile: activeProfile,
+    onChange: setProfile,
+  });
+
+  if (activeProfile !== FOUNDER_FIT_OVERALL) {
+    founderFitLookup = getFounderFitLookup(stateData, activeProfile);
+  }
 
   applyUrlToSlots();
   populateSelects();

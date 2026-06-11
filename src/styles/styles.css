@@ -1118,6 +1118,70 @@ footer a:hover {
   letter-spacing: 0.04em;
 }
 
+/* Founder Fit */
+
+.founder-fit-selector {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  min-width: min(100%, 16rem);
+}
+
+.founder-fit-select {
+  width: 100%;
+  padding: 0.45rem 0.65rem;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--surface-solid);
+  color: var(--text);
+  font: inherit;
+  font-size: var(--text-sm);
+}
+
+.founder-fit-select:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.founder-fit-disclaimer {
+  margin: 0;
+  font-size: var(--text-xs);
+  color: var(--muted);
+  line-height: 1.45;
+}
+
+.founder-fit-weights-link {
+  margin-left: 0.35rem;
+  color: var(--accent);
+  text-decoration: none;
+}
+
+.founder-fit-weights-link:hover {
+  text-decoration: underline;
+}
+
+.sidebar-founder-fit {
+  margin-bottom: 0.75rem;
+}
+
+.founder-fit-rank-row {
+  color: var(--muted);
+  font-size: var(--text-sm);
+}
+
+.compare-founder-fit {
+  margin-bottom: 1rem;
+}
+
+.compare-founder-fit-meta {
+  color: var(--accent);
+}
+
+.rankings-cnbc {
+  font-variant-numeric: tabular-nums;
+  color: var(--muted);
+}
+
 /* Rankings */
 
 .rankings-header {

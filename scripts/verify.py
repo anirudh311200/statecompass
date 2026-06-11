@@ -44,4 +44,46 @@ for abbr, state in data["states"].items():
         category_sum += cat["score"]
     assert category_sum == state["rawScore"], (abbr, category_sum, state["rawScore"])
 
+profiles_path = ROOT / "public/data/founder_fit_profiles.json"
+profiles = json.loads(profiles_path.read_text(encoding="utf-8"))
+profile_ids = set()
+
+for profile in profiles["profiles"]:
+    profile_id = profile["id"]
+    assert profile_id not in profile_ids, profile_id
+    profile_ids.add(profile_id)
+    weights = profile["weights"]
+    assert set(weights.keys()) == EXPECTED_CATEGORIES, profile_id
+    weight_sum = sum(weights.values())
+    assert abs(weight_sum - 1.0) < 1e-9, (profile_id, weight_sum)
+
+    for abbr, state in data["states"].items():
+        raw = 0.0
+        for key in EXPECTED_CATEGORIES:
+            cat = state["categories"][key]
+            raw += (cat["score"] / cat["maxScore"]) * weights[key]
+        score100 = round(raw * 100)
+        assert 0 <= score100 <= 100, (profile_id, abbr, score100)
+
+ranked_by_profile = {}
+for profile in profiles["profiles"]:
+    profile_id = profile["id"]
+    weights = profile["weights"]
+    entries = []
+    for abbr, state in data["states"].items():
+        raw = sum(
+            (state["categories"][key]["score"] / state["categories"][key]["maxScore"]) * weights[key]
+            for key in EXPECTED_CATEGORIES
+        )
+        entries.append((abbr, raw))
+    entries.sort(key=lambda item: (-item[1], item[0]))
+    ranks = {abbr: index + 1 for index, (abbr, _) in enumerate(entries)}
+    ranked_by_profile[profile_id] = ranks
+
+assert ranked_by_profile["tech"]["NC"] != data["states"]["NC"]["rank"], "tech profile should reorder NC"
+assert ranked_by_profile["tech"] != {
+    abbr: state["rank"] for abbr, state in data["states"].items()
+}, "tech profile should change at least one rank"
+
 print("OK: all 50 states aligned with category data")
+print("OK: founder fit profiles validated")

@@ -1,0 +1,60 @@
+{
+  "version": 1,
+  "disclaimer": "Derived from CNBC 2025 category scores — not CNBC's official overall rank.",
+  "profiles": [
+    {
+      "id": "tech",
+      "label": "Tech startup",
+      "description": "Emphasizes workforce talent, technology & innovation, and access to capital.",
+      "emphasized": ["workforce", "technologyAndInnovation", "accessToCapital"],
+      "weights": {
+        "workforce": 0.2,
+        "technologyAndInnovation": 0.2,
+        "accessToCapital": 0.15,
+        "economy": 0.1,
+        "infrastructure": 0.08,
+        "costOfDoingBusiness": 0.07,
+        "businessFriendliness": 0.07,
+        "qualityOfLife": 0.05,
+        "education": 0.05,
+        "costOfLiving": 0.03
+      }
+    },
+    {
+      "id": "bootstrapped",
+      "label": "Bootstrapped services",
+      "description": "Emphasizes cost of doing business, cost of living, and business friendliness.",
+      "emphasized": ["costOfDoingBusiness", "costOfLiving", "businessFriendliness"],
+      "weights": {
+        "costOfDoingBusiness": 0.22,
+        "costOfLiving": 0.2,
+        "businessFriendliness": 0.18,
+        "economy": 0.1,
+        "workforce": 0.08,
+        "infrastructure": 0.07,
+        "qualityOfLife": 0.07,
+        "technologyAndInnovation": 0.04,
+        "education": 0.02,
+        "accessToCapital": 0.02
+      }
+    },
+    {
+      "id": "physical-ops",
+      "label": "Physical ops / logistics",
+      "description": "Emphasizes infrastructure, economy, and workforce for operations-heavy businesses.",
+      "emphasized": ["infrastructure", "economy", "workforce"],
+      "weights": {
+        "infrastructure": 0.22,
+        "economy": 0.2,
+        "workforce": 0.18,
+        "costOfDoingBusiness": 0.12,
+        "businessFriendliness": 0.08,
+        "qualityOfLife": 0.06,
+        "technologyAndInnovation": 0.05,
+        "education": 0.04,
+        "accessToCapital": 0.03,
+        "costOfLiving": 0.02
+      }
+    }
+  ]
+}

@@ -1,5 +1,6 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import FounderFitSelector from "../components/FounderFitSelector.astro";
 import { dataYear } from "../lib/states.js";
 ---
 
@@ -16,6 +17,8 @@ import { dataYear } from "../lib/states.js";
           Side-by-side CNBC {dataYear} scores — share the URL with your co-founder.
         </p>
       </div>
+
+      <FounderFitSelector id="compare-profile" class="compare-founder-fit" />
 
       <div class="compare-slots" id="compare-slots" aria-live="polite">
         <div class="compare-slot" data-slot="0">

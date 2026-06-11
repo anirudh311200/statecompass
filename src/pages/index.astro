@@ -1,5 +1,6 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import FounderFitSelector from "../components/FounderFitSelector.astro";
 ---
 
 <Layout
@@ -17,6 +18,10 @@ import Layout from "../layouts/Layout.astro";
     </section>
 
     <aside class="sidebar" id="sidebar">
+      <div class="sidebar-founder-fit panel">
+        <FounderFitSelector id="map-profile" />
+      </div>
+
       <div class="info-card" id="info-card" aria-live="polite">
         <div class="info-card-header">
           <h2>State details</h2>
@@ -41,7 +46,10 @@ import Layout from "../layouts/Layout.astro";
             </div>
           </div>
           <p class="rank-row">
-            Rank: <span id="rank-value"></span>
+            CNBC rank: <span id="rank-value"></span>
+          </p>
+          <p class="rank-row founder-fit-rank-row" id="founder-fit-rank-row" hidden>
+            Founder Fit: <span id="founder-fit-rank-value"></span>
           </p>
           <span class="tier-badge" id="tier-badge"></span>
 
@@ -101,9 +109,13 @@ import Layout from "../layouts/Layout.astro";
   <script>
     import { initMap } from "../scripts/map.js";
     import { initSearch } from "../scripts/search.js";
+    import { initMapFounderFit } from "../scripts/mapFounderFit.js";
 
     initMap()
-      .then((stateData) => initSearch(stateData))
+      .then((stateData) => {
+        initSearch(stateData);
+        initMapFounderFit(stateData);
+      })
       .catch((error) => {
         console.error(error);
         const defaultText = document.getElementById("tooltip-default");

@@ -1,0 +1,42 @@
+---
+import profilesPayload from "../../public/data/founder_fit_profiles.json";
+
+interface Props {
+  id?: string;
+  showDisclaimer?: boolean;
+  class?: string;
+}
+
+const {
+  id = "founder-fit-profile",
+  showDisclaimer = true,
+  class: className = "",
+} = Astro.props;
+---
+
+<div class:list={["founder-fit-selector", className]}>
+  <label class="toolbar-label" for={id}>Business profile</label>
+  <select id={id} class="founder-fit-select" data-founder-fit-select>
+    <option value="overall">Overall (CNBC)</option>
+    {
+      profilesPayload.profiles.map((profile) => (
+        <option value={profile.id}>{profile.label}</option>
+      ))
+    }
+  </select>
+  {
+    showDisclaimer && (
+      <p class="founder-fit-disclaimer" data-founder-fit-disclaimer hidden>
+        {profilesPayload.disclaimer}
+        <a
+          href="/data/founder_fit_profiles.json"
+          class="founder-fit-weights-link"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          View weights
+        </a>
+      </p>
+    )
+  }
+</div>
