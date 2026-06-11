@@ -9,19 +9,35 @@ import FounderFitSelector from "../components/FounderFitSelector.astro";
   description="Explore how friendly each US state's business climate is. Search or click a state to see its CNBC score and rank."
 >
   <main class="layout">
-    <section class="map-panel" aria-label="United States map">
-      <span id="map-title" hidden>United States business friendliness map</span>
-      <span id="map-desc" hidden>
-        Search or click a state to pin it and see its CNBC ranking and score out of 100.
-      </span>
-      <div id="map-container" aria-hidden="false"></div>
-    </section>
+    <div class="map-column">
+      <section class="map-panel" aria-label="United States map">
+        <span id="map-title" hidden>United States business friendliness map</span>
+        <span id="map-desc" hidden>
+          Search or click a state to pin it and see its ranking and score out of 100.
+        </span>
+        <div id="map-container" aria-hidden="false"></div>
+      </section>
+
+      <div class="map-legend" aria-label="Map color legend">
+        <div class="map-legend-items">
+          <span class="map-legend-item">
+            <span class="swatch green" aria-hidden="true"></span>
+            <span>1–17</span>
+          </span>
+          <span class="map-legend-item">
+            <span class="swatch yellow" aria-hidden="true"></span>
+            <span>18–34</span>
+          </span>
+          <span class="map-legend-item">
+            <span class="swatch red" aria-hidden="true"></span>
+            <span>35–50</span>
+          </span>
+        </div>
+        <span class="map-legend-source">CNBC 2025</span>
+      </div>
+    </div>
 
     <aside class="sidebar" id="sidebar">
-      <div class="sidebar-founder-fit panel">
-        <FounderFitSelector id="map-profile" />
-      </div>
-
       <div class="info-card" id="info-card" aria-live="polite">
         <div class="info-card-header">
           <h2>State details</h2>
@@ -34,10 +50,13 @@ import FounderFitSelector from "../components/FounderFitSelector.astro";
           Search or click a state on the map to see its score and rank.
         </p>
         <div id="tooltip-content" hidden>
+          <FounderFitSelector variant="pills" id="map-profile" showDisclaimer />
+
           <p class="state-name" id="state-name"></p>
+
           <div class="score-block">
             <div class="score-header">
-              <span class="score-label">Score</span>
+              <span class="score-label" id="score-label">Score</span>
               <span class="score-value" id="score-value"></span>
               <span class="score-max">/100</span>
             </div>
@@ -45,63 +64,39 @@ import FounderFitSelector from "../components/FounderFitSelector.astro";
               <div class="score-bar-fill" id="score-bar-fill"></div>
             </div>
           </div>
+
           <p class="rank-row">
-            CNBC rank: <span id="rank-value"></span>
+            Rank <span id="rank-value"></span>
           </p>
-          <p class="rank-row founder-fit-rank-row" id="founder-fit-rank-row" hidden>
-            Founder Fit: <span id="founder-fit-rank-value"></span>
-          </p>
+          <p class="rank-footnote" id="rank-footnote" hidden></p>
+
+          <span class="profile-chip" id="profile-chip" hidden></span>
           <span class="tier-badge" id="tier-badge"></span>
 
-          <div id="category-breakdown" class="category-breakdown" hidden>
-            <div class="category-group">
-              <h3 class="category-heading">Top strengths</h3>
-              <div id="category-strengths"></div>
+          <details class="category-details" id="category-details" hidden>
+            <summary class="category-details-summary">Category breakdown</summary>
+            <div class="category-details-body">
+              <div class="category-group">
+                <h3 class="category-heading">Top strengths</h3>
+                <div id="category-strengths"></div>
+              </div>
+              <div class="category-group">
+                <h3 class="category-heading">Areas to improve</h3>
+                <div id="category-weaknesses"></div>
+              </div>
+              <p class="category-methodology">
+                <a
+                  href="https://www.cnbc.com/2025/06/11/how-we-are-choosing-americas-top-states-for-business-in-2025.html"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Methodology
+                </a>
+                — 10 categories, 2,500 points max
+              </p>
             </div>
-            <div class="category-group">
-              <h3 class="category-heading">Areas to improve</h3>
-              <div id="category-weaknesses"></div>
-            </div>
-            <p class="category-methodology">
-              <a
-                href="https://www.cnbc.com/2025/06/11/how-we-are-choosing-americas-top-states-for-business-in-2025.html"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                CNBC methodology
-              </a>
-              — 10 categories, 2,500 points max
-            </p>
-          </div>
+          </details>
         </div>
-      </div>
-
-      <div class="legend-card">
-        <h2>Legend</h2>
-        <p class="legend-helper">Based on CNBC 2025 rankings</p>
-        <ul class="legend-list">
-          <li class="legend-item">
-            <span class="swatch green" aria-hidden="true"></span>
-            <div>
-              <span class="legend-label">Green — Very favourable</span>
-              <span class="legend-desc">Ranks 1–17</span>
-            </div>
-          </li>
-          <li class="legend-item">
-            <span class="swatch yellow" aria-hidden="true"></span>
-            <div>
-              <span class="legend-label">Yellow — Moderate</span>
-              <span class="legend-desc">Ranks 18–34</span>
-            </div>
-          </li>
-          <li class="legend-item">
-            <span class="swatch red" aria-hidden="true"></span>
-            <div>
-              <span class="legend-label">Red — Less favourable</span>
-              <span class="legend-desc">Ranks 35–50</span>
-            </div>
-          </li>
-        </ul>
       </div>
     </aside>
   </main>
@@ -109,12 +104,12 @@ import FounderFitSelector from "../components/FounderFitSelector.astro";
   <script>
     import { initMap } from "../scripts/map.js";
     import { initSearch } from "../scripts/search.js";
-    import { initMapFounderFit } from "../scripts/mapFounderFit.js";
+    import { initMapSidebar } from "../scripts/mapSidebar.js";
 
     initMap()
       .then((stateData) => {
         initSearch(stateData);
-        initMapFounderFit(stateData);
+        initMapSidebar(stateData);
       })
       .catch((error) => {
         console.error(error);

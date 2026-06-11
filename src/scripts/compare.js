@@ -155,7 +155,7 @@ function renderSummary(abbrs) {
       <div class="score-bar-track" aria-hidden="true">
         <div class="score-bar-fill ${info.tier}" style="width: ${info.score100}%"></div>
       </div>
-      <p class="compare-meta">CNBC rank <strong>#${info.rank}</strong></p>
+      <p class="compare-meta">Overall rank <strong>#${info.rank}</strong></p>
       ${
         fit
           ? `<p class="compare-meta compare-founder-fit-meta">Founder Fit (${getProfileLabel(activeProfile)}): <strong>#${fit.founderFitRank}</strong> · ${fit.founderFitScore100}/100</p>`

@@ -5,38 +5,83 @@ interface Props {
   id?: string;
   showDisclaimer?: boolean;
   class?: string;
+  variant?: "select" | "pills";
 }
 
 const {
   id = "founder-fit-profile",
   showDisclaimer = true,
   class: className = "",
+  variant = "select",
 } = Astro.props;
+
+const pillLabels: Record<string, string> = {
+  overall: "Overall",
+  tech: "Tech",
+  bootstrapped: "Bootstrapped",
+  "physical-ops": "Ops",
+};
 ---
 
-<div class:list={["founder-fit-selector", className]}>
-  <label class="toolbar-label" for={id}>Business profile</label>
-  <select id={id} class="founder-fit-select" data-founder-fit-select>
-    <option value="overall">Overall (CNBC)</option>
-    {
-      profilesPayload.profiles.map((profile) => (
-        <option value={profile.id}>{profile.label}</option>
-      ))
-    }
-  </select>
-  {
-    showDisclaimer && (
-      <p class="founder-fit-disclaimer" data-founder-fit-disclaimer hidden>
-        {profilesPayload.disclaimer}
-        <a
-          href="/data/founder_fit_profiles.json"
-          class="founder-fit-weights-link"
-          target="_blank"
-          rel="noopener noreferrer"
+{
+  variant === "pills" ? (
+    <div class:list={["founder-fit-pills-wrap", className]}>
+      <div
+        class="founder-fit-pills"
+        role="group"
+        aria-label="Business profile"
+        data-founder-fit-pills
+      >
+        <button
+          type="button"
+          class="founder-fit-pill is-active"
+          data-founder-fit-pill
+          data-profile="overall"
+          aria-pressed="true"
         >
-          View weights
-        </a>
-      </p>
-    )
-  }
-</div>
+          {pillLabels.overall}
+        </button>
+        {profilesPayload.profiles.map((profile) => (
+          <button
+            type="button"
+            class="founder-fit-pill"
+            data-founder-fit-pill
+            data-profile={profile.id}
+            aria-pressed="false"
+            title={profile.label}
+          >
+            {pillLabels[profile.id] ?? profile.label}
+          </button>
+        ))}
+      </div>
+      {showDisclaimer && (
+        <p class="founder-fit-disclaimer map-founder-fit-disclaimer" data-map-founder-fit-disclaimer hidden>
+          {profilesPayload.disclaimer}
+        </p>
+      )}
+    </div>
+  ) : (
+    <div class:list={["founder-fit-selector", className]}>
+      <label class="toolbar-label" for={id}>Business profile</label>
+      <select id={id} class="founder-fit-select" data-founder-fit-select>
+        <option value="overall">Overall</option>
+        {profilesPayload.profiles.map((profile) => (
+          <option value={profile.id}>{profile.label}</option>
+        ))}
+      </select>
+      {showDisclaimer && (
+        <p class="founder-fit-disclaimer" data-founder-fit-disclaimer hidden>
+          {profilesPayload.disclaimer}
+          <a
+            href="/data/founder_fit_profiles.json"
+            class="founder-fit-weights-link"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            View weights
+          </a>
+        </p>
+      )}
+    </div>
+  )
+}

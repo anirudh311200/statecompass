@@ -114,9 +114,9 @@ export function syncProfileToUrl(profileId, { replace = true } = {}) {
 
 export function getProfileLabel(profileId) {
   if (!profileId || profileId === FOUNDER_FIT_OVERALL) {
-    return "Overall (CNBC)";
+    return "Overall";
   }
-  return profileById[profileId]?.label ?? "Overall (CNBC)";
+  return profileById[profileId]?.label ?? "Overall";
 }
 
 export function wireFounderFitSelector({

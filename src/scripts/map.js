@@ -1,7 +1,4 @@
-import {
-  getStrengthsAndWeaknesses,
-  renderCategoryList,
-} from "./categories.js";
+import { refreshMapSidebar } from "./mapSidebar.js";
 
 const TIER_COLORS = {
   green: "#22c55e",
@@ -13,12 +10,6 @@ const TIER_GLOWS = {
   green: "drop-shadow(0 0 6px rgba(34, 197, 94, 0.55))",
   yellow: "drop-shadow(0 0 6px rgba(234, 179, 8, 0.55))",
   red: "drop-shadow(0 0 6px rgba(239, 68, 68, 0.55))",
-};
-
-const TIER_LABELS = {
-  green: "Very favourable",
-  yellow: "Moderate",
-  red: "Less favourable",
 };
 
 const DEFAULT_FILL = "#d1d5db";
@@ -67,7 +58,7 @@ function updateMapDimming() {
   mapPanel.classList.toggle("is-dimmed", hasFocus);
 }
 
-function updateSidebar(info) {
+function updateSidebar(abbr, info) {
   const content = document.getElementById("tooltip-content");
   const defaultText = document.getElementById("tooltip-default");
   const clearBtn = document.getElementById("clear-pin");
@@ -77,32 +68,7 @@ function updateSidebar(info) {
   content.hidden = false;
 
   document.getElementById("state-name").textContent = info.name;
-  document.getElementById("score-value").textContent = info.score100;
-  document.getElementById("rank-value").textContent = `#${info.rank} of 50`;
-
-  const barFill = document.getElementById("score-bar-fill");
-  barFill.style.width = `${info.score100}%`;
-  barFill.className = `score-bar-fill ${info.tier}`;
-
-  const badge = document.getElementById("tier-badge");
-  badge.textContent = TIER_LABELS[info.tier];
-  badge.className = `tier-badge ${info.tier}`;
-
-  const categoryBlock = document.getElementById("category-breakdown");
-  if (categoryBlock) {
-    const hasCategories = Boolean(info.categories);
-    categoryBlock.hidden = !hasCategories;
-
-    if (hasCategories) {
-      const { strengths, weaknesses } = getStrengthsAndWeaknesses(info.categories);
-      renderCategoryList(document.getElementById("category-strengths"), strengths, {
-        variant: "strength",
-      });
-      renderCategoryList(document.getElementById("category-weaknesses"), weaknesses, {
-        variant: "weakness",
-      });
-    }
-  }
+  refreshMapSidebar(abbr, info);
 
   if (defaultText) {
     defaultText.hidden = true;
@@ -117,9 +83,9 @@ function updateSidebar(info) {
 
 function hideSidebar() {
   document.getElementById("tooltip-content").hidden = true;
-  const categoryBlock = document.getElementById("category-breakdown");
-  if (categoryBlock) {
-    categoryBlock.hidden = true;
+  const categoryDetails = document.getElementById("category-details");
+  if (categoryDetails) {
+    categoryDetails.hidden = true;
   }
   const defaultText = document.getElementById("tooltip-default");
   if (defaultText) {
@@ -163,7 +129,7 @@ export function pinState(abbr, { skipUrl = false, focusSidebar = false } = {}) {
   pinnedPath = path;
   path.classList.add("is-pinned");
   highlightPath(path, normalized);
-  updateSidebar(stateData[normalized]);
+  updateSidebar(normalized, stateData[normalized]);
   updateMapDimming();
 
   if (!skipUrl) {
@@ -201,7 +167,7 @@ export function clearPin({ skipUrl = false } = {}) {
   if (hoverPath) {
     const abbr = hoverPath.id;
     highlightPath(hoverPath, abbr);
-    updateSidebar(stateData[abbr]);
+    updateSidebar(abbr, stateData[abbr]);
   } else {
     hideSidebar();
   }
@@ -237,8 +203,12 @@ function activateHover(path, abbr) {
 
   hoverPath = path;
   highlightPath(path, abbr);
-  updateSidebar(stateData[abbr]);
+  updateSidebar(abbr, stateData[abbr]);
   updateMapDimming();
+
+  document.dispatchEvent(
+    new CustomEvent("statecompass:hover", { detail: { abbr } })
+  );
 }
 
 function deactivateHover(path) {
@@ -251,7 +221,7 @@ function deactivateHover(path) {
 
   if (pinnedPath) {
     highlightPath(pinnedPath, pinnedAbbr);
-    updateSidebar(stateData[pinnedAbbr]);
+    updateSidebar(pinnedAbbr, stateData[pinnedAbbr]);
   } else {
     hideSidebar();
   }
