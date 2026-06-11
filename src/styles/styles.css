@@ -34,11 +34,11 @@ body {
   min-height: 100vh;
   font-family: var(--font-body);
   background-color: var(--bg);
-  background-image:
-    radial-gradient(ellipse 70% 45% at 50% 0%, rgba(255, 255, 255, 0.03) 0%, transparent 65%),
-    linear-gradient(rgba(255, 255, 255, 0.015) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.015) 1px, transparent 1px);
-  background-size: 100% 100%, 48px 48px, 48px 48px;
+  background-image: radial-gradient(
+    ellipse 70% 45% at 50% 0%,
+    rgba(255, 255, 255, 0.03) 0%,
+    transparent 65%
+  );
   color: var(--text);
   line-height: 1.5;
 }
