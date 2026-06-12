@@ -57,6 +57,14 @@ import { dataYear } from "../lib/states.js";
         <button type="button" class="btn btn-secondary" id="print-compare">
           Print / save PDF
         </button>
+        <button
+          type="button"
+          class="btn btn-secondary"
+          id="download-compare-png"
+          data-default-label="Save as PNG"
+        >
+          Save as PNG
+        </button>
         <p id="compare-share-status" class="share-status" role="status" aria-live="polite"></p>
       </div>
     </div>
@@ -81,6 +89,11 @@ import { dataYear } from "../lib/states.js";
         <p class="panel-helper">Winner highlighted per category (best rank wins).</p>
         <div id="compare-categories"></div>
       </section>
+
+      <p class="compare-export-footer" id="compare-export-footer">
+        <span class="compare-export-label">Compare link · CNBC {dataYear}</span>
+        <span class="compare-export-url" id="compare-export-url"></span>
+      </p>
 
       <p id="compare-live-status" class="visually-hidden" aria-live="polite"></p>
     </div>

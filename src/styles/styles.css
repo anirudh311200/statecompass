@@ -1275,6 +1275,44 @@ footer a:hover {
   display: none;
 }
 
+.compare-export-footer {
+  display: none;
+  margin: 0;
+  padding: 1rem 1.25rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  font-size: var(--text-xs);
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+.compare-export-label {
+  display: block;
+  margin-bottom: 0.25rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.compare-export-url {
+  display: block;
+  word-break: break-all;
+  color: var(--gray);
+}
+
+.compare-results.is-capturing-png .compare-print-header {
+  display: block;
+}
+
+.compare-results.is-capturing-png .compare-export-footer {
+  display: block;
+}
+
+.compare-results.is-capturing-png .compare-detail-link {
+  display: none !important;
+}
+
 /* Founder Fit */
 
 .founder-fit-selector {

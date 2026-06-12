@@ -11,11 +11,13 @@ import {
   wireFounderFitSelector,
 } from "./founderFit.js";
 import { wireCopyButton } from "./share.js";
+import { downloadComparePng } from "./exportCompare.js";
 
 const MAX_STATES = 3;
 const MIN_STATES = 2;
 
 let stateData = {};
+let dataYear = 2025;
 let selectedAbbrs = ["", "", ""];
 let activeProfile = FOUNDER_FIT_OVERALL;
 let founderFitLookup = null;
@@ -323,6 +325,15 @@ function wireControls() {
   document.getElementById("print-compare")?.addEventListener("click", () => {
     window.print();
   });
+
+  document.getElementById("download-compare-png")?.addEventListener("click", () => {
+    downloadComparePng(document.getElementById("compare-results"), {
+      abbrs: getActiveAbbrs(),
+      dataYear,
+      statusEl: document.getElementById("compare-share-status"),
+      buttonEl: document.getElementById("download-compare-png"),
+    });
+  });
 }
 
 function setProfile(profileId) {
@@ -341,6 +352,7 @@ export async function initCompare() {
 
   const payload = await response.json();
   stateData = payload.states;
+  dataYear = payload.year ?? 2025;
   activeProfile = getProfileFromUrl();
 
   wireFounderFitSelector({
