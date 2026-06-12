@@ -121,12 +121,12 @@ const jsonLd = {
     </article>
   </main>
 
-  <script define:vars={{ pageUrl }}>
+  <script>
     import { wireCopyButton } from "../../scripts/share.js";
 
     wireCopyButton(
       document.getElementById("copy-state-link"),
-      pageUrl,
+      () => window.location.href,
       document.getElementById("state-share-status")
     );
   </script>
