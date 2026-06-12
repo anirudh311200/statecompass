@@ -16,11 +16,6 @@ export async function downloadComparePng(root, { abbrs, dataYear, statusEl, butt
   }
 
   const defaultLabel = buttonEl?.dataset.defaultLabel || "Save as PNG";
-  const urlEl = document.getElementById("compare-export-url");
-
-  if (urlEl) {
-    urlEl.textContent = window.location.href;
-  }
 
   try {
     if (buttonEl) {
