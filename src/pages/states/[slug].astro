@@ -4,6 +4,7 @@ import Breadcrumbs from "../../components/Breadcrumbs.astro";
 import CategoryChart from "../../components/CategoryChart.astro";
 import { states, dataYear } from "../../lib/states.js";
 import { TIER_LABELS, METHODOLOGY_URL } from "../../scripts/categories.js";
+import { CNBC_RANKINGS_URL, cnbcSourceLabel } from "../../lib/site.js";
 
 export function getStaticPaths() {
   return Object.entries(states).map(([abbr, state]) => ({
@@ -14,13 +15,48 @@ export function getStaticPaths() {
 
 const { abbr, state } = Astro.props;
 
+const site = Astro.site ?? new URL("https://statecompass.app");
+const pageUrl = new URL(`/states/${state.slug}`, site).href;
+
 const title = `${state.name} — #${state.rank} | StateCompass CNBC ${dataYear}`;
-const description = `${state.name} ranks #${state.rank} of 50 in CNBC America's Top States for Business ${dataYear}. Score ${state.score100}/100. Full category breakdown.`;
+const description = `${state.name} ranks #${state.rank} of 50 in CNBC America's Top States for Business ${dataYear}. Score ${state.score100}/100. Full category breakdown for site selection.`;
 const compareHref = `/compare?states=${abbr}`;
 const mapHref = `/?state=${abbr}`;
+const ogImage = `/og/${state.slug}.svg`;
+const ogImageAlt = `${state.name} — CNBC rank #${state.rank}, score ${state.score100}/100`;
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  name: title,
+  description,
+  url: pageUrl,
+  isPartOf: {
+    "@type": "WebSite",
+    name: "StateCompass",
+    url: site.href,
+  },
+  about: {
+    "@type": "Dataset",
+    name: `${cnbcSourceLabel(dataYear)} — ${state.name}`,
+    description: `CNBC business climate scores and 10-category rankings for ${state.name}.`,
+    creator: {
+      "@type": "Organization",
+      name: "CNBC",
+      url: "https://www.cnbc.com",
+    },
+    url: CNBC_RANKINGS_URL,
+  },
+};
 ---
 
-<Layout title={title} description={description}>
+<Layout
+  title={title}
+  description={description}
+  ogImage={ogImage}
+  ogImageAlt={ogImageAlt}
+  jsonLd={jsonLd}
+>
   <main class="page-content">
     <Breadcrumbs
       crumbs={[
@@ -72,7 +108,26 @@ const mapHref = `/?state=${abbr}`;
       <div class="state-cta-row">
         <a href={compareHref} class="btn btn-primary">Compare with other states</a>
         <a href={mapHref} class="btn btn-secondary">View on map</a>
+        <button
+          type="button"
+          class="btn btn-secondary"
+          id="copy-state-link"
+          data-default-label="Copy state link"
+        >
+          Copy state link
+        </button>
+        <p id="state-share-status" class="share-status" role="status" aria-live="polite"></p>
       </div>
     </article>
   </main>
+
+  <script define:vars={{ pageUrl }}>
+    import { wireCopyButton } from "../../scripts/share.js";
+
+    wireCopyButton(
+      document.getElementById("copy-state-link"),
+      pageUrl,
+      document.getElementById("state-share-status")
+    );
+  </script>
 </Layout>

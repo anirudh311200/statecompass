@@ -8,9 +8,9 @@ import {
   getFounderFitLookup,
   getProfileFromUrl,
   getProfileLabel,
-  syncProfileToUrl,
   wireFounderFitSelector,
 } from "./founderFit.js";
+import { wireCopyButton } from "./share.js";
 
 const MAX_STATES = 3;
 const MIN_STATES = 2;
@@ -234,6 +234,25 @@ function renderCategories(abbrs) {
   });
 }
 
+function announceCompareUpdate(abbrs) {
+  const liveStatus = document.getElementById("compare-live-status");
+  if (!liveStatus || abbrs.length < MIN_STATES) {
+    return;
+  }
+
+  const names = abbrs.map((abbr) => stateData[abbr].name).join(", ");
+  liveStatus.textContent = `Comparison updated: ${names}.`;
+}
+
+function updateShareBar(abbrs) {
+  const shareBar = document.getElementById("compare-share-bar");
+  if (!shareBar) {
+    return;
+  }
+
+  shareBar.hidden = abbrs.length < MIN_STATES;
+}
+
 function renderCompare() {
   const abbrs = getActiveAbbrs();
   const empty = document.getElementById("compare-empty");
@@ -242,6 +261,7 @@ function renderCompare() {
   if (abbrs.length < MIN_STATES) {
     empty.hidden = false;
     results.hidden = true;
+    updateShareBar(abbrs);
     return;
   }
 
@@ -249,6 +269,8 @@ function renderCompare() {
   results.hidden = false;
   renderSummary(abbrs);
   renderCategories(abbrs);
+  updateShareBar(abbrs);
+  announceCompareUpdate(abbrs);
 }
 
 function setSlotAbbr(index, abbr) {
@@ -290,6 +312,16 @@ function wireControls() {
       return;
     }
     removeAbbr(chip.dataset.abbr);
+  });
+
+  wireCopyButton(
+    document.getElementById("copy-compare-link"),
+    () => window.location.href,
+    document.getElementById("compare-share-status")
+  );
+
+  document.getElementById("print-compare")?.addEventListener("click", () => {
+    window.print();
   });
 }
 

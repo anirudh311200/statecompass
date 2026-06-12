@@ -5,15 +5,16 @@ import FounderFitSelector from "../components/FounderFitSelector.astro";
 
 <Layout
   showSearch
-  subtitle="Explore how friendly each state's business climate is — search or click a state."
-  description="Explore how friendly each US state's business climate is. Search or click a state to see its CNBC score and rank."
+  preloadData
+  subtitle="Compare states for HQ and expansion — search or click a state on the map."
+  description="Site selection for founders — explore CNBC business climate scores, ranks, and category breakdowns for all 50 US states."
 >
   <main class="layout">
     <div class="map-column">
       <section class="map-panel" aria-label="United States map">
-        <span id="map-title" hidden>United States business friendliness map</span>
+        <span id="map-title" hidden>United States business climate map</span>
         <span id="map-desc" hidden>
-          Search or click a state to pin it and see its ranking and score out of 100.
+          Search or click a state to pin it and see CNBC rank and score out of 100.
         </span>
         <div id="map-container" aria-hidden="false"></div>
       </section>

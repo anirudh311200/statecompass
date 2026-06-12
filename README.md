@@ -1,14 +1,20 @@
 # StateCompass
 
-Interactive site showing how business-friendly each US state is, based on [CNBC America's Top States for Business 2025](https://www.cnbc.com/2025/07/10/top-states-for-business-americas-2025-the-full-rankings.html).
+**Site selection for founders** — compare where to build and operate your business, powered by [CNBC America's Top States for Business 2025](https://www.cnbc.com/2025/07/10/top-states-for-business-americas-2025-the-full-rankings.html).
+
+Send a compare link in Slack instead of screenshotting ChatGPT. StateCompass gives linkable, visual, CNBC-sourced evidence for HQ and expansion decisions.
 
 Built with [Astro](https://astro.build) — static export, deployable to Vercel or Netlify.
 
 ## Features
 
-- Hover or keyboard-focus any state to highlight it green, yellow, or red by tier
-- Sidebar shows state name, score out of 100, and rank (#1–#50)
-- Fully static — HTML, CSS, and JavaScript only
+- **Map** — Search or click any state; see CNBC score, rank, tier, and top category strengths
+- **Compare** — Side-by-side 2–3 states with winner highlighting; shareable URL and print/PDF export
+- **Rankings** — Full 50-state table with sort, tier filter, and Founder Fit profiles
+- **State pages** — All 10 CNBC categories with sourced breakdowns and social preview cards
+- **Founder Fit** — Re-weighted rankings for tech startups, bootstrapped services, and physical ops
+
+Scores come from CNBC via a verified data pipeline — never hand-edited in the UI.
 
 ## Local development
 
@@ -29,7 +35,7 @@ npm run build
 npm run preview
 ```
 
-The prebuild step regenerates `public/data/states.json` and verifies map alignment.
+The prebuild step regenerates `public/data/states.json`, OG social cards, and runs CI verification.
 
 ## Deploy
 
@@ -56,6 +62,7 @@ GitHub Actions runs on every push to `main`: Python verify, then Astro build.
 
 ```bash
 python scripts/generate_states.py   # Rankings data
+python scripts/generate_og.py       # Social preview cards (50 states + compare + default)
 python scripts/generate_map.py      # SVG map from topojson
 python scripts/verify.py            # Assert 50 states align
 ```
@@ -64,13 +71,18 @@ python scripts/verify.py            # Assert 50 states align
 
 ```
 src/
-  pages/index.astro    — Map home page
-  layouts/Layout.astro — Page shell
-  scripts/map.js       — Hover/focus logic
-  styles/styles.css    — Layout and colors
+  pages/
+    index.astro           — Map home
+    compare.astro         — Side-by-side compare
+    rankings.astro        — Full rankings table
+    states/[slug].astro   — Per-state detail (50 pages)
+  components/             — Header, Footer, charts, Founder Fit
+  scripts/                — Map, compare, rankings, founder fit
+  layouts/Layout.astro    — SEO, OG tags, JSON-LD
 public/
-  assets/              — Logo, favicon, SVG map
-  data/states.json     — Generated ranking data
-scripts/               — Python data generators
-data/                  — US Atlas topojson (map source)
+  assets/                 — Logo, favicon, SVG map
+  data/states.json        — Generated ranking data
+  og/                     — Generated social preview cards
+scripts/                  — Python data generators
+docs/ROADMAP.md           — Product phases
 ```

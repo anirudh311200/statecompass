@@ -34,8 +34,8 @@
 | **0** | Baseline (explore layer) | **Done** |
 | **1** | Compare & discover | **Done** |
 | **2** | Founder Fit | **Done** |
-| **3** | Share & be found | **Next** |
-| **4** | Founder Snapshot | Pending |
+| **3** | Share & be found | **Done** |
+| **4** | Founder Snapshot | **Next** |
 | **5** | Memory & time | Pending |
 | **6** | Distribution | Pending |
 | **7** | UI/UX overhaul *(optional)* | Pending |
@@ -294,14 +294,14 @@ For each profile: compute **Founder Fit score** (weighted sum of category scores
 
 ### Deliverables
 
-- [ ] **Share UX:** "Copy compare link" button; optional "Copy state link"
-- [ ] **Export (MVP):** Print-friendly CSS or one-page PDF via browser print for compare view
-- [ ] **OG images:** Build-time social cards per state (extend `scripts/generate_og.py` or Astro assets)
-- [ ] **JSON-LD** on state detail pages (`WebPage`, dataset reference to CNBC)
-- [ ] **Consistency pass:** terminology, footer (source, year, methodology), tier colors, category names
-- [ ] **Performance:** preload `states.json` on map; self-host fonts if not already
-- [ ] **Accessibility:** focus rings, contrast check, `aria-live` on compare updates
-- [ ] Update [`README.md`](../README.md) positioning to founder/site-selection language
+- [x] **Share UX:** "Copy compare link" button; optional "Copy state link"
+- [x] **Export (MVP):** Print-friendly CSS or one-page PDF via browser print for compare view
+- [x] **OG images:** Build-time social cards per state (extend `scripts/generate_og.py` or Astro assets)
+- [x] **JSON-LD** on state detail pages (`WebPage`, dataset reference to CNBC)
+- [x] **Consistency pass:** terminology, footer (source, year, methodology), tier colors, category names
+- [x] **Performance:** preload `states.json` on map; self-host fonts if not already
+- [x] **Accessibility:** focus rings, contrast check, `aria-live` on compare updates
+- [x] Update [`README.md`](../README.md) positioning to founder/site-selection language
 
 ### Exit criteria
 

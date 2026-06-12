@@ -2,23 +2,37 @@
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
 import "../styles/styles.css";
+import "@fontsource/inter/400.css";
+import "@fontsource/inter/500.css";
+import "@fontsource/inter/600.css";
+import "@fontsource/sora/600.css";
+import "@fontsource/sora/700.css";
 
 interface Props {
   title?: string;
   description?: string;
   showSearch?: boolean;
   subtitle?: string;
+  ogImage?: string;
+  ogImageAlt?: string;
+  preloadData?: boolean;
+  jsonLd?: Record<string, unknown> | Record<string, unknown>[];
 }
 
 const {
   title = "StateCompass",
-  description = "Explore how friendly each US state's business climate is. Search or click a state to see its CNBC score and rank.",
+  description = "Compare US states for HQ and expansion — CNBC business climate scores, ranked and sourced for founders.",
   showSearch = false,
   subtitle,
+  ogImage = "/og/default.svg",
+  ogImageAlt = "StateCompass — site selection for founders",
+  preloadData = false,
+  jsonLd,
 } = Astro.props;
 
 const site = Astro.site ?? new URL("https://statecompass.app");
 const canonical = new URL(Astro.url.pathname, site).href;
+const ogImageUrl = new URL(ogImage, site).href;
 const plausibleDomain = import.meta.env.PUBLIC_PLAUSIBLE_DOMAIN;
 ---
 
@@ -35,15 +49,22 @@ const plausibleDomain = import.meta.env.PUBLIC_PLAUSIBLE_DOMAIN;
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
     <meta property="og:url" content={canonical} />
-    <meta name="twitter:card" content="summary" />
+    <meta property="og:image" content={ogImageUrl} />
+    <meta property="og:image:alt" content={ogImageAlt} />
+    <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Sora:wght@600;700&display=swap"
-      rel="stylesheet"
-    />
+    <meta name="twitter:image" content={ogImageUrl} />
+    {
+      preloadData && (
+        <link rel="preload" href="/data/states.json" as="fetch" crossorigin="anonymous" />
+      )
+    }
+    {
+      jsonLd && (
+        <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+      )
+    }
   </head>
   <body>
     <div class="page">

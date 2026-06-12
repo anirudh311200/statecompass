@@ -4,7 +4,7 @@
   "version": "1.1.0",
   "private": true,
   "scripts": {
-    "prebuild": "python scripts/generate_states.py && python scripts/verify.py",
+    "prebuild": "python scripts/generate_states.py && python scripts/verify.py && python scripts/generate_og.py",
     "build": "astro build",
     "dev": "astro dev",
     "preview": "astro preview",
@@ -12,6 +12,8 @@
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.3.1",
+    "@fontsource/inter": "^5.2.8",
+    "@fontsource/sora": "^5.2.8",
     "astro": "^5.7.10"
   }
 }
