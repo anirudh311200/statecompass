@@ -974,6 +974,12 @@ footer a:hover {
 
 /* State detail */
 
+.state-detail {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
 .state-hero {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(220px, 280px);
