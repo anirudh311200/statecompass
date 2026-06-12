@@ -1647,6 +1647,21 @@ footer a:hover {
     margin-bottom: 1rem;
   }
 
+  /* Category panel is too tall for one page — break between rows, not inside them */
+  .compare-results .panel:has(#compare-categories) {
+    break-inside: auto;
+  }
+
+  .compare-category-row {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .compare-category-row + .compare-category-row {
+    margin-top: 0.65rem;
+    padding-top: 0.65rem;
+  }
+
   .panel-title,
   .compare-category-label,
   .compare-state-name,
