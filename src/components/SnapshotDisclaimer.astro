@@ -1,0 +1,12 @@
+---
+interface Props {
+  text?: string;
+}
+
+const { text = "Informational only — not legal, tax, accounting, or compliance advice." } =
+  Astro.props;
+---
+
+<aside class="snapshot-disclaimer" role="note" aria-label="Legal disclaimer">
+  <p class="snapshot-disclaimer-text">{text}</p>
+</aside>

@@ -30,6 +30,7 @@ jobs:
       - name: Generate data and verify
         run: |
           python scripts/generate_states.py
+          python scripts/build_founder_snapshots.py
           python scripts/verify.py
 
       - name: Build site

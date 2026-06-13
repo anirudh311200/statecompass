@@ -1,0 +1,82 @@
+---
+import SnapshotDisclaimer from "./SnapshotDisclaimer.astro";
+
+interface SourcedFact {
+  value: string;
+  sourceUrl: string;
+  sourceLabel: string;
+}
+
+interface SnapshotState {
+  taxPosture: SourcedFact;
+  businessRegistration: SourcedFact;
+  complianceCalendar: SourcedFact;
+  multiStateHeadsUp: SourcedFact[];
+}
+
+interface Props {
+  stateName: string;
+  snapshot: SnapshotState | null;
+  disclaimer: string;
+}
+
+const { stateName, snapshot, disclaimer } = Astro.props;
+
+const factSections = snapshot
+  ? [
+      { label: "Tax posture", fact: snapshot.taxPosture },
+      { label: "Business registration", fact: snapshot.businessRegistration },
+      { label: "Compliance calendar", fact: snapshot.complianceCalendar },
+    ]
+  : [];
+---
+
+<section class="panel founder-snapshot" aria-labelledby="snapshot-heading">
+  <h2 id="snapshot-heading" class="panel-title">Founder Snapshot</h2>
+  <p class="panel-helper">
+    Lite operational context for {stateName} — what to know before operating here. Sourced
+    public facts, separate from CNBC scores.
+  </p>
+
+  <SnapshotDisclaimer text={disclaimer} />
+
+  {
+    snapshot ? (
+      <div class="snapshot-content">
+        {
+          factSections.map(({ label, fact }) => (
+            <div class="snapshot-fact">
+              <h3 class="snapshot-fact-label">{label}</h3>
+              <p class="snapshot-fact-value">{fact.value}</p>
+              <p class="snapshot-fact-source">
+                Source:{" "}
+                <a href={fact.sourceUrl} target="_blank" rel="noopener noreferrer">
+                  {fact.sourceLabel}
+                </a>
+              </p>
+            </div>
+          ))
+        }
+
+        <div class="snapshot-fact">
+          <h3 class="snapshot-fact-label">Multi-state heads-up</h3>
+          <ul class="snapshot-heads-up-list">
+            {snapshot.multiStateHeadsUp.map((bullet) => (
+              <li class="snapshot-heads-up-item">
+                <p class="snapshot-fact-value">{bullet.value}</p>
+                <p class="snapshot-fact-source">
+                  Source:{" "}
+                  <a href={bullet.sourceUrl} target="_blank" rel="noopener noreferrer">
+                    {bullet.sourceLabel}
+                  </a>
+                </p>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+    ) : (
+      <p class="snapshot-coming-soon">Snapshot data for this state is coming soon.</p>
+    )
+  }
+</section>

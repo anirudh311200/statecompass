@@ -1,0 +1,1957 @@
+{
+  "version": 1,
+  "updatedAt": "2025-06-13",
+  "disclaimer": "Founder Snapshot is informational only — not legal, tax, accounting, or compliance advice. Verify details with official sources and qualified professionals before making decisions.",
+  "states": {
+    "AL": {
+      "taxPosture": {
+        "value": "Alabama taxes C-corporation income at 6.5% and personal income at rates up to 5%. Pass-through entities generally flow through to owners.",
+        "sourceUrl": "https://www.revenue.alabama.gov/individual-corporate/taxes/",
+        "sourceLabel": "Alabama Department of Revenue"
+      },
+      "businessRegistration": {
+        "value": "Form corporations, LLCs, and other entities through the Alabama Secretary of State.",
+        "sourceUrl": "https://www.sos.alabama.gov/business-entities",
+        "sourceLabel": "Alabama Secretary of State"
+      },
+      "complianceCalendar": {
+        "value": "Business privilege tax and annual report filings are required for many entities; due dates vary by entity type.",
+        "sourceUrl": "https://www.revenue.alabama.gov/individual-corporate/business-privilege-tax/",
+        "sourceLabel": "Alabama Department of Revenue — Business Privilege Tax"
+      },
+      "multiStateHeadsUp": [
+        {
+          "value": "Remote employees in Alabama can create payroll withholding and unemployment insurance obligations.",
+          "sourceUrl": "https://www.revenue.alabama.gov/withholding/",
+          "sourceLabel": "Alabama Department of Revenue — Withholding"
+        },
+        {
+          "value": "Out-of-state sellers may owe Alabama sales/use tax once economic nexus thresholds are met.",
+          "sourceUrl": "https://www.revenue.alabama.gov/sales-use/",
+          "sourceLabel": "Alabama Department of Revenue — Sales & Use"
+        },
+        {
+          "value": "If you are incorporated elsewhere but transact business here, you may need to foreign-qualify with the Secretary of State.",
+          "sourceUrl": "https://www.sba.gov/business-guide/launch-your-business/register-your-business",
+          "sourceLabel": "U.S. Small Business Administration"
+        },
+        {
+          "value": "Multi-state operations often trigger registration, withholding, or nexus rules — confirm with official state agencies.",
+          "sourceUrl": "https://www.irs.gov/businesses/small-businesses-self-employed/state-government-websites",
+          "sourceLabel": "IRS — State government websites"
+        }
+      ]
+    },
+    "AK": {
+      "taxPosture": {
+        "value": "Alaska has no state personal income tax or statewide sales tax (local sales taxes may apply). Oil and industry taxes dominate state revenue.",
+        "sourceUrl": "https://tax.alaska.gov/programs/programs/index.aspx",
+        "sourceLabel": "Alaska Department of Revenue — Tax Division"
+      },
+      "businessRegistration": {
+        "value": "Register businesses and obtain licenses through Alaska Commerce.",
+        "sourceUrl": "https://www.commerce.alaska.gov/web/cbpl/BusinessLicensing.aspx",
+        "sourceLabel": "Alaska Department of Commerce"
+      },
+      "complianceCalendar": {
+        "value": "Biennial report and business license renewals apply to many entities; check Commerce for your entity type.",
+        "sourceUrl": "https://www.commerce.alaska.gov/web/cbpl/BusinessLicensing/BiennialReport.aspx",
+        "sourceLabel": "Alaska Department of Commerce — Biennial Report"
+      },
+      "multiStateHeadsUp": [
+        {
+          "value": "Hiring remote workers in Alaska triggers state unemployment and workers' comp requirements.",
+          "sourceUrl": "https://labor.alaska.gov/estax/home.htm",
+          "sourceLabel": "Alaska Department of Labor — Employment Tax"
+        },
+        {
+          "value": "Local borough/city sales taxes apply in many Alaska communities — rates are not uniform statewide.",
+          "sourceUrl": "https://tax.alaska.gov/programs/programs/index.aspx?6000",
+          "sourceLabel": "Alaska Tax Division — Local Sales Tax"
+        },
+        {
+          "value": "If you are incorporated elsewhere but transact business here, you may need to foreign-qualify with the Secretary of State.",
+          "sourceUrl": "https://www.sba.gov/business-guide/launch-your-business/register-your-business",
+          "sourceLabel": "U.S. Small Business Administration"
+        },
+        {
+          "value": "Multi-state operations often trigger registration, withholding, or nexus rules — confirm with official state agencies.",
+          "sourceUrl": "https://www.irs.gov/businesses/small-businesses-self-employed/state-government-websites",
+          "sourceLabel": "IRS — State government websites"
+        }
+      ]
+    },
+    "AZ": {
+      "taxPosture": {
+        "value": "Arizona corporate income tax is 4.9%; personal income tax uses a flat 2.5% rate (2025). Transaction Privilege Tax (TPT) applies to many business activities.",
+        "sourceUrl": "https://azdor.gov/business",
+        "sourceLabel": "Arizona Department of Revenue"
+      },
+      "businessRegistration": {
+        "value": "File entity formations and annual reports with the Arizona Corporation Commission.",
+        "sourceUrl": "https://azcc.gov/business",
+        "sourceLabel": "Arizona Corporation Commission"
+      },
+      "complianceCalendar": {
+        "value": "Annual reports are due to the Corporation Commission; TPT and corporate/income tax returns have separate DOR deadlines.",
+        "sourceUrl": "https://azcc.gov/business/filings/annual-report",
+        "sourceLabel": "Arizona Corporation Commission — Annual Report"
+      },
+      "multiStateHeadsUp": [
+        {
+          "value": "Marketplace and remote sales can create Arizona TPT collection obligations once nexus exists.",
+          "sourceUrl": "https://azdor.gov/transaction-privilege-tax/tax-guidance/remote-sellers-marketplace-facilitators",
+          "sourceLabel": "Arizona DOR — Remote Sellers"
+        },
+        {
+          "value": "Employers with Arizona workers must register for withholding and unemployment insurance.",
+          "sourceUrl": "https://azdes.gov/services/employment/unemployment-employer",
+          "sourceLabel": "Arizona DES — Unemployment Tax"
+        },
+        {
+          "value": "If you are incorporated elsewhere but transact business here, you may need to foreign-qualify with the Secretary of State.",
+          "sourceUrl": "https://www.sba.gov/business-guide/launch-your-business/register-your-business",
+          "sourceLabel": "U.S. Small Business Administration"
+        },
+        {
+          "value": "Multi-state operations often trigger registration, withholding, or nexus rules — confirm with official state agencies.",
+          "sourceUrl": "https://www.irs.gov/businesses/small-businesses-self-employed/state-government-websites",
+          "sourceLabel": "IRS — State government websites"
+        }
+      ]
+    },
+    "AR": {
+      "taxPosture": {
+        "value": "Arkansas corporate income tax tops out at 5.1%; personal income tax uses progressive rates up to 3.9%. Pass-through income is generally taxed at the owner level.",
+        "sourceUrl": "https://www.dfa.arkansas.gov/income-tax/",
+        "sourceLabel": "Arkansas Department of Finance and Administration"
+      },
+      "businessRegistration": {
+        "value": "Form and maintain business entities through the Arkansas Secretary of State.",
+        "sourceUrl": "https://www.sos.arkansas.gov/business-commercial-services-bcs",
+        "sourceLabel": "Arkansas Secretary of State"
+      },
+      "complianceCalendar": {
+        "value": "Annual franchise tax reports are due May 1 for corporations; LLC annual reports follow separate SOS deadlines.",
+        "sourceUrl": "https://www.dfa.arkansas.gov/office/taxes/business-tax/franchise-tax",
+        "sourceLabel": "Arkansas DFA — Franchise Tax"
+      },
+      "multiStateHeadsUp": [
+        {
+          "value": "Remote employees in Arkansas can trigger income tax withholding and unemployment tax accounts.",
+          "sourceUrl": "https://www.dfa.arkansas.gov/income-tax/withholding-tax/",
+          "sourceLabel": "Arkansas DFA — Withholding"
+        },
+        {
+          "value": "Out-of-state retailers may need to collect Arkansas sales tax after exceeding economic nexus thresholds.",
+          "sourceUrl": "https://www.dfa.arkansas.gov/office/taxes/sales-use-tax",
+          "sourceLabel": "Arkansas DFA — Sales & Use Tax"
+        },
+        {
+          "value": "If you are incorporated elsewhere but transact business here, you may need to foreign-qualify with the Secretary of State.",
+          "sourceUrl": "https://www.sba.gov/business-guide/launch-your-business/register-your-business",
+          "sourceLabel": "U.S. Small Business Administration"
+        },
+        {
+          "value": "Multi-state operations often trigger registration, withholding, or nexus rules — confirm with official state agencies.",
+          "sourceUrl": "https://www.irs.gov/businesses/small-businesses-self-employed/state-government-websites",
+          "sourceLabel": "IRS — State government websites"
+        }
+      ]
+    },
+    "CA": {
+      "taxPosture": {
+        "value": "California taxes C-corporation income at 8.84% (plus potential LLC fee/Minimum Franchise Tax of $800). Personal income tax is progressive up to 12.3% (plus Mental Health Services Tax on high earners).",
+        "sourceUrl": "https://www.ftb.ca.gov/businesses/index.html",
+        "sourceLabel": "California Franchise Tax Board"
+      },
+      "businessRegistration": {
+        "value": "Register corporations and LLCs via the California Secretary of State (BizFile Online).",
+        "sourceUrl": "https://bizfileonline.sos.ca.gov/",
+        "sourceLabel": "California Secretary of State — BizFile"
+      },
+      "complianceCalendar": {
+        "value": "Statement of Information due every 1–2 years depending on entity; FTB returns and $800 minimum franchise tax apply to most entities.",
+        "sourceUrl": "https://www.sos.ca.gov/business-programs/business-entities/statements",
+        "sourceLabel": "California SOS — Statements of Information"
+      },
+      "multiStateHeadsUp": [
+        {
+          "value": "California aggressively asserts nexus for out-of-state companies selling to CA customers or employing CA residents.",
+          "sourceUrl": "https://www.cdtfa.ca.gov/industry/remote-sellers.htm",
+          "sourceLabel": "California CDTFA — Remote Sellers"
+        },
+        {
+          "value": "Apportioning multi-state income to California uses market-based rules for many taxpayers.",
+          "sourceUrl": "https://www.ftb.ca.gov/file/business/types/multistate-businesses/index.html",
+          "sourceLabel": "California FTB — Multistate Businesses"
+        },
+        {
+          "value": "If you are incorporated elsewhere but transact business here, you may need to foreign-qualify with the Secretary of State.",
+          "sourceUrl": "https://www.sba.gov/business-guide/launch-your-business/register-your-business",
+          "sourceLabel": "U.S. Small Business Administration"
+        },
+        {
+          "value": "Multi-state operations often trigger registration, withholding, or nexus rules — confirm with official state agencies.",
+          "sourceUrl": "https://www.irs.gov/businesses/small-businesses-self-employed/state-government-websites",
+          "sourceLabel": "IRS — State government websites"
+        }
+      ]
+    },
+    "CO": {
+      "taxPosture": {
+        "value": "Colorado corporate income tax is 4.4% (flat). Personal income tax is a flat 4.4%. Many local jurisdictions add separate occupational privilege taxes.",
+        "sourceUrl": "https://tax.colorado.gov/business-tax",
+        "sourceLabel": "Colorado Department of Revenue"
+      },
+      "businessRegistration": {
+        "value": "File entity formations and periodic reports with the Colorado Secretary of State.",
+        "sourceUrl": "https://www.sos.state.co.us/pubs/business/main.html",
+        "sourceLabel": "Colorado Secretary of State"
+      },
+      "complianceCalendar": {
+        "value": "Periodic reports are due to the Secretary of State; income and sales tax returns follow DOR schedules.",
+        "sourceUrl": "https://www.sos.state.co.us/pubs/business/FAQs/periodicReports.html",
+        "sourceLabel": "Colorado SOS — Periodic Reports"
+      },
+      "multiStateHeadsUp": [
+        {
+          "value": "Colorado economic nexus rules require remote sellers to collect sales tax above state thresholds.",
+          "sourceUrl": "https://tax.colorado.gov/out-of-state-businesses",
+          "sourceLabel": "Colorado DOR — Out-of-State Businesses"
+        },
+        {
+          "value": "Employers with Colorado workers must register for withholding and unemployment insurance.",
+          "sourceUrl": "https://cdle.colorado.gov/employers/unemployment-insurance-ui",
+          "sourceLabel": "Colorado Department of Labor — UI"
+        },
+        {
+          "value": "If you are incorporated elsewhere but transact business here, you may need to foreign-qualify with the Secretary of State.",
+          "sourceUrl": "https://www.sba.gov/business-guide/launch-your-business/register-your-business",
+          "sourceLabel": "U.S. Small Business Administration"
+        },
+        {
+          "value": "Multi-state operations often trigger registration, withholding, or nexus rules — confirm with official state agencies.",
+          "sourceUrl": "https://www.irs.gov/businesses/small-businesses-self-employed/state-government-websites",
+          "sourceLabel": "IRS — State government websites"
+        }
+      ]
+    },
+    "CT": {
+      "taxPosture": {
+        "value": "Connecticut corporate tax tops out at 7.5% with a 10% surcharge on larger liabilities. Personal income tax is progressive up to 6.99%. Pass-through entity tax (PET) may apply.",
+        "sourceUrl": "https://portal.ct.gov/drs/business/business",
+        "sourceLabel": "Connecticut Department of Revenue Services"
+      },
+      "businessRegistration": {
+        "value": "Register business entities through Connecticut Business Services (Secretary of the State).",
+        "sourceUrl": "https://portal.ct.gov/SOTS/Business-Services/Business-Services",
+        "sourceLabel": "Connecticut Secretary of the State"
+      },
+      "complianceCalendar": {
+        "value": "Annual reports are due to the Secretary of the State; corporate and PET returns follow DRS deadlines.",
+        "sourceUrl": "https://portal.ct.gov/SOTS/Business-Services/All-Business-Services/Annual-Reports",
+        "sourceLabel": "Connecticut SOS — Annual Reports"
+      },
+      "multiStateHeadsUp": [
+        {
+          "value": "Remote workers in Connecticut can create income tax withholding obligations for employers.",
+          "sourceUrl": "https://portal.ct.gov/drs/withholding-tax/withholding-tax",
+          "sourceLabel": "Connecticut DRS — Withholding"
+        },
+        {
+          "value": "Marketplace and remote sellers must register once Connecticut economic nexus thresholds are exceeded.",
+          "sourceUrl": "https://portal.ct.gov/drs/sales-tax/sales-tax",
+          "sourceLabel": "Connecticut DRS — Sales Tax"
+        },
+        {
+          "value": "If you are incorporated elsewhere but transact business here, you may need to foreign-qualify with the Secretary of State.",
+          "sourceUrl": "https://www.sba.gov/business-guide/launch-your-business/register-your-business",
+          "sourceLabel": "U.S. Small Business Administration"
+        },
+        {
+          "value": "Multi-state operations often trigger registration, withholding, or nexus rules — confirm with official state agencies.",
+          "sourceUrl": "https://www.irs.gov/businesses/small-businesses-self-employed/state-government-websites",
+          "sourceLabel": "IRS — State government websites"
+        }
+      ]
+    },
+    "DE": {
+      "taxPosture": {
+        "value": "Delaware has no state sales tax. Corporations pay annual franchise tax (often minimum $175–$400 for small corps using authorized-shares method). No personal income tax on non-resident passive income from DE entities.",
+        "sourceUrl": "https://revenue.delaware.gov/business-tax-forms/delaware-corporate-income-tax/",
+        "sourceLabel": "Delaware Division of Revenue"
+      },
+      "businessRegistration": {
+        "value": "Delaware is a common incorporation domicile — file through the Division of Corporations.",
+        "sourceUrl": "https://corp.delaware.gov/",
+        "sourceLabel": "Delaware Division of Corporations"
+      },
+      "complianceCalendar": {
+        "value": "Annual franchise tax and annual report are due March 1 for corporations; LLCs pay $300 annual tax due June 1.",
+        "sourceUrl": "https://corp.delaware.gov/paytaxes/",
+        "sourceLabel": "Delaware Division of Corporations — Franchise Tax"
+      },
+      "multiStateHeadsUp": [
+        {
+          "value": "Incorporating in Delaware does not exempt you from registering in states where you operate (foreign qualification).",
+          "sourceUrl": "https://corp.delaware.gov/howtoform/",
+          "sourceLabel": "Delaware Division of Corporations"
+        },
+        {
+          "value": "Delaware employers must register for withholding and unemployment insurance.",
+          "sourceUrl": "https://revenue.delaware.gov/business-tax-forms/withholding-tax/",
+          "sourceLabel": "Delaware Division of Revenue — Withholding"
+        },
+        {
+          "value": "If you are incorporated elsewhere but transact business here, you may need to foreign-qualify with the Secretary of State.",
+          "sourceUrl": "https://www.sba.gov/business-guide/launch-your-business/register-your-business",
+          "sourceLabel": "U.S. Small Business Administration"
+        },
+        {
+          "value": "Multi-state operations often trigger registration, withholding, or nexus rules — confirm with official state agencies.",
+          "sourceUrl": "https://www.irs.gov/businesses/small-businesses-self-employed/state-government-websites",
+          "sourceLabel": "IRS — State government websites"
+        }
+      ]
+    },
+    "FL": {
+      "taxPosture": {
+        "value": "Florida has no personal income tax. C-corporations pay 5.5% corporate income tax (with $50,000 exemption). Sales tax is 6% plus local surtax in many counties.",
+        "sourceUrl": "https://floridarevenue.com/taxes/taxesfees/Pages/corporate.aspx",
+        "sourceLabel": "Florida Department of Revenue"
+      },
+      "businessRegistration": {
+        "value": "Register entities through Sunbiz (Florida Division of Corporations).",
+        "sourceUrl": "https://dos.fl.gov/sunbiz/",
+        "sourceLabel": "Florida Sunbiz"
+      },
+      "complianceCalendar": {
+        "value": "Annual reports are due May 1 for most entities; late fees apply. Corporate income tax returns follow separate DOR deadlines.",
+        "sourceUrl": "https://dos.fl.gov/sunbiz/manage-business/efile/annual-report/",
+        "sourceLabel": "Florida Sunbiz — Annual Report"
+      },
+      "multiStateHeadsUp": [
+        {
+          "value": "Remote sellers and marketplace facilitators must collect Florida sales tax once economic nexus thresholds are met.",
+          "sourceUrl": "https://floridarevenue.com/taxes/taxesfees/Pages/remote_seller.aspx",
+          "sourceLabel": "Florida DOR — Remote Seller"
+        },
+        {
+          "value": "Employers with Florida workers register for reemployment (unemployment) tax and new hire reporting.",
+          "sourceUrl": "https://floridarevenue.com/taxes/taxesfees/Pages/reemployment.aspx",
+          "sourceLabel": "Florida DOR — Reemployment Tax"
+        },
+        {
+          "value": "If you are incorporated elsewhere but transact business here, you may need to foreign-qualify with the Secretary of State.",
+          "sourceUrl": "https://www.sba.gov/business-guide/launch-your-business/register-your-business",
+          "sourceLabel": "U.S. Small Business Administration"
+        },
+        {
+          "value": "Multi-state operations often trigger registration, withholding, or nexus rules — confirm with official state agencies.",
+          "sourceUrl": "https://www.irs.gov/businesses/small-businesses-self-employed/state-government-websites",
+          "sourceLabel": "IRS — State government websites"
+        }
+      ]
+    },
+    "GA": {
+      "taxPosture": {
+        "value": "Georgia corporate income tax is 5.75%. Personal income tax is a flat 5.49% (2025). Net worth tax applies to many corporations.",
+        "sourceUrl": "https://dor.georgia.gov/business-taxes",
+        "sourceLabel": "Georgia Department of Revenue"
+      },
+      "businessRegistration": {
+        "value": "Form and maintain entities through the Georgia Corporations Division.",
+        "sourceUrl": "https://sos.ga.gov/corporations-division",
+        "sourceLabel": "Georgia Secretary of State — Corporations"
+      },
+      "complianceCalendar": {
+        "value": "Annual registrations are due April 1 between Jan 1 and Apr 1 each year; corporate net worth tax returns have separate deadlines.",
+        "sourceUrl": "https://sos.ga.gov/corporations-division/corporations/annual-registration",
+        "sourceLabel": "Georgia SOS — Annual Registration"
+      },
+      "multiStateHeadsUp": [
+        {
+          "value": "Out-of-state vendors may owe Georgia sales tax once economic nexus thresholds are exceeded.",
+          "sourceUrl": "https://dor.georgia.gov/taxes/sales-use-tax",
+          "sourceLabel": "Georgia DOR — Sales & Use Tax"
+        },
+        {
+          "value": "Georgia employers must withhold state income tax and register for unemployment insurance.",
+          "sourceUrl": "https://dor.georgia.gov/taxes/withholding-tax-employers",
+          "sourceLabel": "Georgia DOR — Withholding"
+        },
+        {
+          "value": "If you are incorporated elsewhere but transact business here, you may need to foreign-qualify with the Secretary of State.",
+          "sourceUrl": "https://www.sba.gov/business-guide/launch-your-business/register-your-business",
+          "sourceLabel": "U.S. Small Business Administration"
+        },
+        {
+          "value": "Multi-state operations often trigger registration, withholding, or nexus rules — confirm with official state agencies.",
+          "sourceUrl": "https://www.irs.gov/businesses/small-businesses-self-employed/state-government-websites",
+          "sourceLabel": "IRS — State government websites"
+        }
+      ]
+    },
+    "HI": {
+      "taxPosture": {
+        "value": "Hawaii uses the General Excise Tax (GET) on gross receipts (not a traditional sales tax). Corporate income tax rates range up to 6.4%; personal income tax is progressive up to 11%.",
+        "sourceUrl": "https://tax.hawaii.gov/geninfo/get/",
+        "sourceLabel": "Hawaii Department of Taxation — GET"
+      },
+      "businessRegistration": {
+        "value": "Register businesses through the Hawaii Business Registration Division.",
+        "sourceUrl": "https://cca.hawaii.gov/breg/",
+        "sourceLabel": "Hawaii Business Registration"
+      },
+      "complianceCalendar": {
+        "value": "Annual reports and business registrations renew through the Business Registration Division; GET returns are filed separately.",
+        "sourceUrl": "https://cca.hawaii.gov/breg/registration/",
+        "sourceLabel": "Hawaii Business Registration — Renewals"
+      },
+      "multiStateHeadsUp": [
+        {
+          "value": "Remote sellers into Hawaii may have GET obligations once activity thresholds are met.",
+          "sourceUrl": "https://tax.hawaii.gov/geninfo/get/marketplace-facilitators/",
+          "sourceLabel": "Hawaii DOT — Marketplace Facilitators"
+        },
+        {
+          "value": "Employers with Hawaii workers must register for withholding and unemployment insurance.",
+          "sourceUrl": "https://labor.hawaii.gov/ui/employer-resources/",
+          "sourceLabel": "Hawaii DLIR — UI for Employers"
+        },
+        {
+          "value": "If you are incorporated elsewhere but transact business here, you may need to foreign-qualify with the Secretary of State.",
+          "sourceUrl": "https://www.sba.gov/business-guide/launch-your-business/register-your-business",
+          "sourceLabel": "U.S. Small Business Administration"
+        },
+        {
+          "value": "Multi-state operations often trigger registration, withholding, or nexus rules — confirm with official state agencies.",
+          "sourceUrl": "https://www.irs.gov/businesses/small-businesses-self-employed/state-government-websites",
+          "sourceLabel": "IRS — State government websites"
+        }
+      ]
+    },
+    "ID": {
+      "taxPosture": {
+        "value": "Idaho corporate income tax is a flat 5.8%. Personal income tax is a flat 5.695% (2025). No franchise tax on most small entities.",
+        "sourceUrl": "https://tax.idaho.gov/taxes/business/",
+        "sourceLabel": "Idaho State Tax Commission"
+      },
+      "businessRegistration": {
+        "value": "File entity formations and annual reports with the Idaho Secretary of State.",
+        "sourceUrl": "https://sos.idaho.gov/business-services/",
+        "sourceLabel": "Idaho Secretary of State"
+      },
+      "complianceCalendar": {
+        "value": "Annual reports are due by the end of the anniversary month of formation; income tax returns follow separate deadlines.",
+        "sourceUrl": "https://sos.idaho.gov/annual-report/",
+        "sourceLabel": "Idaho SOS — Annual Report"
+      },
+      "multiStateHeadsUp": [
+        {
+          "value": "Remote sellers must collect Idaho sales tax once economic nexus thresholds are exceeded.",
+          "sourceUrl": "https://tax.idaho.gov/taxes/sales-use/remote-sellers/",
+          "sourceLabel": "Idaho Tax Commission — Remote Sellers"
+        },
+        {
+          "value": "Idaho employers register for withholding and unemployment insurance when hiring in-state workers.",
+          "sourceUrl": "https://tax.idaho.gov/taxes/income-tax/withholding/",
+          "sourceLabel": "Idaho Tax Commission — Withholding"
+        },
+        {
+          "value": "If you are incorporated elsewhere but transact business here, you may need to foreign-qualify with the Secretary of State.",
+          "sourceUrl": "https://www.sba.gov/business-guide/launch-your-business/register-your-business",
+          "sourceLabel": "U.S. Small Business Administration"
+        },
+        {
+          "value": "Multi-state operations often trigger registration, withholding, or nexus rules — confirm with official state agencies.",
+          "sourceUrl": "https://www.irs.gov/businesses/small-businesses-self-employed/state-government-websites",
+          "sourceLabel": "IRS — State government websites"
+        }
+      ]
+    },
+    "IL": {
+      "taxPosture": {
+        "value": "Illinois corporate income tax is 7% plus 2.5% Personal Property Replacement Tax (9.5% combined for C-corps). Personal income tax is a flat 4.95%.",
+        "sourceUrl": "https://tax.illinois.gov/research/taxinformation/income.html",
+        "sourceLabel": "Illinois Department of Revenue"
+      },
+      "businessRegistration": {
+        "value": "Register entities through the Illinois Secretary of State Business Services.",
+        "sourceUrl": "https://www.ilsos.gov/departments/business_services/",
+        "sourceLabel": "Illinois Secretary of State"
+      },
+      "complianceCalendar": {
+        "value": "Annual reports are due before the first day of the anniversary month; franchise taxes may apply to corporations.",
+        "sourceUrl": "https://www.ilsos.gov/departments/business_services/annual_reports.html",
+        "sourceLabel": "Illinois SOS — Annual Reports"
+      },
+      "multiStateHeadsUp": [
+        {
+          "value": "Illinois requires remote sellers and marketplace facilitators to collect Retailers' Occupation Tax once nexus exists.",
+          "sourceUrl": "https://tax.illinois.gov/research/taxinformation/sales/rot.html",
+          "sourceLabel": "Illinois DOR — Remote Sellers"
+        },
+        {
+          "value": "Employers with Illinois workers must register for withholding and unemployment insurance.",
+          "sourceUrl": "https://tax.illinois.gov/individuals/withholding.html",
+          "sourceLabel": "Illinois DOR — Withholding"
+        },
+        {
+          "value": "If you are incorporated elsewhere but transact business here, you may need to foreign-qualify with the Secretary of State.",
+          "sourceUrl": "https://www.sba.gov/business-guide/launch-your-business/register-your-business",
+          "sourceLabel": "U.S. Small Business Administration"
+        },
+        {
+          "value": "Multi-state operations often trigger registration, withholding, or nexus rules — confirm with official state agencies.",
+          "sourceUrl": "https://www.irs.gov/businesses/small-businesses-self-employed/state-government-websites",
+          "sourceLabel": "IRS — State government websites"
+        }
+      ]
+    },
+    "IN": {
+      "taxPosture": {
+        "value": "Indiana corporate tax rate is 4.9%. Personal income tax is a flat 3.0% (2025). County income taxes may apply to individuals.",
+        "sourceUrl": "https://www.in.gov/dor/business-tax/corporate-income-tax/",
+        "sourceLabel": "Indiana Department of Revenue"
+      },
+      "businessRegistration": {
+        "value": "Form entities and file business reports through the Indiana Secretary of State.",
+        "sourceUrl": "https://www.in.gov/sos/business/",
+        "sourceLabel": "Indiana Secretary of State"
+      },
+      "complianceCalendar": {
+        "value": "Business entity reports are due every two years; corporate income tax returns follow DOR schedules.",
+        "sourceUrl": "https://www.in.gov/sos/business/business-filings/",
+        "sourceLabel": "Indiana SOS — Business Filings"
+      },
+      "multiStateHeadsUp": [
+        {
+          "value": "Remote sellers must register for Indiana sales tax once economic nexus thresholds are met.",
+          "sourceUrl": "https://www.in.gov/dor/business-tax/sales-tax/",
+          "sourceLabel": "Indiana DOR — Sales Tax"
+        },
+        {
+          "value": "Indiana employers must withhold state income tax and pay unemployment insurance.",
+          "sourceUrl": "https://www.in.gov/dor/business-tax/withholding-tax/",
+          "sourceLabel": "Indiana DOR — Withholding"
+        },
+        {
+          "value": "If you are incorporated elsewhere but transact business here, you may need to foreign-qualify with the Secretary of State.",
+          "sourceUrl": "https://www.sba.gov/business-guide/launch-your-business/register-your-business",
+          "sourceLabel": "U.S. Small Business Administration"
+        },
+        {
+          "value": "Multi-state operations often trigger registration, withholding, or nexus rules — confirm with official state agencies.",
+          "sourceUrl": "https://www.irs.gov/businesses/small-businesses-self-employed/state-government-websites",
+          "sourceLabel": "IRS — State government websites"
+        }
+      ]
+    },
+    "IA": {
+      "taxPosture": {
+        "value": "Iowa corporate income tax tops out at 7.1% (graduated). Personal income tax is a flat 3.8% (2025). Pass-through income generally flows to owners.",
+        "sourceUrl": "https://tax.iowa.gov/businesses",
+        "sourceLabel": "Iowa Department of Revenue"
+      },
+      "businessRegistration": {
+        "value": "Register business entities through the Iowa Secretary of State.",
+        "sourceUrl": "https://sos.iowa.gov/business/",
+        "sourceLabel": "Iowa Secretary of State"
+      },
+      "complianceCalendar": {
+        "value": "Biennial reports are due in odd-numbered years by April 1 for corporations and LLCs.",
+        "sourceUrl": "https://sos.iowa.gov/business/biennial.html",
+        "sourceLabel": "Iowa SOS — Biennial Report"
+      },
+      "multiStateHeadsUp": [
+        {
+          "value": "Marketplace facilitators and remote sellers must collect Iowa sales tax once nexus thresholds are exceeded.",
+          "sourceUrl": "https://tax.iowa.gov/marketplace-facilitators",
+          "sourceLabel": "Iowa DOR — Marketplace Facilitators"
+        },
+        {
+          "value": "Iowa employers register for withholding and unemployment insurance when hiring in-state workers.",
+          "sourceUrl": "https://tax.iowa.gov/withholding-tax",
+          "sourceLabel": "Iowa DOR — Withholding"
+        },
+        {
+          "value": "If you are incorporated elsewhere but transact business here, you may need to foreign-qualify with the Secretary of State.",
+          "sourceUrl": "https://www.sba.gov/business-guide/launch-your-business/register-your-business",
+          "sourceLabel": "U.S. Small Business Administration"
+        },
+        {
+          "value": "Multi-state operations often trigger registration, withholding, or nexus rules — confirm with official state agencies.",
+          "sourceUrl": "https://www.irs.gov/businesses/small-businesses-self-employed/state-government-websites",
+          "sourceLabel": "IRS — State government websites"
+        }
+      ]
+    },
+    "KS": {
+      "taxPosture": {
+        "value": "Kansas corporate income tax tops out at 7.0%. Personal income tax uses progressive rates up to 5.58%. Pass-through entities may elect entity-level tax.",
+        "sourceUrl": "https://www.ksrevenue.gov/businesstax.html",
+        "sourceLabel": "Kansas Department of Revenue"
+      },
+      "businessRegistration": {
+        "value": "Form entities and file annual reports with the Kansas Secretary of State.",
+        "sourceUrl": "https://www.sos.ks.gov/business/business.html",
+        "sourceLabel": "Kansas Secretary of State"
+      },
+      "complianceCalendar": {
+        "value": "Annual reports are due by the 15th day of the fourth month after fiscal year end for corporations.",
+        "sourceUrl": "https://www.sos.ks.gov/business/annual_report.html",
+        "sourceLabel": "Kansas SOS — Annual Report"
+      },
+      "multiStateHeadsUp": [
+        {
+          "value": "Remote sellers must collect Kansas sales tax once economic nexus thresholds are exceeded.",
+          "sourceUrl": "https://www.ksrevenue.gov/bustaxtypessales.html",
+          "sourceLabel": "Kansas DOR — Sales Tax"
+        },
+        {
+          "value": "Kansas employers must register for withholding and unemployment insurance.",
+          "sourceUrl": "https://www.ksrevenue.gov/bustaxtypeswithhold.html",
+          "sourceLabel": "Kansas DOR — Withholding"
+        },
+        {
+          "value": "If you are incorporated elsewhere but transact business here, you may need to foreign-qualify with the Secretary of State.",
+          "sourceUrl": "https://www.sba.gov/business-guide/launch-your-business/register-your-business",
+          "sourceLabel": "U.S. Small Business Administration"
+        },
+        {
+          "value": "Multi-state operations often trigger registration, withholding, or nexus rules — confirm with official state agencies.",
+          "sourceUrl": "https://www.irs.gov/businesses/small-businesses-self-employed/state-government-websites",
+          "sourceLabel": "IRS — State government websites"
+        }
+      ]
+    },
+    "KY": {
+      "taxPosture": {
+        "value": "Kentucky taxes corporate income at 5% (LLC entity-level tax also 5% on Kentucky gross receipts/profits). Personal income tax is a flat 4.0% (2025).",
+        "sourceUrl": "https://revenue.ky.gov/Business/Pages/Corporation-Income-Tax.aspx",
+        "sourceLabel": "Kentucky Department of Revenue"
+      },
+      "businessRegistration": {
+        "value": "Register entities through the Kentucky Secretary of State.",
+        "sourceUrl": "https://web.sos.ky.gov/ftsearch/",
+        "sourceLabel": "Kentucky Secretary of State"
+      },
+      "complianceCalendar": {
+        "value": "Annual reports are due between Jan 1 and Jun 30 each year; LLET (limited liability entity tax) may apply.",
+        "sourceUrl": "https://web.sos.ky.gov/annualreport/",
+        "sourceLabel": "Kentucky SOS — Annual Report"
+      },
+      "multiStateHeadsUp": [
+        {
+          "value": "Remote sellers must collect Kentucky sales tax once economic nexus thresholds are met.",
+          "sourceUrl": "https://revenue.ky.gov/Business/Pages/Sales-Use-Tax.aspx",
+          "sourceLabel": "Kentucky DOR — Sales & Use Tax"
+        },
+        {
+          "value": "Kentucky employers register for withholding and unemployment insurance.",
+          "sourceUrl": "https://revenue.ky.gov/Employer/Pages/Employer-Withholding.aspx",
+          "sourceLabel": "Kentucky DOR — Withholding"
+        },
+        {
+          "value": "If you are incorporated elsewhere but transact business here, you may need to foreign-qualify with the Secretary of State.",
+          "sourceUrl": "https://www.sba.gov/business-guide/launch-your-business/register-your-business",
+          "sourceLabel": "U.S. Small Business Administration"
+        },
+        {
+          "value": "Multi-state operations often trigger registration, withholding, or nexus rules — confirm with official state agencies.",
+          "sourceUrl": "https://www.irs.gov/businesses/small-businesses-self-employed/state-government-websites",
+          "sourceLabel": "IRS — State government websites"
+        }
+      ]
+    },
+    "LA": {
+      "taxPosture": {
+        "value": "Louisiana corporate franchise and income taxes apply to most corporations; personal income tax is progressive up to 4.25%. Sales tax combines state and local rates.",
+        "sourceUrl": "https://revenue.louisiana.gov/Businesses",
+        "sourceLabel": "Louisiana Department of Revenue"
+      },
+      "businessRegistration": {
+        "value": "Form entities through the Louisiana Secretary of State Commercial Division.",
+        "sourceUrl": "https://www.sos.la.gov/BusinessServices/Pages/default.aspx",
+        "sourceLabel": "Louisiana Secretary of State"
+      },
+      "complianceCalendar": {
+        "value": "Annual reports are due on the anniversary date of formation; franchise tax returns follow separate LDR deadlines.",
+        "sourceUrl": "https://www.sos.la.gov/BusinessServices/Pages/AnnualReports.aspx",
+        "sourceLabel": "Louisiana SOS — Annual Reports"
+      },
+      "multiStateHeadsUp": [
+        {
+          "value": "Louisiana remote seller rules require sales tax collection once economic nexus thresholds are exceeded.",
+          "sourceUrl": "https://revenue.louisiana.gov/Businesses/Remote-Sellers",
+          "sourceLabel": "Louisiana DOR — Remote Sellers"
+        },
+        {
+          "value": "Employers with Louisiana workers must register for withholding and unemployment insurance.",
+          "sourceUrl": "https://revenue.louisiana.gov/Businesses/Withholding",
+          "sourceLabel": "Louisiana DOR — Withholding"
+        },
+        {
+          "value": "If you are incorporated elsewhere but transact business here, you may need to foreign-qualify with the Secretary of State.",
+          "sourceUrl": "https://www.sba.gov/business-guide/launch-your-business/register-your-business",
+          "sourceLabel": "U.S. Small Business Administration"
+        },
+        {
+          "value": "Multi-state operations often trigger registration, withholding, or nexus rules — confirm with official state agencies.",
+          "sourceUrl": "https://www.irs.gov/businesses/small-businesses-self-employed/state-government-websites",
+          "sourceLabel": "IRS — State government websites"
+        }
+      ]
+    },
+    "ME": {
+      "taxPosture": {
+        "value": "Maine corporate income tax tops out at 8.2%. Personal income tax is progressive up to 7.15%. Franchise tax may apply to C-corps with Maine property/payroll.",
+        "sourceUrl": "https://www.maine.gov/revenue/taxes/income-estate-tax/corporate-income-tax",
+        "sourceLabel": "Maine Revenue Services"
+      },
+      "businessRegistration": {
+        "value": "Register entities through the Maine Secretary of State Corporations Division.",
+        "sourceUrl": "https://www.maine.gov/sos/corporations-commissions",
+        "sourceLabel": "Maine Secretary of State"
+      },
+      "complianceCalendar": {
+        "value": "Annual reports are due Jun 1 each year; corporate income tax returns follow MRS deadlines.",
+        "sourceUrl": "https://www.maine.gov/sos/corporations-commissions/annual-reports",
+        "sourceLabel": "Maine SOS — Annual Reports"
+      },
+      "multiStateHeadsUp": [
+        {
+          "value": "Remote sellers must collect Maine sales tax once economic nexus thresholds are exceeded.",
+          "sourceUrl": "https://www.maine.gov/revenue/taxes/sales-use-service-provider-tax",
+          "sourceLabel": "Maine Revenue Services — Sales Tax"
+        },
+        {
+          "value": "Maine employers register for withholding and unemployment insurance.",
+          "sourceUrl": "https://www.maine.gov/revenue/taxes/income-estate-tax/employer-withholding",
+          "sourceLabel": "Maine Revenue Services — Withholding"
+        },
+        {
+          "value": "If you are incorporated elsewhere but transact business here, you may need to foreign-qualify with the Secretary of State.",
+          "sourceUrl": "https://www.sba.gov/business-guide/launch-your-business/register-your-business",
+          "sourceLabel": "U.S. Small Business Administration"
+        },
+        {
+          "value": "Multi-state operations often trigger registration, withholding, or nexus rules — confirm with official state agencies.",
+          "sourceUrl": "https://www.irs.gov/businesses/small-businesses-self-employed/state-government-websites",
+          "sourceLabel": "IRS — State government websites"
+        }
+      ]
+    },
+    "MD": {
+      "taxPosture": {
+        "value": "Maryland corporate income tax is 8.25%. Personal income tax is progressive up to 5.75% (plus county taxes). Pass-through entity tax election available.",
+        "sourceUrl": "https://www.marylandtaxes.gov/business/index.php",
+        "sourceLabel": "Comptroller of Maryland"
+      },
+      "businessRegistration": {
+        "value": "Register entities through Maryland Business Express (State Department of Assessments and Taxation).",
+        "sourceUrl": "https://egov.maryland.gov/BusinessExpress/",
+        "sourceLabel": "Maryland Business Express"
+      },
+      "complianceCalendar": {
+        "value": "Annual reports and personal property returns are due Apr 15 each year for most entities.",
+        "sourceUrl": "https://egov.maryland.gov/BusinessExpress/AnnualReport",
+        "sourceLabel": "Maryland Business Express — Annual Report"
+      },
+      "multiStateHeadsUp": [
+        {
+          "value": "Remote sellers must collect Maryland sales and use tax once economic nexus thresholds are met.",
+          "sourceUrl": "https://www.marylandtaxes.gov/business/sales-and-use-tax/index.php",
+          "sourceLabel": "Comptroller of Maryland — Sales & Use"
+        },
+        {
+          "value": "Maryland employers must register for withholding and unemployment insurance.",
+          "sourceUrl": "https://www.marylandtaxes.gov/business/withholding/index.php",
+          "sourceLabel": "Comptroller of Maryland — Withholding"
+        },
+        {
+          "value": "If you are incorporated elsewhere but transact business here, you may need to foreign-qualify with the Secretary of State.",
+          "sourceUrl": "https://www.sba.gov/business-guide/launch-your-business/register-your-business",
+          "sourceLabel": "U.S. Small Business Administration"
+        },
+        {
+          "value": "Multi-state operations often trigger registration, withholding, or nexus rules — confirm with official state agencies.",
+          "sourceUrl": "https://www.irs.gov/businesses/small-businesses-self-employed/state-government-websites",
+          "sourceLabel": "IRS — State government websites"
+        }
+      ]
+    },
+    "MA": {
+      "taxPosture": {
+        "value": "Massachusetts corporate excise tax combines 8% income tax with a property/net-worth component (minimum $456 for many corporations). Personal income tax is a flat 5.0%.",
+        "sourceUrl": "https://www.mass.gov/guides/corporate-excise-tax-overview",
+        "sourceLabel": "Massachusetts DOR — Corporate Excise"
+      },
+      "businessRegistration": {
+        "value": "Form entities through the Massachusetts Corporations Division.",
+        "sourceUrl": "https://www.sec.state.ma.us/divisions/corporations/corporations.htm",
+        "sourceLabel": "Massachusetts Corporations Division"
+      },
+      "complianceCalendar": {
+        "value": "Annual reports are due on the anniversary of formation; corporate excise returns follow DOR deadlines.",
+        "sourceUrl": "https://www.sec.state.ma.us/divisions/corporations/general/annual-reports/annual-reports.htm",
+        "sourceLabel": "Massachusetts Corporations — Annual Reports"
+      },
+      "multiStateHeadsUp": [
+        {
+          "value": "Massachusetts requires remote vendors and marketplace facilitators to collect sales tax once nexus exists.",
+          "sourceUrl": "https://www.mass.gov/guides/sales-and-use-tax",
+          "sourceLabel": "Massachusetts DOR — Sales & Use Tax"
+        },
+        {
+          "value": "Employers with Massachusetts workers must register for withholding and unemployment insurance.",
+          "sourceUrl": "https://www.mass.gov/guides/withholding-tax",
+          "sourceLabel": "Massachusetts DOR — Withholding"
+        },
+        {
+          "value": "If you are incorporated elsewhere but transact business here, you may need to foreign-qualify with the Secretary of State.",
+          "sourceUrl": "https://www.sba.gov/business-guide/launch-your-business/register-your-business",
+          "sourceLabel": "U.S. Small Business Administration"
+        },
+        {
+          "value": "Multi-state operations often trigger registration, withholding, or nexus rules — confirm with official state agencies.",
+          "sourceUrl": "https://www.irs.gov/businesses/small-businesses-self-employed/state-government-websites",
+          "sourceLabel": "IRS — State government websites"
+        }
+      ]
+    },
+    "MI": {
+      "taxPosture": {
+        "value": "Michigan corporate income tax is 6%. Personal income tax is a flat 4.25%. Flow-through entities generally pass income to owners.",
+        "sourceUrl": "https://www.michigan.gov/taxes/business-taxes/corporate-income-tax",
+        "sourceLabel": "Michigan Department of Treasury"
+      },
+      "businessRegistration": {
+        "value": "Register entities through Michigan LARA Corporations Division.",
+        "sourceUrl": "https://www.michigan.gov/lara/bureau-services/businesses",
+        "sourceLabel": "Michigan LARA — Corporations"
+      },
+      "complianceCalendar": {
+        "value": "Annual statements are due May 15 for corporations and Feb 15 for LLCs; CIT returns follow separate deadlines.",
+        "sourceUrl": "https://www.michigan.gov/lara/bureau-services/businesses/annual-statements",
+        "sourceLabel": "Michigan LARA — Annual Statements"
+      },
+      "multiStateHeadsUp": [
+        {
+          "value": "Remote sellers and marketplace facilitators must collect Michigan sales tax once nexus thresholds are exceeded.",
+          "sourceUrl": "https://www.michigan.gov/taxes/business-taxes/sales-use-tax",
+          "sourceLabel": "Michigan Treasury — Sales & Use Tax"
+        },
+        {
+          "value": "Michigan employers register for withholding and unemployment insurance.",
+          "sourceUrl": "https://www.michigan.gov/taxes/business-taxes/withholding",
+          "sourceLabel": "Michigan Treasury — Withholding"
+        },
+        {
+          "value": "If you are incorporated elsewhere but transact business here, you may need to foreign-qualify with the Secretary of State.",
+          "sourceUrl": "https://www.sba.gov/business-guide/launch-your-business/register-your-business",
+          "sourceLabel": "U.S. Small Business Administration"
+        },
+        {
+          "value": "Multi-state operations often trigger registration, withholding, or nexus rules — confirm with official state agencies.",
+          "sourceUrl": "https://www.irs.gov/businesses/small-businesses-self-employed/state-government-websites",
+          "sourceLabel": "IRS — State government websites"
+        }
+      ]
+    },
+    "MN": {
+      "taxPosture": {
+        "value": "Minnesota corporate franchise tax rate is 9.8%. Personal income tax is progressive up to 9.85%. Pass-through entity tax election available.",
+        "sourceUrl": "https://www.revenue.state.mn.us/businesses",
+        "sourceLabel": "Minnesota Department of Revenue"
+      },
+      "businessRegistration": {
+        "value": "Register entities through the Minnesota Secretary of State Business Services.",
+        "sourceUrl": "https://www.sos.mn.gov/business-liens/",
+        "sourceLabel": "Minnesota Secretary of State"
+      },
+      "complianceCalendar": {
+        "value": "Annual renewals are due Dec 31 each year for corporations and LLCs.",
+        "sourceUrl": "https://www.sos.mn.gov/business-liens/business-forms-fees/annual-renewal/",
+        "sourceLabel": "Minnesota SOS — Annual Renewal"
+      },
+      "multiStateHeadsUp": [
+        {
+          "value": "Remote sellers must collect Minnesota sales tax once economic nexus thresholds are exceeded.",
+          "sourceUrl": "https://www.revenue.state.mn.us/sales-and-use-tax",
+          "sourceLabel": "Minnesota DOR — Sales & Use Tax"
+        },
+        {
+          "value": "Minnesota employers must register for withholding and unemployment insurance.",
+          "sourceUrl": "https://www.revenue.state.mn.us/withholding-tax",
+          "sourceLabel": "Minnesota DOR — Withholding"
+        },
+        {
+          "value": "If you are incorporated elsewhere but transact business here, you may need to foreign-qualify with the Secretary of State.",
+          "sourceUrl": "https://www.sba.gov/business-guide/launch-your-business/register-your-business",
+          "sourceLabel": "U.S. Small Business Administration"
+        },
+        {
+          "value": "Multi-state operations often trigger registration, withholding, or nexus rules — confirm with official state agencies.",
+          "sourceUrl": "https://www.irs.gov/businesses/small-businesses-self-employed/state-government-websites",
+          "sourceLabel": "IRS — State government websites"
+        }
+      ]
+    },
+    "MS": {
+      "taxPosture": {
+        "value": "Mississippi corporate income tax tops out at 5%. Personal income tax is a flat 4.7% (2025). Franchise tax applies to C-corps and S-corps with MS capital.",
+        "sourceUrl": "https://www.dor.ms.gov/business/corporate-income-and-franchise-tax",
+        "sourceLabel": "Mississippi Department of Revenue"
+      },
+      "businessRegistration": {
+        "value": "Register entities through the Mississippi Secretary of State Business Services.",
+        "sourceUrl": "https://www.sos.ms.gov/business-services",
+        "sourceLabel": "Mississippi Secretary of State"
+      },
+      "complianceCalendar": {
+        "value": "Annual reports are due Apr 15 each year; corporate/franchise tax returns follow DOR schedules.",
+        "sourceUrl": "https://www.sos.ms.gov/business-services/annual-report",
+        "sourceLabel": "Mississippi SOS — Annual Report"
+      },
+      "multiStateHeadsUp": [
+        {
+          "value": "Remote sellers must collect Mississippi sales tax once economic nexus thresholds are met.",
+          "sourceUrl": "https://www.dor.ms.gov/business/sales-tax",
+          "sourceLabel": "Mississippi DOR — Sales Tax"
+        },
+        {
+          "value": "Mississippi employers register for withholding and unemployment insurance.",
+          "sourceUrl": "https://www.dor.ms.gov/individual/withholding-tax",
+          "sourceLabel": "Mississippi DOR — Withholding"
+        },
+        {
+          "value": "If you are incorporated elsewhere but transact business here, you may need to foreign-qualify with the Secretary of State.",
+          "sourceUrl": "https://www.sba.gov/business-guide/launch-your-business/register-your-business",
+          "sourceLabel": "U.S. Small Business Administration"
+        },
+        {
+          "value": "Multi-state operations often trigger registration, withholding, or nexus rules — confirm with official state agencies.",
+          "sourceUrl": "https://www.irs.gov/businesses/small-businesses-self-employed/state-government-websites",
+          "sourceLabel": "IRS — State government websites"
+        }
+      ]
+    },
+    "MO": {
+      "taxPosture": {
+        "value": "Missouri corporate income tax is 4%. Personal income tax tops out at 4.7% (2025). No statewide franchise tax for most LLCs.",
+        "sourceUrl": "https://dor.mo.gov/business/corporate/",
+        "sourceLabel": "Missouri Department of Revenue"
+      },
+      "businessRegistration": {
+        "value": "Register entities through the Missouri Secretary of State Business Services.",
+        "sourceUrl": "https://www.sos.mo.gov/business",
+        "sourceLabel": "Missouri Secretary of State"
+      },
+      "complianceCalendar": {
+        "value": "Annual registration reports are due by the end of the registration anniversary month.",
+        "sourceUrl": "https://www.sos.mo.gov/business/corporations/annual-registration",
+        "sourceLabel": "Missouri SOS — Annual Registration"
+      },
+      "multiStateHeadsUp": [
+        {
+          "value": "Remote sellers must collect Missouri use tax once economic nexus thresholds are exceeded.",
+          "sourceUrl": "https://dor.mo.gov/business/sales/",
+          "sourceLabel": "Missouri DOR — Sales & Use Tax"
+        },
+        {
+          "value": "Missouri employers must register for withholding and unemployment insurance.",
+          "sourceUrl": "https://dor.mo.gov/business/withhold/",
+          "sourceLabel": "Missouri DOR — Withholding"
+        },
+        {
+          "value": "If you are incorporated elsewhere but transact business here, you may need to foreign-qualify with the Secretary of State.",
+          "sourceUrl": "https://www.sba.gov/business-guide/launch-your-business/register-your-business",
+          "sourceLabel": "U.S. Small Business Administration"
+        },
+        {
+          "value": "Multi-state operations often trigger registration, withholding, or nexus rules — confirm with official state agencies.",
+          "sourceUrl": "https://www.irs.gov/businesses/small-businesses-self-employed/state-government-websites",
+          "sourceLabel": "IRS — State government websites"
+        }
+      ]
+    },
+    "MT": {
+      "taxPosture": {
+        "value": "Montana has no statewide sales tax. Corporate income tax tops out at 6.75%; personal income tax is progressive up to 5.9%.",
+        "sourceUrl": "https://mtrevenue.gov/taxes/business/",
+        "sourceLabel": "Montana Department of Revenue"
+      },
+      "businessRegistration": {
+        "value": "Register entities through the Montana Secretary of State Business Services.",
+        "sourceUrl": "https://sosmt.gov/business/",
+        "sourceLabel": "Montana Secretary of State"
+      },
+      "complianceCalendar": {
+        "value": "Annual reports are due Apr 15 each year; corporate income tax returns follow DOR deadlines.",
+        "sourceUrl": "https://sosmt.gov/business/annual-report/",
+        "sourceLabel": "Montana SOS — Annual Report"
+      },
+      "multiStateHeadsUp": [
+        {
+          "value": "Montana employers register for withholding and unemployment insurance when hiring in-state workers.",
+          "sourceUrl": "https://mtrevenue.gov/taxes/business/withholding-tax/",
+          "sourceLabel": "Montana DOR — Withholding"
+        },
+        {
+          "value": "Resort and local option taxes apply in some Montana communities despite no statewide sales tax.",
+          "sourceUrl": "https://mtrevenue.gov/taxes/general-sales-tax/",
+          "sourceLabel": "Montana DOR — Sales Tax Overview"
+        },
+        {
+          "value": "If you are incorporated elsewhere but transact business here, you may need to foreign-qualify with the Secretary of State.",
+          "sourceUrl": "https://www.sba.gov/business-guide/launch-your-business/register-your-business",
+          "sourceLabel": "U.S. Small Business Administration"
+        },
+        {
+          "value": "Multi-state operations often trigger registration, withholding, or nexus rules — confirm with official state agencies.",
+          "sourceUrl": "https://www.irs.gov/businesses/small-businesses-self-employed/state-government-websites",
+          "sourceLabel": "IRS — State government websites"
+        }
+      ]
+    },
+    "NE": {
+      "taxPosture": {
+        "value": "Nebraska corporate income tax tops out at 7.25%. Personal income tax is progressive up to 5.84%.",
+        "sourceUrl": "https://revenue.nebraska.gov/businesses/corporate-income-tax",
+        "sourceLabel": "Nebraska Department of Revenue"
+      },
+      "businessRegistration": {
+        "value": "Register entities through the Nebraska Secretary of State Business Services.",
+        "sourceUrl": "https://www.nebraska.gov/sos/business/index.cgi",
+        "sourceLabel": "Nebraska Secretary of State"
+      },
+      "complianceCalendar": {
+        "value": "Biennial reports are due in even-numbered years by Apr 1 for corporations; LLC reports follow SOS rules.",
+        "sourceUrl": "https://www.nebraska.gov/sos/business/biennial/index.cgi",
+        "sourceLabel": "Nebraska SOS — Biennial Report"
+      },
+      "multiStateHeadsUp": [
+        {
+          "value": "Remote sellers must collect Nebraska sales tax once economic nexus thresholds are exceeded.",
+          "sourceUrl": "https://revenue.nebraska.gov/businesses/sales-and-use-tax",
+          "sourceLabel": "Nebraska DOR — Sales & Use Tax"
+        },
+        {
+          "value": "Nebraska employers register for withholding and unemployment insurance.",
+          "sourceUrl": "https://revenue.nebraska.gov/businesses/income-tax-withholding",
+          "sourceLabel": "Nebraska DOR — Withholding"
+        },
+        {
+          "value": "If you are incorporated elsewhere but transact business here, you may need to foreign-qualify with the Secretary of State.",
+          "sourceUrl": "https://www.sba.gov/business-guide/launch-your-business/register-your-business",
+          "sourceLabel": "U.S. Small Business Administration"
+        },
+        {
+          "value": "Multi-state operations often trigger registration, withholding, or nexus rules — confirm with official state agencies.",
+          "sourceUrl": "https://www.irs.gov/businesses/small-businesses-self-employed/state-government-websites",
+          "sourceLabel": "IRS — State government websites"
+        }
+      ]
+    },
+    "NV": {
+      "taxPosture": {
+        "value": "Nevada has no corporate or personal income tax. The Commerce Tax applies to businesses with Nevada gross revenue exceeding $4 million.",
+        "sourceUrl": "https://tax.nv.gov/business/commerce-tax/",
+        "sourceLabel": "Nevada Department of Taxation — Commerce Tax"
+      },
+      "businessRegistration": {
+        "value": "Register entities through the Nevada Secretary of State SilverFlume portal.",
+        "sourceUrl": "https://www.nvsos.gov/sos/businesses",
+        "sourceLabel": "Nevada Secretary of State"
+      },
+      "complianceCalendar": {
+        "value": "Annual lists and business license renewals are due by the last day of the anniversary month; Commerce Tax returns have separate deadlines.",
+        "sourceUrl": "https://www.nvsos.gov/sos/businesses/annual-lists-and-business-license-renewals",
+        "sourceLabel": "Nevada SOS — Annual Lists"
+      },
+      "multiStateHeadsUp": [
+        {
+          "value": "Nevada employers register for Modified Business Tax and unemployment insurance.",
+          "sourceUrl": "https://tax.nv.gov/business/modified-business-tax/",
+          "sourceLabel": "Nevada Department of Taxation — MBT"
+        },
+        {
+          "value": "High-revenue Nevada operations may owe Commerce Tax even without traditional income tax.",
+          "sourceUrl": "https://tax.nv.gov/business/commerce-tax/frequently-asked-questions/",
+          "sourceLabel": "Nevada Department of Taxation — Commerce Tax FAQ"
+        },
+        {
+          "value": "If you are incorporated elsewhere but transact business here, you may need to foreign-qualify with the Secretary of State.",
+          "sourceUrl": "https://www.sba.gov/business-guide/launch-your-business/register-your-business",
+          "sourceLabel": "U.S. Small Business Administration"
+        },
+        {
+          "value": "Multi-state operations often trigger registration, withholding, or nexus rules — confirm with official state agencies.",
+          "sourceUrl": "https://www.irs.gov/businesses/small-businesses-self-employed/state-government-websites",
+          "sourceLabel": "IRS — State government websites"
+        }
+      ]
+    },
+    "NH": {
+      "taxPosture": {
+        "value": "New Hampshire has no tax on wage income. The Business Profits Tax (BPT) and Business Enterprise Tax (BET) apply to many businesses above filing thresholds.",
+        "sourceUrl": "https://www.revenue.nh.gov/businesses/taxes/business-profits-tax",
+        "sourceLabel": "New Hampshire Department of Revenue Administration"
+      },
+      "businessRegistration": {
+        "value": "Register entities through the New Hampshire Secretary of State Corporations Division.",
+        "sourceUrl": "https://www.sos.nh.gov/corporations",
+        "sourceLabel": "New Hampshire Secretary of State"
+      },
+      "complianceCalendar": {
+        "value": "Annual reports are due Apr 1 each year; BPT/BET returns follow DRA deadlines.",
+        "sourceUrl": "https://www.sos.nh.gov/corporations/annual-report",
+        "sourceLabel": "New Hampshire SOS — Annual Report"
+      },
+      "multiStateHeadsUp": [
+        {
+          "value": "Remote sellers must collect New Hampshire meals and rooms taxes where applicable; no broad sales tax but targeted taxes exist.",
+          "sourceUrl": "https://www.revenue.nh.gov/faq/business-enterprise-tax",
+          "sourceLabel": "New Hampshire DRA — Business Taxes"
+        },
+        {
+          "value": "Employers with New Hampshire workers register for unemployment insurance (no wage income tax withholding).",
+          "sourceUrl": "https://www.nhemploymentsecurity.org/employers/employer-index.asp",
+          "sourceLabel": "NH Employment Security"
+        },
+        {
+          "value": "If you are incorporated elsewhere but transact business here, you may need to foreign-qualify with the Secretary of State.",
+          "sourceUrl": "https://www.sba.gov/business-guide/launch-your-business/register-your-business",
+          "sourceLabel": "U.S. Small Business Administration"
+        },
+        {
+          "value": "Multi-state operations often trigger registration, withholding, or nexus rules — confirm with official state agencies.",
+          "sourceUrl": "https://www.irs.gov/businesses/small-businesses-self-employed/state-government-websites",
+          "sourceLabel": "IRS — State government websites"
+        }
+      ]
+    },
+    "NJ": {
+      "taxPosture": {
+        "value": "New Jersey corporate business tax tops out at 9% (plus surcharges on larger liabilities). Personal income tax is progressive up to 10.75%.",
+        "sourceUrl": "https://www.nj.gov/treasury/taxation/cbt/",
+        "sourceLabel": "New Jersey Division of Taxation — CBT"
+      },
+      "businessRegistration": {
+        "value": "Register entities through the New Jersey Division of Revenue and Enterprise Services.",
+        "sourceUrl": "https://www.nj.gov/treasury/revenue/",
+        "sourceLabel": "New Jersey Division of Revenue"
+      },
+      "complianceCalendar": {
+        "value": "Annual reports are due by the end of the anniversary month; CBT returns follow separate deadlines.",
+        "sourceUrl": "https://www.nj.gov/treasury/revenue/annualreport.shtml",
+        "sourceLabel": "New Jersey Division of Revenue — Annual Report"
+      },
+      "multiStateHeadsUp": [
+        {
+          "value": "Remote sellers must collect New Jersey sales tax once economic nexus thresholds are exceeded.",
+          "sourceUrl": "https://www.nj.gov/treasury/taxation/salesanduse.shtml",
+          "sourceLabel": "New Jersey Division of Taxation — Sales & Use"
+        },
+        {
+          "value": "New Jersey employers must register for withholding and unemployment insurance.",
+          "sourceUrl": "https://www.nj.gov/treasury/taxation/employer.shtml",
+          "sourceLabel": "New Jersey Division of Taxation — Employers"
+        },
+        {
+          "value": "If you are incorporated elsewhere but transact business here, you may need to foreign-qualify with the Secretary of State.",
+          "sourceUrl": "https://www.sba.gov/business-guide/launch-your-business/register-your-business",
+          "sourceLabel": "U.S. Small Business Administration"
+        },
+        {
+          "value": "Multi-state operations often trigger registration, withholding, or nexus rules — confirm with official state agencies.",
+          "sourceUrl": "https://www.irs.gov/businesses/small-businesses-self-employed/state-government-websites",
+          "sourceLabel": "IRS — State government websites"
+        }
+      ]
+    },
+    "NM": {
+      "taxPosture": {
+        "value": "New Mexico uses Gross Receipts Tax (GRT) on business receipts rather than a traditional sales tax. Corporate income tax tops out at 5.9%; personal income tax is progressive up to 5.9%.",
+        "sourceUrl": "https://www.tax.newmexico.gov/businesses/gross-receipts-tax/",
+        "sourceLabel": "New Mexico Taxation and Revenue Department"
+      },
+      "businessRegistration": {
+        "value": "Register entities through the New Mexico Secretary of State Business Services.",
+        "sourceUrl": "https://www.sos.nm.gov/business-services/",
+        "sourceLabel": "New Mexico Secretary of State"
+      },
+      "complianceCalendar": {
+        "value": "Biennial reports are due in odd-numbered years; GRT and corporate returns follow TRD schedules.",
+        "sourceUrl": "https://www.sos.nm.gov/business-services/business-maintenance/",
+        "sourceLabel": "New Mexico SOS — Business Maintenance"
+      },
+      "multiStateHeadsUp": [
+        {
+          "value": "Remote sellers and marketplace providers may owe New Mexico GRT once economic nexus thresholds are met.",
+          "sourceUrl": "https://www.tax.newmexico.gov/businesses/marketplace-providers/",
+          "sourceLabel": "New Mexico TRD — Marketplace Providers"
+        },
+        {
+          "value": "New Mexico employers register for withholding and unemployment insurance.",
+          "sourceUrl": "https://www.tax.newmexico.gov/businesses/wage-withholding-tax/",
+          "sourceLabel": "New Mexico TRD — Withholding"
+        },
+        {
+          "value": "If you are incorporated elsewhere but transact business here, you may need to foreign-qualify with the Secretary of State.",
+          "sourceUrl": "https://www.sba.gov/business-guide/launch-your-business/register-your-business",
+          "sourceLabel": "U.S. Small Business Administration"
+        },
+        {
+          "value": "Multi-state operations often trigger registration, withholding, or nexus rules — confirm with official state agencies.",
+          "sourceUrl": "https://www.irs.gov/businesses/small-businesses-self-employed/state-government-websites",
+          "sourceLabel": "IRS — State government websites"
+        }
+      ]
+    },
+    "NY": {
+      "taxPosture": {
+        "value": "New York corporate franchise tax includes Article 9-A rates up to 7.25% plus fixed dollar minimums for many corporations. Personal income tax is progressive up to 10.9% (NYC adds local tax).",
+        "sourceUrl": "https://www.tax.ny.gov/bus/ct/",
+        "sourceLabel": "New York State Department of Taxation and Finance"
+      },
+      "businessRegistration": {
+        "value": "Register entities through the New York Department of State Division of Corporations.",
+        "sourceUrl": "https://www.ny.gov/services/start-business-new-york",
+        "sourceLabel": "New York State — Start a Business"
+      },
+      "complianceCalendar": {
+        "value": "Biennial statements are due for corporations; franchise tax returns follow DTF deadlines.",
+        "sourceUrl": "https://dos.ny.gov/forming-business-new-york-state",
+        "sourceLabel": "NY Department of State — Forming a Business"
+      },
+      "multiStateHeadsUp": [
+        {
+          "value": "New York economic nexus rules require remote sellers to register once sales thresholds are exceeded.",
+          "sourceUrl": "https://www.tax.ny.gov/pubs_and_bulls/tg_bulletins/st/out_of_state_vendors.htm",
+          "sourceLabel": "NY DTF — Out-of-State Vendors"
+        },
+        {
+          "value": "Employers with New York workers must register for withholding, paid family leave, and unemployment insurance.",
+          "sourceUrl": "https://www.tax.ny.gov/bus/ct/register.htm",
+          "sourceLabel": "NY DTF — Employer Registration"
+        },
+        {
+          "value": "If you are incorporated elsewhere but transact business here, you may need to foreign-qualify with the Secretary of State.",
+          "sourceUrl": "https://www.sba.gov/business-guide/launch-your-business/register-your-business",
+          "sourceLabel": "U.S. Small Business Administration"
+        },
+        {
+          "value": "Multi-state operations often trigger registration, withholding, or nexus rules — confirm with official state agencies.",
+          "sourceUrl": "https://www.irs.gov/businesses/small-businesses-self-employed/state-government-websites",
+          "sourceLabel": "IRS — State government websites"
+        }
+      ]
+    },
+    "NC": {
+      "taxPosture": {
+        "value": "North Carolina corporate income tax is 2.5%. Personal income tax is a flat 4.5% (2025). Franchise tax applies to corporations doing business in NC.",
+        "sourceUrl": "https://www.ncdor.gov/taxes-forms/corporate-income-tax",
+        "sourceLabel": "North Carolina Department of Revenue"
+      },
+      "businessRegistration": {
+        "value": "Register entities through the North Carolina Secretary of State Business Registration.",
+        "sourceUrl": "https://www.sosnc.gov/online_services/search/by_title/_Business_Registration",
+        "sourceLabel": "North Carolina Secretary of State"
+      },
+      "complianceCalendar": {
+        "value": "Annual reports are due Apr 15 each year; franchise and corporate tax returns follow DOR deadlines.",
+        "sourceUrl": "https://www.sosnc.gov/online_services/annual_report",
+        "sourceLabel": "North Carolina SOS — Annual Report"
+      },
+      "multiStateHeadsUp": [
+        {
+          "value": "Remote sellers must collect North Carolina sales tax once economic nexus thresholds are exceeded.",
+          "sourceUrl": "https://www.ncdor.gov/taxes-forms/sales-and-use-tax",
+          "sourceLabel": "North Carolina DOR — Sales & Use Tax"
+        },
+        {
+          "value": "North Carolina employers register for withholding and unemployment insurance.",
+          "sourceUrl": "https://www.ncdor.gov/taxes-forms/withholding-tax",
+          "sourceLabel": "North Carolina DOR — Withholding"
+        },
+        {
+          "value": "If you are incorporated elsewhere but transact business here, you may need to foreign-qualify with the Secretary of State.",
+          "sourceUrl": "https://www.sba.gov/business-guide/launch-your-business/register-your-business",
+          "sourceLabel": "U.S. Small Business Administration"
+        },
+        {
+          "value": "Multi-state operations often trigger registration, withholding, or nexus rules — confirm with official state agencies.",
+          "sourceUrl": "https://www.irs.gov/businesses/small-businesses-self-employed/state-government-websites",
+          "sourceLabel": "IRS — State government websites"
+        }
+      ]
+    },
+    "ND": {
+      "taxPosture": {
+        "value": "North Dakota corporate income tax tops out at 4.31%. Personal income tax is progressive up to 2.5% (2025).",
+        "sourceUrl": "https://www.tax.nd.gov/business/corporate-income-tax",
+        "sourceLabel": "North Dakota Office of State Tax Commissioner"
+      },
+      "businessRegistration": {
+        "value": "Register entities through North Dakota FirstStop (Secretary of State).",
+        "sourceUrl": "https://firststop.sos.nd.gov/",
+        "sourceLabel": "North Dakota FirstStop"
+      },
+      "complianceCalendar": {
+        "value": "Annual reports are due Nov 15 each year; corporate income tax returns follow Tax Commissioner deadlines.",
+        "sourceUrl": "https://firststop.sos.nd.gov/annual-report",
+        "sourceLabel": "North Dakota FirstStop — Annual Report"
+      },
+      "multiStateHeadsUp": [
+        {
+          "value": "Remote sellers must collect North Dakota sales tax once economic nexus thresholds are exceeded.",
+          "sourceUrl": "https://www.tax.nd.gov/business/sales-and-use-tax",
+          "sourceLabel": "North Dakota Tax Commissioner — Sales & Use"
+        },
+        {
+          "value": "North Dakota employers register for withholding and unemployment insurance.",
+          "sourceUrl": "https://www.tax.nd.gov/business/income-tax-withholding",
+          "sourceLabel": "North Dakota Tax Commissioner — Withholding"
+        },
+        {
+          "value": "If you are incorporated elsewhere but transact business here, you may need to foreign-qualify with the Secretary of State.",
+          "sourceUrl": "https://www.sba.gov/business-guide/launch-your-business/register-your-business",
+          "sourceLabel": "U.S. Small Business Administration"
+        },
+        {
+          "value": "Multi-state operations often trigger registration, withholding, or nexus rules — confirm with official state agencies.",
+          "sourceUrl": "https://www.irs.gov/businesses/small-businesses-self-employed/state-government-websites",
+          "sourceLabel": "IRS — State government websites"
+        }
+      ]
+    },
+    "OH": {
+      "taxPosture": {
+        "value": "Ohio Commercial Activity Tax (CAT) applies to taxable gross receipts above $3 million (with $150 minimum for most filers). Personal income tax is progressive up to 3.5% (2025).",
+        "sourceUrl": "https://tax.ohio.gov/business/commercial-activity-tax",
+        "sourceLabel": "Ohio Department of Taxation — CAT"
+      },
+      "businessRegistration": {
+        "value": "Register entities through the Ohio Secretary of State Business Services.",
+        "sourceUrl": "https://www.ohiosos.gov/businesses/",
+        "sourceLabel": "Ohio Secretary of State"
+      },
+      "complianceCalendar": {
+        "value": "Annual reports (or statements of continued existence) are due; CAT and municipal taxes follow separate schedules.",
+        "sourceUrl": "https://www.ohiosos.gov/businesses/filing-forms/",
+        "sourceLabel": "Ohio SOS — Business Filings"
+      },
+      "multiStateHeadsUp": [
+        {
+          "value": "Remote sellers must collect Ohio sales tax once economic nexus thresholds are exceeded.",
+          "sourceUrl": "https://tax.ohio.gov/wps/portal/gov/tax/help-center/faqs/sales-and-use-tax",
+          "sourceLabel": "Ohio Department of Taxation — Sales & Use"
+        },
+        {
+          "value": "Ohio employers register for withholding and unemployment compensation.",
+          "sourceUrl": "https://tax.ohio.gov/wps/portal/gov/tax/business/employer-withholding",
+          "sourceLabel": "Ohio Department of Taxation — Withholding"
+        },
+        {
+          "value": "If you are incorporated elsewhere but transact business here, you may need to foreign-qualify with the Secretary of State.",
+          "sourceUrl": "https://www.sba.gov/business-guide/launch-your-business/register-your-business",
+          "sourceLabel": "U.S. Small Business Administration"
+        },
+        {
+          "value": "Multi-state operations often trigger registration, withholding, or nexus rules — confirm with official state agencies.",
+          "sourceUrl": "https://www.irs.gov/businesses/small-businesses-self-employed/state-government-websites",
+          "sourceLabel": "IRS — State government websites"
+        }
+      ]
+    },
+    "OK": {
+      "taxPosture": {
+        "value": "Oklahoma corporate income tax is 4%. Personal income tax tops out at 4.75% (2025). Franchise tax applies to corporations.",
+        "sourceUrl": "https://oklahoma.gov/tax/businesses/corporate-income-tax.html",
+        "sourceLabel": "Oklahoma Tax Commission"
+      },
+      "businessRegistration": {
+        "value": "Register entities through the Oklahoma Secretary of State Business Filing Department.",
+        "sourceUrl": "https://www.sos.ok.gov/business/",
+        "sourceLabel": "Oklahoma Secretary of State"
+      },
+      "complianceCalendar": {
+        "value": "Annual certificates (for LLCs) and franchise tax returns follow SOS and OTC deadlines.",
+        "sourceUrl": "https://www.sos.ok.gov/business/default.aspx",
+        "sourceLabel": "Oklahoma SOS — Business Services"
+      },
+      "multiStateHeadsUp": [
+        {
+          "value": "Remote sellers must collect Oklahoma sales tax once economic nexus thresholds are exceeded.",
+          "sourceUrl": "https://oklahoma.gov/tax/businesses/sales-use-tax.html",
+          "sourceLabel": "Oklahoma Tax Commission — Sales & Use"
+        },
+        {
+          "value": "Oklahoma employers register for withholding and unemployment insurance.",
+          "sourceUrl": "https://oklahoma.gov/tax/businesses/withholding.html",
+          "sourceLabel": "Oklahoma Tax Commission — Withholding"
+        },
+        {
+          "value": "If you are incorporated elsewhere but transact business here, you may need to foreign-qualify with the Secretary of State.",
+          "sourceUrl": "https://www.sba.gov/business-guide/launch-your-business/register-your-business",
+          "sourceLabel": "U.S. Small Business Administration"
+        },
+        {
+          "value": "Multi-state operations often trigger registration, withholding, or nexus rules — confirm with official state agencies.",
+          "sourceUrl": "https://www.irs.gov/businesses/small-businesses-self-employed/state-government-websites",
+          "sourceLabel": "IRS — State government websites"
+        }
+      ]
+    },
+    "OR": {
+      "taxPosture": {
+        "value": "Oregon has no general sales tax. Corporate excise tax is 6.6% on income up to $1M and 7.6% above; personal income tax is progressive up to 9.9%.",
+        "sourceUrl": "https://www.oregon.gov/dor/programs/businesses/Pages/corporate.aspx",
+        "sourceLabel": "Oregon Department of Revenue"
+      },
+      "businessRegistration": {
+        "value": "Register entities through the Oregon Secretary of State Corporation Division.",
+        "sourceUrl": "https://sos.oregon.gov/business/Pages/default.aspx",
+        "sourceLabel": "Oregon Secretary of State"
+      },
+      "complianceCalendar": {
+        "value": "Annual reports are due on the anniversary of formation; corporate excise returns follow DOR deadlines.",
+        "sourceUrl": "https://sos.oregon.gov/business/Pages/annual-report.aspx",
+        "sourceLabel": "Oregon SOS — Annual Report"
+      },
+      "multiStateHeadsUp": [
+        {
+          "value": "Corporate Activity Tax (CAT) may apply to Oregon commercial activity above $1 million.",
+          "sourceUrl": "https://www.oregon.gov/dor/programs/businesses/Pages/corporate-activity-tax.aspx",
+          "sourceLabel": "Oregon DOR — Corporate Activity Tax"
+        },
+        {
+          "value": "Oregon employers register for withholding and unemployment insurance.",
+          "sourceUrl": "https://www.oregon.gov/dor/programs/businesses/Pages/payroll-withholding.aspx",
+          "sourceLabel": "Oregon DOR — Payroll Withholding"
+        },
+        {
+          "value": "If you are incorporated elsewhere but transact business here, you may need to foreign-qualify with the Secretary of State.",
+          "sourceUrl": "https://www.sba.gov/business-guide/launch-your-business/register-your-business",
+          "sourceLabel": "U.S. Small Business Administration"
+        },
+        {
+          "value": "Multi-state operations often trigger registration, withholding, or nexus rules — confirm with official state agencies.",
+          "sourceUrl": "https://www.irs.gov/businesses/small-businesses-self-employed/state-government-websites",
+          "sourceLabel": "IRS — State government websites"
+        }
+      ]
+    },
+    "PA": {
+      "taxPosture": {
+        "value": "Pennsylvania corporate net income tax is 7.99% (2025). Personal income tax is a flat 3.07%. Capital stock and foreign franchise taxes have been phased down for many entities.",
+        "sourceUrl": "https://www.pa.gov/agencies/revenue/resources/tax-types-and-information/corporate-net-income-tax.html",
+        "sourceLabel": "Pennsylvania Department of Revenue"
+      },
+      "businessRegistration": {
+        "value": "Register entities through the Pennsylvania Department of State.",
+        "sourceUrl": "https://www.pa.gov/agencies/dos/programs/business.html",
+        "sourceLabel": "Pennsylvania Department of State"
+      },
+      "complianceCalendar": {
+        "value": "Decennial reports are required every 10 years (plus ongoing annual registration for certain entities); CNI returns follow DOR deadlines.",
+        "sourceUrl": "https://www.pa.gov/agencies/dos/programs/business/reporting-and-fees.html",
+        "sourceLabel": "Pennsylvania DOS — Reporting"
+      },
+      "multiStateHeadsUp": [
+        {
+          "value": "Remote sellers must collect Pennsylvania sales tax once economic nexus thresholds are exceeded.",
+          "sourceUrl": "https://www.pa.gov/agencies/revenue/resources/tax-types-and-information/sales-use-and-hotel-occupancy-tax.html",
+          "sourceLabel": "Pennsylvania DOR — Sales & Use Tax"
+        },
+        {
+          "value": "Pennsylvania employers register for withholding and unemployment compensation.",
+          "sourceUrl": "https://www.pa.gov/agencies/revenue/resources/tax-types-and-information/employer-withholding.html",
+          "sourceLabel": "Pennsylvania DOR — Withholding"
+        },
+        {
+          "value": "If you are incorporated elsewhere but transact business here, you may need to foreign-qualify with the Secretary of State.",
+          "sourceUrl": "https://www.sba.gov/business-guide/launch-your-business/register-your-business",
+          "sourceLabel": "U.S. Small Business Administration"
+        },
+        {
+          "value": "Multi-state operations often trigger registration, withholding, or nexus rules — confirm with official state agencies.",
+          "sourceUrl": "https://www.irs.gov/businesses/small-businesses-self-employed/state-government-websites",
+          "sourceLabel": "IRS — State government websites"
+        }
+      ]
+    },
+    "RI": {
+      "taxPosture": {
+        "value": "Rhode Island corporate tax rate is 7%. Personal income tax is progressive up to 5.99%. Minimum corporate tax of $400 applies to many entities.",
+        "sourceUrl": "https://tax.ri.gov/tax-sections/corporate-tax",
+        "sourceLabel": "Rhode Island Division of Taxation"
+      },
+      "businessRegistration": {
+        "value": "Register entities through the Rhode Island Secretary of State Business Services.",
+        "sourceUrl": "https://www.sos.ri.gov/divisions/business-services",
+        "sourceLabel": "Rhode Island Secretary of State"
+      },
+      "complianceCalendar": {
+        "value": "Annual reports are due between Sep 1 and Nov 1 each year; corporate tax returns follow DOR deadlines.",
+        "sourceUrl": "https://www.sos.ri.gov/divisions/business-services/annual-reports",
+        "sourceLabel": "Rhode Island SOS — Annual Reports"
+      },
+      "multiStateHeadsUp": [
+        {
+          "value": "Remote sellers must collect Rhode Island sales tax once economic nexus thresholds are exceeded.",
+          "sourceUrl": "https://tax.ri.gov/tax-sections/sales-excise-taxes/sales-use-tax",
+          "sourceLabel": "Rhode Island Division of Taxation — Sales Tax"
+        },
+        {
+          "value": "Rhode Island employers register for withholding and unemployment insurance.",
+          "sourceUrl": "https://tax.ri.gov/tax-sections/withholding-tax",
+          "sourceLabel": "Rhode Island Division of Taxation — Withholding"
+        },
+        {
+          "value": "If you are incorporated elsewhere but transact business here, you may need to foreign-qualify with the Secretary of State.",
+          "sourceUrl": "https://www.sba.gov/business-guide/launch-your-business/register-your-business",
+          "sourceLabel": "U.S. Small Business Administration"
+        },
+        {
+          "value": "Multi-state operations often trigger registration, withholding, or nexus rules — confirm with official state agencies.",
+          "sourceUrl": "https://www.irs.gov/businesses/small-businesses-self-employed/state-government-websites",
+          "sourceLabel": "IRS — State government websites"
+        }
+      ]
+    },
+    "SC": {
+      "taxPosture": {
+        "value": "South Carolina corporate income tax is 5%. Personal income tax tops out at 6.2% (2025). License fees apply to many entities.",
+        "sourceUrl": "https://dor.sc.gov/tax/corporate",
+        "sourceLabel": "South Carolina Department of Revenue"
+      },
+      "businessRegistration": {
+        "value": "Register entities through the South Carolina Secretary of State Business Filings.",
+        "sourceUrl": "https://sos.sc.gov/online-services/business-filings",
+        "sourceLabel": "South Carolina Secretary of State"
+      },
+      "complianceCalendar": {
+        "value": "Annual reports are due by the end of the month following the anniversary of formation; corporate returns follow DOR deadlines.",
+        "sourceUrl": "https://sos.sc.gov/online-services/annual-reports",
+        "sourceLabel": "South Carolina SOS — Annual Reports"
+      },
+      "multiStateHeadsUp": [
+        {
+          "value": "Remote sellers must collect South Carolina sales tax once economic nexus thresholds are exceeded.",
+          "sourceUrl": "https://dor.sc.gov/tax/sales",
+          "sourceLabel": "South Carolina DOR — Sales Tax"
+        },
+        {
+          "value": "South Carolina employers register for withholding and unemployment insurance.",
+          "sourceUrl": "https://dor.sc.gov/tax/withholding",
+          "sourceLabel": "South Carolina DOR — Withholding"
+        },
+        {
+          "value": "If you are incorporated elsewhere but transact business here, you may need to foreign-qualify with the Secretary of State.",
+          "sourceUrl": "https://www.sba.gov/business-guide/launch-your-business/register-your-business",
+          "sourceLabel": "U.S. Small Business Administration"
+        },
+        {
+          "value": "Multi-state operations often trigger registration, withholding, or nexus rules — confirm with official state agencies.",
+          "sourceUrl": "https://www.irs.gov/businesses/small-businesses-self-employed/state-government-websites",
+          "sourceLabel": "IRS — State government websites"
+        }
+      ]
+    },
+    "SD": {
+      "taxPosture": {
+        "value": "South Dakota has no corporate or personal income tax. Sales tax is 4.5% plus municipal tax. Bank franchise tax applies to financial institutions.",
+        "sourceUrl": "https://dor.sd.gov/businesses/taxes/sales-use-tax/",
+        "sourceLabel": "South Dakota Department of Revenue"
+      },
+      "businessRegistration": {
+        "value": "Register entities through the South Dakota Secretary of State Business Services.",
+        "sourceUrl": "https://sdsos.gov/business-services/",
+        "sourceLabel": "South Dakota Secretary of State"
+      },
+      "complianceCalendar": {
+        "value": "Annual reports are due by the last day of the anniversary month; sales tax returns follow separate DOR schedules.",
+        "sourceUrl": "https://sdsos.gov/business-services/corporations/annual-report.aspx",
+        "sourceLabel": "South Dakota SOS — Annual Report"
+      },
+      "multiStateHeadsUp": [
+        {
+          "value": "South Dakota was the landmark Wayfair nexus case — remote sellers must collect sales tax once thresholds are met.",
+          "sourceUrl": "https://dor.sd.gov/businesses/taxes/sales-use-tax/remote-seller/",
+          "sourceLabel": "South Dakota DOR — Remote Seller"
+        },
+        {
+          "value": "Employers with South Dakota workers register for unemployment insurance (no state income tax withholding).",
+          "sourceUrl": "https://dlr.sd.gov/employers/unemployment-tax.aspx",
+          "sourceLabel": "South Dakota DLIR — Unemployment Tax"
+        },
+        {
+          "value": "If you are incorporated elsewhere but transact business here, you may need to foreign-qualify with the Secretary of State.",
+          "sourceUrl": "https://www.sba.gov/business-guide/launch-your-business/register-your-business",
+          "sourceLabel": "U.S. Small Business Administration"
+        },
+        {
+          "value": "Multi-state operations often trigger registration, withholding, or nexus rules — confirm with official state agencies.",
+          "sourceUrl": "https://www.irs.gov/businesses/small-businesses-self-employed/state-government-websites",
+          "sourceLabel": "IRS — State government websites"
+        }
+      ]
+    },
+    "TN": {
+      "taxPosture": {
+        "value": "Tennessee has no tax on wage income. The excise tax (6.5% of net earnings) and franchise tax (0.25% of net worth) apply to most corporations and LLCs.",
+        "sourceUrl": "https://www.tn.gov/revenue/taxes/business-tax/excise-tax.html",
+        "sourceLabel": "Tennessee Department of Revenue — Excise Tax"
+      },
+      "businessRegistration": {
+        "value": "Register entities through the Tennessee Secretary of State Business Services.",
+        "sourceUrl": "https://sos.tn.gov/business-services",
+        "sourceLabel": "Tennessee Secretary of State"
+      },
+      "complianceCalendar": {
+        "value": "Annual reports are due by the first day of the fourth month after fiscal year end; excise/franchise returns follow DOR deadlines.",
+        "sourceUrl": "https://sos.tn.gov/business-services/annual-report",
+        "sourceLabel": "Tennessee SOS — Annual Report"
+      },
+      "multiStateHeadsUp": [
+        {
+          "value": "Remote sellers must collect Tennessee sales tax once economic nexus thresholds are exceeded.",
+          "sourceUrl": "https://www.tn.gov/revenue/taxes/sales-and-use-tax.html",
+          "sourceLabel": "Tennessee DOR — Sales & Use Tax"
+        },
+        {
+          "value": "Tennessee employers register for unemployment insurance and franchise/excise accounts as applicable.",
+          "sourceUrl": "https://www.tn.gov/workforce/employers/tax-incentives/unemployment-insurance-tax.html",
+          "sourceLabel": "Tennessee Department of Labor — UI Tax"
+        },
+        {
+          "value": "If you are incorporated elsewhere but transact business here, you may need to foreign-qualify with the Secretary of State.",
+          "sourceUrl": "https://www.sba.gov/business-guide/launch-your-business/register-your-business",
+          "sourceLabel": "U.S. Small Business Administration"
+        },
+        {
+          "value": "Multi-state operations often trigger registration, withholding, or nexus rules — confirm with official state agencies.",
+          "sourceUrl": "https://www.irs.gov/businesses/small-businesses-self-employed/state-government-websites",
+          "sourceLabel": "IRS — State government websites"
+        }
+      ]
+    },
+    "TX": {
+      "taxPosture": {
+        "value": "Texas has no state personal income tax. Most entities owe franchise tax if total revenue exceeds the no-tax-due threshold ($2.47M for 2025 reports); margins tax applies above that.",
+        "sourceUrl": "https://comptroller.texas.gov/taxes/franchise/",
+        "sourceLabel": "Texas Comptroller — Franchise Tax"
+      },
+      "businessRegistration": {
+        "value": "Register corporations, LLCs, and partnerships with the Texas Secretary of State.",
+        "sourceUrl": "https://www.sos.state.tx.us/corp/index.shtml",
+        "sourceLabel": "Texas Secretary of State"
+      },
+      "complianceCalendar": {
+        "value": "Franchise tax reports are due May 15 annually (with extension options); public information reports may accompany zero-tax filings.",
+        "sourceUrl": "https://comptroller.texas.gov/taxes/franchise/forms/",
+        "sourceLabel": "Texas Comptroller — Franchise Tax Forms"
+      },
+      "multiStateHeadsUp": [
+        {
+          "value": "Remote sellers must collect Texas sales tax once economic nexus thresholds are exceeded.",
+          "sourceUrl": "https://comptroller.texas.gov/taxes/sales/faq/remote.php",
+          "sourceLabel": "Texas Comptroller — Remote Sellers"
+        },
+        {
+          "value": "Employers with Texas workers register for unemployment tax; no state income tax withholding.",
+          "sourceUrl": "https://www.twc.texas.gov/businesses/unemployment-tax",
+          "sourceLabel": "Texas Workforce Commission — UI Tax"
+        },
+        {
+          "value": "If you are incorporated elsewhere but transact business here, you may need to foreign-qualify with the Secretary of State.",
+          "sourceUrl": "https://www.sba.gov/business-guide/launch-your-business/register-your-business",
+          "sourceLabel": "U.S. Small Business Administration"
+        },
+        {
+          "value": "Multi-state operations often trigger registration, withholding, or nexus rules — confirm with official state agencies.",
+          "sourceUrl": "https://www.irs.gov/businesses/small-businesses-self-employed/state-government-websites",
+          "sourceLabel": "IRS — State government websites"
+        }
+      ]
+    },
+    "UT": {
+      "taxPosture": {
+        "value": "Utah corporate income tax is 4.55%. Personal income tax is a flat 4.55%. Single-rate structure applies to most taxpayers.",
+        "sourceUrl": "https://tax.utah.gov/business/income",
+        "sourceLabel": "Utah State Tax Commission"
+      },
+      "businessRegistration": {
+        "value": "Register entities through the Utah Division of Corporations and Commercial Code.",
+        "sourceUrl": "https://corporations.utah.gov/",
+        "sourceLabel": "Utah Division of Corporations"
+      },
+      "complianceCalendar": {
+        "value": "Annual renewals are due on the anniversary of registration; corporate returns follow Tax Commission deadlines.",
+        "sourceUrl": "https://corporations.utah.gov/renewals/",
+        "sourceLabel": "Utah Division of Corporations — Renewals"
+      },
+      "multiStateHeadsUp": [
+        {
+          "value": "Remote sellers must collect Utah sales tax once economic nexus thresholds are exceeded.",
+          "sourceUrl": "https://tax.utah.gov/sales",
+          "sourceLabel": "Utah State Tax Commission — Sales Tax"
+        },
+        {
+          "value": "Utah employers register for withholding and unemployment insurance.",
+          "sourceUrl": "https://tax.utah.gov/withholding",
+          "sourceLabel": "Utah State Tax Commission — Withholding"
+        },
+        {
+          "value": "If you are incorporated elsewhere but transact business here, you may need to foreign-qualify with the Secretary of State.",
+          "sourceUrl": "https://www.sba.gov/business-guide/launch-your-business/register-your-business",
+          "sourceLabel": "U.S. Small Business Administration"
+        },
+        {
+          "value": "Multi-state operations often trigger registration, withholding, or nexus rules — confirm with official state agencies.",
+          "sourceUrl": "https://www.irs.gov/businesses/small-businesses-self-employed/state-government-websites",
+          "sourceLabel": "IRS — State government websites"
+        }
+      ]
+    },
+    "VT": {
+      "taxPosture": {
+        "value": "Vermont corporate income tax tops out at 8.5%. Personal income tax is progressive up to 8.75%. Minimum entity tax may apply.",
+        "sourceUrl": "https://tax.vermont.gov/business/corporate-income-tax",
+        "sourceLabel": "Vermont Department of Taxes"
+      },
+      "businessRegistration": {
+        "value": "Register entities through the Vermont Secretary of State Corporations Division.",
+        "sourceUrl": "https://sos.vermont.gov/corporations/",
+        "sourceLabel": "Vermont Secretary of State"
+      },
+      "complianceCalendar": {
+        "value": "Annual reports are due within 2.5 months of fiscal year end; corporate returns follow DOR deadlines.",
+        "sourceUrl": "https://sos.vermont.gov/corporations/annual-report/",
+        "sourceLabel": "Vermont SOS — Annual Report"
+      },
+      "multiStateHeadsUp": [
+        {
+          "value": "Remote sellers must collect Vermont sales tax once economic nexus thresholds are exceeded.",
+          "sourceUrl": "https://tax.vermont.gov/business/sales-and-use-tax",
+          "sourceLabel": "Vermont Department of Taxes — Sales & Use"
+        },
+        {
+          "value": "Vermont employers register for withholding and unemployment insurance.",
+          "sourceUrl": "https://tax.vermont.gov/business/withholding-tax",
+          "sourceLabel": "Vermont Department of Taxes — Withholding"
+        },
+        {
+          "value": "If you are incorporated elsewhere but transact business here, you may need to foreign-qualify with the Secretary of State.",
+          "sourceUrl": "https://www.sba.gov/business-guide/launch-your-business/register-your-business",
+          "sourceLabel": "U.S. Small Business Administration"
+        },
+        {
+          "value": "Multi-state operations often trigger registration, withholding, or nexus rules — confirm with official state agencies.",
+          "sourceUrl": "https://www.irs.gov/businesses/small-businesses-self-employed/state-government-websites",
+          "sourceLabel": "IRS — State government websites"
+        }
+      ]
+    },
+    "VA": {
+      "taxPosture": {
+        "value": "Virginia corporate income tax is 6%. Personal income tax is progressive up to 5.75%. BPOL (business license) taxes may apply locally.",
+        "sourceUrl": "https://www.tax.virginia.gov/corporate-income-tax",
+        "sourceLabel": "Virginia Tax — Corporate Income"
+      },
+      "businessRegistration": {
+        "value": "Register entities through the Virginia State Corporation Commission (SCC).",
+        "sourceUrl": "https://www.scc.virginia.gov/business-home",
+        "sourceLabel": "Virginia State Corporation Commission"
+      },
+      "complianceCalendar": {
+        "value": "Annual registration fees are due by the end of the month following formation anniversary; corporate returns follow Virginia Tax deadlines.",
+        "sourceUrl": "https://www.scc.virginia.gov/businesses/annual-reports/",
+        "sourceLabel": "Virginia SCC — Annual Registration"
+      },
+      "multiStateHeadsUp": [
+        {
+          "value": "Remote sellers must collect Virginia sales tax once economic nexus thresholds are exceeded.",
+          "sourceUrl": "https://www.tax.virginia.gov/sales-and-use-tax",
+          "sourceLabel": "Virginia Tax — Sales & Use"
+        },
+        {
+          "value": "Virginia employers register for withholding and unemployment insurance.",
+          "sourceUrl": "https://www.tax.virginia.gov/withholding-tax",
+          "sourceLabel": "Virginia Tax — Withholding"
+        },
+        {
+          "value": "If you are incorporated elsewhere but transact business here, you may need to foreign-qualify with the Secretary of State.",
+          "sourceUrl": "https://www.sba.gov/business-guide/launch-your-business/register-your-business",
+          "sourceLabel": "U.S. Small Business Administration"
+        },
+        {
+          "value": "Multi-state operations often trigger registration, withholding, or nexus rules — confirm with official state agencies.",
+          "sourceUrl": "https://www.irs.gov/businesses/small-businesses-self-employed/state-government-websites",
+          "sourceLabel": "IRS — State government websites"
+        }
+      ]
+    },
+    "WA": {
+      "taxPosture": {
+        "value": "Washington has no personal income tax. The Business & Occupation (B&O) tax applies to gross receipts; rates vary by classification. No corporate income tax as traditionally defined.",
+        "sourceUrl": "https://dor.wa.gov/taxes-rates/business-occupation-tax",
+        "sourceLabel": "Washington Department of Revenue — B&O Tax"
+      },
+      "businessRegistration": {
+        "value": "Register entities through the Washington Secretary of State Corporations Division.",
+        "sourceUrl": "https://www.sos.wa.gov/corps/",
+        "sourceLabel": "Washington Secretary of State"
+      },
+      "complianceCalendar": {
+        "value": "Annual reports are due by the end of the registration anniversary month; B&O and sales tax returns follow DOR schedules.",
+        "sourceUrl": "https://www.sos.wa.gov/corps/annual-report",
+        "sourceLabel": "Washington SOS — Annual Report"
+      },
+      "multiStateHeadsUp": [
+        {
+          "value": "Washington requires marketplace facilitators and remote sellers to collect sales tax once nexus thresholds are met.",
+          "sourceUrl": "https://dor.wa.gov/taxes-rates/retail-sales-tax/marketplace-fairness",
+          "sourceLabel": "Washington DOR — Marketplace Fairness"
+        },
+        {
+          "value": "Washington employers register for unemployment insurance and workers' comp (no state income tax withholding).",
+          "sourceUrl": "https://esd.wa.gov/employer-taxes",
+          "sourceLabel": "Washington ESD — Employer Taxes"
+        },
+        {
+          "value": "If you are incorporated elsewhere but transact business here, you may need to foreign-qualify with the Secretary of State.",
+          "sourceUrl": "https://www.sba.gov/business-guide/launch-your-business/register-your-business",
+          "sourceLabel": "U.S. Small Business Administration"
+        },
+        {
+          "value": "Multi-state operations often trigger registration, withholding, or nexus rules — confirm with official state agencies.",
+          "sourceUrl": "https://www.irs.gov/businesses/small-businesses-self-employed/state-government-websites",
+          "sourceLabel": "IRS — State government websites"
+        }
+      ]
+    },
+    "WV": {
+      "taxPosture": {
+        "value": "West Virginia corporate income tax is 6.5%. Personal income tax tops out at 5.12% (2025). Business franchise tax has been phased out for most taxpayers.",
+        "sourceUrl": "https://tax.wv.gov/Business/CorporateIncome/Pages/default.aspx",
+        "sourceLabel": "West Virginia State Tax Department"
+      },
+      "businessRegistration": {
+        "value": "Register entities through the West Virginia Secretary of State Business Division.",
+        "sourceUrl": "https://sos.wv.gov/business",
+        "sourceLabel": "West Virginia Secretary of State"
+      },
+      "complianceCalendar": {
+        "value": "Annual reports are due Jul 1 each year; corporate income tax returns follow State Tax Department deadlines.",
+        "sourceUrl": "https://sos.wv.gov/business/Pages/AnnualReport.aspx",
+        "sourceLabel": "West Virginia SOS — Annual Report"
+      },
+      "multiStateHeadsUp": [
+        {
+          "value": "Remote sellers must collect West Virginia sales tax once economic nexus thresholds are exceeded.",
+          "sourceUrl": "https://tax.wv.gov/Business/SalesAndUse/Pages/default.aspx",
+          "sourceLabel": "West Virginia State Tax Department — Sales & Use"
+        },
+        {
+          "value": "West Virginia employers register for withholding and unemployment compensation.",
+          "sourceUrl": "https://tax.wv.gov/Business/Withholding/Pages/default.aspx",
+          "sourceLabel": "West Virginia State Tax Department — Withholding"
+        },
+        {
+          "value": "If you are incorporated elsewhere but transact business here, you may need to foreign-qualify with the Secretary of State.",
+          "sourceUrl": "https://www.sba.gov/business-guide/launch-your-business/register-your-business",
+          "sourceLabel": "U.S. Small Business Administration"
+        },
+        {
+          "value": "Multi-state operations often trigger registration, withholding, or nexus rules — confirm with official state agencies.",
+          "sourceUrl": "https://www.irs.gov/businesses/small-businesses-self-employed/state-government-websites",
+          "sourceLabel": "IRS — State government websites"
+        }
+      ]
+    },
+    "WI": {
+      "taxPosture": {
+        "value": "Wisconsin corporate income tax is 7.9%. Personal income tax is progressive up to 7.65%. Economic development surcharge may apply to large corporations.",
+        "sourceUrl": "https://www.revenue.wi.gov/Pages/FAQS/pcs-corp.aspx",
+        "sourceLabel": "Wisconsin Department of Revenue"
+      },
+      "businessRegistration": {
+        "value": "Register entities through the Wisconsin Department of Financial Institutions.",
+        "sourceUrl": "https://www.wdfi.org/corporations/",
+        "sourceLabel": "Wisconsin DFI — Corporations"
+      },
+      "complianceCalendar": {
+        "value": "Annual reports are due by the end of the quarter following the anniversary of formation; corporate returns follow DOR deadlines.",
+        "sourceUrl": "https://www.wdfi.org/corporations/annualreport.htm",
+        "sourceLabel": "Wisconsin DFI — Annual Report"
+      },
+      "multiStateHeadsUp": [
+        {
+          "value": "Remote sellers must collect Wisconsin sales tax once economic nexus thresholds are exceeded.",
+          "sourceUrl": "https://www.revenue.wi.gov/Pages/FAQS/slf-sales-use.aspx",
+          "sourceLabel": "Wisconsin DOR — Sales & Use Tax"
+        },
+        {
+          "value": "Wisconsin employers register for withholding and unemployment insurance.",
+          "sourceUrl": "https://www.revenue.wi.gov/Pages/FAQS/pcs-202.aspx",
+          "sourceLabel": "Wisconsin DOR — Withholding"
+        },
+        {
+          "value": "If you are incorporated elsewhere but transact business here, you may need to foreign-qualify with the Secretary of State.",
+          "sourceUrl": "https://www.sba.gov/business-guide/launch-your-business/register-your-business",
+          "sourceLabel": "U.S. Small Business Administration"
+        },
+        {
+          "value": "Multi-state operations often trigger registration, withholding, or nexus rules — confirm with official state agencies.",
+          "sourceUrl": "https://www.irs.gov/businesses/small-businesses-self-employed/state-government-websites",
+          "sourceLabel": "IRS — State government websites"
+        }
+      ]
+    },
+    "WY": {
+      "taxPosture": {
+        "value": "Wyoming has no corporate or personal income tax. Annual report license tax is $60 minimum for many entities (or $60 + assets located in WY for other structures).",
+        "sourceUrl": "https://wyobiz.wyo.gov/Business/AnnualReport.aspx",
+        "sourceLabel": "Wyoming Secretary of State — Annual Report"
+      },
+      "businessRegistration": {
+        "value": "Register entities through Wyoming Business Center (Wyoming Secretary of State).",
+        "sourceUrl": "https://wyobiz.wyo.gov/",
+        "sourceLabel": "Wyoming Business Center"
+      },
+      "complianceCalendar": {
+        "value": "Annual reports are due on the first day of the anniversary month of formation.",
+        "sourceUrl": "https://sos.wyo.gov/Business/AnnualReportRequirements.aspx",
+        "sourceLabel": "Wyoming SOS — Annual Report Requirements"
+      },
+      "multiStateHeadsUp": [
+        {
+          "value": "Incorporating in Wyoming does not eliminate registration requirements in states where you operate.",
+          "sourceUrl": "https://sos.wyo.gov/Business/FAQ.aspx",
+          "sourceLabel": "Wyoming Secretary of State — FAQ"
+        },
+        {
+          "value": "Employers with Wyoming workers register for unemployment insurance (no state income tax withholding).",
+          "sourceUrl": "https://dws.wyo.gov/dws-division/unemployment-insurance/",
+          "sourceLabel": "Wyoming DWS — Unemployment Insurance"
+        },
+        {
+          "value": "If you are incorporated elsewhere but transact business here, you may need to foreign-qualify with the Secretary of State.",
+          "sourceUrl": "https://www.sba.gov/business-guide/launch-your-business/register-your-business",
+          "sourceLabel": "U.S. Small Business Administration"
+        },
+        {
+          "value": "Multi-state operations often trigger registration, withholding, or nexus rules — confirm with official state agencies.",
+          "sourceUrl": "https://www.irs.gov/businesses/small-businesses-self-employed/state-government-websites",
+          "sourceLabel": "IRS — State government websites"
+        }
+      ]
+    }
+  }
+}

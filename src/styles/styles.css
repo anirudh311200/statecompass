@@ -1020,6 +1020,86 @@ footer a:hover {
   gap: 0.75rem;
 }
 
+/* Founder Snapshot */
+
+.founder-snapshot {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.snapshot-disclaimer {
+  margin: 0 0 1.25rem;
+  padding: 0.85rem 1rem;
+  background: rgba(251, 191, 36, 0.08);
+  border: 1px solid rgba(251, 191, 36, 0.35);
+  border-radius: 10px;
+}
+
+.snapshot-disclaimer-text {
+  margin: 0;
+  font-size: var(--text-sm);
+  color: var(--text);
+  line-height: 1.5;
+}
+
+.snapshot-content {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.snapshot-fact-label {
+  margin: 0 0 0.35rem;
+  font-family: var(--font-body);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--text);
+}
+
+.snapshot-fact-value {
+  margin: 0 0 0.35rem;
+  font-size: var(--text-sm);
+  line-height: 1.55;
+  color: var(--gray);
+}
+
+.snapshot-fact-source {
+  margin: 0;
+  font-size: var(--text-xs);
+  color: var(--muted);
+}
+
+.snapshot-fact-source a {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+.snapshot-fact-source a:hover {
+  text-decoration: underline;
+}
+
+.snapshot-heads-up-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+.snapshot-heads-up-item {
+  padding-left: 0.85rem;
+  border-left: 2px solid var(--border);
+}
+
+.snapshot-coming-soon {
+  margin: 0;
+  font-size: var(--text-sm);
+  color: var(--muted);
+  font-style: italic;
+}
+
 .tier-badge--sm {
   margin-top: 0;
   padding: 0.25rem 0.6rem;

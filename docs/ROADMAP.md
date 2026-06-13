@@ -35,8 +35,8 @@
 | **1** | Compare & discover | **Done** |
 | **2** | Founder Fit | **Done** |
 | **3** | Share & be found | **Done** |
-| **4** | Founder Snapshot | **Next** |
-| **5** | Memory & time | Pending |
+| **4** | Founder Snapshot | **Done** |
+| **5** | Memory & time | **Next** |
 | **6** | Distribution | Pending |
 | **7** | UI/UX overhaul *(optional)* | Pending |
 
@@ -313,7 +313,7 @@ For each profile: compute **Founder Fit score** (weighted sum of category scores
 
 ---
 
-## Phase 4 — Founder Snapshot
+## Phase 4 — Founder Snapshot — **Done**
 
 **Goal:** Lite operational context per state — **what to know before operating here** — without becoming a compliance product.
 
@@ -337,10 +337,10 @@ Per state, sourced public facts:
 
 ### Deliverables
 
-- [ ] Schema + validation in `verify.py` for snapshot fields
-- [ ] `FounderSnapshot.astro` component on state detail pages
-- [ ] Prominent disclaimer component
-- [ ] Document data sourcing process in `docs/DATA.md` (optional) or inline in roadmap
+- [x] Schema + validation in `verify.py` for snapshot fields
+- [x] `FounderSnapshot.astro` component on state detail pages
+- [x] Prominent disclaimer component
+- [x] Document data sourcing process in `docs/DATA.md` (optional) or inline in roadmap
 
 ### Exit criteria
 

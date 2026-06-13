@@ -2,7 +2,9 @@
 import Layout from "../../layouts/Layout.astro";
 import Breadcrumbs from "../../components/Breadcrumbs.astro";
 import CategoryChart from "../../components/CategoryChart.astro";
+import FounderSnapshot from "../../components/FounderSnapshot.astro";
 import { states, dataYear } from "../../lib/states.js";
+import { getSnapshotForState, snapshotDisclaimer } from "../../lib/snapshots.js";
 import { TIER_LABELS, METHODOLOGY_URL } from "../../scripts/categories.js";
 import { CNBC_RANKINGS_URL, cnbcSourceLabel } from "../../lib/site.js";
 
@@ -14,6 +16,7 @@ export function getStaticPaths() {
 }
 
 const { abbr, state } = Astro.props;
+const snapshot = getSnapshotForState(abbr);
 
 const site = Astro.site ?? new URL("https://statecompass.app");
 const pageUrl = new URL(`/states/${state.slug}`, site).href;
@@ -104,6 +107,12 @@ const jsonLd = {
           — 10 categories, 2,500 points max
         </p>
       </section>
+
+      <FounderSnapshot
+        stateName={state.name}
+        snapshot={snapshot}
+        disclaimer={snapshotDisclaimer}
+      />
 
       <div class="state-cta-row">
         <a href={compareHref} class="btn btn-primary">Compare with other states</a>

@@ -85,5 +85,32 @@ assert ranked_by_profile["tech"] != {
     abbr: state["rank"] for abbr, state in data["states"].items()
 }, "tech profile should change at least one rank"
 
+SNAPSHOT_FIELDS = ("taxPosture", "businessRegistration", "complianceCalendar")
+SNAPSHOTS_PATH = ROOT / "public/data/founder_snapshots.json"
+snapshots_payload = json.loads(SNAPSHOTS_PATH.read_text(encoding="utf-8"))
+snapshot_states = snapshots_payload["states"]
+
+assert "disclaimer" in snapshots_payload and snapshots_payload["disclaimer"].strip()
+assert snapshot_states.keys() == json_ids, (
+    snapshot_states.keys() - json_ids,
+    json_ids - snapshot_states.keys(),
+)
+
+for abbr in json_ids:
+    entry = snapshot_states[abbr]
+    for field in SNAPSHOT_FIELDS:
+        fact = entry[field]
+        assert fact["value"].strip(), (abbr, field, "value")
+        assert fact["sourceUrl"].startswith("https://"), (abbr, field, fact["sourceUrl"])
+        assert fact["sourceLabel"].strip(), (abbr, field, "sourceLabel")
+
+    heads_up = entry["multiStateHeadsUp"]
+    assert 3 <= len(heads_up) <= 5, (abbr, len(heads_up))
+    for index, bullet in enumerate(heads_up):
+        assert bullet["value"].strip(), (abbr, "multiStateHeadsUp", index)
+        assert bullet["sourceUrl"].startswith("https://"), (abbr, "multiStateHeadsUp", index)
+        assert bullet["sourceLabel"].strip(), (abbr, "multiStateHeadsUp", index)
+
 print("OK: all 50 states aligned with category data")
 print("OK: founder fit profiles validated")
+print("OK: founder snapshots validated")
