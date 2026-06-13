@@ -1,5 +1,6 @@
 ---
 import SnapshotDisclaimer from "./SnapshotDisclaimer.astro";
+import { HEADS_UP_COMPARE_ROWS, HEADS_UP_SHARED_TITLE } from "../scripts/snapshotLabels.js";
 
 interface SourcedFact {
   value: string;
@@ -29,6 +30,15 @@ const factSections = snapshot
       { label: "Compliance calendar", fact: snapshot.complianceCalendar },
     ]
   : [];
+
+const headsUpLabeled = snapshot
+  ? HEADS_UP_COMPARE_ROWS.map(({ index, label }) => ({
+      label,
+      fact: snapshot.multiStateHeadsUp[index],
+    })).filter((entry) => entry.fact)
+  : [];
+
+const headsUpShared = snapshot ? snapshot.multiStateHeadsUp.slice(2) : [];
 ---
 
 <section class="panel founder-snapshot" aria-labelledby="snapshot-heading">
@@ -58,21 +68,47 @@ const factSections = snapshot
           ))
         }
 
-        <div class="snapshot-fact">
+        <div class="snapshot-fact snapshot-heads-up-group">
           <h3 class="snapshot-fact-label">Multi-state heads-up</h3>
-          <ul class="snapshot-heads-up-list">
-            {snapshot.multiStateHeadsUp.map((bullet) => (
-              <li class="snapshot-heads-up-item">
-                <p class="snapshot-fact-value">{bullet.value}</p>
+          <p class="snapshot-fact-helper">
+            If you operate outside {stateName} or hire remotely — informational, not legal advice.
+          </p>
+
+          {
+            headsUpLabeled.map(({ label, fact }) => (
+              <div class="snapshot-heads-up-row">
+                <h4 class="snapshot-heads-up-row-label">{label}</h4>
+                <p class="snapshot-fact-value">{fact.value}</p>
                 <p class="snapshot-fact-source">
                   Source:{" "}
-                  <a href={bullet.sourceUrl} target="_blank" rel="noopener noreferrer">
-                    {bullet.sourceLabel}
+                  <a href={fact.sourceUrl} target="_blank" rel="noopener noreferrer">
+                    {fact.sourceLabel}
                   </a>
                 </p>
-              </li>
-            ))}
-          </ul>
+              </div>
+            ))
+          }
+
+          {
+            headsUpShared.length > 0 && (
+              <div class="snapshot-shared-note">
+                <h4 class="snapshot-heads-up-row-label">{HEADS_UP_SHARED_TITLE}</h4>
+                <ul class="snapshot-heads-up-list">
+                  {headsUpShared.map((bullet) => (
+                    <li class="snapshot-heads-up-item">
+                      <p class="snapshot-fact-value">{bullet.value}</p>
+                      <p class="snapshot-fact-source">
+                        Source:{" "}
+                        <a href={bullet.sourceUrl} target="_blank" rel="noopener noreferrer">
+                          {bullet.sourceLabel}
+                        </a>
+                      </p>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )
+          }
         </div>
       </div>
     ) : (

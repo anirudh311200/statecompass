@@ -12,6 +12,7 @@ import {
 } from "./founderFit.js";
 import { wireCopyButton } from "./share.js";
 import { downloadComparePng } from "./exportCompare.js";
+import { HEADS_UP_COMPARE_ROWS, HEADS_UP_SHARED_TITLE } from "./snapshotLabels.js";
 
 const MAX_STATES = 3;
 const MIN_STATES = 2;
@@ -270,6 +271,80 @@ function renderSnapshotFactCell(fact) {
   return cell;
 }
 
+function renderSnapshotCompareRow(abbrs, label, resolveFact) {
+  const row = document.createElement("div");
+  row.className = "compare-snapshot-row";
+
+  const header = document.createElement("div");
+  header.className = "compare-snapshot-header";
+  header.innerHTML = `<span class="compare-snapshot-label">${label}</span>`;
+  row.appendChild(header);
+
+  const cols = document.createElement("div");
+  cols.className = "compare-snapshot-cols";
+
+  abbrs.forEach((abbr) => {
+    const info = stateData[abbr];
+    const col = document.createElement("div");
+    col.className = "compare-snapshot-col";
+
+    const stateLabel = document.createElement("p");
+    stateLabel.className = "compare-snapshot-state";
+    stateLabel.textContent = info.name;
+    col.appendChild(stateLabel);
+
+    const fact = resolveFact(abbr);
+    if (fact) {
+      col.appendChild(renderSnapshotFactCell(fact));
+    } else {
+      const missing = document.createElement("p");
+      missing.className = "compare-snapshot-value compare-snapshot-missing";
+      missing.textContent = "Not available.";
+      col.appendChild(missing);
+    }
+
+    cols.appendChild(col);
+  });
+
+  row.appendChild(cols);
+  return row;
+}
+
+function renderSharedHeadsUpNote(abbrs) {
+  const sampleAbbr = abbrs.find((abbr) => snapshotData[abbr]?.multiStateHeadsUp?.length >= 4);
+  if (!sampleAbbr) {
+    return null;
+  }
+
+  const sharedBullets = snapshotData[sampleAbbr].multiStateHeadsUp.slice(2);
+  const note = document.createElement("div");
+  note.className = "compare-snapshot-shared-note";
+
+  const title = document.createElement("p");
+  title.className = "compare-snapshot-shared-title";
+  title.textContent = HEADS_UP_SHARED_TITLE;
+  note.appendChild(title);
+
+  const list = document.createElement("ul");
+  list.className = "compare-snapshot-shared-list";
+
+  sharedBullets.forEach((bullet) => {
+    const item = document.createElement("li");
+    item.className = "compare-snapshot-shared-item";
+
+    const value = document.createElement("p");
+    value.className = "compare-snapshot-value";
+    value.textContent = bullet.value;
+    item.appendChild(value);
+    appendSourceLine(item, bullet);
+
+    list.appendChild(item);
+  });
+
+  note.appendChild(list);
+  return note;
+}
+
 function renderSnapshotCompare(abbrs) {
   const container = document.getElementById("compare-snapshot");
   const disclaimerEl = document.getElementById("compare-snapshot-disclaimer");
@@ -288,97 +363,32 @@ function renderSnapshotCompare(abbrs) {
   }
 
   SNAPSHOT_ROWS.forEach(({ key, label }) => {
-    const row = document.createElement("div");
-    row.className = "compare-snapshot-row";
-
-    const header = document.createElement("div");
-    header.className = "compare-snapshot-header";
-    header.innerHTML = `<span class="compare-snapshot-label">${label}</span>`;
-    row.appendChild(header);
-
-    const cols = document.createElement("div");
-    cols.className = "compare-snapshot-cols";
-
-    abbrs.forEach((abbr) => {
-      const info = stateData[abbr];
-      const snapshot = snapshotData[abbr];
-      const col = document.createElement("div");
-      col.className = "compare-snapshot-col";
-
-      const stateLabel = document.createElement("p");
-      stateLabel.className = "compare-snapshot-state";
-      stateLabel.textContent = info.name;
-      col.appendChild(stateLabel);
-
-      if (snapshot?.[key]) {
-        col.appendChild(renderSnapshotFactCell(snapshot[key]));
-      } else {
-        const missing = document.createElement("p");
-        missing.className = "compare-snapshot-value compare-snapshot-missing";
-        missing.textContent = "Snapshot unavailable.";
-        col.appendChild(missing);
-      }
-
-      cols.appendChild(col);
-    });
-
-    row.appendChild(cols);
-    container.appendChild(row);
+    container.appendChild(
+      renderSnapshotCompareRow(abbrs, label, (abbr) => snapshotData[abbr]?.[key] ?? null)
+    );
   });
 
-  const headsUpRow = document.createElement("div");
-  headsUpRow.className = "compare-snapshot-row";
+  const subsection = document.createElement("div");
+  subsection.className = "compare-snapshot-subsection";
+  subsection.innerHTML = `
+    <p class="compare-snapshot-subsection-title">Multi-state heads-up</p>
+    <p class="compare-snapshot-subsection-helper">If you operate outside these states or hire remotely — compare topic by topic, not ranked.</p>
+  `;
+  container.appendChild(subsection);
 
-  const headsUpHeader = document.createElement("div");
-  headsUpHeader.className = "compare-snapshot-header";
-  headsUpHeader.innerHTML = `<span class="compare-snapshot-label">Multi-state heads-up</span>`;
-  headsUpRow.appendChild(headsUpHeader);
-
-  const headsUpCols = document.createElement("div");
-  headsUpCols.className = "compare-snapshot-cols";
-
-  abbrs.forEach((abbr) => {
-    const info = stateData[abbr];
-    const snapshot = snapshotData[abbr];
-    const col = document.createElement("div");
-    col.className = "compare-snapshot-col";
-
-    const stateLabel = document.createElement("p");
-    stateLabel.className = "compare-snapshot-state";
-    stateLabel.textContent = info.name;
-    col.appendChild(stateLabel);
-
-    const bullets = snapshot?.multiStateHeadsUp;
-    if (bullets?.length) {
-      const list = document.createElement("ul");
-      list.className = "compare-snapshot-heads-up-list";
-
-      bullets.forEach((bullet) => {
-        const item = document.createElement("li");
-        item.className = "compare-snapshot-heads-up-item";
-
-        const value = document.createElement("p");
-        value.className = "compare-snapshot-value";
-        value.textContent = bullet.value;
-        item.appendChild(value);
-        appendSourceLine(item, bullet);
-
-        list.appendChild(item);
-      });
-
-      col.appendChild(list);
-    } else {
-      const missing = document.createElement("p");
-      missing.className = "compare-snapshot-value compare-snapshot-missing";
-      missing.textContent = "Snapshot unavailable.";
-      col.appendChild(missing);
-    }
-
-    headsUpCols.appendChild(col);
+  HEADS_UP_COMPARE_ROWS.forEach(({ index, label }) => {
+    container.appendChild(
+      renderSnapshotCompareRow(abbrs, label, (abbr) => {
+        const bullets = snapshotData[abbr]?.multiStateHeadsUp;
+        return bullets?.[index] ?? null;
+      })
+    );
   });
 
-  headsUpRow.appendChild(headsUpCols);
-  container.appendChild(headsUpRow);
+  const sharedNote = renderSharedHeadsUpNote(abbrs);
+  if (sharedNote) {
+    container.appendChild(sharedNote);
+  }
 }
 
 function announceCompareUpdate(abbrs) {
