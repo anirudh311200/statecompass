@@ -6,15 +6,15 @@ import FounderFitSelector from "../components/FounderFitSelector.astro";
 <Layout
   showSearch
   preloadData
-  subtitle="Compare states for HQ and expansion — search or click a state on the map."
-  description="Site selection for founders — explore CNBC business climate scores, ranks, and category breakdowns for all 50 US states."
+  subtitle="Compare states for HQ and expansion — CNBC scores, Founder Snapshot, and shareable compare links."
+  description="Site selection for founders — explore CNBC business climate scores, full state breakdowns, and Founder Snapshot operational context for all 50 US states."
 >
   <main class="layout">
     <div class="map-column">
       <section class="map-panel" aria-label="United States map">
         <span id="map-title" hidden>United States business climate map</span>
         <span id="map-desc" hidden>
-          Search or click a state to pin it and see CNBC rank and score out of 100.
+          Search or click a state to preview rank and score. Open the full state page for all 10 categories and Founder Snapshot.
         </span>
         <div id="map-container" aria-hidden="false"></div>
       </section>
@@ -48,12 +48,18 @@ import FounderFitSelector from "../components/FounderFitSelector.astro";
         </div>
         <p id="tooltip-default" class="tooltip-prompt">
           <span class="prompt-dot" aria-hidden="true"></span>
-          Search or click a state on the map to see its score and rank.
+          Search or click a state to preview rank and score — open the full page for Founder Snapshot.
         </p>
         <div id="tooltip-content" hidden>
           <FounderFitSelector variant="pills" id="map-profile" showDisclaimer />
 
-          <p class="state-name" id="state-name"></p>
+          <p class="state-name">
+            <a href="#" id="state-name-link" class="state-name-link"></a>
+          </p>
+
+          <a href="#" id="map-detail-link" class="map-detail-link map-detail-link--primary">
+            Full breakdown →
+          </a>
 
           <div class="score-block">
             <div class="score-header">
@@ -97,6 +103,16 @@ import FounderFitSelector from "../components/FounderFitSelector.astro";
               </p>
             </div>
           </details>
+
+          <div class="map-snapshot-teaser" id="map-snapshot-teaser">
+            <p class="map-snapshot-teaser-title">Founder Snapshot</p>
+            <p class="map-snapshot-teaser-text">
+              Tax posture, business registration, compliance calendar, and multi-state heads-up — on the full state page.
+            </p>
+            <a href="#" id="map-snapshot-link" class="map-detail-link">
+              View operational context →
+            </a>
+          </div>
         </div>
       </div>
     </aside>

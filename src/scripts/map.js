@@ -58,6 +58,29 @@ function updateMapDimming() {
   mapPanel.classList.toggle("is-dimmed", hasFocus);
 }
 
+function updateDetailLinks(abbr, info) {
+  if (!info?.slug) {
+    return;
+  }
+
+  const href = `/states/${info.slug}`;
+  const nameLink = document.getElementById("state-name-link");
+  const detailLink = document.getElementById("map-detail-link");
+  const snapshotLink = document.getElementById("map-snapshot-link");
+
+  if (nameLink) {
+    nameLink.textContent = info.name;
+    nameLink.href = href;
+    nameLink.title = `Full ${info.name} page — categories and Founder Snapshot`;
+  }
+  if (detailLink) {
+    detailLink.href = href;
+  }
+  if (snapshotLink) {
+    snapshotLink.href = href;
+  }
+}
+
 function updateSidebar(abbr, info) {
   const content = document.getElementById("tooltip-content");
   const defaultText = document.getElementById("tooltip-default");
@@ -67,7 +90,7 @@ function updateSidebar(abbr, info) {
   void content.offsetWidth;
   content.hidden = false;
 
-  document.getElementById("state-name").textContent = info.name;
+  updateDetailLinks(abbr, info);
   refreshMapSidebar(abbr, info);
 
   if (defaultText) {
@@ -107,6 +130,18 @@ function syncUrl(abbr) {
     url.searchParams.delete("state");
   }
   history.replaceState(null, "", url);
+}
+
+export function getStateDetailUrl(abbr) {
+  const info = stateData[abbr];
+  return info?.slug ? `/states/${info.slug}` : null;
+}
+
+export function navigateToStateDetail(abbr) {
+  const href = getStateDetailUrl(abbr);
+  if (href) {
+    window.location.href = href;
+  }
 }
 
 export function pinState(abbr, { skipUrl = false, focusSidebar = false } = {}) {
@@ -252,6 +287,9 @@ function wireStates() {
     path.addEventListener("focus", () => activateHover(path, abbr));
     path.addEventListener("blur", () => deactivateHover(path));
     path.addEventListener("click", () => pinState(abbr));
+    path.addEventListener("dblclick", () => {
+      window.location.href = `/states/${info.slug}`;
+    });
     path.addEventListener("keydown", (event) => {
       if (event.key === "Enter" || event.key === " ") {
         event.preventDefault();

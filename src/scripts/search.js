@@ -1,4 +1,4 @@
-import { pinState } from "./map.js";
+import { pinState, navigateToStateDetail } from "./map.js";
 
 const MAX_RESULTS = 8;
 
@@ -78,8 +78,13 @@ export function initSearch(stateData) {
     setActiveIndex(hasResults && normalized.length > 0 ? 0 : -1);
   }
 
-  function selectAbbr(abbr) {
+  function selectAbbr(abbr, { openDetail = false } = {}) {
     if (!abbr) {
+      return;
+    }
+
+    if (openDetail) {
+      navigateToStateDetail(abbr);
       return;
     }
 
@@ -120,8 +125,10 @@ export function initSearch(stateData) {
 
     if (event.key === "Enter") {
       event.preventDefault();
+      const openDetail = event.ctrlKey || event.metaKey;
+
       if (!list.hidden && activeIndex >= 0) {
-        selectAbbr(visibleResults[activeIndex][0]);
+        selectAbbr(visibleResults[activeIndex][0], { openDetail });
         return;
       }
 
@@ -132,12 +139,12 @@ export function initSearch(stateData) {
           info.name.toLowerCase() === normalized
       );
       if (exact) {
-        selectAbbr(exact[0]);
+        selectAbbr(exact[0], { openDetail });
         return;
       }
 
       if (visibleResults.length === 1) {
-        selectAbbr(visibleResults[0][0]);
+        selectAbbr(visibleResults[0][0], { openDetail });
       }
       return;
     }
@@ -158,7 +165,7 @@ export function initSearch(stateData) {
     if (!option) {
       return;
     }
-    selectAbbr(option.dataset.abbr);
+    selectAbbr(option.dataset.abbr, { openDetail: event.ctrlKey || event.metaKey });
   });
 
   document.addEventListener("click", (event) => {
