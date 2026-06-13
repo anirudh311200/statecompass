@@ -16,7 +16,15 @@ import { downloadComparePng } from "./exportCompare.js";
 const MAX_STATES = 3;
 const MIN_STATES = 2;
 
+const SNAPSHOT_ROWS = [
+  { key: "taxPosture", label: "Tax posture" },
+  { key: "businessRegistration", label: "Business registration" },
+  { key: "complianceCalendar", label: "Compliance calendar" },
+];
+
 let stateData = {};
+let snapshotData = {};
+let snapshotDisclaimer = "";
 let dataYear = 2025;
 let selectedAbbrs = ["", "", ""];
 let activeProfile = FOUNDER_FIT_OVERALL;
@@ -236,6 +244,143 @@ function renderCategories(abbrs) {
   });
 }
 
+function appendSourceLine(parent, fact) {
+  const source = document.createElement("p");
+  source.className = "compare-snapshot-source";
+  source.append("Source: ");
+  const link = document.createElement("a");
+  link.href = fact.sourceUrl;
+  link.target = "_blank";
+  link.rel = "noopener noreferrer";
+  link.textContent = fact.sourceLabel;
+  source.append(link);
+  parent.appendChild(source);
+}
+
+function renderSnapshotFactCell(fact) {
+  const cell = document.createElement("div");
+  cell.className = "compare-snapshot-cell";
+
+  const value = document.createElement("p");
+  value.className = "compare-snapshot-value";
+  value.textContent = fact.value;
+  cell.appendChild(value);
+  appendSourceLine(cell, fact);
+
+  return cell;
+}
+
+function renderSnapshotCompare(abbrs) {
+  const container = document.getElementById("compare-snapshot");
+  const disclaimerEl = document.getElementById("compare-snapshot-disclaimer");
+  if (!container) {
+    return;
+  }
+
+  container.replaceChildren();
+
+  if (disclaimerEl && snapshotDisclaimer) {
+    disclaimerEl.replaceChildren();
+    const text = document.createElement("p");
+    text.className = "snapshot-disclaimer-text";
+    text.textContent = snapshotDisclaimer;
+    disclaimerEl.append(text);
+  }
+
+  SNAPSHOT_ROWS.forEach(({ key, label }) => {
+    const row = document.createElement("div");
+    row.className = "compare-snapshot-row";
+
+    const header = document.createElement("div");
+    header.className = "compare-snapshot-header";
+    header.innerHTML = `<span class="compare-snapshot-label">${label}</span>`;
+    row.appendChild(header);
+
+    const cols = document.createElement("div");
+    cols.className = "compare-snapshot-cols";
+
+    abbrs.forEach((abbr) => {
+      const info = stateData[abbr];
+      const snapshot = snapshotData[abbr];
+      const col = document.createElement("div");
+      col.className = "compare-snapshot-col";
+
+      const stateLabel = document.createElement("p");
+      stateLabel.className = "compare-snapshot-state";
+      stateLabel.textContent = info.name;
+      col.appendChild(stateLabel);
+
+      if (snapshot?.[key]) {
+        col.appendChild(renderSnapshotFactCell(snapshot[key]));
+      } else {
+        const missing = document.createElement("p");
+        missing.className = "compare-snapshot-value compare-snapshot-missing";
+        missing.textContent = "Snapshot unavailable.";
+        col.appendChild(missing);
+      }
+
+      cols.appendChild(col);
+    });
+
+    row.appendChild(cols);
+    container.appendChild(row);
+  });
+
+  const headsUpRow = document.createElement("div");
+  headsUpRow.className = "compare-snapshot-row";
+
+  const headsUpHeader = document.createElement("div");
+  headsUpHeader.className = "compare-snapshot-header";
+  headsUpHeader.innerHTML = `<span class="compare-snapshot-label">Multi-state heads-up</span>`;
+  headsUpRow.appendChild(headsUpHeader);
+
+  const headsUpCols = document.createElement("div");
+  headsUpCols.className = "compare-snapshot-cols";
+
+  abbrs.forEach((abbr) => {
+    const info = stateData[abbr];
+    const snapshot = snapshotData[abbr];
+    const col = document.createElement("div");
+    col.className = "compare-snapshot-col";
+
+    const stateLabel = document.createElement("p");
+    stateLabel.className = "compare-snapshot-state";
+    stateLabel.textContent = info.name;
+    col.appendChild(stateLabel);
+
+    const bullets = snapshot?.multiStateHeadsUp;
+    if (bullets?.length) {
+      const list = document.createElement("ul");
+      list.className = "compare-snapshot-heads-up-list";
+
+      bullets.forEach((bullet) => {
+        const item = document.createElement("li");
+        item.className = "compare-snapshot-heads-up-item";
+
+        const value = document.createElement("p");
+        value.className = "compare-snapshot-value";
+        value.textContent = bullet.value;
+        item.appendChild(value);
+        appendSourceLine(item, bullet);
+
+        list.appendChild(item);
+      });
+
+      col.appendChild(list);
+    } else {
+      const missing = document.createElement("p");
+      missing.className = "compare-snapshot-value compare-snapshot-missing";
+      missing.textContent = "Snapshot unavailable.";
+      col.appendChild(missing);
+    }
+
+    headsUpCols.appendChild(col);
+  });
+
+  headsUpRow.appendChild(headsUpCols);
+  container.appendChild(headsUpRow);
+}
+
 function announceCompareUpdate(abbrs) {
   const liveStatus = document.getElementById("compare-live-status");
   if (!liveStatus || abbrs.length < MIN_STATES) {
@@ -271,6 +416,7 @@ function renderCompare() {
   results.hidden = false;
   renderSummary(abbrs);
   renderCategories(abbrs);
+  renderSnapshotCompare(abbrs);
   updateShareBar(abbrs);
   announceCompareUpdate(abbrs);
 }
@@ -345,13 +491,24 @@ function setProfile(profileId) {
 }
 
 export async function initCompare() {
-  const response = await fetch("/data/states.json");
-  if (!response.ok) {
+  const [statesResponse, snapshotsResponse] = await Promise.all([
+    fetch("/data/states.json"),
+    fetch("/data/founder_snapshots.json"),
+  ]);
+
+  if (!statesResponse.ok) {
     throw new Error("Could not load state data.");
   }
+  if (!snapshotsResponse.ok) {
+    throw new Error("Could not load Founder Snapshot data.");
+  }
 
-  const payload = await response.json();
+  const payload = await statesResponse.json();
+  const snapshotsPayload = await snapshotsResponse.json();
+
   stateData = payload.states;
+  snapshotData = snapshotsPayload.states;
+  snapshotDisclaimer = snapshotsPayload.disclaimer ?? "";
   dataYear = payload.year ?? 2025;
   activeProfile = getProfileFromUrl();
 

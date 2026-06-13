@@ -6,8 +6,8 @@ import { dataYear } from "../lib/states.js";
 
 <Layout
   title={`Compare States — CNBC ${dataYear} | StateCompass`}
-  description="Compare 2–3 US states side by side on CNBC business climate scores and all 10 category rankings. Shareable link for co-founders and board decks."
-  subtitle="Compare up to 3 states on CNBC scores and category ranks."
+  description="Compare 2–3 US states side by side on CNBC scores, category rankings, and Founder Snapshot operational context. Shareable link for co-founders and board decks."
+  subtitle="Compare up to 3 states — CNBC scores, categories, and Founder Snapshot."
   ogImage="/og/compare.svg"
   ogImageAlt="Compare US states — CNBC rankings for founders"
 >
@@ -16,7 +16,7 @@ import { dataYear } from "../lib/states.js";
       <div class="compare-controls-header">
         <h1 class="page-title">Compare states</h1>
         <p class="page-lead">
-          Side-by-side CNBC {dataYear} scores — share the URL with your co-founder.
+          Side-by-side CNBC {dataYear} scores and Founder Snapshot operational context — share the URL with your co-founder.
         </p>
       </div>
 
@@ -70,7 +70,7 @@ import { dataYear } from "../lib/states.js";
     </div>
 
     <div id="compare-empty" class="compare-empty panel">
-      <p>Select at least two states above to compare scores and categories.</p>
+      <p>Select at least two states above to compare CNBC scores, categories, and operational context.</p>
     </div>
 
     <div id="compare-results" class="compare-results" hidden aria-live="polite">
@@ -88,6 +88,20 @@ import { dataYear } from "../lib/states.js";
         <h2 id="compare-categories-heading" class="panel-title">By category</h2>
         <p class="panel-helper">Winner highlighted per category (best rank wins).</p>
         <div id="compare-categories"></div>
+      </section>
+
+      <section class="panel compare-snapshot-panel" aria-labelledby="compare-snapshot-heading">
+        <h2 id="compare-snapshot-heading" class="panel-title">Operational context</h2>
+        <p class="panel-helper">
+          Founder Snapshot — sourced public facts, separate from CNBC scores. Not ranked or scored.
+        </p>
+        <aside
+          id="compare-snapshot-disclaimer"
+          class="snapshot-disclaimer compare-snapshot-disclaimer"
+          role="note"
+          aria-label="Legal disclaimer"
+        ></aside>
+        <div id="compare-snapshot"></div>
       </section>
 
       <p class="compare-export-footer" id="compare-export-footer">

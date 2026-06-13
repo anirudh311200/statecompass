@@ -66,7 +66,6 @@ function updateDetailLinks(abbr, info) {
   const href = `/states/${info.slug}`;
   const nameLink = document.getElementById("state-name-link");
   const detailLink = document.getElementById("map-detail-link");
-  const snapshotLink = document.getElementById("map-snapshot-link");
 
   if (nameLink) {
     nameLink.textContent = info.name;
@@ -75,9 +74,6 @@ function updateDetailLinks(abbr, info) {
   }
   if (detailLink) {
     detailLink.href = href;
-  }
-  if (snapshotLink) {
-    snapshotLink.href = href;
   }
 }
 
