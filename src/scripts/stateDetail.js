@@ -13,63 +13,12 @@ import {
   wireYearSelector,
 } from "./yearData.js";
 
-const RANK_MIN = 1;
-const RANK_MAX = 50;
-const MINI_SVG_WIDTH = 180;
-const MINI_SVG_HEIGHT = 36;
-const MINI_CY = 16;
-const MINI_PAD = 12;
-
 function escapeHtml(value) {
   return String(value)
     .replace(/&/g, "&amp;")
     .replace(/</g, "&lt;")
     .replace(/>/g, "&gt;")
     .replace(/"/g, "&quot;");
-}
-
-function rankToX(rank) {
-  const plotWidth = MINI_SVG_WIDTH - MINI_PAD * 2;
-  return MINI_PAD + ((rank - RANK_MIN) / (RANK_MAX - RANK_MIN)) * plotWidth;
-}
-
-function bezierPath(x1, x2) {
-  const y = MINI_CY;
-  const dx = x2 - x1;
-  const bend = Math.min(Math.abs(dx) * 0.4, 12);
-  const direction = x2 >= x1 ? 1 : -1;
-  return `M ${x1} ${y} C ${x1 + dx * 0.33} ${y - bend * direction}, ${x1 + dx * 0.67} ${y + bend * direction}, ${x2} ${y}`;
-}
-
-function renderMiniDumbbell(priorRank, currentRank, delta, priorYear, currentYear) {
-  const direction = delta > 0 ? "up" : delta < 0 ? "down" : "flat";
-  const xPrior = rankToX(priorRank);
-  const xCurrent = rankToX(currentRank);
-  const path = bezierPath(xPrior, xCurrent);
-  const gradId = "state-yoy-grad";
-
-  return `
-    <div class="state-yoy-dumbbell-wrap is-${direction}" aria-hidden="true">
-      <div class="state-yoy-dumbbell-labels">
-        <span class="state-yoy-dumbbell-year">${priorYear}</span>
-        <span class="state-yoy-dumbbell-year">${currentYear}</span>
-      </div>
-      <svg class="state-yoy-dumbbell-svg" viewBox="0 0 ${MINI_SVG_WIDTH} ${MINI_SVG_HEIGHT}" role="img" aria-label="Overall rank ${priorRank} to ${currentRank}">
-        <defs>
-          <linearGradient id="${gradId}" x1="${xPrior}" y1="0" x2="${xCurrent}" y2="0" gradientUnits="userSpaceOnUse">
-            <stop offset="0%" class="state-yoy-grad-stop is-prior" />
-            <stop offset="100%" class="state-yoy-grad-stop is-current" />
-          </linearGradient>
-        </defs>
-        <path class="state-yoy-connector" d="${path}" fill="none" stroke="url(#${gradId})" stroke-width="2.5" stroke-linecap="round" pathLength="100" />
-        <circle class="state-yoy-dot is-prior" cx="${xPrior}" cy="${MINI_CY}" r="4.5" />
-        <circle class="state-yoy-dot is-current" cx="${xCurrent}" cy="${MINI_CY}" r="5.5" />
-        <text class="state-yoy-rank-label" x="${xPrior}" y="${MINI_SVG_HEIGHT - 3}" text-anchor="middle">#${priorRank}</text>
-        <text class="state-yoy-rank-label" x="${xCurrent}" y="${MINI_SVG_HEIGHT - 3}" text-anchor="middle">#${currentRank}</text>
-      </svg>
-      <span class="state-yoy-dumbbell-delta is-${direction}">${formatRankDelta(delta)}</span>
-    </div>
-  `;
 }
 
 function renderDriverList(drivers, label, className) {
@@ -87,36 +36,54 @@ function renderDriverList(drivers, label, className) {
   </ul>`;
 }
 
+function clearYoYPanel() {
+  const panel = document.getElementById("state-yoy-panel");
+  const helper = document.getElementById("state-yoy-helper");
+  const columns = document.getElementById("state-yoy-columns");
+  const links = document.getElementById("state-yoy-links");
+  const note = document.getElementById("state-yoy-note");
+
+  if (helper) {
+    helper.textContent = "";
+  }
+  if (columns) {
+    columns.innerHTML = "";
+  }
+  if (links) {
+    links.innerHTML = "";
+  }
+  if (note) {
+    note.textContent = "";
+  }
+  if (panel) {
+    panel.hidden = true;
+  }
+}
+
 function renderYoYPanel(drivers, { priorYear, currentYear, slug }) {
   const panel = document.getElementById("state-yoy-panel");
   const helper = document.getElementById("state-yoy-helper");
-  const dumbbell = document.getElementById("state-yoy-dumbbell");
   const columns = document.getElementById("state-yoy-columns");
   const links = document.getElementById("state-yoy-links");
   const note = document.getElementById("state-yoy-note");
 
   if (!panel || !drivers) {
-    if (panel) {
-      panel.hidden = true;
-    }
+    clearYoYPanel();
     return null;
   }
 
   const { overall } = drivers;
   const direction = overall.rankDelta > 0 ? "up" : overall.rankDelta < 0 ? "down" : "flat";
+  const deltaLabel = formatRankDelta(overall.rankDelta);
 
   if (helper) {
-    helper.textContent = `CNBC ${priorYear} vs ${currentYear} — overall and category rank shifts (#1 is best).`;
-  }
-
-  if (dumbbell) {
-    dumbbell.innerHTML = renderMiniDumbbell(
-      overall.priorRank,
-      overall.currentRank,
-      overall.rankDelta,
-      priorYear,
-      currentYear
-    );
+    helper.innerHTML = `
+      <span class="state-yoy-overall is-${direction}">
+        Overall rank #${overall.priorRank} → #${overall.currentRank}
+        (${deltaLabel}) · CNBC ${priorYear} vs ${currentYear}
+      </span>
+      <span class="state-yoy-overall-note">Category shifts below (#1 is best).</span>
+    `;
   }
 
   if (columns) {
@@ -148,7 +115,7 @@ function renderYoYPanel(drivers, { priorYear, currentYear, slug }) {
   if (note) {
     note.textContent =
       direction === "flat"
-        ? "Overall rank held steady vs the prior CNBC study. Category shifts below reflect movement among peers and methodology changes."
+        ? "Overall rank held steady vs the prior CNBC study. Category shifts reflect movement among peers and methodology changes."
         : "Rank changes use CNBC category ranks vs the prior study — methodology and weights can differ year to year.";
   }
 
@@ -213,7 +180,7 @@ function updateCategoryHelper(year, hasYoY) {
   if (helper) {
     helper.textContent = hasYoY
       ? `All 10 CNBC ${year} categories — score out of category max, rank among 50 states. Colored badges show YoY rank change vs prior study.`
-      : `All 10 CNBC categories — score out of category max, rank among 50 states.`;
+      : `All 10 CNBC ${year} categories — score out of category max, rank among 50 states.`;
   }
 }
 
@@ -251,10 +218,7 @@ export async function initStateDetail(abbr) {
       rankDeltas = renderYoYPanel(drivers, { priorYear, currentYear: year, slug });
       updateCategoryHelper(year, true);
     } else {
-      const panel = document.getElementById("state-yoy-panel");
-      if (panel) {
-        panel.hidden = true;
-      }
+      clearYoYPanel();
       updateCategoryHelper(year, false);
     }
 

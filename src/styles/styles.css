@@ -1118,100 +1118,37 @@ footer a:hover {
   gap: 0.75rem;
 }
 
-.state-yoy-dumbbell {
-  display: flex;
-  justify-content: center;
-  padding: 0.25rem 0 0.5rem;
-}
-
-.state-yoy-dumbbell-wrap {
-  display: grid;
-  grid-template-columns: 1fr auto;
-  align-items: center;
-  gap: 0.75rem 1rem;
-  width: min(100%, 320px);
-}
-
-.state-yoy-dumbbell-labels {
+.state-yoy-panel[hidden] {
   display: none;
 }
 
-.state-yoy-dumbbell-svg {
-  width: 100%;
-  max-width: 220px;
-  height: 36px;
-  display: block;
-  grid-column: 1;
+.state-yoy-helper {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
 }
 
-.state-yoy-grad-stop.is-prior {
-  stop-color: rgba(163, 163, 163, 0.75);
-}
-
-.state-yoy-dumbbell-wrap.is-up .state-yoy-grad-stop.is-current {
-  stop-color: rgba(34, 197, 94, 0.65);
-}
-
-.state-yoy-dumbbell-wrap.is-down .state-yoy-grad-stop.is-current {
-  stop-color: rgba(239, 68, 68, 0.65);
-}
-
-.state-yoy-dumbbell-wrap.is-flat .state-yoy-grad-stop.is-current {
-  stop-color: var(--gray);
-}
-
-.state-yoy-connector {
-  stroke-dasharray: 100;
-  stroke-dashoffset: 0;
-}
-
-.state-yoy-dot.is-prior {
-  fill: var(--gray);
-}
-
-.state-yoy-dumbbell-wrap.is-up .state-yoy-dot.is-current {
-  fill: rgba(34, 197, 94, 0.75);
-}
-
-.state-yoy-dumbbell-wrap.is-down .state-yoy-dot.is-current {
-  fill: rgba(239, 68, 68, 0.75);
-}
-
-.state-yoy-dumbbell-wrap.is-flat .state-yoy-dot.is-current {
-  fill: var(--muted);
-}
-
-.state-yoy-rank-label {
-  font-family: var(--font-body);
-  font-size: 8px;
-  fill: var(--dim);
-}
-
-.state-yoy-dumbbell-delta {
-  grid-column: 2;
-  grid-row: 1;
-  flex-shrink: 0;
-  min-width: 2.25rem;
-  padding: 0.2rem 0.45rem;
-  border-radius: 999px;
-  font-size: var(--text-xs);
+.state-yoy-overall {
   font-weight: 600;
-  text-align: center;
+  color: var(--text);
 }
 
-.state-yoy-dumbbell-delta.is-up {
-  color: rgba(34, 197, 94, 0.85);
-  background: rgba(34, 197, 94, 0.12);
+.state-yoy-overall.is-up {
+  color: var(--green);
 }
 
-.state-yoy-dumbbell-delta.is-down {
-  color: rgba(239, 68, 68, 0.85);
-  background: rgba(239, 68, 68, 0.12);
+.state-yoy-overall.is-down {
+  color: var(--red);
 }
 
-.state-yoy-dumbbell-delta.is-flat {
+.state-yoy-overall.is-flat {
   color: var(--muted);
-  background: rgba(255, 255, 255, 0.06);
+}
+
+.state-yoy-overall-note {
+  font-weight: 400;
+  color: var(--muted);
+  font-size: var(--text-sm);
 }
 
 .state-yoy-links {
