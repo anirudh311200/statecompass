@@ -1,79 +1,189 @@
-const CHART_COLORS = {
-  up: "#22c55e",
-  down: "#ef4444",
-};
+import { formatRankDelta } from "./yearData.js";
 
-function rankY(rank, height, padding) {
-  const plotHeight = height - padding * 2;
-  return padding + ((rank - 1) / 49) * plotHeight;
+const RANK_MIN = 1;
+const RANK_MAX = 50;
+const SVG_WIDTH = 220;
+const SVG_HEIGHT = 32;
+const SVG_CY = 14;
+const DOT_PRIOR_R = 4;
+const DOT_CURRENT_R = 5;
+const PLOT_PAD = 10;
+
+function escapeHtml(value) {
+  return String(value)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;");
 }
 
-export function renderSlopeChart(container, { risers, fallers, priorYear, currentYear, limit = 8 }) {
+function rankToX(rank) {
+  const plotWidth = SVG_WIDTH - PLOT_PAD * 2;
+  return PLOT_PAD + ((rank - RANK_MIN) / (RANK_MAX - RANK_MIN)) * plotWidth;
+}
+
+function bezierPath(x1, x2) {
+  const y = SVG_CY;
+  const dx = x2 - x1;
+  const bend = Math.min(Math.abs(dx) * 0.4, 14);
+  const direction = x2 >= x1 ? 1 : -1;
+  return `M ${x1} ${y} C ${x1 + dx * 0.33} ${y - bend * direction}, ${x1 + dx * 0.67} ${y + bend * direction}, ${x2} ${y}`;
+}
+
+function renderDumbbellRow(mover, direction, index) {
+  const xPrior = rankToX(mover.priorRank);
+  const xCurrent = rankToX(mover.currentRank);
+  const path = bezierPath(xPrior, xCurrent);
+  const gradId = `movers-grad-${direction}-${mover.abbr}`;
+  const delay = `${index * 0.07}s`;
+  const deltaLabel = formatRankDelta(mover.delta);
+
+  return `
+    <button
+      type="button"
+      class="movers-dumbbell-row is-${direction}"
+      data-abbr="${mover.abbr}"
+      data-table="${direction === "up" ? "risers" : "fallers"}"
+      aria-label="${escapeHtml(mover.name)}: rank ${mover.priorRank} to ${mover.currentRank}, ${deltaLabel}"
+      style="--row-delay: ${delay}"
+    >
+      <span class="movers-dumbbell-name">${escapeHtml(mover.name)}</span>
+      <span class="movers-dumbbell-track" aria-hidden="true">
+        <svg class="movers-dumbbell-svg" viewBox="0 0 ${SVG_WIDTH} ${SVG_HEIGHT}" preserveAspectRatio="xMidYMid meet">
+          <defs>
+            <linearGradient id="${gradId}" x1="${xPrior}" y1="0" x2="${xCurrent}" y2="0" gradientUnits="userSpaceOnUse">
+              <stop offset="0%" class="movers-dumbbell-grad-stop is-prior" />
+              <stop offset="100%" class="movers-dumbbell-grad-stop is-current" />
+            </linearGradient>
+          </defs>
+          <path
+            class="movers-dumbbell-connector"
+            d="${path}"
+            fill="none"
+            stroke="url(#${gradId})"
+            stroke-width="2"
+            stroke-linecap="round"
+            pathLength="100"
+          />
+          <circle class="movers-dumbbell-dot is-prior" cx="${xPrior}" cy="${SVG_CY}" r="${DOT_PRIOR_R}" />
+          <circle class="movers-dumbbell-dot is-current" cx="${xCurrent}" cy="${SVG_CY}" r="${DOT_CURRENT_R}" />
+          <text class="movers-dumbbell-rank-label is-prior" x="${xPrior}" y="${SVG_HEIGHT - 2}" text-anchor="middle">#${mover.priorRank}</text>
+          <text class="movers-dumbbell-rank-label is-current" x="${xCurrent}" y="${SVG_HEIGHT - 2}" text-anchor="middle">#${mover.currentRank}</text>
+        </svg>
+      </span>
+      <span class="movers-dumbbell-delta is-${direction}">${deltaLabel}</span>
+    </button>
+  `;
+}
+
+function renderPanel(title, direction, movers, { priorYear, currentYear }) {
+  if (!movers.length) {
+    return `
+      <div class="movers-dumbbell-panel is-${direction}">
+        <div class="movers-dumbbell-panel-head">
+          <h3 class="movers-dumbbell-panel-title">${title}</h3>
+        </div>
+        <p class="movers-chart-empty">No ${direction === "up" ? "risers" : "fallers"} to chart for this view.</p>
+      </div>
+    `;
+  }
+
+  const rows = movers.map((mover, index) => renderDumbbellRow(mover, direction, index)).join("");
+
+  return `
+    <div class="movers-dumbbell-panel is-${direction}">
+      <div class="movers-dumbbell-panel-head">
+        <h3 class="movers-dumbbell-panel-title">${title}</h3>
+        <div class="movers-dumbbell-years" aria-hidden="true">
+          <span class="movers-dumbbell-year is-prior">${priorYear}</span>
+          <span class="movers-dumbbell-year-arrow">→</span>
+          <span class="movers-dumbbell-year is-current">${currentYear}</span>
+        </div>
+      </div>
+      <div class="movers-dumbbell-axis" aria-hidden="true">
+        <span>#1 best</span>
+        <span>#50</span>
+      </div>
+      <div class="movers-dumbbell-rows">
+        ${rows}
+      </div>
+    </div>
+  `;
+}
+
+export function renderDumbbellCharts(
+  container,
+  { risers, fallers, priorYear, currentYear, limit = 6 }
+) {
   if (!container) {
     return;
   }
 
   const topRisers = risers.filter((m) => m.delta > 0).slice(0, limit);
   const topFallers = fallers.filter((m) => m.delta < 0).slice(0, limit);
-  const movers = [...topRisers, ...topFallers];
 
-  if (!movers.length) {
+  if (!topRisers.length && !topFallers.length) {
     container.innerHTML = `<p class="movers-chart-empty">No rank movement to chart for this view.</p>`;
     return;
   }
 
-  const width = 640;
-  const height = 320;
-  const padding = { top: 28, right: 24, bottom: 36, left: 48 };
-  const xPrior = padding.left + 40;
-  const xCurrent = width - padding.right - 40;
-
-  const lines = movers
-    .map((mover) => {
-      const color = mover.delta > 0 ? CHART_COLORS.up : CHART_COLORS.down;
-      const y1 = rankY(mover.priorRank, height, padding.top);
-      const y2 = rankY(mover.currentRank, height, padding.top);
-      return `<line class="movers-slope-line" x1="${xPrior}" y1="${y1}" x2="${xCurrent}" y2="${y2}" stroke="${color}" stroke-width="2" stroke-linecap="round" opacity="0.85" />`;
-    })
-    .join("");
-
-  const labels = movers
-    .map((mover) => {
-      const color = mover.delta > 0 ? CHART_COLORS.up : CHART_COLORS.down;
-      const y = rankY(mover.currentRank, height, padding.top);
-      return `<text class="movers-slope-label" x="${xCurrent + 8}" y="${y + 4}" fill="${color}" font-size="11">${mover.abbr}</text>`;
-    })
-    .join("");
-
-  const gridLines = [1, 10, 25, 40, 50]
-    .map((rank) => {
-      const y = rankY(rank, height, padding.top);
-      return `
-        <line x1="${padding.left}" y1="${y}" x2="${width - padding.right}" y2="${y}" stroke="rgba(255,255,255,0.06)" stroke-width="1" />
-        <text x="${padding.left - 8}" y="${y + 4}" text-anchor="end" fill="#737373" font-size="10">#${rank}</text>
-      `;
-    })
-    .join("");
-
   container.innerHTML = `
-    <figure class="movers-slope-figure">
+    <figure class="movers-dumbbell-figure">
       <figcaption class="visually-hidden">
-        Slope chart of CNBC rank changes from ${priorYear} to ${currentYear} for top movers.
+        Dumbbell charts of CNBC rank changes from ${priorYear} to ${currentYear} for top risers and fallers.
       </figcaption>
-      <svg class="movers-slope-svg" viewBox="0 0 ${width} ${height}" role="img" aria-hidden="true">
-        ${gridLines}
-        <line x1="${xPrior}" y1="${padding.top}" x2="${xPrior}" y2="${height - padding.bottom}" stroke="#404040" stroke-width="1.5" />
-        <line x1="${xCurrent}" y1="${padding.top}" x2="${xCurrent}" y2="${height - padding.bottom}" stroke="#404040" stroke-width="1.5" />
-        ${lines}
-        ${labels}
-        <text x="${xPrior}" y="${height - 12}" text-anchor="middle" fill="#a3a3a3" font-size="12" font-weight="600">${priorYear}</text>
-        <text x="${xCurrent}" y="${height - 12}" text-anchor="middle" fill="#a3a3a3" font-size="12" font-weight="600">${currentYear}</text>
-        <text x="${(xPrior + xCurrent) / 2}" y="16" text-anchor="middle" fill="#737373" font-size="11">Lower on chart = better rank</text>
-      </svg>
-      <div class="movers-slope-legend" aria-hidden="true">
-        <span class="movers-slope-legend-item is-up"><span class="movers-slope-swatch"></span> Risers</span>
-        <span class="movers-slope-legend-item is-down"><span class="movers-slope-swatch"></span> Fallers</span>
+      <div class="movers-dumbbell-grid">
+        ${renderPanel("Top risers", "up", topRisers, { priorYear, currentYear })}
+        ${renderPanel("Top fallers", "down", topFallers, { priorYear, currentYear })}
       </div>
     </figure>
   `;
+}
+
+export function setDumbbellHighlight(container, abbr) {
+  if (!container) {
+    return;
+  }
+
+  container.querySelectorAll(".movers-dumbbell-row").forEach((row) => {
+    row.classList.toggle("is-highlighted", abbr != null && row.dataset.abbr === abbr);
+  });
+}
+
+export function setDumbbellExpanded(container, abbr) {
+  if (!container) {
+    return;
+  }
+
+  container.querySelectorAll(".movers-dumbbell-row").forEach((row) => {
+    row.classList.toggle("is-expanded", abbr != null && row.dataset.abbr === abbr);
+  });
+}
+
+export function wireDumbbellChartInteractions(container, { onSelect, onHighlight }) {
+  if (!container) {
+    return;
+  }
+
+  container.querySelectorAll(".movers-dumbbell-row").forEach((row) => {
+    row.addEventListener("click", () => {
+      onSelect?.(row.dataset.abbr, row.dataset.table);
+    });
+
+    row.addEventListener("mouseenter", () => {
+      onHighlight?.(row.dataset.abbr);
+    });
+
+    row.addEventListener("mouseleave", () => {
+      onHighlight?.(null);
+    });
+
+    row.addEventListener("focus", () => {
+      onHighlight?.(row.dataset.abbr);
+    });
+
+    row.addEventListener("blur", () => {
+      onHighlight?.(null);
+    });
+  });
 }

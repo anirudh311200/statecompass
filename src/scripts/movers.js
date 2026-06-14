@@ -11,9 +11,15 @@ import {
   formatRankDelta,
   syncYearToUrl,
 } from "./yearData.js";
-import { renderSlopeChart } from "./moversChart.js";
+import {
+  renderDumbbellCharts,
+  setDumbbellHighlight,
+  setDumbbellExpanded,
+  wireDumbbellChartInteractions,
+} from "./moversChart.js";
 
 let expandedAbbr = null;
+let highlightedAbbr = null;
 let lastPriorPayload = null;
 let lastCurrentPayload = null;
 let lastPriorYear = null;
@@ -154,7 +160,28 @@ function updateMethodologyNote(index, priorYear, currentYear) {
   `;
 }
 
-function wireTableInteractions(tbody, tableId) {
+function setTableHighlight(abbr) {
+  document.querySelectorAll(".movers-row").forEach((row) => {
+    row.classList.toggle("is-chart-highlighted", abbr != null && row.dataset.abbr === abbr);
+  });
+}
+
+function wireTableRowHover(tbody, chartEl) {
+  tbody?.querySelectorAll(".movers-row").forEach((row) => {
+    row.addEventListener("mouseenter", () => {
+      highlightedAbbr = row.dataset.abbr;
+      setTableHighlight(highlightedAbbr);
+      setDumbbellHighlight(chartEl, highlightedAbbr);
+    });
+    row.addEventListener("mouseleave", () => {
+      highlightedAbbr = null;
+      setTableHighlight(null);
+      setDumbbellHighlight(chartEl, null);
+    });
+  });
+}
+
+function wireTableInteractions(tbody, tableId, chartEl) {
   tbody?.addEventListener("click", (event) => {
     const expandBtn = event.target.closest(".movers-expand-btn");
     const row = event.target.closest(".movers-row");
@@ -164,6 +191,7 @@ function wireTableInteractions(tbody, tableId) {
       const abbr = row.dataset.abbr;
       expandedAbbr = expandedAbbr === abbr ? null : abbr;
       rerenderTables();
+      setDumbbellExpanded(chartEl, expandedAbbr);
       return;
     }
 
@@ -171,6 +199,7 @@ function wireTableInteractions(tbody, tableId) {
       const abbr = row.dataset.abbr;
       expandedAbbr = expandedAbbr === abbr ? null : abbr;
       rerenderTables();
+      setDumbbellExpanded(chartEl, expandedAbbr);
     }
   });
 
@@ -187,6 +216,7 @@ function wireTableInteractions(tbody, tableId) {
       const abbr = row.dataset.abbr;
       expandedAbbr = expandedAbbr === abbr ? null : abbr;
       rerenderTables();
+      setDumbbellExpanded(chartEl, expandedAbbr);
     }
   });
 }
@@ -206,7 +236,7 @@ export async function initMovers() {
   const risersEmpty = document.getElementById("movers-risers-empty");
   const fallersEmpty = document.getElementById("movers-fallers-empty");
   const modeLabel = document.getElementById("movers-mode-label");
-  const chartEl = document.getElementById("movers-slope-chart");
+  const chartEl = document.getElementById("movers-dumbbell-chart");
 
   if (!priorYear || !risersBody || !fallersBody) {
     return;
@@ -230,6 +260,7 @@ export async function initMovers() {
     currentSelect.addEventListener("change", async () => {
       currentYear = Number(currentSelect.value);
       expandedAbbr = null;
+      highlightedAbbr = null;
       syncYearToUrl(currentYear, index);
       await render();
     });
@@ -247,6 +278,10 @@ export async function initMovers() {
       categoryLabel,
       tableId: "fallers",
     });
+    wireTableRowHover(risersBody, chartEl);
+    wireTableRowHover(fallersBody, chartEl);
+    setDumbbellExpanded(chartEl, expandedAbbr);
+    setTableHighlight(highlightedAbbr);
   };
 
   async function render() {
@@ -285,22 +320,44 @@ export async function initMovers() {
       fallersEmpty.hidden = lastFallers.length > 0;
     }
 
-    renderSlopeChart(chartEl, {
+    renderDumbbellCharts(chartEl, {
       risers: lastRisers,
       fallers: lastFallers,
       priorYear,
       currentYear,
+      limit: 6,
     });
+
+    wireDumbbellChartInteractions(chartEl, {
+      onSelect: (abbr) => {
+        expandedAbbr = expandedAbbr === abbr ? null : abbr;
+        rerenderTables();
+        if (expandedAbbr) {
+          document.querySelector(`.movers-row[data-abbr="${expandedAbbr}"]`)?.scrollIntoView({
+            behavior: "smooth",
+            block: "nearest",
+          });
+        }
+      },
+      onHighlight: (abbr) => {
+        highlightedAbbr = abbr;
+        setTableHighlight(abbr);
+        setDumbbellHighlight(chartEl, abbr);
+      },
+    });
+
+    setDumbbellExpanded(chartEl, expandedAbbr);
 
     updateMethodologyNote(index, priorYear, currentYear);
   }
 
   categorySelect?.addEventListener("change", () => {
     expandedAbbr = null;
+    highlightedAbbr = null;
     render().catch((error) => console.error(error));
   });
 
-  wireTableInteractions(risersBody, "risers");
-  wireTableInteractions(fallersBody, "fallers");
+  wireTableInteractions(risersBody, "risers", chartEl);
+  wireTableInteractions(fallersBody, "fallers", chartEl);
   await render();
 }
