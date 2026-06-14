@@ -1,4 +1,5 @@
-import { CATEGORY_ORDER, CATEGORY_LABELS } from "./categories.js";
+import { CATEGORY_LABELS } from "./categories.js";
+import { cnbcStateArticleUrl, METHODOLOGY_URLS } from "../lib/cnbcUrls.js";
 import {
   loadIndex,
   loadYearPayload,
@@ -6,63 +7,170 @@ import {
   resolveYear,
   getPriorYear,
   computeYoYMovers,
+  computeStateYoYDrivers,
   formatRankDelta,
   syncYearToUrl,
 } from "./yearData.js";
+import { renderSlopeChart } from "./moversChart.js";
 
-function renderMoverRow(mover, { showCategory = false, categoryLabel = "" }) {
-  const deltaClass =
-    mover.delta > 0 ? "is-up" : mover.delta < 0 ? "is-down" : "is-flat";
-  const deltaLabel =
-    mover.delta > 0
-      ? `Up ${mover.delta} ranks`
-      : mover.delta < 0
-        ? `Down ${Math.abs(mover.delta)} ranks`
-        : "No change";
+let expandedAbbr = null;
+let lastPriorPayload = null;
+let lastCurrentPayload = null;
+let lastPriorYear = null;
+let lastCurrentYear = null;
+let lastCategoryKey = "";
+
+function escapeHtml(value) {
+  return String(value)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;");
+}
+
+function renderDriverList(drivers, label, className) {
+  if (!drivers.length) {
+    return `<p class="movers-context-muted">No major ${label} in this period.</p>`;
+  }
+  return `<ul class="movers-driver-list ${className}">
+    ${drivers
+      .slice(0, 3)
+      .map(
+        (cat) =>
+          `<li><span class="movers-driver-label">${escapeHtml(cat.label)}</span> <span class="movers-driver-delta">${formatRankDelta(cat.rankDelta)} ranks</span> <span class="movers-driver-ranks">#${cat.priorRank}→#${cat.currentRank}</span></li>`
+      )
+      .join("")}
+  </ul>`;
+}
+
+function renderContextPanel(drivers, { priorYear, currentYear, categoryKey }) {
+  if (!drivers) {
+    return "";
+  }
+
+  const scopeLabel = categoryKey ? CATEGORY_LABELS[categoryKey] : "Overall";
+  const scopedCategory = categoryKey
+    ? drivers.categories.find((cat) => cat.key === categoryKey)
+    : null;
+
+  const compareHref = `/?state=${drivers.abbr}&year=${currentYear}`;
+  const stateHref = `/states/${drivers.slug}`;
+  const cnbcHref = cnbcStateArticleUrl(currentYear, drivers.slug);
+  const snapshotHref = `${stateHref}#founder-snapshot`;
+
+  const focusBlock = scopedCategory
+    ? `<p class="movers-context-focus">
+        <strong>${escapeHtml(scopeLabel)}:</strong>
+        #${scopedCategory.priorRank} → #${scopedCategory.currentRank}
+        (${formatRankDelta(scopedCategory.rankDelta)} ranks ·
+        ${scopedCategory.priorScore}→${scopedCategory.currentScore} CNBC pts)
+      </p>`
+    : `<p class="movers-context-focus">
+        <strong>Overall:</strong>
+        #${drivers.overall.priorRank} → #${drivers.overall.currentRank}
+        (${formatRankDelta(drivers.overall.rankDelta)} ranks ·
+        ${drivers.overall.priorScore}→${drivers.overall.currentScore} CNBC pts)
+      </p>`;
 
   return `
-    <tr class="movers-row" data-abbr="${mover.abbr}" tabindex="0" role="link" aria-label="${mover.name}, ${deltaLabel}">
-      <td class="movers-name"><a href="/states/${mover.slug}">${mover.name}</a></td>
-      <td class="movers-rank">#${mover.priorRank}</td>
-      <td class="movers-rank">#${mover.currentRank}</td>
-      <td class="movers-delta ${deltaClass}">${formatRankDelta(mover.delta)}</td>
-      ${showCategory ? `<td class="movers-category">${categoryLabel}</td>` : ""}
-    </tr>
+    <div class="movers-context-inner">
+      <p class="movers-context-title">What moved for ${escapeHtml(drivers.name)}</p>
+      ${focusBlock}
+      <div class="movers-context-columns">
+        <div>
+          <p class="movers-context-subhead is-up">Biggest lifts</p>
+          ${renderDriverList(drivers.lifts, "lifts", "is-up")}
+        </div>
+        <div>
+          <p class="movers-context-subhead is-down">Biggest drags</p>
+          ${renderDriverList(drivers.drags, "drags", "is-down")}
+        </div>
+      </div>
+      <p class="movers-context-note">
+        Rank changes use CNBC ${priorYear} vs ${currentYear} category ranks and point totals.
+        Methodology and weights can differ year to year — a drop may reflect peer movement, not only local conditions.
+      </p>
+      <div class="movers-context-links">
+        <a href="${compareHref}">Preview on map</a>
+        <a href="${stateHref}">Full state page</a>
+        <a href="${cnbcHref}" target="_blank" rel="noopener noreferrer">CNBC ${currentYear} writeup</a>
+        <a href="${snapshotHref}">Founder Snapshot</a>
+      </div>
+      <p class="movers-context-disclaimer">Founder Snapshot is operational context — not CNBC-scored.</p>
+    </div>
   `;
 }
 
-function updateSummary(risers, fallers, priorYear, currentYear, categoryLabel) {
-  const summary = document.getElementById("movers-summary");
-  if (!summary) {
+function renderMoverRows(movers, { categoryKey, categoryLabel, tableId }) {
+  return movers
+    .map((mover) => {
+      const deltaClass =
+        mover.delta > 0 ? "is-up" : mover.delta < 0 ? "is-down" : "is-flat";
+      const isExpanded = expandedAbbr === mover.abbr;
+      const drivers = computeStateYoYDrivers(mover.abbr, lastPriorPayload, lastCurrentPayload);
+      const contextHtml = isExpanded
+        ? renderContextPanel(drivers, {
+            priorYear: lastPriorYear,
+            currentYear: lastCurrentYear,
+            categoryKey,
+          })
+        : "";
+
+      return `
+        <tr class="movers-row" data-abbr="${mover.abbr}" data-table="${tableId}">
+          <td class="movers-name">
+            <button type="button" class="movers-expand-btn" aria-expanded="${isExpanded}" aria-label="Show what moved for ${escapeHtml(mover.name)}">
+              <span class="movers-expand-icon" aria-hidden="true">${isExpanded ? "▾" : "▸"}</span>
+            </button>
+            <a href="/states/${mover.slug}">${escapeHtml(mover.name)}</a>
+          </td>
+          <td class="movers-rank">#${mover.priorRank}</td>
+          <td class="movers-rank">#${mover.currentRank}</td>
+          <td class="movers-delta ${deltaClass}">${formatRankDelta(mover.delta)}</td>
+        </tr>
+        <tr class="movers-detail-row" data-detail-for="${mover.abbr}" data-table="${tableId}" ${isExpanded ? "" : "hidden"}>
+          <td colspan="4">${contextHtml}</td>
+        </tr>
+      `;
+    })
+    .join("");
+}
+
+function updateMethodologyNote(index, priorYear, currentYear) {
+  const note = document.getElementById("movers-methodology");
+  if (!note) {
     return;
   }
 
-  const topRiser = risers.find((m) => m.delta > 0);
-  const topFaller = fallers.find((m) => m.delta < 0);
-  const scope = categoryLabel ? `${categoryLabel} rank` : "overall rank";
+  const priorUrl = index.methodologyUrls?.[String(priorYear)] ?? METHODOLOGY_URLS[priorYear];
+  const currentUrl = index.methodologyUrls?.[String(currentYear)] ?? METHODOLOGY_URLS[currentYear];
 
-  summary.textContent = [
-    topRiser
-      ? `${topRiser.name} gained the most (${scope}): #${topRiser.priorRank} → #${topRiser.currentRank}.`
-      : null,
-    topFaller
-      ? `${topFaller.name} dropped the most: #${topFaller.priorRank} → #${topFaller.currentRank}.`
-      : null,
-    `Comparing CNBC ${priorYear} vs ${currentYear}.`,
-  ]
-    .filter(Boolean)
-    .join(" ");
+  note.innerHTML = `
+    <strong>How to read YoY movers:</strong>
+    CNBC reweights categories and metrics each year. Compare ranks within the same study — point totals across years use different category caps.
+    <a href="${priorUrl}" target="_blank" rel="noopener noreferrer">CNBC ${priorYear} methodology</a>
+    ·
+    <a href="${currentUrl}" target="_blank" rel="noopener noreferrer">CNBC ${currentYear} methodology</a>
+  `;
 }
 
-function wireRowNavigation(tbody) {
+function wireTableInteractions(tbody, tableId) {
   tbody?.addEventListener("click", (event) => {
+    const expandBtn = event.target.closest(".movers-expand-btn");
     const row = event.target.closest(".movers-row");
-    if (!row) {
+
+    if (expandBtn && row) {
+      event.preventDefault();
+      const abbr = row.dataset.abbr;
+      expandedAbbr = expandedAbbr === abbr ? null : abbr;
+      rerenderTables();
       return;
     }
-    const link = row.querySelector("a");
-    if (link && !event.target.closest("a")) {
-      window.location.href = link.href;
+
+    if (row && !event.target.closest("a") && !expandBtn) {
+      const abbr = row.dataset.abbr;
+      expandedAbbr = expandedAbbr === abbr ? null : abbr;
+      rerenderTables();
     }
   });
 
@@ -72,14 +180,18 @@ function wireRowNavigation(tbody) {
       return;
     }
     if (event.key === "Enter" || event.key === " ") {
-      event.preventDefault();
-      const link = row.querySelector("a");
-      if (link) {
-        window.location.href = link.href;
+      if (event.target.closest("a")) {
+        return;
       }
+      event.preventDefault();
+      const abbr = row.dataset.abbr;
+      expandedAbbr = expandedAbbr === abbr ? null : abbr;
+      rerenderTables();
     }
   });
 }
+
+let rerenderTables = () => {};
 
 export async function initMovers() {
   const index = await loadIndex();
@@ -94,10 +206,14 @@ export async function initMovers() {
   const risersEmpty = document.getElementById("movers-risers-empty");
   const fallersEmpty = document.getElementById("movers-fallers-empty");
   const modeLabel = document.getElementById("movers-mode-label");
+  const chartEl = document.getElementById("movers-slope-chart");
 
   if (!priorYear || !risersBody || !fallersBody) {
     return;
   }
+
+  let lastRisers = [];
+  let lastFallers = [];
 
   if (currentSelect) {
     currentSelect.innerHTML = "";
@@ -113,10 +229,25 @@ export async function initMovers() {
     currentSelect.value = String(currentYear);
     currentSelect.addEventListener("change", async () => {
       currentYear = Number(currentSelect.value);
+      expandedAbbr = null;
       syncYearToUrl(currentYear, index);
       await render();
     });
   }
+
+  rerenderTables = () => {
+    const categoryLabel = lastCategoryKey ? CATEGORY_LABELS[lastCategoryKey] : "";
+    risersBody.innerHTML = renderMoverRows(lastRisers, {
+      categoryKey: lastCategoryKey,
+      categoryLabel,
+      tableId: "risers",
+    });
+    fallersBody.innerHTML = renderMoverRows(lastFallers, {
+      categoryKey: lastCategoryKey,
+      categoryLabel,
+      tableId: "fallers",
+    });
+  };
 
   async function render() {
     const priorPayload = await loadYearPayload(priorYear);
@@ -124,44 +255,52 @@ export async function initMovers() {
     const categoryKey = categorySelect?.value || "";
     const categoryLabel = categoryKey ? CATEGORY_LABELS[categoryKey] : "";
 
+    lastPriorPayload = priorPayload;
+    lastCurrentPayload = currentPayload;
+    lastPriorYear = priorYear;
+    lastCurrentYear = currentYear;
+    lastCategoryKey = categoryKey;
+
     const movers = computeYoYMovers(priorPayload, currentPayload, {
       categoryKey: categoryKey || null,
     });
-    const risers = movers.filter((m) => m.delta > 0).slice(0, 15);
-    const fallers = [...movers].filter((m) => m.delta < 0).sort((a, b) => a.delta - b.delta).slice(0, 15);
+    lastRisers = movers.filter((m) => m.delta > 0).slice(0, 15);
+    lastFallers = [...movers]
+      .filter((m) => m.delta < 0)
+      .sort((a, b) => a.delta - b.delta)
+      .slice(0, 15);
 
     if (modeLabel) {
       modeLabel.textContent = categoryKey
-        ? `${categoryLabel} — CNBC ${priorYear} vs ${currentYear}`
-        : `Overall rank — CNBC ${priorYear} vs ${currentYear}`;
+        ? `${categoryLabel} rank changes — CNBC ${priorYear} vs ${currentYear}`
+        : `Overall rank changes — CNBC ${priorYear} vs ${currentYear}`;
     }
 
-    risersBody.innerHTML = risers
-      .map((mover) =>
-        renderMoverRow(mover, { showCategory: Boolean(categoryKey), categoryLabel })
-      )
-      .join("");
-    fallersBody.innerHTML = fallers
-      .map((mover) =>
-        renderMoverRow(mover, { showCategory: Boolean(categoryKey), categoryLabel })
-      )
-      .join("");
+    rerenderTables();
 
     if (risersEmpty) {
-      risersEmpty.hidden = risers.length > 0;
+      risersEmpty.hidden = lastRisers.length > 0;
     }
     if (fallersEmpty) {
-      fallersEmpty.hidden = fallers.length > 0;
+      fallersEmpty.hidden = lastFallers.length > 0;
     }
 
-    updateSummary(risers, fallers, priorYear, currentYear, categoryLabel);
+    renderSlopeChart(chartEl, {
+      risers: lastRisers,
+      fallers: lastFallers,
+      priorYear,
+      currentYear,
+    });
+
+    updateMethodologyNote(index, priorYear, currentYear);
   }
 
   categorySelect?.addEventListener("change", () => {
+    expandedAbbr = null;
     render().catch((error) => console.error(error));
   });
 
-  wireRowNavigation(risersBody);
-  wireRowNavigation(fallersBody);
+  wireTableInteractions(risersBody, "risers");
+  wireTableInteractions(fallersBody, "fallers");
   await render();
 }

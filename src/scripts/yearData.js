@@ -1,3 +1,5 @@
+import { CATEGORY_ORDER, CATEGORY_LABELS } from "./categories.js";
+
 const INDEX_PATH = "/data/states-index.json";
 const YEAR_PATH = (year) => `/data/states-${year}.json`;
 
@@ -82,13 +84,6 @@ export function wireYearSelector(select, { index, initialYear, onChange }) {
   });
 }
 
-export function getLatestChangelog(index) {
-  if (!index?.changelog?.length) {
-    return null;
-  }
-  return index.changelog[0];
-}
-
 export function getPriorYear(year, index) {
   const years = [...(index?.availableYears ?? [])].sort((a, b) => a - b);
   const idx = years.indexOf(year);
@@ -141,6 +136,53 @@ export function formatRankDelta(delta) {
     return String(delta);
   }
   return "—";
+}
+
+export function computeStateYoYDrivers(abbr, priorPayload, currentPayload) {
+  const prior = priorPayload.states[abbr];
+  const current = currentPayload.states[abbr];
+  if (!prior || !current) {
+    return null;
+  }
+
+  const categories = CATEGORY_ORDER.map((key) => {
+    const priorCat = prior.categories[key];
+    const currentCat = current.categories[key];
+    const rankDelta = priorCat.rank - currentCat.rank;
+    return {
+      key,
+      label: CATEGORY_LABELS[key],
+      priorRank: priorCat.rank,
+      currentRank: currentCat.rank,
+      rankDelta,
+      priorScore: priorCat.score,
+      currentScore: currentCat.score,
+      scoreDelta: currentCat.score - priorCat.score,
+    };
+  });
+
+  const overallRankDelta = prior.rank - current.rank;
+
+  return {
+    abbr,
+    name: current.name,
+    slug: current.slug,
+    overall: {
+      priorRank: prior.rank,
+      currentRank: current.rank,
+      rankDelta: overallRankDelta,
+      priorScore: prior.rawScore,
+      currentScore: current.rawScore,
+      scoreDelta: current.rawScore - prior.rawScore,
+    },
+    categories,
+    drags: categories
+      .filter((cat) => cat.rankDelta < 0)
+      .sort((a, b) => a.rankDelta - b.rankDelta),
+    lifts: categories
+      .filter((cat) => cat.rankDelta > 0)
+      .sort((a, b) => b.rankDelta - a.rankDelta),
+  };
 }
 
 export function dispatchYearChange(year, payload) {

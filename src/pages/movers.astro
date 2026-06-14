@@ -1,6 +1,5 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import YearSelector from "../components/YearSelector.astro";
 import EmailNotify from "../components/EmailNotify.astro";
 import { CATEGORY_ORDER, CATEGORY_LABELS } from "../scripts/categories.js";
 import { dataYear } from "../lib/states.js";
@@ -40,14 +39,20 @@ import { dataYear } from "../lib/states.js";
       </div>
     </div>
 
-    <p class="movers-summary panel-helper" id="movers-summary" aria-live="polite"></p>
+    <aside class="movers-methodology panel" id="movers-methodology" aria-label="How to read year-over-year movers"></aside>
+
+    <section class="panel movers-chart-panel" aria-labelledby="movers-chart-heading">
+      <h2 id="movers-chart-heading" class="panel-title">Rank movement chart</h2>
+      <p class="panel-helper">Top risers and fallers — lines slope up when rank improved (lower number is better).</p>
+      <div id="movers-slope-chart" class="movers-slope-chart"></div>
+    </section>
 
     <div class="movers-grid">
       <section class="panel movers-section" aria-labelledby="movers-risers-heading">
         <h2 id="movers-risers-heading" class="panel-title movers-section-title is-up">
           Biggest risers
         </h2>
-        <p class="panel-helper">Positive delta = improved rank (lower number is better).</p>
+        <p class="panel-helper">Expand a row to see category drivers and links.</p>
         <table class="movers-table">
           <thead>
             <tr>
@@ -66,7 +71,7 @@ import { dataYear } from "../lib/states.js";
         <h2 id="movers-fallers-heading" class="panel-title movers-section-title is-down">
           Biggest fallers
         </h2>
-        <p class="panel-helper">Negative delta = rank dropped vs prior year.</p>
+        <p class="panel-helper">Expand a row to see category drivers and links.</p>
         <table class="movers-table">
           <thead>
             <tr>
