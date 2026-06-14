@@ -190,6 +190,16 @@ export function initMapSidebar(states) {
     }
   });
 
+  document.addEventListener("statecompass:year", (event) => {
+    stateData = event.detail?.states ?? stateData;
+    if (activeProfile !== FOUNDER_FIT_OVERALL) {
+      founderFitLookup = getFounderFitLookup(stateData, activeProfile);
+    }
+    if (focusedAbbr && stateData[focusedAbbr]) {
+      applySidebarLens(focusedAbbr, stateData[focusedAbbr]);
+    }
+  });
+
   if (focusedAbbr && stateData[focusedAbbr]) {
     applySidebarLens(focusedAbbr, stateData[focusedAbbr]);
   }

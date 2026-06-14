@@ -13,6 +13,14 @@ import {
 import { wireCopyButton } from "./share.js";
 import { downloadComparePng } from "./exportCompare.js";
 import { HEADS_UP_COMPARE_ROWS, HEADS_UP_SHARED_TITLE } from "./snapshotLabels.js";
+import { saveComparison } from "./memory.js";
+import {
+  loadIndex,
+  getYearFromUrl,
+  resolveYear,
+  loadYearPayload,
+  syncYearToUrl,
+} from "./yearData.js";
 
 const MAX_STATES = 3;
 const MIN_STATES = 2;
@@ -27,6 +35,7 @@ let stateData = {};
 let snapshotData = {};
 let snapshotDisclaimer = "";
 let dataYear = 2025;
+let yearIndex = null;
 let selectedAbbrs = ["", "", ""];
 let activeProfile = FOUNDER_FIT_OVERALL;
 let founderFitLookup = null;
@@ -457,6 +466,47 @@ function applyUrlToSlots() {
   });
 }
 
+function updateYearLabels(year) {
+  document.querySelectorAll("[data-cnbc-year]").forEach((el) => {
+    el.textContent = `CNBC ${year}`;
+  });
+}
+
+function applyYearPayload(payload, year) {
+  stateData = payload.states;
+  dataYear = year;
+  founderFitLookup =
+    activeProfile === FOUNDER_FIT_OVERALL ? null : getFounderFitLookup(stateData, activeProfile);
+  updateYearLabels(year);
+  populateSelects();
+  updateSelectOptions();
+  renderChips();
+  renderCompare();
+}
+
+function wireYearControl() {
+  const select = document.querySelector("[data-year-select]");
+  if (!select || !yearIndex) {
+    return;
+  }
+
+  select.innerHTML = "";
+  yearIndex.availableYears.forEach((year) => {
+    const option = document.createElement("option");
+    option.value = String(year);
+    option.textContent = `CNBC ${year}`;
+    select.appendChild(option);
+  });
+  select.value = String(dataYear);
+
+  select.addEventListener("change", async () => {
+    const year = Number(select.value);
+    const payload = await loadYearPayload(year);
+    applyYearPayload(payload, year);
+    syncYearToUrl(year, yearIndex);
+  });
+}
+
 function wireControls() {
   document.querySelectorAll(".compare-select").forEach((select, index) => {
     select.addEventListener("change", () => {
@@ -490,6 +540,18 @@ function wireControls() {
       buttonEl: document.getElementById("download-compare-png"),
     });
   });
+
+  document.getElementById("save-comparison")?.addEventListener("click", () => {
+    const abbrs = getActiveAbbrs();
+    if (abbrs.length < MIN_STATES) {
+      return;
+    }
+    saveComparison(abbrs);
+    const status = document.getElementById("compare-share-status");
+    if (status) {
+      status.textContent = "Comparison saved for later in this browser.";
+    }
+  });
 }
 
 function setProfile(profileId) {
@@ -501,26 +563,26 @@ function setProfile(profileId) {
 }
 
 export async function initCompare() {
-  const [statesResponse, snapshotsResponse] = await Promise.all([
-    fetch("/data/states.json"),
+  yearIndex = await loadIndex();
+  const year = resolveYear(getYearFromUrl(), yearIndex);
+
+  const [payload, snapshotsResponse] = await Promise.all([
+    loadYearPayload(year),
     fetch("/data/founder_snapshots.json"),
   ]);
 
-  if (!statesResponse.ok) {
-    throw new Error("Could not load state data.");
-  }
   if (!snapshotsResponse.ok) {
     throw new Error("Could not load Founder Snapshot data.");
   }
 
-  const payload = await statesResponse.json();
   const snapshotsPayload = await snapshotsResponse.json();
 
   stateData = payload.states;
   snapshotData = snapshotsPayload.states;
   snapshotDisclaimer = snapshotsPayload.disclaimer ?? "";
-  dataYear = payload.year ?? 2025;
+  dataYear = payload.year ?? year;
   activeProfile = getProfileFromUrl();
+  updateYearLabels(dataYear);
 
   wireFounderFitSelector({
     select: document.querySelector("[data-founder-fit-select]"),
@@ -538,5 +600,27 @@ export async function initCompare() {
   updateSelectOptions();
   renderChips();
   renderCompare();
+  wireYearControl();
   wireControls();
+
+  const saved = new URLSearchParams(window.location.search).get("states");
+  if (!saved) {
+    try {
+      const stored = JSON.parse(localStorage.getItem("statecompass:saved") || "{}");
+      if (stored.comparison?.length >= MIN_STATES) {
+        selectedAbbrs = ["", "", ""];
+        stored.comparison.forEach((abbr, index) => {
+          if (index < MAX_STATES && stateData[abbr]) {
+            selectedAbbrs[index] = abbr;
+          }
+        });
+        populateSelects();
+        updateSelectOptions();
+        renderChips();
+        renderCompare();
+      }
+    } catch {
+      // ignore malformed saved data
+    }
+  }
 }

@@ -1,0 +1,92 @@
+---
+import Layout from "../layouts/Layout.astro";
+import YearSelector from "../components/YearSelector.astro";
+import EmailNotify from "../components/EmailNotify.astro";
+import { CATEGORY_ORDER, CATEGORY_LABELS } from "../scripts/categories.js";
+import { dataYear } from "../lib/states.js";
+---
+
+<Layout
+  title={`YoY Movers — CNBC ${dataYear} | StateCompass`}
+  description="Biggest CNBC rank risers and fallers year over year — overall or by category. See which states climbed or dropped between annual studies."
+  subtitle="Biggest rank movers between CNBC years — overall or per category."
+>
+  <main class="page-content movers-page">
+    <header class="movers-header">
+      <h1 class="page-title">Year-over-year movers</h1>
+      <p class="page-lead" id="movers-mode-label">
+        Overall rank changes between CNBC annual studies.
+      </p>
+    </header>
+
+    <div class="movers-toolbar panel">
+      <div class="movers-toolbar-item">
+        <label class="toolbar-label" for="movers-current-year">Compare</label>
+        <select id="movers-current-year" class="movers-year-select" data-movers-current-year>
+          <option value={dataYear}>CNBC {dataYear}</option>
+        </select>
+      </div>
+
+      <div class="movers-toolbar-item">
+        <label class="toolbar-label" for="movers-category">View</label>
+        <select id="movers-category" class="movers-category-select">
+          <option value="">Overall rank</option>
+          {
+            CATEGORY_ORDER.map((key) => (
+              <option value={key}>{CATEGORY_LABELS[key]}</option>
+            ))
+          }
+        </select>
+      </div>
+    </div>
+
+    <p class="movers-summary panel-helper" id="movers-summary" aria-live="polite"></p>
+
+    <div class="movers-grid">
+      <section class="panel movers-section" aria-labelledby="movers-risers-heading">
+        <h2 id="movers-risers-heading" class="panel-title movers-section-title is-up">
+          Biggest risers
+        </h2>
+        <p class="panel-helper">Positive delta = improved rank (lower number is better).</p>
+        <table class="movers-table">
+          <thead>
+            <tr>
+              <th scope="col">State</th>
+              <th scope="col">Prior</th>
+              <th scope="col">Current</th>
+              <th scope="col">Δ</th>
+            </tr>
+          </thead>
+          <tbody id="movers-risers"></tbody>
+        </table>
+        <p id="movers-risers-empty" class="movers-empty" hidden>No risers for this view.</p>
+      </section>
+
+      <section class="panel movers-section" aria-labelledby="movers-fallers-heading">
+        <h2 id="movers-fallers-heading" class="panel-title movers-section-title is-down">
+          Biggest fallers
+        </h2>
+        <p class="panel-helper">Negative delta = rank dropped vs prior year.</p>
+        <table class="movers-table">
+          <thead>
+            <tr>
+              <th scope="col">State</th>
+              <th scope="col">Prior</th>
+              <th scope="col">Current</th>
+              <th scope="col">Δ</th>
+            </tr>
+          </thead>
+          <tbody id="movers-fallers"></tbody>
+        </table>
+        <p id="movers-fallers-empty" class="movers-empty" hidden>No fallers for this view.</p>
+      </section>
+    </div>
+
+    <EmailNotify class="movers-email" />
+  </main>
+
+  <script>
+    import { initMovers } from "../scripts/movers.js";
+    initMovers().catch((error) => console.error(error));
+  </script>
+</Layout>

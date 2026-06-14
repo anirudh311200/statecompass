@@ -1,7 +1,13 @@
 import { dataYear } from "./states.js";
 
-export const CNBC_RANKINGS_URL =
-  "https://www.cnbc.com/2025/07/10/top-states-for-business-americas-2025-the-full-rankings.html";
+const RANKINGS_URLS = {
+  2025:
+    "https://www.cnbc.com/2025/07/10/top-states-for-business-americas-2025-the-full-rankings.html",
+  2024:
+    "https://www.cnbc.com/2024/07/11/americas-top-states-for-business-full-rankings.html",
+};
+
+export const CNBC_RANKINGS_URL = RANKINGS_URLS[dataYear] ?? RANKINGS_URLS[2025];
 
 export const SITE_NAME = "StateCompass";
 export const SITE_TAGLINE =
@@ -13,4 +19,8 @@ export function cnbcSourceLabel(year = dataYear) {
 
 export function cnbcYearLabel(year = dataYear) {
   return `CNBC ${year}`;
+}
+
+export function cnbcRankingsUrl(year = dataYear) {
+  return RANKINGS_URLS[year] ?? RANKINGS_URLS[2025];
 }

@@ -36,7 +36,7 @@
 | **2** | Founder Fit | **Done** |
 | **3** | Share & be found | **Done** |
 | **4** | Founder Snapshot | **Done** |
-| **5** | Memory & time | **Next** |
+| **5** | Memory & time | **Done** |
 | **6** | Distribution | Pending |
 | **7** | UI/UX overhaul *(optional)* | Pending |
 
@@ -360,11 +360,11 @@ Per state, sourced public facts:
 
 ### Deliverables
 
-- [ ] **Multi-year CNBC:** `year` dimension in JSON; ingest 2026 when published; year selector on map/rankings
-- [ ] **YoY movers:** "Biggest risers/fallers" view (overall or per category)
-- [ ] **Saved states / comparisons:** localStorage first (no accounts); restore on visit
-- [ ] **Email capture (optional):** "Notify me when 2026 rankings drop" — e.g. Buttondown, ConvertKit
-- [ ] **Changelog note** on site when new CNBC year ingested
+- [x] **Multi-year CNBC:** `year` dimension in JSON; ingest 2026 when published; year selector on map/rankings
+- [x] **YoY movers:** "Biggest risers/fallers" view (overall or per category)
+- [x] **Saved states / comparisons:** localStorage first (no accounts); restore on visit
+- [x] **Email capture (optional):** "Notify me when 2026 rankings drop" — e.g. Buttondown, ConvertKit
+- [x] **Changelog note** on site when new CNBC year ingested
 
 ### Exit criteria
 

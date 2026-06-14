@@ -6,6 +6,14 @@ import {
   syncProfileToUrl,
   wireFounderFitSelector,
 } from "./founderFit.js";
+import { TIER_LABELS } from "./categories.js";
+import {
+  loadIndex,
+  getYearFromUrl,
+  resolveYear,
+  loadYearPayload,
+  syncYearToUrl,
+} from "./yearData.js";
 
 export async function initRankings() {
   const tbody = document.getElementById("rankings-body");
@@ -18,18 +26,16 @@ export async function initRankings() {
   const rankHeader = document.getElementById("rankings-rank-header");
   const scoreHeader = document.getElementById("rankings-score-header");
   const cnbcHeader = document.getElementById("rankings-cnbc-header");
+  const yearSelect = document.querySelector("[data-year-select]");
 
   if (!tbody) {
     return;
   }
 
-  const response = await fetch("/data/states.json");
-  if (!response.ok) {
-    throw new Error("Could not load state data.");
-  }
-
-  const payload = await response.json();
-  const statesObject = payload.states;
+  const index = await loadIndex();
+  let currentYear = resolveYear(getYearFromUrl(), index);
+  let payload = await loadYearPayload(currentYear);
+  let statesObject = payload.states;
   const lookups = {};
 
   const rows = Array.from(tbody.querySelectorAll(".rankings-row"));
@@ -37,9 +43,56 @@ export async function initRankings() {
   let sortKey = "rank";
   let activeProfile = getProfileFromUrl();
 
-  rows.forEach((row) => {
-    row.dataset.abbr = row.dataset.abbr || "";
-  });
+  function populateRowsFromYear() {
+    rows.forEach((row) => {
+      const abbr = row.dataset.abbr;
+      const state = statesObject[abbr];
+      if (!state) {
+        return;
+      }
+      row.dataset.tier = state.tier;
+      row.dataset.cnbcRank = String(state.rank);
+      row.dataset.cnbcScore = String(state.score100);
+      row.dataset.rank = String(state.rank);
+      row.dataset.score = String(state.score100);
+      row.dataset.slug = state.slug;
+      row.dataset.name = state.name;
+      row.setAttribute(
+        "aria-label",
+        `${state.name}, rank ${state.rank}, score ${state.score100} out of 100`
+      );
+    });
+  }
+
+  function wireYearSelector() {
+    if (!yearSelect) {
+      return;
+    }
+
+    yearSelect.innerHTML = "";
+    index.availableYears.forEach((year) => {
+      const option = document.createElement("option");
+      option.value = String(year);
+      option.textContent = `CNBC ${year}`;
+      yearSelect.appendChild(option);
+    });
+    yearSelect.value = String(currentYear);
+
+    yearSelect.addEventListener("change", async () => {
+      currentYear = Number(yearSelect.value);
+      payload = await loadYearPayload(currentYear);
+      statesObject = payload.states;
+      populateRowsFromYear();
+      applyProfileToRows(activeProfile);
+      syncYearToUrl(currentYear, index);
+      applyView();
+      document.dispatchEvent(
+        new CustomEvent("statecompass:year", {
+          detail: { year: currentYear, payload, states: statesObject },
+        })
+      );
+    });
+  }
 
   function getLookup(profileId) {
     if (profileId === FOUNDER_FIT_OVERALL) {
@@ -57,8 +110,8 @@ export async function initRankings() {
 
     if (modeLabel) {
       modeLabel.textContent = isFounderFit
-        ? `Founder Fit: ${profileLabel} — derived from CNBC category scores. Click a row for the full breakdown.`
-        : "CNBC America's Top States for Business — click a row for the full breakdown.";
+        ? `Founder Fit: ${profileLabel} — CNBC ${currentYear}, derived from category scores. Click a row for the full breakdown.`
+        : `CNBC America's Top States for Business, ${currentYear} — click a row for the full breakdown.`;
     }
 
     if (rankHeader) {
@@ -73,6 +126,7 @@ export async function initRankings() {
   }
 
   function applyProfileToRows(profileId) {
+    Object.keys(lookups).forEach((key) => delete lookups[key]);
     const lookup = getLookup(profileId);
     const isFounderFit = Boolean(lookup);
 
@@ -83,6 +137,7 @@ export async function initRankings() {
       const rankCell = row.querySelector(".rankings-rank");
       const scoreCell = row.querySelector(".rankings-score");
       const cnbcCell = row.querySelector(".rankings-cnbc");
+      const tierCell = row.querySelector(".tier-badge");
 
       if (isFounderFit && lookup[abbr]) {
         const fit = lookup[abbr];
@@ -101,6 +156,13 @@ export async function initRankings() {
         if (cnbcCell) {
           cnbcCell.textContent = "";
         }
+      }
+
+      if (tierCell && statesObject[abbr]) {
+        const tier = statesObject[abbr].tier;
+        row.dataset.tier = tier;
+        tierCell.className = `tier-badge tier-badge--sm ${tier}`;
+        tierCell.textContent = TIER_LABELS[tier] ?? tier;
       }
     });
 
@@ -192,6 +254,9 @@ export async function initRankings() {
     initialProfile: activeProfile,
     onChange: setProfile,
   });
+
+  wireYearSelector();
+  populateRowsFromYear();
 
   if (profileSelect) {
     profileSelect.value = activeProfile;

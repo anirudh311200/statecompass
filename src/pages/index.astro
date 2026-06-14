@@ -1,6 +1,9 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import FounderFitSelector from "../components/FounderFitSelector.astro";
+import YearSelector from "../components/YearSelector.astro";
+import SavedPanel from "../components/SavedPanel.astro";
+import { dataYear } from "../lib/states.js";
 ---
 
 <Layout
@@ -20,6 +23,7 @@ import FounderFitSelector from "../components/FounderFitSelector.astro";
       </section>
 
       <div class="map-legend" aria-label="Map color legend">
+        <YearSelector id="map-year" class="map-year-select" />
         <div class="map-legend-items">
           <span class="map-legend-item">
             <span class="swatch green" aria-hidden="true"></span>
@@ -34,7 +38,7 @@ import FounderFitSelector from "../components/FounderFitSelector.astro";
             <span>35–50</span>
           </span>
         </div>
-        <span class="map-legend-source">CNBC 2025</span>
+        <span class="map-legend-source" data-cnbc-year>CNBC {dataYear}</span>
       </div>
     </div>
 
@@ -60,6 +64,13 @@ import FounderFitSelector from "../components/FounderFitSelector.astro";
           <a href="#" id="map-detail-link" class="map-detail-link map-detail-link--primary">
             Full breakdown &amp; Founder Snapshot →
           </a>
+
+          <div class="map-save-row">
+            <button type="button" id="save-pinned-state" class="btn btn-secondary btn-sm" hidden>
+              Save state
+            </button>
+            <p id="save-state-status" class="share-status" role="status" aria-live="polite"></p>
+          </div>
 
           <div class="score-block">
             <div class="score-header">
@@ -112,6 +123,8 @@ import FounderFitSelector from "../components/FounderFitSelector.astro";
           </div>
         </div>
       </div>
+
+      <SavedPanel />
     </aside>
   </main>
 

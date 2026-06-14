@@ -1,6 +1,7 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import FounderFitSelector from "../components/FounderFitSelector.astro";
+import YearSelector from "../components/YearSelector.astro";
 import { dataYear } from "../lib/states.js";
 ---
 
@@ -16,8 +17,12 @@ import { dataYear } from "../lib/states.js";
       <div class="compare-controls-header">
         <h1 class="page-title">Compare states</h1>
         <p class="page-lead">
-          Side-by-side CNBC {dataYear} scores and Founder Snapshot operational context — share the URL with your co-founder.
+          Side-by-side <span data-cnbc-year>CNBC {dataYear}</span> scores and Founder Snapshot operational context — share the URL with your co-founder.
         </p>
+      </div>
+
+      <div class="compare-toolbar-row">
+        <YearSelector id="compare-year" />
       </div>
 
       <FounderFitSelector id="compare-profile" class="compare-founder-fit" />
@@ -54,6 +59,9 @@ import { dataYear } from "../lib/states.js";
         >
           Copy compare link
         </button>
+        <button type="button" class="btn btn-secondary" id="save-comparison">
+          Save comparison
+        </button>
         <button type="button" class="btn btn-secondary" id="print-compare">
           Print / save PDF
         </button>
@@ -75,7 +83,7 @@ import { dataYear } from "../lib/states.js";
 
     <div id="compare-results" class="compare-results" hidden aria-live="polite">
       <section class="panel compare-print-header" aria-hidden="true">
-        <p class="compare-print-brand">StateCompass · CNBC {dataYear}</p>
+        <p class="compare-print-brand">StateCompass · <span data-cnbc-year>CNBC {dataYear}</span></p>
         <h2 class="compare-print-title">State comparison</h2>
       </section>
 
@@ -105,7 +113,7 @@ import { dataYear } from "../lib/states.js";
       </section>
 
       <p class="compare-export-footer" id="compare-export-footer">
-        StateCompass · CNBC {dataYear} · statecompass.app
+        StateCompass · <span data-cnbc-year>CNBC {dataYear}</span> · statecompass.app
       </p>
 
       <p id="compare-live-status" class="visually-hidden" aria-live="polite"></p>

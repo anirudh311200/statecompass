@@ -1,0 +1,50 @@
+---
+interface Props {
+  class?: string;
+}
+
+const { class: className = "" } = Astro.props;
+const buttondownUrl = import.meta.env.PUBLIC_BUTTONDOWN_URL;
+---
+
+{
+  buttondownUrl ? (
+    <section class:list={["email-notify panel", className]} aria-labelledby="email-notify-heading">
+      <h2 id="email-notify-heading" class="panel-title">Rankings updates</h2>
+      <p class="panel-helper">
+        Get an email when CNBC publishes the next Top States for Business study (e.g. 2026).
+      </p>
+      <form
+        class="email-notify-form"
+        action={buttondownUrl}
+        method="post"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        <label class="visually-hidden" for="notify-email">
+          Email address
+        </label>
+        <input
+          type="email"
+          id="notify-email"
+          name="email"
+          class="email-notify-input"
+          placeholder="you@company.com"
+          required
+          autocomplete="email"
+        />
+        <button type="submit" class="btn btn-secondary">
+          Notify me
+        </button>
+      </form>
+    </section>
+  ) : (
+    <section class:list={["email-notify panel email-notify--placeholder", className]} aria-labelledby="email-notify-heading">
+      <h2 id="email-notify-heading" class="panel-title">Rankings updates</h2>
+      <p class="panel-helper">
+        Email alerts for the next CNBC year will appear here once{" "}
+        <code>PUBLIC_BUTTONDOWN_URL</code> is configured (Buttondown or ConvertKit embed URL).
+      </p>
+    </section>
+  )
+}

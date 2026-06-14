@@ -1,4 +1,5 @@
 import { refreshMapSidebar } from "./mapSidebar.js";
+import { saveState } from "./memory.js";
 
 const TIER_COLORS = {
   green: "#22c55e",
@@ -15,6 +16,8 @@ const TIER_GLOWS = {
 const DEFAULT_FILL = "#d1d5db";
 
 let stateData = {};
+let currentYear = 2025;
+let yearIndex = null;
 let mapPanel = null;
 let hoverPath = null;
 let pinnedAbbr = null;
@@ -58,6 +61,98 @@ function updateMapDimming() {
   mapPanel.classList.toggle("is-dimmed", hasFocus);
 }
 
+function updateYearLabels(year) {
+  document.querySelectorAll("[data-cnbc-year]").forEach((el) => {
+    el.textContent = `CNBC ${year}`;
+  });
+}
+
+function refreshMapColors() {
+  document.querySelectorAll("#us-map .state").forEach((path) => {
+    const abbr = path.id;
+    const info = stateData[abbr];
+    if (!info) {
+      return;
+    }
+    path.setAttribute(
+      "aria-label",
+      `${info.name}: rank ${info.rank}, score ${info.score100} out of 100`
+    );
+    if (path === pinnedPath || path === hoverPath) {
+      highlightPath(path, abbr);
+    }
+  });
+}
+
+function applyYearPayload(payload, year) {
+  stateData = payload.states;
+  currentYear = year;
+  updateYearLabels(year);
+  refreshMapColors();
+
+  if (pinnedAbbr && stateData[pinnedAbbr]) {
+    updateSidebar(pinnedAbbr, stateData[pinnedAbbr]);
+  } else if (hoverPath) {
+    const abbr = hoverPath.id;
+    if (stateData[abbr]) {
+      updateSidebar(abbr, stateData[abbr]);
+    }
+  }
+
+  document.dispatchEvent(
+    new CustomEvent("statecompass:year", {
+      detail: { year, payload, states: stateData },
+    })
+  );
+}
+
+function wireSaveControl() {
+  const saveBtn = document.getElementById("save-pinned-state");
+  saveBtn?.addEventListener("click", () => {
+    if (pinnedAbbr) {
+      saveState(pinnedAbbr);
+      const status = document.getElementById("save-state-status");
+      if (status) {
+        status.textContent = `${stateData[pinnedAbbr]?.name ?? pinnedAbbr} saved for later.`;
+      }
+    }
+  });
+}
+
+function wireYearControl() {
+  const select = document.querySelector("[data-year-select]");
+  if (!select || !yearIndex) {
+    return;
+  }
+
+  select.innerHTML = "";
+  yearIndex.availableYears.forEach((year) => {
+    const option = document.createElement("option");
+    option.value = String(year);
+    option.textContent = `CNBC ${year}`;
+    select.appendChild(option);
+  });
+  select.value = String(currentYear);
+
+  select.addEventListener("change", async () => {
+    const year = Number(select.value);
+    const response = await fetch(`/data/states-${year}.json`);
+    if (!response.ok) {
+      return;
+    }
+    const payload = await response.json();
+    applyYearPayload(payload, year);
+
+    const url = new URL(window.location.href);
+    if (year === yearIndex.defaultYear) {
+      url.searchParams.delete("year");
+    } else {
+      url.searchParams.set("year", String(year));
+    }
+    history.replaceState(null, "", url);
+  });
+}
+
 function updateDetailLinks(abbr, info) {
   if (!info?.slug) {
     return;
@@ -81,6 +176,7 @@ function updateSidebar(abbr, info) {
   const content = document.getElementById("tooltip-content");
   const defaultText = document.getElementById("tooltip-default");
   const clearBtn = document.getElementById("clear-pin");
+  const saveBtn = document.getElementById("save-pinned-state");
 
   content.hidden = true;
   void content.offsetWidth;
@@ -94,6 +190,9 @@ function updateSidebar(abbr, info) {
   }
   if (clearBtn) {
     clearBtn.hidden = !pinnedAbbr;
+  }
+  if (saveBtn) {
+    saveBtn.hidden = !pinnedAbbr;
   }
 
   document.querySelector(".info-card")?.classList.add("has-selection");
@@ -113,6 +212,10 @@ function hideSidebar() {
   const clearBtn = document.getElementById("clear-pin");
   if (clearBtn) {
     clearBtn.hidden = true;
+  }
+  const saveBtn = document.getElementById("save-pinned-state");
+  if (saveBtn) {
+    saveBtn.hidden = true;
   }
   document.querySelector(".info-card")?.classList.remove("has-selection");
   document.querySelector(".sidebar")?.classList.remove("has-selection");
@@ -330,13 +433,28 @@ function wireGlobalControls() {
 
 export async function initMap() {
   mapPanel = document.querySelector(".map-panel");
-  const response = await fetch("/data/states.json");
+
+  const indexResponse = await fetch("/data/states-index.json");
+  if (!indexResponse.ok) {
+    throw new Error("Could not load states index.");
+  }
+  yearIndex = await indexResponse.json();
+
+  const params = new URLSearchParams(window.location.search);
+  const requestedYear = params.get("year");
+  const year = requestedYear && yearIndex.availableYears.includes(Number(requestedYear))
+    ? Number(requestedYear)
+    : yearIndex.defaultYear;
+
+  const response = await fetch(`/data/states-${year}.json`);
   if (!response.ok) {
     throw new Error("Could not load state data.");
   }
 
   const payload = await response.json();
   stateData = payload.states;
+  currentYear = year;
+  updateYearLabels(year);
 
   const svgContainer = document.getElementById("map-container");
   const svgResponse = await fetch("/assets/us-map.svg");
@@ -353,6 +471,8 @@ export async function initMap() {
 
   wireStates();
   wireGlobalControls();
+  wireYearControl();
+  wireSaveControl();
   applyUrlState();
 
   return stateData;

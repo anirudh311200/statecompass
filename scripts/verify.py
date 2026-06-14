@@ -3,10 +3,10 @@ import re
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-data = json.loads((ROOT / "public/data/states.json").read_text(encoding="utf-8"))
-svg = (ROOT / "public/assets/us-map.svg").read_text(encoding="utf-8")
-ids = set(re.findall(r'id="([A-Z]{2})"', svg))
-json_ids = set(data["states"].keys())
+INDEX_PATH = ROOT / "public/data/states-index.json"
+index = json.loads(INDEX_PATH.read_text(encoding="utf-8"))
+available_years = index["availableYears"]
+default_year = index["defaultYear"]
 
 EXPECTED_CATEGORIES = {
     "economy",
@@ -21,32 +21,66 @@ EXPECTED_CATEGORIES = {
     "costOfLiving",
 }
 
-assert len(json_ids) == 50, len(json_ids)
-assert json_ids == ids, (json_ids - ids, ids - json_ids)
-assert data["states"]["NC"]["rank"] == 1
-assert data["states"]["AK"]["rank"] == 50
-assert data["maxTotalScore"] == 2500
-assert set(data["categories"].keys()) == EXPECTED_CATEGORIES
+svg = (ROOT / "public/assets/us-map.svg").read_text(encoding="utf-8")
+map_ids = set(re.findall(r'id="([A-Z]{2})"', svg))
 
-slugs = set()
-for abbr, state in data["states"].items():
-    assert "slug" in state, abbr
-    assert state["slug"] == state["name"].lower().replace(" ", "-"), abbr
-    assert state["slug"] not in slugs, state["slug"]
-    slugs.add(state["slug"])
-    assert "categories" in state, abbr
-    assert set(state["categories"].keys()) == EXPECTED_CATEGORIES, abbr
-    category_sum = 0
-    for key, cat in state["categories"].items():
-        assert 1 <= cat["rank"] <= 50, (abbr, key, cat["rank"])
-        assert 0 <= cat["score"] <= cat["maxScore"], (abbr, key, cat)
-        assert cat["maxScore"] == data["categories"][key]["maxScore"], (abbr, key)
-        category_sum += cat["score"]
-    assert category_sum == state["rawScore"], (abbr, category_sum, state["rawScore"])
+year_payloads = {}
+for year in available_years:
+    path = ROOT / f"public/data/states-{year}.json"
+    payload = json.loads(path.read_text(encoding="utf-8"))
+    year_payloads[year] = payload
+
+    json_ids = set(payload["states"].keys())
+    assert len(json_ids) == 50, (year, len(json_ids))
+    assert json_ids == map_ids, (year, json_ids - map_ids, map_ids - json_ids)
+    assert payload["maxTotalScore"] == 2500, year
+    assert set(payload["categories"].keys()) == EXPECTED_CATEGORIES, year
+
+    slugs = set()
+    for abbr, state in payload["states"].items():
+        assert "slug" in state, (year, abbr)
+        assert state["slug"] == state["name"].lower().replace(" ", "-"), (year, abbr)
+        assert state["slug"] not in slugs, (year, state["slug"])
+        slugs.add(state["slug"])
+        assert set(state["categories"].keys()) == EXPECTED_CATEGORIES, (year, abbr)
+        category_sum = 0
+        for key, cat in state["categories"].items():
+            assert 1 <= cat["rank"] <= 50, (year, abbr, key, cat["rank"])
+            assert 0 <= cat["score"] <= cat["maxScore"], (year, abbr, key, cat)
+            assert cat["maxScore"] == payload["categories"][key]["maxScore"], (year, abbr, key)
+            category_sum += cat["score"]
+        assert category_sum == state["rawScore"], (year, abbr, category_sum, state["rawScore"])
+
+assert default_year in available_years
+assert len(index["changelog"]) == len(available_years)
+for entry in index["changelog"]:
+    assert entry["year"] in available_years
+    assert entry["message"].strip()
+    assert entry["publishedAt"]
+
+# Legacy states.json matches default year
+legacy = json.loads((ROOT / "public/data/states.json").read_text(encoding="utf-8"))
+assert legacy["year"] == default_year
+assert legacy["states"].keys() == year_payloads[default_year]["states"].keys()
+
+# YoY: every state appears in all years with valid ranks
+if len(available_years) >= 2:
+    years_sorted = sorted(available_years)
+    prior_year = years_sorted[-2]
+    current_year = years_sorted[-1]
+    prior_states = year_payloads[prior_year]["states"]
+    current_states = year_payloads[current_year]["states"]
+    assert prior_states.keys() == current_states.keys()
+    movers = []
+    for abbr in prior_states:
+        delta = prior_states[abbr]["rank"] - current_states[abbr]["rank"]
+        movers.append((abbr, delta))
+    assert any(delta != 0 for _, delta in movers), "YoY should show rank movement"
 
 profiles_path = ROOT / "public/data/founder_fit_profiles.json"
 profiles = json.loads(profiles_path.read_text(encoding="utf-8"))
 profile_ids = set()
+default_data = year_payloads[default_year]
 
 for profile in profiles["profiles"]:
     profile_id = profile["id"]
@@ -57,7 +91,7 @@ for profile in profiles["profiles"]:
     weight_sum = sum(weights.values())
     assert abs(weight_sum - 1.0) < 1e-9, (profile_id, weight_sum)
 
-    for abbr, state in data["states"].items():
+    for abbr, state in default_data["states"].items():
         raw = 0.0
         for key in EXPECTED_CATEGORIES:
             cat = state["categories"][key]
@@ -70,7 +104,7 @@ for profile in profiles["profiles"]:
     profile_id = profile["id"]
     weights = profile["weights"]
     entries = []
-    for abbr, state in data["states"].items():
+    for abbr, state in default_data["states"].items():
         raw = sum(
             (state["categories"][key]["score"] / state["categories"][key]["maxScore"]) * weights[key]
             for key in EXPECTED_CATEGORIES
@@ -80,23 +114,21 @@ for profile in profiles["profiles"]:
     ranks = {abbr: index + 1 for index, (abbr, _) in enumerate(entries)}
     ranked_by_profile[profile_id] = ranks
 
-assert ranked_by_profile["tech"]["NC"] != data["states"]["NC"]["rank"], "tech profile should reorder NC"
+assert ranked_by_profile["tech"]["NC"] != default_data["states"]["NC"]["rank"]
 assert ranked_by_profile["tech"] != {
-    abbr: state["rank"] for abbr, state in data["states"].items()
-}, "tech profile should change at least one rank"
+    abbr: state["rank"] for abbr, state in default_data["states"].items()
+}
 
 SNAPSHOT_FIELDS = ("taxPosture", "businessRegistration", "complianceCalendar")
 SNAPSHOTS_PATH = ROOT / "public/data/founder_snapshots.json"
 snapshots_payload = json.loads(SNAPSHOTS_PATH.read_text(encoding="utf-8"))
 snapshot_states = snapshots_payload["states"]
+default_ids = set(default_data["states"].keys())
 
 assert "disclaimer" in snapshots_payload and snapshots_payload["disclaimer"].strip()
-assert snapshot_states.keys() == json_ids, (
-    snapshot_states.keys() - json_ids,
-    json_ids - snapshot_states.keys(),
-)
+assert snapshot_states.keys() == default_ids
 
-for abbr in json_ids:
+for abbr in default_ids:
     entry = snapshot_states[abbr]
     for field in SNAPSHOT_FIELDS:
         fact = entry[field]
@@ -106,11 +138,12 @@ for abbr in json_ids:
 
     heads_up = entry["multiStateHeadsUp"]
     assert 3 <= len(heads_up) <= 5, (abbr, len(heads_up))
-    for index, bullet in enumerate(heads_up):
-        assert bullet["value"].strip(), (abbr, "multiStateHeadsUp", index)
-        assert bullet["sourceUrl"].startswith("https://"), (abbr, "multiStateHeadsUp", index)
-        assert bullet["sourceLabel"].strip(), (abbr, "multiStateHeadsUp", index)
+    for bullet_index, bullet in enumerate(heads_up):
+        assert bullet["value"].strip(), (abbr, "multiStateHeadsUp", bullet_index)
+        assert bullet["sourceUrl"].startswith("https://"), (abbr, "multiStateHeadsUp", bullet_index)
+        assert bullet["sourceLabel"].strip(), (abbr, "multiStateHeadsUp", bullet_index)
 
-print("OK: all 50 states aligned with category data")
+print("OK: multi-year index and payloads validated")
+print("OK: all 50 states aligned with category data per year")
 print("OK: founder fit profiles validated")
 print("OK: founder snapshots validated")
