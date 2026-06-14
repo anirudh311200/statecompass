@@ -2,6 +2,7 @@
 interface Crumb {
   label: string;
   href?: string;
+  id?: string;
 }
 
 interface Props {
@@ -17,7 +18,7 @@ const { crumbs } = Astro.props;
       crumbs.map((crumb, index) => (
         <li class="breadcrumb-item">
           {crumb.href ? (
-            <a href={crumb.href}>{crumb.label}</a>
+            <a href={crumb.href} id={crumb.id}>{crumb.label}</a>
           ) : (
             <span aria-current="page">{crumb.label}</span>
           )}

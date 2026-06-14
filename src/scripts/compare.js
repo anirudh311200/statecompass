@@ -20,6 +20,7 @@ import {
   resolveYear,
   loadYearPayload,
   syncYearToUrl,
+  buildStateDetailUrl,
 } from "./yearData.js";
 
 const MAX_STATES = 3;
@@ -182,7 +183,7 @@ function renderSummary(abbrs) {
           : ""
       }
       <span class="tier-badge tier-badge--sm ${info.tier}">${TIER_LABELS[info.tier]}</span>
-      <a href="/states/${info.slug}" class="compare-detail-link">Full breakdown →</a>
+      <a href="${buildStateDetailUrl(info.slug, dataYear, yearIndex)}" class="compare-detail-link">Full breakdown →</a>
     `;
     container.appendChild(card);
   });

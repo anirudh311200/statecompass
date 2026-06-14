@@ -3,6 +3,7 @@ import Layout from "../../layouts/Layout.astro";
 import Breadcrumbs from "../../components/Breadcrumbs.astro";
 import CategoryChart from "../../components/CategoryChart.astro";
 import FounderSnapshot from "../../components/FounderSnapshot.astro";
+import YearSelector from "../../components/YearSelector.astro";
 import { states, dataYear } from "../../lib/states.js";
 import { getSnapshotForState, snapshotDisclaimer } from "../../lib/snapshots.js";
 import { TIER_LABELS, METHODOLOGY_URL } from "../../scripts/categories.js";
@@ -64,44 +65,64 @@ const jsonLd = {
     <Breadcrumbs
       crumbs={[
         { label: "Map", href: "/" },
-        { label: "States", href: "/rankings" },
+        { label: "States", href: "/rankings", id: "state-rankings-crumb" },
         { label: state.name },
       ]}
     />
 
-    <article class="state-detail">
+    <article class="state-detail" data-state-abbr={abbr} data-state-slug={state.slug}>
+      <div class="state-toolbar panel">
+        <YearSelector id="state-year" label="CNBC year" />
+      </div>
+
       <header class="state-hero">
         <div class="state-hero-main">
-          <p class="state-hero-eyebrow">CNBC {dataYear} · #{state.rank} of 50</p>
+          <p class="state-hero-eyebrow" id="state-hero-eyebrow">
+            CNBC {dataYear} · #{state.rank} of 50
+          </p>
           <h1 class="state-hero-title">{state.name}</h1>
-          <span class={`tier-badge ${state.tier}`}>{TIER_LABELS[state.tier]}</span>
+          <span class={`tier-badge ${state.tier}`} id="state-tier-badge">
+            {TIER_LABELS[state.tier]}
+          </span>
         </div>
         <div class="state-hero-score">
           <span class="score-label">Overall score</span>
           <div class="score-header">
-            <span class="score-value">{state.score100}</span>
+            <span class="score-value" id="state-score-value">{state.score100}</span>
             <span class="score-max">/100</span>
           </div>
           <div class="score-bar-track" aria-hidden="true">
             <div
               class={`score-bar-fill ${state.tier}`}
+              id="state-score-bar-fill"
               style={`width: ${state.score100}%`}
             />
           </div>
           <p class="rank-row">
-            Rank: <span>#{state.rank} of 50</span>
+            Rank: <span id="state-rank-value">#{state.rank} of 50</span>
           </p>
         </div>
       </header>
 
+      <section class="panel state-yoy-panel" id="state-yoy-panel" hidden aria-labelledby="state-yoy-heading">
+        <h2 id="state-yoy-heading" class="panel-title">Year-over-year movement</h2>
+        <p class="panel-helper" id="state-yoy-helper"></p>
+        <div id="state-yoy-dumbbell" class="state-yoy-dumbbell"></div>
+        <div id="state-yoy-columns"></div>
+        <div class="state-yoy-links movers-context-links" id="state-yoy-links"></div>
+        <p class="state-yoy-note movers-context-note" id="state-yoy-note"></p>
+      </section>
+
       <section class="panel" aria-labelledby="category-heading">
         <h2 id="category-heading" class="panel-title">Category breakdown</h2>
-        <p class="panel-helper">
+        <p class="panel-helper" id="state-category-helper">
           All 10 CNBC categories — score out of category max, rank among 50 states.
         </p>
-        <CategoryChart categories={state.categories} />
+        <div id="state-category-chart">
+          <CategoryChart categories={state.categories} />
+        </div>
         <p class="category-methodology">
-          <a href={METHODOLOGY_URL} target="_blank" rel="noopener noreferrer">
+          <a id="state-methodology-link" href={METHODOLOGY_URL} target="_blank" rel="noopener noreferrer">
             CNBC methodology
           </a>
           — 10 categories, 2,500 points max
@@ -115,8 +136,10 @@ const jsonLd = {
       />
 
       <div class="state-cta-row">
-        <a href={compareHref} class="btn btn-primary">Compare with other states</a>
-        <a href={mapHref} class="btn btn-secondary">View on map</a>
+        <a href={compareHref} class="btn btn-primary" id="state-compare-link">
+          Compare with other states
+        </a>
+        <a href={mapHref} class="btn btn-secondary" id="state-map-link">View on map</a>
         <button
           type="button"
           class="btn btn-secondary"
@@ -132,6 +155,10 @@ const jsonLd = {
 
   <script>
     import { wireCopyButton } from "../../scripts/share.js";
+    import { initStateDetail } from "../../scripts/stateDetail.js";
+
+    const detail = document.querySelector(".state-detail");
+    initStateDetail(detail?.dataset.stateAbbr).catch((error) => console.error(error));
 
     wireCopyButton(
       document.getElementById("copy-state-link"),

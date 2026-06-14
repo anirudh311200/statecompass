@@ -1,5 +1,6 @@
 import { refreshMapSidebar } from "./mapSidebar.js";
 import { isStateSaved, toggleSavedState } from "./memory.js";
+import { buildStateDetailUrl } from "./yearData.js";
 
 const TIER_COLORS = {
   green: "#22c55e",
@@ -190,7 +191,7 @@ function updateDetailLinks(abbr, info) {
     return;
   }
 
-  const href = `/states/${info.slug}`;
+  const href = buildStateDetailUrl(info.slug, currentYear, yearIndex);
   const nameLink = document.getElementById("state-name-link");
   const detailLink = document.getElementById("map-detail-link");
 
@@ -262,7 +263,7 @@ function syncUrl(abbr) {
 
 export function getStateDetailUrl(abbr) {
   const info = stateData[abbr];
-  return info?.slug ? `/states/${info.slug}` : null;
+  return info?.slug ? buildStateDetailUrl(info.slug, currentYear, yearIndex) : null;
 }
 
 export function navigateToStateDetail(abbr) {
@@ -416,7 +417,8 @@ function wireStates() {
     path.addEventListener("blur", () => deactivateHover(path));
     path.addEventListener("click", () => pinState(abbr));
     path.addEventListener("dblclick", () => {
-      window.location.href = `/states/${info.slug}`;
+      const href = buildStateDetailUrl(info.slug, currentYear, yearIndex);
+      window.location.href = href;
     });
     path.addEventListener("keydown", (event) => {
       if (event.key === "Enter" || event.key === " ") {

@@ -64,6 +64,15 @@ export function syncYearToUrl(year, index) {
   history.replaceState(null, "", url);
 }
 
+export function buildStateDetailUrl(slug, year, index) {
+  const path = `/states/${slug}`;
+  const defaultYear = index?.defaultYear ?? 2025;
+  if (!year || year === defaultYear) {
+    return path;
+  }
+  return `${path}?year=${year}`;
+}
+
 export function wireYearSelector(select, { index, initialYear, onChange }) {
   if (!select) {
     return;

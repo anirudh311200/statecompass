@@ -10,6 +10,7 @@ import {
   computeStateYoYDrivers,
   formatRankDelta,
   syncYearToUrl,
+  buildStateDetailUrl,
 } from "./yearData.js";
 import {
   renderDumbbellCharts,
@@ -25,6 +26,7 @@ let lastCurrentPayload = null;
 let lastPriorYear = null;
 let lastCurrentYear = null;
 let lastCategoryKey = "";
+let lastIndex = null;
 
 function escapeHtml(value) {
   return String(value)
@@ -60,7 +62,7 @@ function renderContextPanel(drivers, { priorYear, currentYear, categoryKey }) {
     : null;
 
   const compareHref = `/?state=${drivers.abbr}&year=${currentYear}`;
-  const stateHref = `/states/${drivers.slug}`;
+  const stateHref = buildStateDetailUrl(drivers.slug, currentYear, lastIndex);
   const cnbcHref = cnbcStateArticleUrl(currentYear, drivers.slug);
   const snapshotHref = `${stateHref}#founder-snapshot`;
 
@@ -128,7 +130,7 @@ function renderMoverRows(movers, { categoryKey, categoryLabel, tableId }) {
             <button type="button" class="movers-expand-btn" aria-expanded="${isExpanded}" aria-label="Show what moved for ${escapeHtml(mover.name)}">
               <span class="movers-expand-icon" aria-hidden="true">${isExpanded ? "▾" : "▸"}</span>
             </button>
-            <a href="/states/${mover.slug}">${escapeHtml(mover.name)}</a>
+            <a href="${buildStateDetailUrl(mover.slug, lastCurrentYear, lastIndex)}">${escapeHtml(mover.name)}</a>
           </td>
           <td class="movers-rank">#${mover.priorRank}</td>
           <td class="movers-rank">#${mover.currentRank}</td>
@@ -225,6 +227,7 @@ let rerenderTables = () => {};
 
 export async function initMovers() {
   const index = await loadIndex();
+  lastIndex = index;
   const requestedYear = getYearFromUrl();
   let currentYear = resolveYear(requestedYear, index);
   const priorYear = getPriorYear(currentYear, index);

@@ -13,6 +13,7 @@ import {
   resolveYear,
   loadYearPayload,
   syncYearToUrl,
+  buildStateDetailUrl,
 } from "./yearData.js";
 
 export async function initRankings() {
@@ -234,7 +235,7 @@ export async function initRankings() {
     if (!row || row.hidden) {
       return;
     }
-    window.location.href = `/states/${row.dataset.slug}`;
+    window.location.href = buildStateDetailUrl(row.dataset.slug, currentYear, index);
   });
 
   tbody.addEventListener("keydown", (event) => {
@@ -244,7 +245,7 @@ export async function initRankings() {
     }
     if (event.key === "Enter" || event.key === " ") {
       event.preventDefault();
-      window.location.href = `/states/${row.dataset.slug}`;
+      window.location.href = buildStateDetailUrl(row.dataset.slug, currentYear, index);
     }
   });
 
