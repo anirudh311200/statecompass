@@ -1,11 +1,16 @@
 <aside class="saved-panel panel" id="saved-panel" aria-label="Saved states and comparisons">
   <div class="saved-panel-header">
-    <h2 class="saved-panel-title">Saved for later</h2>
+    <h2 class="saved-panel-title">
+      Saved for later
+      <span id="saved-count" class="saved-count" hidden>0</span>
+    </h2>
     <p class="saved-panel-lead">Stored in this browser — no account needed.</p>
   </div>
-  <div id="saved-states-list" class="saved-list"></div>
-  <div id="saved-comparison" class="saved-comparison" hidden></div>
-  <p id="saved-empty" class="saved-empty">Pin states on the map or save a comparison to see them here on return.</p>
+  <div id="saved-states-list" class="saved-chip-list"></div>
+  <div id="saved-comparison" class="saved-comparison-block" hidden></div>
+  <p id="saved-empty" class="saved-empty">
+    Bookmark a state on the map or save a comparison to pick up where you left off.
+  </p>
 </aside>
 
 <script>

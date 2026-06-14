@@ -52,25 +52,36 @@ import { dataYear } from "../lib/states.js";
         </div>
         <p id="tooltip-default" class="tooltip-prompt">
           <span class="prompt-dot" aria-hidden="true"></span>
-          Search or click a state to preview rank and score — open the full page for Founder Snapshot.
+          <span class="tooltip-prompt-copy">
+            <span class="tooltip-prompt-line">Search or click a state to preview rank and score.</span>
+            <span class="tooltip-prompt-line tooltip-prompt-line--secondary">
+              Open the full state page for Founder Snapshot.
+            </span>
+          </span>
         </p>
         <div id="tooltip-content" hidden>
           <FounderFitSelector variant="pills" id="map-profile" showDisclaimer />
 
-          <p class="state-name">
-            <a href="#" id="state-name-link" class="state-name-link"></a>
-          </p>
+          <div class="state-name-row">
+            <p class="state-name">
+              <a href="#" id="state-name-link" class="state-name-link"></a>
+            </p>
+            <button
+              type="button"
+              id="bookmark-state"
+              class="bookmark-btn"
+              hidden
+              aria-pressed="false"
+              aria-label="Save state for later"
+              title="Save for later"
+            >
+              <span class="bookmark-icon" aria-hidden="true">☆</span>
+            </button>
+          </div>
 
           <a href="#" id="map-detail-link" class="map-detail-link map-detail-link--primary">
             Full breakdown &amp; Founder Snapshot →
           </a>
-
-          <div class="map-save-row">
-            <button type="button" id="save-pinned-state" class="btn btn-secondary btn-sm" hidden>
-              Save state
-            </button>
-            <p id="save-state-status" class="share-status" role="status" aria-live="polite"></p>
-          </div>
 
           <div class="score-block">
             <div class="score-header">

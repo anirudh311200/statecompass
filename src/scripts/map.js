@@ -1,5 +1,5 @@
 import { refreshMapSidebar } from "./mapSidebar.js";
-import { saveState } from "./memory.js";
+import { isStateSaved, toggleSavedState } from "./memory.js";
 
 const TIER_COLORS = {
   green: "#22c55e",
@@ -106,15 +106,47 @@ function applyYearPayload(payload, year) {
   );
 }
 
-function wireSaveControl() {
-  const saveBtn = document.getElementById("save-pinned-state");
-  saveBtn?.addEventListener("click", () => {
-    if (pinnedAbbr) {
-      saveState(pinnedAbbr);
-      const status = document.getElementById("save-state-status");
-      if (status) {
-        status.textContent = `${stateData[pinnedAbbr]?.name ?? pinnedAbbr} saved for later.`;
-      }
+function updateBookmarkButton(abbr) {
+  const bookmarkBtn = document.getElementById("bookmark-state");
+  if (!bookmarkBtn) {
+    return;
+  }
+
+  const saved = isStateSaved(abbr);
+  const info = stateData[abbr];
+  bookmarkBtn.hidden = !abbr;
+  bookmarkBtn.setAttribute("aria-pressed", saved ? "true" : "false");
+  bookmarkBtn.setAttribute(
+    "aria-label",
+    saved
+      ? `Remove ${info?.name ?? abbr} from saved`
+      : `Save ${info?.name ?? abbr} for later`
+  );
+  bookmarkBtn.title = saved ? "Saved — click to remove" : "Save for later";
+  bookmarkBtn.classList.toggle("is-saved", saved);
+  const icon = bookmarkBtn.querySelector(".bookmark-icon");
+  if (icon) {
+    icon.textContent = saved ? "★" : "☆";
+  }
+}
+
+function wireBookmarkControl() {
+  const bookmarkBtn = document.getElementById("bookmark-state");
+  bookmarkBtn?.addEventListener("click", (event) => {
+    event.preventDefault();
+    event.stopPropagation();
+    const abbr = pinnedAbbr || hoverPath?.id;
+    if (!abbr) {
+      return;
+    }
+    toggleSavedState(abbr);
+    updateBookmarkButton(abbr);
+  });
+
+  document.addEventListener("statecompass:saved", () => {
+    const abbr = pinnedAbbr || hoverPath?.id;
+    if (abbr) {
+      updateBookmarkButton(abbr);
     }
   });
 }
@@ -176,7 +208,6 @@ function updateSidebar(abbr, info) {
   const content = document.getElementById("tooltip-content");
   const defaultText = document.getElementById("tooltip-default");
   const clearBtn = document.getElementById("clear-pin");
-  const saveBtn = document.getElementById("save-pinned-state");
 
   content.hidden = true;
   void content.offsetWidth;
@@ -184,15 +215,13 @@ function updateSidebar(abbr, info) {
 
   updateDetailLinks(abbr, info);
   refreshMapSidebar(abbr, info);
+  updateBookmarkButton(abbr);
 
   if (defaultText) {
     defaultText.hidden = true;
   }
   if (clearBtn) {
     clearBtn.hidden = !pinnedAbbr;
-  }
-  if (saveBtn) {
-    saveBtn.hidden = !pinnedAbbr;
   }
 
   document.querySelector(".info-card")?.classList.add("has-selection");
@@ -213,9 +242,9 @@ function hideSidebar() {
   if (clearBtn) {
     clearBtn.hidden = true;
   }
-  const saveBtn = document.getElementById("save-pinned-state");
-  if (saveBtn) {
-    saveBtn.hidden = true;
+  const bookmarkBtn = document.getElementById("bookmark-state");
+  if (bookmarkBtn) {
+    bookmarkBtn.hidden = true;
   }
   document.querySelector(".info-card")?.classList.remove("has-selection");
   document.querySelector(".sidebar")?.classList.remove("has-selection");
@@ -472,7 +501,7 @@ export async function initMap() {
   wireStates();
   wireGlobalControls();
   wireYearControl();
-  wireSaveControl();
+  wireBookmarkControl();
   applyUrlState();
 
   return stateData;

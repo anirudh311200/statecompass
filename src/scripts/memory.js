@@ -26,6 +26,25 @@ export function getSaved() {
   return readStore();
 }
 
+export function isStateSaved(abbr) {
+  const normalized = abbr?.trim().toUpperCase();
+  if (!normalized) {
+    return false;
+  }
+  return readStore().states.includes(normalized);
+}
+
+export function toggleSavedState(abbr) {
+  const normalized = abbr?.trim().toUpperCase();
+  if (!normalized) {
+    return readStore();
+  }
+  if (isStateSaved(normalized)) {
+    return removeSavedState(normalized);
+  }
+  return saveState(normalized);
+}
+
 export function saveState(abbr) {
   const normalized = abbr?.trim().toUpperCase();
   if (!normalized) {

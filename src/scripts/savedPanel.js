@@ -3,7 +3,6 @@ import {
   removeSavedState,
   clearSavedComparison,
   buildCompareHref,
-  buildStateHref,
 } from "./memory.js";
 import { loadYearData } from "./yearData.js";
 
@@ -13,6 +12,7 @@ function renderSaved(store) {
   const listEl = document.getElementById("saved-states-list");
   const comparisonEl = document.getElementById("saved-comparison");
   const emptyEl = document.getElementById("saved-empty");
+  const countEl = document.getElementById("saved-count");
 
   if (!listEl || !comparisonEl || !emptyEl) {
     return;
@@ -27,38 +27,47 @@ function renderSaved(store) {
 
   emptyEl.hidden = hasStates || hasComparison;
 
+  if (countEl) {
+    countEl.textContent = String(store.states.length);
+    countEl.hidden = !hasStates;
+  }
+
   store.states.forEach((abbr) => {
     const info = statesObject[abbr];
     if (!info) {
       return;
     }
 
-    const item = document.createElement("div");
-    item.className = "saved-item";
-    item.innerHTML = `
-      <a href="${buildStateHref(abbr, statesObject)}" class="saved-item-link">${info.name}</a>
-      <span class="saved-item-meta">#${info.rank} · ${info.score100}/100</span>
-      <button type="button" class="saved-item-remove" data-remove-state="${abbr}" aria-label="Remove ${info.name} from saved">Remove</button>
+    const chip = document.createElement("div");
+    chip.className = `saved-chip saved-chip--${info.tier}`;
+    chip.innerHTML = `
+      <a href="/?state=${abbr}" class="saved-chip-link" title="Preview ${info.name} on map">
+        <span class="saved-chip-dot" aria-hidden="true"></span>
+        <span class="saved-chip-name">${info.name}</span>
+        <span class="saved-chip-meta">#${info.rank}</span>
+      </a>
+      <button type="button" class="saved-chip-remove" data-remove-state="${abbr}" aria-label="Remove ${info.name}">×</button>
     `;
-    listEl.appendChild(item);
+    listEl.appendChild(chip);
   });
 
   if (hasComparison) {
     const names = store.comparison
       .map((abbr) => statesObject[abbr]?.name || abbr)
-      .join(" vs ");
+      .join(" · ");
     const href = buildCompareHref(store.comparison);
 
     comparisonEl.hidden = false;
     comparisonEl.innerHTML = `
       <p class="saved-comparison-label">Saved comparison</p>
-      <a href="${href}" class="saved-comparison-link">${names}</a>
-      <button type="button" class="saved-item-remove" data-clear-comparison aria-label="Clear saved comparison">Clear</button>
+      <a href="${href}" class="saved-comparison-chip">${names} →</a>
+      <button type="button" class="saved-chip-remove saved-comparison-clear" data-clear-comparison aria-label="Clear saved comparison">×</button>
     `;
   }
 
   listEl.querySelectorAll("[data-remove-state]").forEach((button) => {
-    button.addEventListener("click", () => {
+    button.addEventListener("click", (event) => {
+      event.stopPropagation();
       removeSavedState(button.dataset.removeState);
     });
   });
@@ -86,9 +95,4 @@ export async function initSavedPanel() {
     statesObject = event.detail?.states ?? statesObject;
     renderSaved(getSaved());
   });
-}
-
-export function refreshSavedPanelStates(states) {
-  statesObject = states;
-  renderSaved(getSaved());
 }
