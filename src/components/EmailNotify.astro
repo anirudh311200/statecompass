@@ -38,13 +38,5 @@ const buttondownUrl = import.meta.env.PUBLIC_BUTTONDOWN_URL;
         </button>
       </form>
     </section>
-  ) : (
-    <section class:list={["email-notify panel email-notify--placeholder", className]} aria-labelledby="email-notify-heading">
-      <h2 id="email-notify-heading" class="panel-title">Rankings updates</h2>
-      <p class="panel-helper">
-        Email alerts for the next CNBC year will appear here once{" "}
-        <code>PUBLIC_BUTTONDOWN_URL</code> is configured (Buttondown or ConvertKit embed URL).
-      </p>
-    </section>
-  )
+  ) : null
 }

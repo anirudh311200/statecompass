@@ -2964,11 +2964,6 @@ footer a:hover {
   font: inherit;
 }
 
-.email-notify--placeholder code {
-  font-size: 0.85em;
-  color: var(--muted);
-}
-
 @media (max-width: 768px) {
   .movers-grid {
     grid-template-columns: 1fr;
