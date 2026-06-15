@@ -46,7 +46,7 @@ export const TIER_MAP_FILLS = {
   red: "url(#tier-red)",
 };
 
-/** Gradient stops for map SVG defs (luminous, not flat). */
+/** Shared luminous palette — map tiers; CSS mirrors these in styles.css :root */
 export const TIER_GRADIENTS = {
   green: { id: "tier-green", hi: "#86efac", lo: "#22c55e", hiOp: 0.72, loOp: 0.22 },
   yellow: { id: "tier-yellow", hi: "#fde68a", lo: "#eab308", hiOp: 0.68, loOp: 0.2 },

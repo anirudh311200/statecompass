@@ -44,9 +44,21 @@
     rgba(239, 68, 68, 0.14) 100%
   );
 
-  /* Direction hue (Movers + YoY) */
-  --direction-up: #34d399;
-  --direction-down: #f87171;
+  /* Direction (Movers + YoY) — same luminous green/red as tier palette */
+  --direction-up: var(--green-bright);
+  --direction-down: var(--red-bright);
+  --direction-up-fill: var(--tier-green-fill);
+  --direction-down-fill: var(--tier-red-fill);
+  --direction-up-glow: var(--tier-green-glow);
+  --direction-down-glow: var(--tier-red-glow);
+  --direction-up-soft: rgba(134, 239, 172, 0.14);
+  --direction-up-soft-strong: rgba(134, 239, 172, 0.22);
+  --direction-down-soft: rgba(252, 165, 165, 0.14);
+  --direction-down-soft-strong: rgba(252, 165, 165, 0.22);
+  --direction-up-stop: rgba(134, 239, 172, 0.55);
+  --direction-down-stop: rgba(252, 165, 165, 0.52);
+  --direction-up-dot: rgba(134, 239, 172, 0.72);
+  --direction-down-dot: rgba(252, 165, 165, 0.68);
 
   --font-display: "Sora", system-ui, sans-serif;
   --font-body: "Inter", system-ui, sans-serif;
@@ -1174,10 +1186,12 @@ footer a:hover {
 
 .state-yoy-overall.is-up {
   color: var(--direction-up);
+  text-shadow: 0 0 12px var(--direction-up-glow);
 }
 
 .state-yoy-overall.is-down {
   color: var(--direction-down);
+  text-shadow: 0 0 12px var(--direction-down-glow);
 }
 
 .state-yoy-overall.is-flat {
@@ -1206,13 +1220,15 @@ footer a:hover {
 }
 
 .category-chart-yoy.is-up {
-  color: rgba(52, 211, 153, 0.9);
-  background: rgba(52, 211, 153, 0.12);
+  color: var(--direction-up);
+  background: var(--direction-up-soft);
+  box-shadow: 0 0 8px var(--direction-up-glow);
 }
 
 .category-chart-yoy.is-down {
-  color: rgba(248, 113, 113, 0.9);
-  background: rgba(248, 113, 113, 0.12);
+  color: var(--direction-down);
+  background: var(--direction-down-soft);
+  box-shadow: 0 0 8px var(--direction-down-glow);
 }
 
 .state-hero {
@@ -2359,17 +2375,17 @@ footer a:hover {
 
 .saved-chip--green {
   border-color: rgba(74, 222, 128, 0.35);
-  box-shadow: 0 0 12px rgba(74, 222, 128, 0.08);
+  box-shadow: 0 0 12px var(--tier-green-glow);
 }
 
 .saved-chip--yellow {
   border-color: rgba(250, 204, 21, 0.35);
-  box-shadow: 0 0 10px rgba(250, 204, 21, 0.07);
+  box-shadow: 0 0 10px var(--tier-yellow-glow);
 }
 
 .saved-chip--red {
   border-color: rgba(248, 113, 113, 0.35);
-  box-shadow: 0 0 10px rgba(248, 113, 113, 0.07);
+  box-shadow: 0 0 10px var(--tier-red-glow);
 }
 
 .saved-chip-link {
@@ -2542,11 +2558,13 @@ footer a:hover {
 }
 
 .movers-dumbbell-panel.is-up .movers-dumbbell-panel-title {
-  color: rgba(52, 211, 153, 0.85);
+  color: var(--direction-up);
+  text-shadow: 0 0 14px var(--direction-up-glow);
 }
 
 .movers-dumbbell-panel.is-down .movers-dumbbell-panel-title {
-  color: rgba(248, 113, 113, 0.85);
+  color: var(--direction-down);
+  text-shadow: 0 0 14px var(--direction-down-glow);
 }
 
 .movers-dumbbell-years {
@@ -2648,11 +2666,13 @@ footer a:hover {
 }
 
 .movers-dumbbell-panel.is-up .movers-dumbbell-grad-stop.is-current {
-  stop-color: rgba(52, 211, 153, 0.55);
+  stop-color: var(--green-bright);
+  stop-opacity: 0.55;
 }
 
 .movers-dumbbell-panel.is-down .movers-dumbbell-grad-stop.is-current {
-  stop-color: rgba(248, 113, 113, 0.55);
+  stop-color: var(--red-bright);
+  stop-opacity: 0.52;
 }
 
 .movers-dumbbell-connector {
@@ -2671,11 +2691,13 @@ footer a:hover {
 }
 
 .movers-dumbbell-panel.is-up .movers-dumbbell-dot.is-current {
-  fill: rgba(52, 211, 153, 0.65);
+  fill: var(--direction-up-dot);
+  filter: drop-shadow(0 0 4px var(--direction-up-glow));
 }
 
 .movers-dumbbell-panel.is-down .movers-dumbbell-dot.is-current {
-  fill: rgba(248, 113, 113, 0.65);
+  fill: var(--direction-down-dot);
+  filter: drop-shadow(0 0 4px var(--direction-down-glow));
 }
 
 .movers-dumbbell-rank-label {
@@ -2700,51 +2722,59 @@ footer a:hover {
 }
 
 .movers-dumbbell-delta.is-up {
-  color: rgba(52, 211, 153, 0.8);
-  background: rgba(52, 211, 153, 0.12);
+  color: var(--direction-up);
+  background: var(--direction-up-fill);
+  box-shadow: 0 0 10px var(--direction-up-glow);
 }
 
 .movers-dumbbell-delta.is-down {
-  color: rgba(248, 113, 113, 0.8);
-  background: rgba(248, 113, 113, 0.12);
+  color: var(--direction-down);
+  background: var(--direction-down-fill);
+  box-shadow: 0 0 10px var(--direction-down-glow);
 }
 
 .movers-dumbbell-row:hover .movers-dumbbell-delta.is-up,
 .movers-dumbbell-row.is-highlighted .movers-dumbbell-delta.is-up,
 .movers-dumbbell-row.is-expanded .movers-dumbbell-delta.is-up {
   color: var(--direction-up);
-  background: rgba(52, 211, 153, 0.18);
+  background: var(--direction-up-fill);
+  box-shadow: 0 0 14px var(--direction-up-glow);
 }
 
 .movers-dumbbell-row:hover .movers-dumbbell-delta.is-down,
 .movers-dumbbell-row.is-highlighted .movers-dumbbell-delta.is-down,
 .movers-dumbbell-row.is-expanded .movers-dumbbell-delta.is-down {
   color: var(--direction-down);
-  background: rgba(248, 113, 113, 0.18);
+  background: var(--direction-down-fill);
+  box-shadow: 0 0 14px var(--direction-down-glow);
 }
 
 .movers-dumbbell-row:hover.is-up .movers-dumbbell-grad-stop.is-current,
 .movers-dumbbell-row.is-highlighted.is-up .movers-dumbbell-grad-stop.is-current,
 .movers-dumbbell-row.is-expanded.is-up .movers-dumbbell-grad-stop.is-current {
-  stop-color: var(--direction-up);
+  stop-color: var(--green-bright);
+  stop-opacity: 0.75;
 }
 
 .movers-dumbbell-row:hover.is-down .movers-dumbbell-grad-stop.is-current,
 .movers-dumbbell-row.is-highlighted.is-down .movers-dumbbell-grad-stop.is-current,
 .movers-dumbbell-row.is-expanded.is-down .movers-dumbbell-grad-stop.is-current {
-  stop-color: var(--direction-down);
+  stop-color: var(--red-bright);
+  stop-opacity: 0.72;
 }
 
 .movers-dumbbell-row:hover.is-up .movers-dumbbell-dot.is-current,
 .movers-dumbbell-row.is-highlighted.is-up .movers-dumbbell-dot.is-current,
 .movers-dumbbell-row.is-expanded.is-up .movers-dumbbell-dot.is-current {
-  fill: var(--direction-up);
+  fill: var(--green-bright);
+  filter: drop-shadow(0 0 6px var(--direction-up-glow));
 }
 
 .movers-dumbbell-row:hover.is-down .movers-dumbbell-dot.is-current,
 .movers-dumbbell-row.is-highlighted.is-down .movers-dumbbell-dot.is-current,
 .movers-dumbbell-row.is-expanded.is-down .movers-dumbbell-dot.is-current {
-  fill: var(--direction-down);
+  fill: var(--red-bright);
+  filter: drop-shadow(0 0 6px var(--direction-down-glow));
 }
 
 .movers-dumbbell-row:hover.is-up .movers-dumbbell-connector,
@@ -2814,10 +2844,12 @@ footer a:hover {
 
 .movers-section-title.is-up {
   color: var(--direction-up);
+  text-shadow: 0 0 16px var(--direction-up-glow);
 }
 
 .movers-section-title.is-down {
   color: var(--direction-down);
+  text-shadow: 0 0 16px var(--direction-down-glow);
 }
 
 .movers-table {
@@ -2911,10 +2943,12 @@ footer a:hover {
 
 .movers-context-subhead.is-up {
   color: var(--direction-up);
+  text-shadow: 0 0 10px var(--direction-up-glow);
 }
 
 .movers-context-subhead.is-down {
   color: var(--direction-down);
+  text-shadow: 0 0 10px var(--direction-down-glow);
 }
 
 .movers-driver-list {
@@ -2941,10 +2975,12 @@ footer a:hover {
 
 .movers-driver-list.is-up .movers-driver-delta {
   color: var(--direction-up);
+  text-shadow: 0 0 8px var(--direction-up-glow);
 }
 
 .movers-driver-list.is-down .movers-driver-delta {
   color: var(--direction-down);
+  text-shadow: 0 0 8px var(--direction-down-glow);
 }
 
 .movers-driver-ranks {
@@ -2988,11 +3024,13 @@ footer a:hover {
 .movers-delta.is-up {
   color: var(--direction-up);
   font-weight: 600;
+  text-shadow: 0 0 10px var(--direction-up-glow);
 }
 
 .movers-delta.is-down {
   color: var(--direction-down);
   font-weight: 600;
+  text-shadow: 0 0 10px var(--direction-down-glow);
 }
 
 .movers-delta.is-flat {
