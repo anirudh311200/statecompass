@@ -3068,8 +3068,37 @@ footer a:hover {
   text-align: center;
 }
 
+.partners-hero .page-lead {
+  margin-inline: auto;
+  text-align: center;
+  max-width: 44rem;
+}
+
 .partners-section .panel-helper {
   margin-bottom: 1rem;
+}
+
+.partners-section a {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+.partners-section a:hover {
+  color: var(--text);
+  text-decoration: underline;
+}
+
+.partners-section code {
+  font-size: 0.9em;
+  color: var(--gray);
+}
+
+.partners-attribution-note a {
+  color: var(--accent);
+}
+
+.partners-attribution-note a:hover {
+  color: var(--text);
 }
 
 .partners-subtitle {
@@ -3087,19 +3116,78 @@ footer a:hover {
 }
 
 .partners-list a {
-  color: var(--accent);
   word-break: break-all;
+}
+
+.partners-code-block {
+  position: relative;
+  margin: 0.75rem 0 0;
+}
+
+.partners-copy-btn {
+  position: absolute;
+  top: 0.65rem;
+  right: 0.65rem;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  padding: 0;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: rgba(14, 14, 14, 0.92);
+  color: var(--gray);
+  cursor: pointer;
+  transition: color 0.15s ease, border-color 0.15s ease, background 0.15s ease;
+}
+
+.partners-copy-btn:hover {
+  color: var(--text);
+  border-color: #525252;
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.partners-copy-btn:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.partners-copy-icon {
+  font-size: 1rem;
+  line-height: 1;
+}
+
+.partners-copy-icon--done {
+  display: none;
+  color: var(--green);
+}
+
+.partners-copy-btn.is-copied .partners-copy-icon--copy {
+  display: none;
+}
+
+.partners-copy-btn.is-copied .partners-copy-icon--done {
+  display: inline;
+}
+
+.partners-copy-status {
+  min-height: 1.25rem;
+  margin: 0.5rem 0 0;
+  font-size: var(--text-sm);
+  color: var(--muted);
 }
 
 .partners-code {
   background: var(--surface-solid);
   border: 1px solid var(--border);
   border-radius: 10px;
-  padding: 1rem;
+  padding: 1rem 2.75rem 1rem 1rem;
   overflow-x: auto;
   font-size: var(--text-xs);
   line-height: 1.5;
-  margin: 0.75rem 0 0;
+  margin: 0;
 }
 
 .partners-code code {

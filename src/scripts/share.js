@@ -1,3 +1,5 @@
+import { trackShare } from "./analytics.js";
+
 export function getShareUrl(pathOrUrl) {
   if (pathOrUrl.startsWith("http://") || pathOrUrl.startsWith("https://")) {
     return pathOrUrl;
@@ -22,8 +24,6 @@ export async function copyText(text) {
   document.execCommand("copy");
   textarea.remove();
 }
-
-import { trackShare } from "./analytics.js";
 
 export function wireCopyButton(button, getUrl, statusEl, { shareType = "link" } = {}) {
   if (!button) {
@@ -50,6 +50,39 @@ export function wireCopyButton(button, getUrl, statusEl, { shareType = "link" } 
     } catch {
       if (statusEl) {
         statusEl.textContent = "Could not copy link. Copy the URL from your browser bar.";
+      }
+    }
+  });
+}
+
+export function wireCopyCodeButton(button, getText, { shareType = "embed-code", statusEl } = {}) {
+  if (!button) {
+    return;
+  }
+
+  const defaultLabel = button.dataset.defaultLabel || button.getAttribute("aria-label") || "Copy code";
+
+  button.addEventListener("click", async () => {
+    const text = typeof getText === "function" ? getText() : getText;
+
+    try {
+      await copyText(text);
+      trackShare(shareType);
+      button.classList.add("is-copied");
+      button.setAttribute("aria-label", "Copied");
+      if (statusEl) {
+        statusEl.textContent = "Embed code copied to clipboard.";
+      }
+      window.setTimeout(() => {
+        button.classList.remove("is-copied");
+        button.setAttribute("aria-label", defaultLabel);
+        if (statusEl) {
+          statusEl.textContent = "";
+        }
+      }, 2000);
+    } catch {
+      if (statusEl) {
+        statusEl.textContent = "Could not copy code. Select the snippet and copy manually.";
       }
     }
   });

@@ -35,8 +35,8 @@ const embedCompareCode = `<iframe
     <header class="panel partners-hero">
       <h1 class="page-title">For accelerators &amp; VCs</h1>
       <p class="page-lead">
-        Give founders a linkable, visual, CNBC-sourced compare instead of a ChatGPT screenshot.
-        Embed read-only widgets or fetch the same JSON our site uses — with attribution.
+        Give founders a shareable compare link for Slack and board decks — ranked, visual, and CNBC-sourced.
+        Embed read-only widgets or fetch the same JSON our site uses, with attribution.
       </p>
     </header>
 
@@ -74,13 +74,39 @@ const embedCompareCode = `<iframe
       <p>
         Optional query params: <code>?state=TX</code> to pin a state, <code>?year=2024</code> for prior CNBC year.
       </p>
-      <pre class="partners-code" tabindex="0"><code>{embedMapCode}</code></pre>
+      <div class="partners-code-block">
+        <button
+          type="button"
+          class="partners-copy-btn"
+          id="copy-embed-map"
+          aria-label="Copy map embed code"
+          title="Copy embed code"
+        >
+          <span class="partners-copy-icon partners-copy-icon--copy" aria-hidden="true">⎘</span>
+          <span class="partners-copy-icon partners-copy-icon--done" aria-hidden="true">✓</span>
+        </button>
+        <pre class="partners-code" tabindex="0"><code id="embed-map-code">{embedMapCode}</code></pre>
+      </div>
 
       <h3 class="partners-subtitle">Compare</h3>
       <p>
         Pass 2–3 abbreviations: <code>?states=TX,NC,FL</code>. Optional <code>?year=2024</code>.
       </p>
-      <pre class="partners-code" tabindex="0"><code>{embedCompareCode}</code></pre>
+      <div class="partners-code-block">
+        <button
+          type="button"
+          class="partners-copy-btn"
+          id="copy-embed-compare"
+          aria-label="Copy compare embed code"
+          title="Copy embed code"
+        >
+          <span class="partners-copy-icon partners-copy-icon--copy" aria-hidden="true">⎘</span>
+          <span class="partners-copy-icon partners-copy-icon--done" aria-hidden="true">✓</span>
+        </button>
+        <pre class="partners-code" tabindex="0"><code id="embed-compare-code">{embedCompareCode}</code></pre>
+      </div>
+
+      <p id="partners-copy-status" class="partners-copy-status" role="status" aria-live="polite"></p>
 
       <p class="partners-attribution-note">
         <strong>Attribution required.</strong> Embeds include a CNBC source link and StateCompass credit.
@@ -123,4 +149,22 @@ const embedCompareCode = `<iframe
       </ul>
     </section>
   </main>
+
+  <script>
+    import { wireCopyCodeButton } from "../scripts/share.js";
+
+    const statusEl = document.getElementById("partners-copy-status");
+
+    wireCopyCodeButton(
+      document.getElementById("copy-embed-map"),
+      () => document.getElementById("embed-map-code")?.textContent?.trim() ?? "",
+      { shareType: "embed-map", statusEl }
+    );
+
+    wireCopyCodeButton(
+      document.getElementById("copy-embed-compare"),
+      () => document.getElementById("embed-compare-code")?.textContent?.trim() ?? "",
+      { shareType: "embed-compare", statusEl }
+    );
+  </script>
 </Layout>
