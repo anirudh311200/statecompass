@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>StateCompass embed test — how to open</title>
+  <style>
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: system-ui, sans-serif;
+      background: #18181b;
+      color: #f4f4f5;
+      display: grid;
+      place-items: center;
+      padding: 2rem;
+    }
+
+    .card {
+      max-width: 36rem;
+      padding: 1.5rem;
+      border: 1px solid #3f3f46;
+      border-radius: 12px;
+      background: #27272a;
+    }
+
+    h1 {
+      margin: 0 0 0.75rem;
+      font-size: 1.25rem;
+    }
+
+    p {
+      margin: 0 0 1rem;
+      color: #d4d4d8;
+      line-height: 1.6;
+    }
+
+    code {
+      background: #09090b;
+      padding: 0.15rem 0.4rem;
+      border-radius: 4px;
+    }
+
+    ol {
+      margin: 0;
+      padding-left: 1.25rem;
+      color: #d4d4d8;
+      line-height: 1.8;
+    }
+
+    a {
+      color: #fafafa;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>Embed test moved to <code>public/embed-test.html</code></h1>
+    <p>
+      Double-clicking an HTML file uses <code>file://</code>, and browsers block StateCompass iframes from
+      that context — you will see “refused to connect” even though embeds work on real websites.
+    </p>
+    <p><strong>Run one of these instead:</strong></p>
+    <ol>
+      <li><code>npx serve public</code> → <a href="http://localhost:3000/embed-test.html">http://localhost:3000/embed-test.html</a></li>
+      <li><code>npm run preview</code> → <code>/embed-test.html</code></li>
+      <li>Production → <a href="https://statecompass.app/embed-test.html">statecompass.app/embed-test.html</a></li>
+    </ol>
+  </div>
+</body>
+</html>

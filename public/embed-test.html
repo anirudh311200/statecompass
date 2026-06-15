@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>StateCompass embed test — fake partner site</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: system-ui, -apple-system, sans-serif;
+      background: #f4f4f5;
+      color: #18181b;
+      line-height: 1.5;
+    }
+
+    .shell {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 2rem 1.25rem 3rem;
+    }
+
+    .badge {
+      display: inline-block;
+      margin-bottom: 0.75rem;
+      padding: 0.25rem 0.6rem;
+      border-radius: 999px;
+      background: #e4e4e7;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .warn {
+      margin: 0 0 1.5rem;
+      padding: 1rem 1.1rem;
+      border-left: 4px solid #eab308;
+      border-radius: 8px;
+      background: #fef9c3;
+      color: #713f12;
+      font-size: 0.95rem;
+    }
+
+    .warn code {
+      background: rgba(0, 0, 0, 0.06);
+      padding: 0.1rem 0.35rem;
+      border-radius: 4px;
+    }
+
+    h1 {
+      margin: 0 0 0.35rem;
+      font-size: 1.5rem;
+    }
+
+    .lead {
+      margin: 0 0 2rem;
+      color: #52525b;
+      max-width: 42rem;
+    }
+
+    section {
+      margin-bottom: 2.5rem;
+    }
+
+    h2 {
+      margin: 0 0 0.5rem;
+      font-size: 1.05rem;
+    }
+
+    .hint {
+      margin: 0 0 0.75rem;
+      font-size: 0.9rem;
+      color: #71717a;
+    }
+
+    iframe {
+      display: block;
+      width: 100%;
+      border: 0;
+      border-radius: 12px;
+      background: #0e0e0e;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+    }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <span class="badge">Partner embed test</span>
+    <h1>Acme Fintech — Where to operate</h1>
+
+    <div id="file-warn" class="warn" hidden>
+      <strong>Opened as a local file — embeds will not load.</strong>
+      Browsers block iframes from <code>file://</code> pages (null origin). Serve this page over HTTP instead:
+      <br /><br />
+      <code>npx serve public</code> → open <code>http://localhost:3000/embed-test.html</code>
+      <br />
+      or after deploy: <code>https://statecompass.app/embed-test.html</code>
+    </div>
+
+    <p class="lead">
+      Simulates a partner site embedding StateCompass. Real partner sites use HTTPS, which works with our
+      <code>frame-ancestors *</code> policy — only local <code>file://</code> testing breaks.
+    </p>
+
+    <section>
+      <h2>Map embed — NC pinned</h2>
+      <p class="hint"><code>/embed/map?state=NC</code></p>
+      <iframe
+        src="https://statecompass.app/embed/map?state=NC"
+        title="StateCompass — CNBC state rankings map"
+        width="100%"
+        height="520"
+        loading="lazy"
+      ></iframe>
+    </section>
+
+    <section>
+      <h2>Compare embed — TX, NC, FL</h2>
+      <p class="hint"><code>/embed/compare?states=TX,NC,FL</code></p>
+      <iframe
+        src="https://statecompass.app/embed/compare?states=TX,NC,FL"
+        title="StateCompass — compare states"
+        width="100%"
+        height="640"
+        loading="lazy"
+      ></iframe>
+    </section>
+  </div>
+
+  <script>
+    if (window.location.protocol === "file:") {
+      document.getElementById("file-warn").hidden = false;
+    }
+  </script>
+</body>
+</html>
