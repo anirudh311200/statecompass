@@ -14,38 +14,18 @@ const {
 } = Astro.props;
 
 const isCompact = variant === "compact";
-const menuListId = `${id}-list`;
 ---
 
 {
   isCompact ? (
-    <div class:list={["year-menu", className]} data-year-menu>
-      <label class="visually-hidden" for={`${id}-trigger`}>
-        {label}
-      </label>
-      <button
-        type="button"
-        id={`${id}-trigger`}
-        class="year-menu-trigger"
-        data-year-menu-trigger
-        aria-haspopup="listbox"
-        aria-expanded="false"
-        aria-controls={menuListId}
-      >
-        <span class="year-menu-value" data-year-menu-value>
-          CNBC 2025
-        </span>
-        <span class="year-menu-chevron" aria-hidden="true" />
-      </button>
-      <div class="year-menu-panel" data-year-menu-panel hidden>
-        <ul
-          id={menuListId}
-          class="year-menu-list"
-          role="listbox"
-          data-year-menu-list
-          tabindex="-1"
-        />
-      </div>
+    <div
+      id={id}
+      class:list={["year-toggle", className]}
+      data-year-toggle
+      role="group"
+      aria-label={label}
+    >
+      <div class="year-toggle-track" data-year-toggle-track />
     </div>
   ) : (
     <div class:list={["year-select-wrap", className]}>

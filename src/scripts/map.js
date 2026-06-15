@@ -204,7 +204,7 @@ function wireBookmarkControl() {
 
 function wireYearControl() {
   const root =
-    document.querySelector("[data-year-menu]") ||
+    document.querySelector("[data-year-toggle]") ||
     document.querySelector("select[data-year-select]");
   if (!root || !yearIndex) {
     return;

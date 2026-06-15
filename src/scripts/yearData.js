@@ -110,10 +110,20 @@ export function wireYearPicker(root, { index, initialYear, onChange }) {
   const menu = root.matches?.("[data-year-menu]")
     ? root
     : root.querySelector?.("[data-year-menu]");
-  if (!menu) {
+  if (menu) {
+    wireYearMenu(menu, { index, initialYear, onChange });
     return;
   }
 
+  const toggle = root.matches?.("[data-year-toggle]")
+    ? root
+    : root.querySelector?.("[data-year-toggle]");
+  if (toggle) {
+    wireYearToggle(toggle, { index, initialYear, onChange });
+  }
+}
+
+function wireYearMenu(menu, { index, initialYear, onChange }) {
   const trigger = menu.querySelector("[data-year-menu-trigger]");
   const panel = menu.querySelector("[data-year-menu-panel]");
   const list = menu.querySelector("[data-year-menu-list]");
@@ -188,6 +198,45 @@ export function wireYearPicker(root, { index, initialYear, onChange }) {
   });
 
   renderOptions();
+}
+
+function wireYearToggle(toggle, { index, initialYear, onChange }) {
+  const track = toggle.querySelector("[data-year-toggle-track]");
+  if (!track) {
+    return;
+  }
+
+  let activeYear = initialYear;
+
+  function syncButtons() {
+    track.querySelectorAll("[data-year-toggle-btn]").forEach((button) => {
+      const year = Number(button.dataset.year);
+      const selected = year === activeYear;
+      button.classList.toggle("is-active", selected);
+      button.setAttribute("aria-pressed", selected ? "true" : "false");
+    });
+  }
+
+  track.innerHTML = "";
+  index.availableYears.forEach((year) => {
+    const button = document.createElement("button");
+    button.type = "button";
+    button.className = "year-toggle-btn";
+    button.dataset.yearToggleBtn = "";
+    button.dataset.year = String(year);
+    button.textContent = `CNBC ${year}`;
+    button.setAttribute("aria-pressed", year === activeYear ? "true" : "false");
+    button.classList.toggle("is-active", year === activeYear);
+    button.addEventListener("click", () => {
+      if (year === activeYear) {
+        return;
+      }
+      activeYear = year;
+      syncButtons();
+      onChange(year);
+    });
+    track.appendChild(button);
+  });
 }
 
 export function getPriorYear(year, index) {
