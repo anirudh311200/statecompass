@@ -11,7 +11,7 @@ import "@fontsource/sora/700.css";
 interface Props {
   title?: string;
   description?: string;
-  showSearch?: boolean;
+  homePage?: boolean;
   subtitle?: string;
   ogImage?: string;
   ogImageAlt?: string;
@@ -22,7 +22,7 @@ interface Props {
 const {
   title = "StateCompass",
   description = "Compare US states for HQ and expansion — CNBC scores, Founder Snapshot operational context, and shareable compare links for founders.",
-  showSearch = false,
+  homePage = false,
   subtitle,
   ogImage = "/og/default.svg",
   ogImageAlt = "StateCompass — site selection for founders",
@@ -69,8 +69,8 @@ const plausibleDomain = import.meta.env.PUBLIC_PLAUSIBLE_DOMAIN;
     }
   </head>
   <body>
-    <div class="page">
-      <Header showSearch={showSearch} subtitle={subtitle} />
+    <div class:list={["page", { "page--home": homePage }]}>
+      <Header compact={homePage} subtitle={subtitle} />
       <slot />
       <Footer />
     </div>

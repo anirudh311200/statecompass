@@ -1,11 +1,11 @@
 ---
 interface Props {
-  showSearch?: boolean;
+  compact?: boolean;
   subtitle?: string;
 }
 
 const {
-  showSearch = false,
+  compact = false,
   subtitle = "Compare states for HQ and expansion — CNBC 2025 rankings.",
 } = Astro.props;
 
@@ -15,11 +15,16 @@ const navItems = [
   { href: "/rankings", label: "Rankings", match: (p) => p.startsWith("/rankings") },
   { href: "/compare", label: "Compare", match: (p) => p.startsWith("/compare") },
   { href: "/movers", label: "Movers", match: (p) => p.startsWith("/movers") },
-  { href: "/partners", label: "Partners", match: (p) => p.startsWith("/partners") },
+  {
+    href: "/partners",
+    label: "Partners",
+    match: (p) => p.startsWith("/partners"),
+    hideOnMobile: true,
+  },
 ];
 ---
 
-<header class="site-header">
+<header class:list={["site-header", { "site-header--compact": compact }]}>
   <a href="/" class="brand" aria-label="StateCompass home">
     <img src="/assets/logo.svg" alt="StateCompass" class="brand-logo" width="210" height="40" />
   </a>
@@ -29,7 +34,10 @@ const navItems = [
       navItems.map((item) => (
         <a
           href={item.href}
-          class:list={["nav-link", { "is-active": item.match(path) }]}
+          class:list={[
+            "nav-link",
+            { "is-active": item.match(path), "nav-link--partners": item.hideOnMobile },
+          ]}
           aria-current={item.match(path) ? "page" : undefined}
         >
           {item.label}
@@ -39,28 +47,4 @@ const navItems = [
   </nav>
 
   <p class="subtitle">{subtitle}</p>
-
-  {
-    showSearch && (
-      <div class="search-wrap">
-        <label for="state-search" class="visually-hidden">
-          Search states
-        </label>
-        <input
-          type="search"
-          id="state-search"
-          class="state-search-input"
-          role="combobox"
-          aria-autocomplete="list"
-          aria-expanded="false"
-          aria-controls="state-search-list"
-          placeholder="Search by state name or abbreviation…"
-          autocomplete="off"
-          spellcheck="false"
-        />
-        <ul id="state-search-list" class="state-search-list" role="listbox" hidden />
-        <p class="search-hint">Enter to preview on map · Ctrl+Enter for full state page</p>
-      </div>
-    )
-  }
 </header>

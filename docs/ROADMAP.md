@@ -510,7 +510,7 @@ Ship **one sub-section per PR** unless explicitly combined.
 
 ---
 
-### 7h — Homepage choreography (map visible on open)
+### 7h — Homepage choreography (map visible on open) — **Done**
 
 **Goal:** User lands on `/` and sees the **full continental US map** without scrolling — no “cool website, where’s TX?”. Search and year stay; chrome compresses.
 
@@ -522,14 +522,14 @@ Ship **one sub-section per PR** unless explicitly combined.
 
 **Deliverables**
 
-- [ ] **Short home-only subtitle** (SEO description stays long in `<meta>`), e.g. *Site selection for founders — CNBC scores & shareable compare.*
-- [ ] **Move search** from header into map toolbar row (with year + legend) — or floating strip directly above map panel
-- [ ] Search hint (`Enter to preview…`) — show on **focus only** or `title` tooltip; hide by default on mobile
-- [ ] **Compact map legend:** single left-aligned row — `CNBC 2025 ▾ · □1–17 □18–34 □35–50`; `flex-start` + tight gap; **remove** duplicate `map-legend-source` on home (year lives in dropdown once; footer still attributes CNBC)
-- [ ] Compact `YearSelector` variant for map (inline `CNBC 2025 ▾`, visually hidden label for a11y)
-- [ ] Optional: merge legend strip into bottom inset of `map-panel` (one card, saves vertical px)
-- [ ] Nav: consider **Partners** under footer or “More” on small screens to save header height
-- [ ] Target: on ~900px-tall laptop, **top ~70% of continental US visible** without scroll
+- [x] **Short home-only subtitle** (SEO description stays long in `<meta>`), e.g. *Site selection for founders — CNBC scores & shareable compare.*
+- [x] **Move search** from header into map toolbar row (with year + legend) — or floating strip directly above map panel
+- [x] Search hint (`Enter to preview…`) — show on **focus only** or `title` tooltip; hide by default on mobile
+- [x] **Compact map legend:** single left-aligned row — `CNBC 2025 ▾ · □1–17 □18–34 □35–50`; `flex-start` + tight gap; **remove** duplicate `map-legend-source` on home (year lives in dropdown once; footer still attributes CNBC)
+- [x] Compact `YearSelector` variant for map (inline `CNBC 2025 ▾`, visually hidden label for a11y)
+- [x] Optional: merge legend strip into bottom inset of `map-panel` (one card, saves vertical px)
+- [x] Nav: consider **Partners** under footer or “More” on small screens to save header height
+- [x] Target: on ~900px-tall laptop, **top ~70% of continental US visible** without scroll
 
 **Exit criteria:** No duplicate CNBC year in legend bar; map dominates first screen on desktop and mobile; search remains discoverable.
 

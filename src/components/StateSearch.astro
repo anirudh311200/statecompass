@@ -1,0 +1,35 @@
+---
+interface Props {
+  variant?: "default" | "map";
+}
+
+const { variant = "default" } = Astro.props;
+const isMap = variant === "map";
+---
+
+<div class:list={["search-wrap", { "search-wrap--map": isMap }]}>
+  <label for="state-search" class="visually-hidden">Search states</label>
+  <input
+    type="search"
+    id="state-search"
+    class="state-search-input"
+    role="combobox"
+    aria-autocomplete="list"
+    aria-expanded="false"
+    aria-controls="state-search-list"
+    placeholder="Search by state name or abbreviation…"
+    title="Enter to preview on map · Ctrl+Enter for full state page"
+    autocomplete="off"
+    spellcheck="false"
+  />
+  <ul id="state-search-list" class="state-search-list" role="listbox" hidden />
+  {
+    isMap ? (
+      <p class="search-hint search-hint--focus" id="state-search-hint">
+        Enter to preview on map · Ctrl+Enter for full state page
+      </p>
+    ) : (
+      <p class="search-hint">Enter to preview on map · Ctrl+Enter for full state page</p>
+    )
+  }
+</div>

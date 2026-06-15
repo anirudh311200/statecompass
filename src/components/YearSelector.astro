@@ -3,18 +3,27 @@ interface Props {
   id?: string;
   label?: string;
   class?: string;
+  variant?: "default" | "compact";
 }
 
 const {
   id = "year-select",
   label = "CNBC year",
   class: className = "",
+  variant = "default",
 } = Astro.props;
+
+const isCompact = variant === "compact";
 ---
 
-<div class:list={["year-select-wrap", className]}>
-  <label class="toolbar-label" for={id}>{label}</label>
-  <select id={id} class="year-select" data-year-select>
+<div class:list={["year-select-wrap", className, { "year-select-wrap--compact": isCompact }]}>
+  <label
+    class:list={[{ "visually-hidden": isCompact, "toolbar-label": !isCompact }]}
+    for={id}
+  >
+    {label}
+  </label>
+  <select id={id} class:list={["year-select", { "year-select--compact": isCompact }]} data-year-select>
     <option value="2025">CNBC 2025</option>
     <option value="2024">CNBC 2024</option>
   </select>
