@@ -1,0 +1,66 @@
+{
+  "apiVersion": "1",
+  "documentation": "https://statecompass.app/partners#api",
+  "year": 2024,
+  "abbreviation": "WY",
+  "state": {
+    "name": "Wyoming",
+    "slug": "wyoming",
+    "rank": 30,
+    "rawScore": 1270,
+    "score100": 80,
+    "tier": "yellow",
+    "categories": {
+      "economy": {
+        "score": 217,
+        "maxScore": 350,
+        "rank": 15
+      },
+      "infrastructure": {
+        "score": 206,
+        "maxScore": 425,
+        "rank": 31
+      },
+      "workforce": {
+        "score": 171,
+        "maxScore": 375,
+        "rank": 40
+      },
+      "costOfDoingBusiness": {
+        "score": 131,
+        "maxScore": 275,
+        "rank": 30
+      },
+      "businessFriendliness": {
+        "score": 160,
+        "maxScore": 250,
+        "rank": 10
+      },
+      "qualityOfLife": {
+        "score": 191,
+        "maxScore": 325,
+        "rank": 18
+      },
+      "technologyAndInnovation": {
+        "score": 71,
+        "maxScore": 250,
+        "rank": 44
+      },
+      "education": {
+        "score": 66,
+        "maxScore": 125,
+        "rank": 17
+      },
+      "accessToCapital": {
+        "score": 32,
+        "maxScore": 75,
+        "rank": 30
+      },
+      "costOfLiving": {
+        "score": 25,
+        "maxScore": 50,
+        "rank": 27
+      }
+    }
+  }
+}

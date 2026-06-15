@@ -1,0 +1,66 @@
+{
+  "apiVersion": "1",
+  "documentation": "https://statecompass.app/partners#api",
+  "year": 2024,
+  "abbreviation": "AK",
+  "state": {
+    "name": "Alaska",
+    "slug": "alaska",
+    "rank": 48,
+    "rawScore": 1041,
+    "score100": 65,
+    "tier": "red",
+    "categories": {
+      "economy": {
+        "score": 174,
+        "maxScore": 350,
+        "rank": 28
+      },
+      "infrastructure": {
+        "score": 118,
+        "maxScore": 425,
+        "rank": 50
+      },
+      "workforce": {
+        "score": 197,
+        "maxScore": 375,
+        "rank": 28
+      },
+      "costOfDoingBusiness": {
+        "score": 65,
+        "maxScore": 275,
+        "rank": 47
+      },
+      "businessFriendliness": {
+        "score": 152,
+        "maxScore": 250,
+        "rank": 15
+      },
+      "qualityOfLife": {
+        "score": 193,
+        "maxScore": 325,
+        "rank": 17
+      },
+      "technologyAndInnovation": {
+        "score": 74,
+        "maxScore": 250,
+        "rank": 43
+      },
+      "education": {
+        "score": 30,
+        "maxScore": 125,
+        "rank": 48
+      },
+      "accessToCapital": {
+        "score": 11,
+        "maxScore": 75,
+        "rank": 49
+      },
+      "costOfLiving": {
+        "score": 27,
+        "maxScore": 50,
+        "rank": 24
+      }
+    }
+  }
+}

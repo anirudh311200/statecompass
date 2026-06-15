@@ -1,0 +1,66 @@
+{
+  "apiVersion": "1",
+  "documentation": "https://statecompass.app/partners#api",
+  "year": 2024,
+  "abbreviation": "KY",
+  "state": {
+    "name": "Kentucky",
+    "slug": "kentucky",
+    "rank": 27,
+    "rawScore": 1291,
+    "score100": 81,
+    "tier": "yellow",
+    "categories": {
+      "economy": {
+        "score": 132,
+        "maxScore": 350,
+        "rank": 45
+      },
+      "infrastructure": {
+        "score": 220,
+        "maxScore": 425,
+        "rank": 27
+      },
+      "workforce": {
+        "score": 225,
+        "maxScore": 375,
+        "rank": 11
+      },
+      "costOfDoingBusiness": {
+        "score": 212,
+        "maxScore": 275,
+        "rank": 4
+      },
+      "businessFriendliness": {
+        "score": 148,
+        "maxScore": 250,
+        "rank": 16
+      },
+      "qualityOfLife": {
+        "score": 142,
+        "maxScore": 325,
+        "rank": 32
+      },
+      "technologyAndInnovation": {
+        "score": 84,
+        "maxScore": 250,
+        "rank": 40
+      },
+      "education": {
+        "score": 64,
+        "maxScore": 125,
+        "rank": 22
+      },
+      "accessToCapital": {
+        "score": 30,
+        "maxScore": 75,
+        "rank": 32
+      },
+      "costOfLiving": {
+        "score": 34,
+        "maxScore": 50,
+        "rank": 11
+      }
+    }
+  }
+}

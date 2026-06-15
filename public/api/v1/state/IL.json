@@ -1,0 +1,66 @@
+{
+  "apiVersion": "1",
+  "documentation": "https://statecompass.app/partners#api",
+  "year": 2024,
+  "abbreviation": "IL",
+  "state": {
+    "name": "Illinois",
+    "slug": "illinois",
+    "rank": 15,
+    "rawScore": 1384,
+    "score100": 87,
+    "tier": "green",
+    "categories": {
+      "economy": {
+        "score": 133,
+        "maxScore": 350,
+        "rank": 42
+      },
+      "infrastructure": {
+        "score": 265,
+        "maxScore": 425,
+        "rank": 6
+      },
+      "workforce": {
+        "score": 180,
+        "maxScore": 375,
+        "rank": 37
+      },
+      "costOfDoingBusiness": {
+        "score": 125,
+        "maxScore": 275,
+        "rank": 32
+      },
+      "businessFriendliness": {
+        "score": 119,
+        "maxScore": 250,
+        "rank": 33
+      },
+      "qualityOfLife": {
+        "score": 186,
+        "maxScore": 325,
+        "rank": 22
+      },
+      "technologyAndInnovation": {
+        "score": 189,
+        "maxScore": 250,
+        "rank": 6
+      },
+      "education": {
+        "score": 81,
+        "maxScore": 125,
+        "rank": 4
+      },
+      "accessToCapital": {
+        "score": 66,
+        "maxScore": 75,
+        "rank": 4
+      },
+      "costOfLiving": {
+        "score": 40,
+        "maxScore": 50,
+        "rank": 5
+      }
+    }
+  }
+}

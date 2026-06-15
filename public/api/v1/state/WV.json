@@ -1,0 +1,66 @@
+{
+  "apiVersion": "1",
+  "documentation": "https://statecompass.app/partners#api",
+  "year": 2024,
+  "abbreviation": "WV",
+  "state": {
+    "name": "West Virginia",
+    "slug": "west-virginia",
+    "rank": 40,
+    "rawScore": 1179,
+    "score100": 74,
+    "tier": "red",
+    "categories": {
+      "economy": {
+        "score": 174,
+        "maxScore": 350,
+        "rank": 28
+      },
+      "infrastructure": {
+        "score": 158,
+        "maxScore": 425,
+        "rank": 45
+      },
+      "workforce": {
+        "score": 154,
+        "maxScore": 375,
+        "rank": 47
+      },
+      "costOfDoingBusiness": {
+        "score": 217,
+        "maxScore": 275,
+        "rank": 3
+      },
+      "businessFriendliness": {
+        "score": 144,
+        "maxScore": 250,
+        "rank": 17
+      },
+      "qualityOfLife": {
+        "score": 144,
+        "maxScore": 325,
+        "rank": 31
+      },
+      "technologyAndInnovation": {
+        "score": 61,
+        "maxScore": 250,
+        "rank": 47
+      },
+      "education": {
+        "score": 72,
+        "maxScore": 125,
+        "rank": 10
+      },
+      "accessToCapital": {
+        "score": 9,
+        "maxScore": 75,
+        "rank": 50
+      },
+      "costOfLiving": {
+        "score": 46,
+        "maxScore": 50,
+        "rank": 1
+      }
+    }
+  }
+}

@@ -1,0 +1,66 @@
+{
+  "apiVersion": "1",
+  "documentation": "https://statecompass.app/partners#api",
+  "year": 2024,
+  "abbreviation": "SC",
+  "state": {
+    "name": "South Carolina",
+    "slug": "south-carolina",
+    "rank": 19,
+    "rawScore": 1354,
+    "score100": 85,
+    "tier": "yellow",
+    "categories": {
+      "economy": {
+        "score": 226,
+        "maxScore": 350,
+        "rank": 12
+      },
+      "infrastructure": {
+        "score": 252,
+        "maxScore": 425,
+        "rank": 11
+      },
+      "workforce": {
+        "score": 210,
+        "maxScore": 375,
+        "rank": 17
+      },
+      "costOfDoingBusiness": {
+        "score": 190,
+        "maxScore": 275,
+        "rank": 10
+      },
+      "businessFriendliness": {
+        "score": 126,
+        "maxScore": 250,
+        "rank": 27
+      },
+      "qualityOfLife": {
+        "score": 124,
+        "maxScore": 325,
+        "rank": 39
+      },
+      "technologyAndInnovation": {
+        "score": 119,
+        "maxScore": 250,
+        "rank": 28
+      },
+      "education": {
+        "score": 60,
+        "maxScore": 125,
+        "rank": 28
+      },
+      "accessToCapital": {
+        "score": 22,
+        "maxScore": 75,
+        "rank": 40
+      },
+      "costOfLiving": {
+        "score": 25,
+        "maxScore": 50,
+        "rank": 27
+      }
+    }
+  }
+}

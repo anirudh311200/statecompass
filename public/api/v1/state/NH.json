@@ -1,0 +1,66 @@
+{
+  "apiVersion": "1",
+  "documentation": "https://statecompass.app/partners#api",
+  "year": 2024,
+  "abbreviation": "NH",
+  "state": {
+    "name": "New Hampshire",
+    "slug": "new-hampshire",
+    "rank": 41,
+    "rawScore": 1178,
+    "score100": 74,
+    "tier": "red",
+    "categories": {
+      "economy": {
+        "score": 119,
+        "maxScore": 350,
+        "rank": 48
+      },
+      "infrastructure": {
+        "score": 145,
+        "maxScore": 425,
+        "rank": 48
+      },
+      "workforce": {
+        "score": 199,
+        "maxScore": 375,
+        "rank": 24
+      },
+      "costOfDoingBusiness": {
+        "score": 111,
+        "maxScore": 275,
+        "rank": 36
+      },
+      "businessFriendliness": {
+        "score": 164,
+        "maxScore": 250,
+        "rank": 9
+      },
+      "qualityOfLife": {
+        "score": 211,
+        "maxScore": 325,
+        "rank": 9
+      },
+      "technologyAndInnovation": {
+        "score": 100,
+        "maxScore": 250,
+        "rank": 35
+      },
+      "education": {
+        "score": 79,
+        "maxScore": 125,
+        "rank": 6
+      },
+      "accessToCapital": {
+        "score": 29,
+        "maxScore": 75,
+        "rank": 36
+      },
+      "costOfLiving": {
+        "score": 21,
+        "maxScore": 50,
+        "rank": 34
+      }
+    }
+  }
+}

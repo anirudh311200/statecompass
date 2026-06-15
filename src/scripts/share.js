@@ -23,7 +23,9 @@ export async function copyText(text) {
   textarea.remove();
 }
 
-export function wireCopyButton(button, getUrl, statusEl) {
+import { trackShare } from "./analytics.js";
+
+export function wireCopyButton(button, getUrl, statusEl, { shareType = "link" } = {}) {
   if (!button) {
     return;
   }
@@ -34,6 +36,7 @@ export function wireCopyButton(button, getUrl, statusEl) {
 
     try {
       await copyText(getShareUrl(url));
+      trackShare(shareType);
       button.textContent = "Copied!";
       if (statusEl) {
         statusEl.textContent = "Link copied to clipboard.";

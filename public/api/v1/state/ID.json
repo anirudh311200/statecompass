@@ -1,0 +1,66 @@
+{
+  "apiVersion": "1",
+  "documentation": "https://statecompass.app/partners#api",
+  "year": 2024,
+  "abbreviation": "ID",
+  "state": {
+    "name": "Idaho",
+    "slug": "idaho",
+    "rank": 36,
+    "rawScore": 1229,
+    "score100": 77,
+    "tier": "red",
+    "categories": {
+      "economy": {
+        "score": 232,
+        "maxScore": 350,
+        "rank": 9
+      },
+      "infrastructure": {
+        "score": 195,
+        "maxScore": 425,
+        "rank": 34
+      },
+      "workforce": {
+        "score": 192,
+        "maxScore": 375,
+        "rank": 31
+      },
+      "costOfDoingBusiness": {
+        "score": 139,
+        "maxScore": 275,
+        "rank": 28
+      },
+      "businessFriendliness": {
+        "score": 137,
+        "maxScore": 250,
+        "rank": 23
+      },
+      "qualityOfLife": {
+        "score": 130,
+        "maxScore": 325,
+        "rank": 37
+      },
+      "technologyAndInnovation": {
+        "score": 137,
+        "maxScore": 250,
+        "rank": 24
+      },
+      "education": {
+        "score": 30,
+        "maxScore": 125,
+        "rank": 48
+      },
+      "accessToCapital": {
+        "score": 16,
+        "maxScore": 75,
+        "rank": 47
+      },
+      "costOfLiving": {
+        "score": 21,
+        "maxScore": 50,
+        "rank": 34
+      }
+    }
+  }
+}

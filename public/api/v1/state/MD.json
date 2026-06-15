@@ -1,0 +1,66 @@
+{
+  "apiVersion": "1",
+  "documentation": "https://statecompass.app/partners#api",
+  "year": 2024,
+  "abbreviation": "MD",
+  "state": {
+    "name": "Maryland",
+    "slug": "maryland",
+    "rank": 31,
+    "rawScore": 1263,
+    "score100": 79,
+    "tier": "yellow",
+    "categories": {
+      "economy": {
+        "score": 173,
+        "maxScore": 350,
+        "rank": 30
+      },
+      "infrastructure": {
+        "score": 188,
+        "maxScore": 425,
+        "rank": 37
+      },
+      "workforce": {
+        "score": 197,
+        "maxScore": 375,
+        "rank": 28
+      },
+      "costOfDoingBusiness": {
+        "score": 65,
+        "maxScore": 275,
+        "rank": 47
+      },
+      "businessFriendliness": {
+        "score": 116,
+        "maxScore": 250,
+        "rank": 37
+      },
+      "qualityOfLife": {
+        "score": 198,
+        "maxScore": 325,
+        "rank": 16
+      },
+      "technologyAndInnovation": {
+        "score": 182,
+        "maxScore": 250,
+        "rank": 8
+      },
+      "education": {
+        "score": 69,
+        "maxScore": 125,
+        "rank": 14
+      },
+      "accessToCapital": {
+        "score": 48,
+        "maxScore": 75,
+        "rank": 16
+      },
+      "costOfLiving": {
+        "score": 27,
+        "maxScore": 50,
+        "rank": 24
+      }
+    }
+  }
+}

@@ -1,0 +1,50 @@
+---
+import "../styles/styles.css";
+import "@fontsource/inter/400.css";
+import "@fontsource/inter/500.css";
+import "@fontsource/inter/600.css";
+import "@fontsource/sora/600.css";
+import { dataYear } from "../lib/states.js";
+import { CNBC_RANKINGS_URL, cnbcSourceLabel } from "../lib/site.js";
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const {
+  title = "StateCompass embed",
+  description = "Embeddable CNBC state rankings — attribution required.",
+} = Astro.props;
+
+const site = Astro.site ?? new URL("https://statecompass.app");
+const canonical = new URL(Astro.url.pathname, site).href;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="robots" content="noindex" />
+    <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml" />
+    <link rel="canonical" href={canonical} />
+  </head>
+  <body class="embed-body">
+    <div class="embed-shell">
+      <slot />
+      <footer class="embed-attribution">
+        <p>
+          Scores from
+          <a href={CNBC_RANKINGS_URL} target="_blank" rel="noopener noreferrer">
+            {cnbcSourceLabel(dataYear)}
+          </a>
+          · Powered by
+          <a href={site.href} target="_blank" rel="noopener noreferrer">StateCompass</a>
+        </p>
+      </footer>
+    </div>
+  </body>
+</html>

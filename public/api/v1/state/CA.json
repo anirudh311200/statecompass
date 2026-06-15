@@ -1,0 +1,66 @@
+{
+  "apiVersion": "1",
+  "documentation": "https://statecompass.app/partners#api",
+  "year": 2024,
+  "abbreviation": "CA",
+  "state": {
+    "name": "California",
+    "slug": "california",
+    "rank": 23,
+    "rawScore": 1334,
+    "score100": 84,
+    "tier": "yellow",
+    "categories": {
+      "economy": {
+        "score": 161,
+        "maxScore": 350,
+        "rank": 32
+      },
+      "infrastructure": {
+        "score": 245,
+        "maxScore": 425,
+        "rank": 15
+      },
+      "workforce": {
+        "score": 225,
+        "maxScore": 375,
+        "rank": 11
+      },
+      "costOfDoingBusiness": {
+        "score": 81,
+        "maxScore": 275,
+        "rank": 45
+      },
+      "businessFriendliness": {
+        "score": 73,
+        "maxScore": 250,
+        "rank": 47
+      },
+      "qualityOfLife": {
+        "score": 213,
+        "maxScore": 325,
+        "rank": 8
+      },
+      "technologyAndInnovation": {
+        "score": 196,
+        "maxScore": 250,
+        "rank": 5
+      },
+      "education": {
+        "score": 62,
+        "maxScore": 125,
+        "rank": 24
+      },
+      "accessToCapital": {
+        "score": 75,
+        "maxScore": 75,
+        "rank": 1
+      },
+      "costOfLiving": {
+        "score": 3,
+        "maxScore": 50,
+        "rank": 50
+      }
+    }
+  }
+}

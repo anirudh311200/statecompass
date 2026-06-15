@@ -1,0 +1,66 @@
+{
+  "apiVersion": "1",
+  "documentation": "https://statecompass.app/partners#api",
+  "year": 2024,
+  "abbreviation": "UT",
+  "state": {
+    "name": "Utah",
+    "slug": "utah",
+    "rank": 13,
+    "rawScore": 1396,
+    "score100": 88,
+    "tier": "green",
+    "categories": {
+      "economy": {
+        "score": 245,
+        "maxScore": 350,
+        "rank": 6
+      },
+      "infrastructure": {
+        "score": 272,
+        "maxScore": 425,
+        "rank": 4
+      },
+      "workforce": {
+        "score": 215,
+        "maxScore": 375,
+        "rank": 16
+      },
+      "costOfDoingBusiness": {
+        "score": 152,
+        "maxScore": 275,
+        "rank": 26
+      },
+      "businessFriendliness": {
+        "score": 156,
+        "maxScore": 250,
+        "rank": 12
+      },
+      "qualityOfLife": {
+        "score": 150,
+        "maxScore": 325,
+        "rank": 30
+      },
+      "technologyAndInnovation": {
+        "score": 111,
+        "maxScore": 250,
+        "rank": 32
+      },
+      "education": {
+        "score": 45,
+        "maxScore": 125,
+        "rank": 43
+      },
+      "accessToCapital": {
+        "score": 34,
+        "maxScore": 75,
+        "rank": 28
+      },
+      "costOfLiving": {
+        "score": 16,
+        "maxScore": 50,
+        "rank": 41
+      }
+    }
+  }
+}

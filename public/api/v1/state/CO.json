@@ -1,0 +1,66 @@
+{
+  "apiVersion": "1",
+  "documentation": "https://statecompass.app/partners#api",
+  "year": 2024,
+  "abbreviation": "CO",
+  "state": {
+    "name": "Colorado",
+    "slug": "colorado",
+    "rank": 16,
+    "rawScore": 1375,
+    "score100": 86,
+    "tier": "green",
+    "categories": {
+      "economy": {
+        "score": 216,
+        "maxScore": 350,
+        "rank": 16
+      },
+      "infrastructure": {
+        "score": 247,
+        "maxScore": 425,
+        "rank": 12
+      },
+      "workforce": {
+        "score": 225,
+        "maxScore": 375,
+        "rank": 11
+      },
+      "costOfDoingBusiness": {
+        "score": 100,
+        "maxScore": 275,
+        "rank": 39
+      },
+      "businessFriendliness": {
+        "score": 120,
+        "maxScore": 250,
+        "rank": 32
+      },
+      "qualityOfLife": {
+        "score": 181,
+        "maxScore": 325,
+        "rank": 23
+      },
+      "technologyAndInnovation": {
+        "score": 168,
+        "maxScore": 250,
+        "rank": 14
+      },
+      "education": {
+        "score": 60,
+        "maxScore": 125,
+        "rank": 28
+      },
+      "accessToCapital": {
+        "score": 48,
+        "maxScore": 75,
+        "rank": 16
+      },
+      "costOfLiving": {
+        "score": 10,
+        "maxScore": 50,
+        "rank": 46
+      }
+    }
+  }
+}

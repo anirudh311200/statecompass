@@ -1,0 +1,66 @@
+{
+  "apiVersion": "1",
+  "documentation": "https://statecompass.app/partners#api",
+  "year": 2024,
+  "abbreviation": "NM",
+  "state": {
+    "name": "New Mexico",
+    "slug": "new-mexico",
+    "rank": 43,
+    "rawScore": 1143,
+    "score100": 72,
+    "tier": "red",
+    "categories": {
+      "economy": {
+        "score": 178,
+        "maxScore": 350,
+        "rank": 27
+      },
+      "infrastructure": {
+        "score": 179,
+        "maxScore": 425,
+        "rank": 39
+      },
+      "workforce": {
+        "score": 193,
+        "maxScore": 375,
+        "rank": 30
+      },
+      "costOfDoingBusiness": {
+        "score": 168,
+        "maxScore": 275,
+        "rank": 20
+      },
+      "businessFriendliness": {
+        "score": 83,
+        "maxScore": 250,
+        "rank": 44
+      },
+      "qualityOfLife": {
+        "score": 137,
+        "maxScore": 325,
+        "rank": 35
+      },
+      "technologyAndInnovation": {
+        "score": 90,
+        "maxScore": 250,
+        "rank": 39
+      },
+      "education": {
+        "score": 60,
+        "maxScore": 125,
+        "rank": 28
+      },
+      "accessToCapital": {
+        "score": 30,
+        "maxScore": 75,
+        "rank": 32
+      },
+      "costOfLiving": {
+        "score": 25,
+        "maxScore": 50,
+        "rank": 27
+      }
+    }
+  }
+}

@@ -418,7 +418,11 @@ function wireStates() {
     path.addEventListener("click", () => pinState(abbr));
     path.addEventListener("dblclick", () => {
       const href = buildStateDetailUrl(info.slug, currentYear, yearIndex);
-      window.location.href = href;
+      if (document.body.classList.contains("embed-body")) {
+        window.open(href, "_blank", "noopener,noreferrer");
+      } else {
+        window.location.href = href;
+      }
     });
     path.addEventListener("keydown", (event) => {
       if (event.key === "Enter" || event.key === " ") {
@@ -462,7 +466,8 @@ function wireGlobalControls() {
   });
 }
 
-export async function initMap() {
+export async function initMap(options = {}) {
+  const embedMode = Boolean(options.embed);
   mapPanel = document.querySelector(".map-panel");
 
   const indexResponse = await fetch("/data/states-index.json");
@@ -503,7 +508,9 @@ export async function initMap() {
   wireStates();
   wireGlobalControls();
   wireYearControl();
-  wireBookmarkControl();
+  if (!embedMode) {
+    wireBookmarkControl();
+  }
   applyUrlState();
 
   return stateData;

@@ -1,0 +1,66 @@
+{
+  "apiVersion": "1",
+  "documentation": "https://statecompass.app/partners#api",
+  "year": 2024,
+  "abbreviation": "MI",
+  "state": {
+    "name": "Michigan",
+    "slug": "michigan",
+    "rank": 9,
+    "rawScore": 1443,
+    "score100": 90,
+    "tier": "green",
+    "categories": {
+      "economy": {
+        "score": 149,
+        "maxScore": 350,
+        "rank": 38
+      },
+      "infrastructure": {
+        "score": 228,
+        "maxScore": 425,
+        "rank": 24
+      },
+      "workforce": {
+        "score": 209,
+        "maxScore": 375,
+        "rank": 18
+      },
+      "costOfDoingBusiness": {
+        "score": 189,
+        "maxScore": 275,
+        "rank": 12
+      },
+      "businessFriendliness": {
+        "score": 166,
+        "maxScore": 250,
+        "rank": 8
+      },
+      "qualityOfLife": {
+        "score": 180,
+        "maxScore": 325,
+        "rank": 24
+      },
+      "technologyAndInnovation": {
+        "score": 179,
+        "maxScore": 250,
+        "rank": 9
+      },
+      "education": {
+        "score": 50,
+        "maxScore": 125,
+        "rank": 41
+      },
+      "accessToCapital": {
+        "score": 49,
+        "maxScore": 75,
+        "rank": 15
+      },
+      "costOfLiving": {
+        "score": 44,
+        "maxScore": 50,
+        "rank": 3
+      }
+    }
+  }
+}

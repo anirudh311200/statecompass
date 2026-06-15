@@ -1,0 +1,66 @@
+{
+  "apiVersion": "1",
+  "documentation": "https://statecompass.app/partners#api",
+  "year": 2024,
+  "abbreviation": "DE",
+  "state": {
+    "name": "Delaware",
+    "slug": "delaware",
+    "rank": 34,
+    "rawScore": 1242,
+    "score100": 78,
+    "tier": "yellow",
+    "categories": {
+      "economy": {
+        "score": 231,
+        "maxScore": 350,
+        "rank": 10
+      },
+      "infrastructure": {
+        "score": 230,
+        "maxScore": 425,
+        "rank": 23
+      },
+      "workforce": {
+        "score": 243,
+        "maxScore": 375,
+        "rank": 7
+      },
+      "costOfDoingBusiness": {
+        "score": 86,
+        "maxScore": 275,
+        "rank": 44
+      },
+      "businessFriendliness": {
+        "score": 74,
+        "maxScore": 250,
+        "rank": 46
+      },
+      "qualityOfLife": {
+        "score": 169,
+        "maxScore": 325,
+        "rank": 27
+      },
+      "technologyAndInnovation": {
+        "score": 100,
+        "maxScore": 250,
+        "rank": 35
+      },
+      "education": {
+        "score": 42,
+        "maxScore": 125,
+        "rank": 45
+      },
+      "accessToCapital": {
+        "score": 36,
+        "maxScore": 75,
+        "rank": 26
+      },
+      "costOfLiving": {
+        "score": 31,
+        "maxScore": 50,
+        "rank": 14
+      }
+    }
+  }
+}

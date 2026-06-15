@@ -1,0 +1,66 @@
+{
+  "apiVersion": "1",
+  "documentation": "https://statecompass.app/partners#api",
+  "year": 2024,
+  "abbreviation": "RI",
+  "state": {
+    "name": "Rhode Island",
+    "slug": "rhode-island",
+    "rank": 44,
+    "rawScore": 1127,
+    "score100": 71,
+    "tier": "red",
+    "categories": {
+      "economy": {
+        "score": 133,
+        "maxScore": 350,
+        "rank": 42
+      },
+      "infrastructure": {
+        "score": 204,
+        "maxScore": 425,
+        "rank": 32
+      },
+      "workforce": {
+        "score": 203,
+        "maxScore": 375,
+        "rank": 22
+      },
+      "costOfDoingBusiness": {
+        "score": 79,
+        "maxScore": 275,
+        "rank": 46
+      },
+      "businessFriendliness": {
+        "score": 82,
+        "maxScore": 250,
+        "rank": 45
+      },
+      "qualityOfLife": {
+        "score": 206,
+        "maxScore": 325,
+        "rank": 15
+      },
+      "technologyAndInnovation": {
+        "score": 140,
+        "maxScore": 250,
+        "rank": 23
+      },
+      "education": {
+        "score": 45,
+        "maxScore": 125,
+        "rank": 43
+      },
+      "accessToCapital": {
+        "score": 23,
+        "maxScore": 75,
+        "rank": 39
+      },
+      "costOfLiving": {
+        "score": 12,
+        "maxScore": 50,
+        "rank": 42
+      }
+    }
+  }
+}

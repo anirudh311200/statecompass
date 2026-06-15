@@ -1,0 +1,66 @@
+{
+  "apiVersion": "1",
+  "documentation": "https://statecompass.app/partners#api",
+  "year": 2024,
+  "abbreviation": "MT",
+  "state": {
+    "name": "Montana",
+    "slug": "montana",
+    "rank": 46,
+    "rawScore": 1099,
+    "score100": 69,
+    "tier": "red",
+    "categories": {
+      "economy": {
+        "score": 185,
+        "maxScore": 350,
+        "rank": 25
+      },
+      "infrastructure": {
+        "score": 162,
+        "maxScore": 425,
+        "rank": 43
+      },
+      "workforce": {
+        "score": 160,
+        "maxScore": 375,
+        "rank": 44
+      },
+      "costOfDoingBusiness": {
+        "score": 122,
+        "maxScore": 275,
+        "rank": 33
+      },
+      "businessFriendliness": {
+        "score": 119,
+        "maxScore": 250,
+        "rank": 33
+      },
+      "qualityOfLife": {
+        "score": 164,
+        "maxScore": 325,
+        "rank": 29
+      },
+      "technologyAndInnovation": {
+        "score": 99,
+        "maxScore": 250,
+        "rank": 37
+      },
+      "education": {
+        "score": 60,
+        "maxScore": 125,
+        "rank": 28
+      },
+      "accessToCapital": {
+        "score": 18,
+        "maxScore": 75,
+        "rank": 44
+      },
+      "costOfLiving": {
+        "score": 10,
+        "maxScore": 50,
+        "rank": 46
+      }
+    }
+  }
+}

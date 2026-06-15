@@ -1,0 +1,66 @@
+{
+  "apiVersion": "1",
+  "documentation": "https://statecompass.app/partners#api",
+  "year": 2024,
+  "abbreviation": "MO",
+  "state": {
+    "name": "Missouri",
+    "slug": "missouri",
+    "rank": 18,
+    "rawScore": 1363,
+    "score100": 85,
+    "tier": "yellow",
+    "categories": {
+      "economy": {
+        "score": 218,
+        "maxScore": 350,
+        "rank": 14
+      },
+      "infrastructure": {
+        "score": 244,
+        "maxScore": 425,
+        "rank": 16
+      },
+      "workforce": {
+        "score": 154,
+        "maxScore": 375,
+        "rank": 47
+      },
+      "costOfDoingBusiness": {
+        "score": 193,
+        "maxScore": 275,
+        "rank": 8
+      },
+      "businessFriendliness": {
+        "score": 154,
+        "maxScore": 250,
+        "rank": 14
+      },
+      "qualityOfLife": {
+        "score": 98,
+        "maxScore": 325,
+        "rank": 44
+      },
+      "technologyAndInnovation": {
+        "score": 157,
+        "maxScore": 250,
+        "rank": 16
+      },
+      "education": {
+        "score": 69,
+        "maxScore": 125,
+        "rank": 14
+      },
+      "accessToCapital": {
+        "score": 38,
+        "maxScore": 75,
+        "rank": 24
+      },
+      "costOfLiving": {
+        "score": 38,
+        "maxScore": 50,
+        "rank": 8
+      }
+    }
+  }
+}

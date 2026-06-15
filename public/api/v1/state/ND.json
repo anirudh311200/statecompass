@@ -1,0 +1,66 @@
+{
+  "apiVersion": "1",
+  "documentation": "https://statecompass.app/partners#api",
+  "year": 2024,
+  "abbreviation": "ND",
+  "state": {
+    "name": "North Dakota",
+    "slug": "north-dakota",
+    "rank": 34,
+    "rawScore": 1242,
+    "score100": 78,
+    "tier": "yellow",
+    "categories": {
+      "economy": {
+        "score": 157,
+        "maxScore": 350,
+        "rank": 37
+      },
+      "infrastructure": {
+        "score": 171,
+        "maxScore": 425,
+        "rank": 42
+      },
+      "workforce": {
+        "score": 161,
+        "maxScore": 375,
+        "rank": 43
+      },
+      "costOfDoingBusiness": {
+        "score": 164,
+        "maxScore": 275,
+        "rank": 21
+      },
+      "businessFriendliness": {
+        "score": 225,
+        "maxScore": 250,
+        "rank": 1
+      },
+      "qualityOfLife": {
+        "score": 188,
+        "maxScore": 325,
+        "rank": 20
+      },
+      "technologyAndInnovation": {
+        "score": 57,
+        "maxScore": 250,
+        "rank": 50
+      },
+      "education": {
+        "score": 59,
+        "maxScore": 125,
+        "rank": 33
+      },
+      "accessToCapital": {
+        "score": 28,
+        "maxScore": 75,
+        "rank": 37
+      },
+      "costOfLiving": {
+        "score": 32,
+        "maxScore": 50,
+        "rank": 12
+      }
+    }
+  }
+}

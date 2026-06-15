@@ -1,0 +1,66 @@
+{
+  "apiVersion": "1",
+  "documentation": "https://statecompass.app/partners#api",
+  "year": 2024,
+  "abbreviation": "NC",
+  "state": {
+    "name": "North Carolina",
+    "slug": "north-carolina",
+    "rank": 2,
+    "rawScore": 1592,
+    "score100": 100,
+    "tier": "green",
+    "categories": {
+      "economy": {
+        "score": 256,
+        "maxScore": 350,
+        "rank": 4
+      },
+      "infrastructure": {
+        "score": 235,
+        "maxScore": 425,
+        "rank": 20
+      },
+      "workforce": {
+        "score": 269,
+        "maxScore": 375,
+        "rank": 3
+      },
+      "costOfDoingBusiness": {
+        "score": 170,
+        "maxScore": 275,
+        "rank": 18
+      },
+      "businessFriendliness": {
+        "score": 195,
+        "maxScore": 250,
+        "rank": 2
+      },
+      "qualityOfLife": {
+        "score": 142,
+        "maxScore": 325,
+        "rank": 32
+      },
+      "technologyAndInnovation": {
+        "score": 175,
+        "maxScore": 250,
+        "rank": 11
+      },
+      "education": {
+        "score": 72,
+        "maxScore": 125,
+        "rank": 10
+      },
+      "accessToCapital": {
+        "score": 54,
+        "maxScore": 75,
+        "rank": 10
+      },
+      "costOfLiving": {
+        "score": 24,
+        "maxScore": 50,
+        "rank": 31
+      }
+    }
+  }
+}

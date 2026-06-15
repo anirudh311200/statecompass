@@ -10,6 +10,7 @@ import {
   getProfileLabel,
   wireFounderFitSelector,
 } from "./founderFit.js";
+import { trackCompare } from "./analytics.js";
 import { wireCopyButton } from "./share.js";
 import { downloadComparePng } from "./exportCompare.js";
 import { HEADS_UP_COMPARE_ROWS, HEADS_UP_SHARED_TITLE } from "./snapshotLabels.js";
@@ -40,6 +41,8 @@ let yearIndex = null;
 let selectedAbbrs = ["", "", ""];
 let activeProfile = FOUNDER_FIT_OVERALL;
 let founderFitLookup = null;
+let embedMode = false;
+let lastCompareTrackKey = "";
 
 function normalizeAbbr(value) {
   if (!value) {
@@ -183,7 +186,7 @@ function renderSummary(abbrs) {
           : ""
       }
       <span class="tier-badge tier-badge--sm ${info.tier}">${TIER_LABELS[info.tier]}</span>
-      <a href="${buildStateDetailUrl(info.slug, dataYear, yearIndex)}" class="compare-detail-link">Full breakdown →</a>
+      <a href="${buildStateDetailUrl(info.slug, dataYear, yearIndex)}" class="compare-detail-link"${embedMode ? ' target="_blank" rel="noopener noreferrer"' : ""}>Full breakdown →</a>
     `;
     container.appendChild(card);
   });
@@ -439,6 +442,12 @@ function renderCompare() {
   renderSnapshotCompare(abbrs);
   updateShareBar(abbrs);
   announceCompareUpdate(abbrs);
+
+  const trackKey = abbrs.join(",");
+  if (trackKey !== lastCompareTrackKey) {
+    lastCompareTrackKey = trackKey;
+    trackCompare(abbrs);
+  }
 }
 
 function setSlotAbbr(index, abbr) {
@@ -526,7 +535,8 @@ function wireControls() {
   wireCopyButton(
     document.getElementById("copy-compare-link"),
     () => window.location.href,
-    document.getElementById("compare-share-status")
+    document.getElementById("compare-share-status"),
+    { shareType: "compare" }
   );
 
   document.getElementById("print-compare")?.addEventListener("click", () => {
@@ -563,24 +573,28 @@ function setProfile(profileId) {
   syncUrl();
 }
 
-export async function initCompare() {
+export async function initCompare(options = {}) {
+  embedMode = Boolean(options.embed);
   yearIndex = await loadIndex();
   const year = resolveYear(getYearFromUrl(), yearIndex);
 
-  const [payload, snapshotsResponse] = await Promise.all([
-    loadYearPayload(year),
-    fetch("/data/founder_snapshots.json"),
-  ]);
+  const payloadPromise = loadYearPayload(year);
+  const snapshotsPromise = embedMode
+    ? Promise.resolve(null)
+    : fetch("/data/founder_snapshots.json");
 
-  if (!snapshotsResponse.ok) {
-    throw new Error("Could not load Founder Snapshot data.");
+  const [payload, snapshotsResponse] = await Promise.all([payloadPromise, snapshotsPromise]);
+
+  if (!embedMode) {
+    if (!snapshotsResponse.ok) {
+      throw new Error("Could not load Founder Snapshot data.");
+    }
+    const snapshotsPayload = await snapshotsResponse.json();
+    snapshotData = snapshotsPayload.states;
+    snapshotDisclaimer = snapshotsPayload.disclaimer ?? "";
   }
 
-  const snapshotsPayload = await snapshotsResponse.json();
-
   stateData = payload.states;
-  snapshotData = snapshotsPayload.states;
-  snapshotDisclaimer = snapshotsPayload.disclaimer ?? "";
   dataYear = payload.year ?? year;
   activeProfile = getProfileFromUrl();
   updateYearLabels(dataYear);
@@ -597,11 +611,19 @@ export async function initCompare() {
   }
 
   applyUrlToSlots();
-  populateSelects();
-  updateSelectOptions();
-  renderChips();
+  if (!embedMode) {
+    populateSelects();
+    updateSelectOptions();
+    renderChips();
+  }
   renderCompare();
+
   wireYearControl();
+
+  if (embedMode) {
+    return;
+  }
+
   wireControls();
 
   const saved = new URLSearchParams(window.location.search).get("states");

@@ -1,0 +1,126 @@
+---
+import Layout from "../layouts/Layout.astro";
+import { dataYear } from "../lib/states.js";
+import { CNBC_RANKINGS_URL, cnbcSourceLabel } from "../lib/site.js";
+
+const site = Astro.site ?? new URL("https://statecompass.app");
+const origin = site.origin;
+
+const embedMapCode = `<iframe
+  src="${origin}/embed/map?state=TX"
+  title="StateCompass — CNBC state rankings map"
+  width="100%"
+  height="520"
+  style="border:0;border-radius:12px;max-width:960px;"
+  loading="lazy"
+></iframe>`;
+
+const embedCompareCode = `<iframe
+  src="${origin}/embed/compare?states=TX,NC,FL"
+  title="StateCompass — compare states"
+  width="100%"
+  height="640"
+  style="border:0;border-radius:12px;max-width:960px;"
+  loading="lazy"
+></iframe>`;
+---
+
+<Layout
+  title="For accelerators & VCs — embed & API | StateCompass"
+  description="Embed CNBC-sourced state rankings in your portfolio site, share compare links with founders, or fetch read-only JSON for your tools."
+  subtitle="Distribution for accelerators, VCs, and startup programs."
+  ogImage="/og/default.svg"
+>
+  <main class="page-content partners-page">
+    <header class="panel partners-hero">
+      <h1 class="page-title">For accelerators &amp; VCs</h1>
+      <p class="page-lead">
+        Give founders a linkable, visual, CNBC-sourced compare instead of a ChatGPT screenshot.
+        Embed read-only widgets or fetch the same JSON our site uses — with attribution.
+      </p>
+    </header>
+
+    <section class="panel partners-section" aria-labelledby="partners-link-heading">
+      <h2 id="partners-link-heading" class="panel-title">Share links</h2>
+      <p class="panel-helper">Send these in Slack, Notion, or your portfolio CRM — URLs stay stable.</p>
+      <ul class="partners-list">
+        <li>
+          <strong>Compare 2–3 states:</strong>
+          <a href="/compare?states=TX,NC,FL">{origin}/compare?states=TX,NC,FL</a>
+        </li>
+        <li>
+          <strong>Single state breakdown:</strong>
+          <a href="/states/texas">{origin}/states/texas</a>
+        </li>
+        <li>
+          <strong>Founder Fit rankings:</strong>
+          <a href="/rankings?profile=tech">{origin}/rankings?profile=tech</a>
+          (tech startup, bootstrapped services, physical ops)
+        </li>
+        <li>
+          <strong>Year-over-year movers:</strong>
+          <a href="/movers">{origin}/movers</a>
+        </li>
+      </ul>
+    </section>
+
+    <section class="panel partners-section" aria-labelledby="partners-embed-heading">
+      <h2 id="partners-embed-heading" class="panel-title">Embed widgets</h2>
+      <p class="panel-helper">
+        Read-only iframes with required CNBC attribution in the footer. Host on your site; founders click through to StateCompass for full detail.
+      </p>
+
+      <h3 class="partners-subtitle">Map</h3>
+      <p>
+        Optional query params: <code>?state=TX</code> to pin a state, <code>?year=2024</code> for prior CNBC year.
+      </p>
+      <pre class="partners-code" tabindex="0"><code>{embedMapCode}</code></pre>
+
+      <h3 class="partners-subtitle">Compare</h3>
+      <p>
+        Pass 2–3 abbreviations: <code>?states=TX,NC,FL</code>. Optional <code>?year=2024</code>.
+      </p>
+      <pre class="partners-code" tabindex="0"><code>{embedCompareCode}</code></pre>
+
+      <p class="partners-attribution-note">
+        <strong>Attribution required.</strong> Embeds include a CNBC source link and StateCompass credit.
+        Do not remove or hide the embed footer. Scores must not be presented as your own research.
+      </p>
+    </section>
+
+    <section class="panel partners-section" id="api" aria-labelledby="partners-api-heading">
+      <h2 id="partners-api-heading" class="panel-title">Public API (read-only)</h2>
+      <p class="panel-helper">
+        Same data as <code>states.json</code> — generated at build time, no drift. CORS enabled for browser and server use.
+      </p>
+
+      <ul class="partners-list">
+        <li><a href="/api/v1/index.json"><code>GET /api/v1/index.json</code></a> — discovery document</li>
+        <li><a href="/api/v1/states.json"><code>GET /api/v1/states.json</code></a> — default CNBC year (all 50 states)</li>
+        <li><a href={`/api/v1/states-${dataYear}.json`}><code>GET /api/v1/states-{dataYear}.json</code></a> — specific year</li>
+        <li><a href="/api/v1/states-index.json"><code>GET /api/v1/states-index.json</code></a> — available years &amp; changelog</li>
+        <li><a href="/api/v1/state/TX.json"><code>GET /api/v1/state/TX.json</code></a> — single state by abbreviation</li>
+      </ul>
+
+      <p>
+        For programmatic compare, fetch <code>/api/v1/states.json</code> and read the <code>states</code> object,
+        or deep-link to <a href="/compare?states=TX,NC">/compare?states=TX,NC</a>.
+        Responses include <code>apiVersion</code> and <code>attribution</code> fields.
+      </p>
+      <p class="partners-attribution-note">
+        Source: <a href={CNBC_RANKINGS_URL} target="_blank" rel="noopener noreferrer">{cnbcSourceLabel(dataYear)}</a>.
+        Cache-friendly static JSON — no API keys required.
+      </p>
+    </section>
+
+    <section class="panel partners-section" aria-labelledby="partners-guidelines-heading">
+      <h2 id="partners-guidelines-heading" class="panel-title">Guidelines</h2>
+      <ul class="partners-list">
+        <li>Always attribute CNBC and link to official rankings or methodology.</li>
+        <li>Founder Fit scores are StateCompass-derived — label them, not CNBC official ranks.</li>
+        <li>Founder Snapshot content is informational, not legal or tax advice.</li>
+        <li>Questions? Link to <a href={origin}>{origin}</a> — we do not offer white-label score editing.</li>
+      </ul>
+    </section>
+  </main>
+</Layout>

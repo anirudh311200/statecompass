@@ -1,0 +1,66 @@
+{
+  "apiVersion": "1",
+  "documentation": "https://statecompass.app/partners#api",
+  "year": 2024,
+  "abbreviation": "NY",
+  "state": {
+    "name": "New York",
+    "slug": "new-york",
+    "rank": 22,
+    "rawScore": 1343,
+    "score100": 84,
+    "tier": "yellow",
+    "categories": {
+      "economy": {
+        "score": 220,
+        "maxScore": 350,
+        "rank": 13
+      },
+      "infrastructure": {
+        "score": 257,
+        "maxScore": 425,
+        "rank": 9
+      },
+      "workforce": {
+        "score": 163,
+        "maxScore": 375,
+        "rank": 41
+      },
+      "costOfDoingBusiness": {
+        "score": 97,
+        "maxScore": 275,
+        "rank": 41
+      },
+      "businessFriendliness": {
+        "score": 34,
+        "maxScore": 250,
+        "rank": 50
+      },
+      "qualityOfLife": {
+        "score": 211,
+        "maxScore": 325,
+        "rank": 9
+      },
+      "technologyAndInnovation": {
+        "score": 207,
+        "maxScore": 250,
+        "rank": 1
+      },
+      "education": {
+        "score": 75,
+        "maxScore": 125,
+        "rank": 7
+      },
+      "accessToCapital": {
+        "score": 67,
+        "maxScore": 75,
+        "rank": 3
+      },
+      "costOfLiving": {
+        "score": 12,
+        "maxScore": 50,
+        "rank": 42
+      }
+    }
+  }
+}

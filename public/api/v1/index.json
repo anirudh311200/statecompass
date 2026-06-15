@@ -1,0 +1,27 @@
+{
+  "apiVersion": "1",
+  "name": "StateCompass Public API",
+  "documentation": "https://statecompass.app/partners#api",
+  "attribution": "CNBC America's Top States for Business \u2014 required on all republished scores.",
+  "endpoints": {
+    "index": "/api/v1/index.json",
+    "statesDefaultYear": "/api/v1/states.json",
+    "statesByYear": "/api/v1/states-{year}.json",
+    "statesIndex": "/api/v1/states-index.json",
+    "singleState": "/api/v1/state/{ABBR}.json",
+    "compareEmbed": "/embed/compare?states=TX,NC,FL",
+    "comparePage": "/compare?states=TX,NC,FL"
+  },
+  "compare": {
+    "description": "Fetch two or three state objects and compare client-side, or link to the compare page.",
+    "example": "https://statecompass.app/compare?states=TX,NC,FL",
+    "statesField": "Use /api/v1/states.json and read the `states` object keyed by abbreviation."
+  },
+  "availableYears": [
+    2025,
+    2024
+  ],
+  "defaultYear": 2025,
+  "cors": "Access-Control-Allow-Origin: * on /api/v1/*",
+  "rateLimit": "Static JSON \u2014 CDN cached; no authentication required."
+}

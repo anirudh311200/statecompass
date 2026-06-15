@@ -1,0 +1,27 @@
+{
+  "defaultYear": 2025,
+  "availableYears": [
+    2025,
+    2024
+  ],
+  "rankingsUrls": {
+    "2025": "https://www.cnbc.com/2025/07/10/top-states-for-business-americas-2025-the-full-rankings.html",
+    "2024": "https://www.cnbc.com/2024/07/11/americas-top-states-for-business-full-rankings.html"
+  },
+  "methodologyUrls": {
+    "2025": "https://www.cnbc.com/2025/06/11/how-we-are-choosing-americas-top-states-for-business-in-2025.html",
+    "2024": "https://www.cnbc.com/2024/06/13/how-we-are-choosing-americas-top-states-for-business-2024.html"
+  },
+  "changelog": [
+    {
+      "year": 2025,
+      "publishedAt": "2025-07-10",
+      "message": "CNBC 2025 rankings ingested \u2014 North Carolina #1 overall; Virginia climbs to #4 from #1 in 2024."
+    },
+    {
+      "year": 2024,
+      "publishedAt": "2024-07-11",
+      "message": "CNBC 2024 rankings archived \u2014 Virginia #1 overall; North Carolina runner-up at #2."
+    }
+  ]
+}

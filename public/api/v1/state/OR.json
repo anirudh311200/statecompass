@@ -1,0 +1,66 @@
+{
+  "apiVersion": "1",
+  "documentation": "https://statecompass.app/partners#api",
+  "year": 2024,
+  "abbreviation": "OR",
+  "state": {
+    "name": "Oregon",
+    "slug": "oregon",
+    "rank": 28,
+    "rawScore": 1283,
+    "score100": 80,
+    "tier": "yellow",
+    "categories": {
+      "economy": {
+        "score": 158,
+        "maxScore": 350,
+        "rank": 34
+      },
+      "infrastructure": {
+        "score": 242,
+        "maxScore": 425,
+        "rank": 17
+      },
+      "workforce": {
+        "score": 185,
+        "maxScore": 375,
+        "rank": 36
+      },
+      "costOfDoingBusiness": {
+        "score": 116,
+        "maxScore": 275,
+        "rank": 34
+      },
+      "businessFriendliness": {
+        "score": 66,
+        "maxScore": 250,
+        "rank": 48
+      },
+      "qualityOfLife": {
+        "score": 226,
+        "maxScore": 325,
+        "rank": 6
+      },
+      "technologyAndInnovation": {
+        "score": 179,
+        "maxScore": 250,
+        "rank": 9
+      },
+      "education": {
+        "score": 54,
+        "maxScore": 125,
+        "rank": 37
+      },
+      "accessToCapital": {
+        "score": 37,
+        "maxScore": 75,
+        "rank": 25
+      },
+      "costOfLiving": {
+        "score": 20,
+        "maxScore": 50,
+        "rank": 37
+      }
+    }
+  }
+}

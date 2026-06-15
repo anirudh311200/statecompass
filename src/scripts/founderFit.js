@@ -1,4 +1,5 @@
 import profilesPayload from "../../public/data/founder_fit_profiles.json";
+import { trackProfile } from "./analytics.js";
 import { CATEGORY_ORDER } from "./categories.js";
 
 export const FOUNDER_FIT_OVERALL = "overall";
@@ -143,6 +144,7 @@ export function wireFounderFitSelector({
     const profileId = getProfileFromUrl(`?profile=${select.value}`);
     select.value = profileId;
     updateDisclaimer(profileId);
+    trackProfile(profileId);
     onChange?.(profileId);
   }
 

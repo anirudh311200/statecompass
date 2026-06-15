@@ -1,0 +1,66 @@
+{
+  "apiVersion": "1",
+  "documentation": "https://statecompass.app/partners#api",
+  "year": 2024,
+  "abbreviation": "KS",
+  "state": {
+    "name": "Kansas",
+    "slug": "kansas",
+    "rank": 29,
+    "rawScore": 1279,
+    "score100": 80,
+    "tier": "yellow",
+    "categories": {
+      "economy": {
+        "score": 129,
+        "maxScore": 350,
+        "rank": 46
+      },
+      "infrastructure": {
+        "score": 228,
+        "maxScore": 425,
+        "rank": 24
+      },
+      "workforce": {
+        "score": 201,
+        "maxScore": 375,
+        "rank": 23
+      },
+      "costOfDoingBusiness": {
+        "score": 179,
+        "maxScore": 275,
+        "rank": 13
+      },
+      "businessFriendliness": {
+        "score": 169,
+        "maxScore": 250,
+        "rank": 6
+      },
+      "qualityOfLife": {
+        "score": 113,
+        "maxScore": 325,
+        "rank": 42
+      },
+      "technologyAndInnovation": {
+        "score": 121,
+        "maxScore": 250,
+        "rank": 27
+      },
+      "education": {
+        "score": 71,
+        "maxScore": 125,
+        "rank": 12
+      },
+      "accessToCapital": {
+        "score": 32,
+        "maxScore": 75,
+        "rank": 30
+      },
+      "costOfLiving": {
+        "score": 36,
+        "maxScore": 50,
+        "rank": 9
+      }
+    }
+  }
+}

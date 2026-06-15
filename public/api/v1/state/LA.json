@@ -1,0 +1,66 @@
+{
+  "apiVersion": "1",
+  "documentation": "https://statecompass.app/partners#api",
+  "year": 2024,
+  "abbreviation": "LA",
+  "state": {
+    "name": "Louisiana",
+    "slug": "louisiana",
+    "rank": 47,
+    "rawScore": 1078,
+    "score100": 68,
+    "tier": "red",
+    "categories": {
+      "economy": {
+        "score": 120,
+        "maxScore": 350,
+        "rank": 47
+      },
+      "infrastructure": {
+        "score": 179,
+        "maxScore": 425,
+        "rank": 39
+      },
+      "workforce": {
+        "score": 149,
+        "maxScore": 375,
+        "rank": 50
+      },
+      "costOfDoingBusiness": {
+        "score": 193,
+        "maxScore": 275,
+        "rank": 8
+      },
+      "businessFriendliness": {
+        "score": 118,
+        "maxScore": 250,
+        "rank": 35
+      },
+      "qualityOfLife": {
+        "score": 100,
+        "maxScore": 325,
+        "rank": 43
+      },
+      "technologyAndInnovation": {
+        "score": 99,
+        "maxScore": 250,
+        "rank": 37
+      },
+      "education": {
+        "score": 65,
+        "maxScore": 125,
+        "rank": 20
+      },
+      "accessToCapital": {
+        "score": 27,
+        "maxScore": 75,
+        "rank": 38
+      },
+      "costOfLiving": {
+        "score": 28,
+        "maxScore": 50,
+        "rank": 19
+      }
+    }
+  }
+}

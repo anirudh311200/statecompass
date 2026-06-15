@@ -1,0 +1,66 @@
+{
+  "apiVersion": "1",
+  "documentation": "https://statecompass.app/partners#api",
+  "year": 2024,
+  "abbreviation": "PA",
+  "state": {
+    "name": "Pennsylvania",
+    "slug": "pennsylvania",
+    "rank": 17,
+    "rawScore": 1374,
+    "score100": 86,
+    "tier": "green",
+    "categories": {
+      "economy": {
+        "score": 158,
+        "maxScore": 350,
+        "rank": 34
+      },
+      "infrastructure": {
+        "score": 235,
+        "maxScore": 425,
+        "rank": 20
+      },
+      "workforce": {
+        "score": 186,
+        "maxScore": 375,
+        "rank": 35
+      },
+      "costOfDoingBusiness": {
+        "score": 148,
+        "maxScore": 275,
+        "rank": 27
+      },
+      "businessFriendliness": {
+        "score": 98,
+        "maxScore": 250,
+        "rank": 41
+      },
+      "qualityOfLife": {
+        "score": 179,
+        "maxScore": 325,
+        "rank": 25
+      },
+      "technologyAndInnovation": {
+        "score": 184,
+        "maxScore": 250,
+        "rank": 7
+      },
+      "education": {
+        "score": 82,
+        "maxScore": 125,
+        "rank": 3
+      },
+      "accessToCapital": {
+        "score": 65,
+        "maxScore": 75,
+        "rank": 5
+      },
+      "costOfLiving": {
+        "score": 39,
+        "maxScore": 50,
+        "rank": 7
+      }
+    }
+  }
+}

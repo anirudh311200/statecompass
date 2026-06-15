@@ -1,0 +1,66 @@
+{
+  "apiVersion": "1",
+  "documentation": "https://statecompass.app/partners#api",
+  "year": 2024,
+  "abbreviation": "NV",
+  "state": {
+    "name": "Nevada",
+    "slug": "nevada",
+    "rank": 39,
+    "rawScore": 1192,
+    "score100": 75,
+    "tier": "red",
+    "categories": {
+      "economy": {
+        "score": 233,
+        "maxScore": 350,
+        "rank": 8
+      },
+      "infrastructure": {
+        "score": 236,
+        "maxScore": 425,
+        "rank": 19
+      },
+      "workforce": {
+        "score": 227,
+        "maxScore": 375,
+        "rank": 10
+      },
+      "costOfDoingBusiness": {
+        "score": 101,
+        "maxScore": 275,
+        "rank": 38
+      },
+      "businessFriendliness": {
+        "score": 117,
+        "maxScore": 250,
+        "rank": 36
+      },
+      "qualityOfLife": {
+        "score": 140,
+        "maxScore": 325,
+        "rank": 34
+      },
+      "technologyAndInnovation": {
+        "score": 67,
+        "maxScore": 250,
+        "rank": 46
+      },
+      "education": {
+        "score": 9,
+        "maxScore": 125,
+        "rank": 50
+      },
+      "accessToCapital": {
+        "score": 39,
+        "maxScore": 75,
+        "rank": 23
+      },
+      "costOfLiving": {
+        "score": 23,
+        "maxScore": 50,
+        "rank": 32
+      }
+    }
+  }
+}

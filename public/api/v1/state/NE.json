@@ -1,0 +1,66 @@
+{
+  "apiVersion": "1",
+  "documentation": "https://statecompass.app/partners#api",
+  "year": 2024,
+  "abbreviation": "NE",
+  "state": {
+    "name": "Nebraska",
+    "slug": "nebraska",
+    "rank": 24,
+    "rawScore": 1324,
+    "score100": 83,
+    "tier": "yellow",
+    "categories": {
+      "economy": {
+        "score": 190,
+        "maxScore": 350,
+        "rank": 22
+      },
+      "infrastructure": {
+        "score": 202,
+        "maxScore": 425,
+        "rank": 33
+      },
+      "workforce": {
+        "score": 204,
+        "maxScore": 375,
+        "rank": 21
+      },
+      "costOfDoingBusiness": {
+        "score": 164,
+        "maxScore": 275,
+        "rank": 21
+      },
+      "businessFriendliness": {
+        "score": 167,
+        "maxScore": 250,
+        "rank": 7
+      },
+      "qualityOfLife": {
+        "score": 210,
+        "maxScore": 325,
+        "rank": 13
+      },
+      "technologyAndInnovation": {
+        "score": 81,
+        "maxScore": 250,
+        "rank": 41
+      },
+      "education": {
+        "score": 60,
+        "maxScore": 125,
+        "rank": 28
+      },
+      "accessToCapital": {
+        "score": 18,
+        "maxScore": 75,
+        "rank": 44
+      },
+      "costOfLiving": {
+        "score": 28,
+        "maxScore": 50,
+        "rank": 19
+      }
+    }
+  }
+}

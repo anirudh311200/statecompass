@@ -1,0 +1,66 @@
+{
+  "apiVersion": "1",
+  "documentation": "https://statecompass.app/partners#api",
+  "year": 2024,
+  "abbreviation": "MN",
+  "state": {
+    "name": "Minnesota",
+    "slug": "minnesota",
+    "rank": 6,
+    "rawScore": 1474,
+    "score100": 92,
+    "tier": "green",
+    "categories": {
+      "economy": {
+        "score": 187,
+        "maxScore": 350,
+        "rank": 24
+      },
+      "infrastructure": {
+        "score": 271,
+        "maxScore": 425,
+        "rank": 5
+      },
+      "workforce": {
+        "score": 207,
+        "maxScore": 375,
+        "rank": 19
+      },
+      "costOfDoingBusiness": {
+        "score": 115,
+        "maxScore": 275,
+        "rank": 35
+      },
+      "businessFriendliness": {
+        "score": 139,
+        "maxScore": 250,
+        "rank": 22
+      },
+      "qualityOfLife": {
+        "score": 240,
+        "maxScore": 325,
+        "rank": 4
+      },
+      "technologyAndInnovation": {
+        "score": 169,
+        "maxScore": 250,
+        "rank": 12
+      },
+      "education": {
+        "score": 66,
+        "maxScore": 125,
+        "rank": 17
+      },
+      "accessToCapital": {
+        "score": 52,
+        "maxScore": 75,
+        "rank": 12
+      },
+      "costOfLiving": {
+        "score": 28,
+        "maxScore": 50,
+        "rank": 19
+      }
+    }
+  }
+}

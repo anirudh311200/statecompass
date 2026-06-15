@@ -1,0 +1,109 @@
+---
+import EmbedLayout from "../../layouts/EmbedLayout.astro";
+import YearSelector from "../../components/YearSelector.astro";
+import { dataYear } from "../../lib/states.js";
+
+const site = Astro.site ?? new URL("https://statecompass.app");
+---
+
+<EmbedLayout
+  title={`Embed map — CNBC ${dataYear} | StateCompass`}
+  description="Embeddable US map with CNBC business climate scores. CNBC attribution required."
+>
+  <main class="embed-map">
+    <div class="embed-map-layout">
+      <section class="embed-map-panel map-panel" aria-label="United States map">
+        <span id="map-title" hidden>United States business climate map</span>
+        <span id="map-desc" hidden>
+          Click a state to preview CNBC rank and score. Opens full details on StateCompass.
+        </span>
+        <div id="map-container" aria-hidden="false"></div>
+      </section>
+
+      <aside class="embed-map-sidebar sidebar" id="sidebar">
+        <div class="info-card" id="info-card" aria-live="polite">
+          <div class="info-card-header">
+            <h2 class="embed-map-heading">State preview</h2>
+            <button type="button" id="clear-pin" class="clear-pin-btn" hidden>
+              Clear
+            </button>
+          </div>
+          <p id="tooltip-default" class="tooltip-prompt">
+            <span class="prompt-dot" aria-hidden="true"></span>
+            <span class="tooltip-prompt-copy">
+              <span class="tooltip-prompt-line">Click a state to preview rank and score.</span>
+            </span>
+          </p>
+          <div id="tooltip-content" hidden>
+            <div class="state-name-row">
+              <p class="state-name">
+                <a href="#" id="state-name-link" class="state-name-link" target="_blank" rel="noopener noreferrer"></a>
+              </p>
+            </div>
+
+            <a href="#" id="map-detail-link" class="map-detail-link map-detail-link--primary" target="_blank" rel="noopener noreferrer">
+              Full breakdown on StateCompass →
+            </a>
+
+            <div class="score-block">
+              <div class="score-header">
+                <span class="score-label" id="score-label">Score</span>
+                <span class="score-value" id="score-value"></span>
+                <span class="score-max">/100</span>
+              </div>
+              <div class="score-bar-track" aria-hidden="true">
+                <div class="score-bar-fill" id="score-bar-fill"></div>
+              </div>
+            </div>
+
+            <p class="rank-row">
+              Rank <span id="rank-value"></span>
+            </p>
+            <p class="rank-footnote" id="rank-footnote" hidden></p>
+            <span class="tier-badge" id="tier-badge"></span>
+          </div>
+        </div>
+      </aside>
+    </div>
+
+    <div class="embed-map-legend map-legend" aria-label="Map color legend">
+      <YearSelector id="map-year" class="map-year-select" />
+      <div class="map-legend-items">
+        <span class="map-legend-item">
+          <span class="swatch green" aria-hidden="true"></span>
+          <span>1–17</span>
+        </span>
+        <span class="map-legend-item">
+          <span class="swatch yellow" aria-hidden="true"></span>
+          <span>18–34</span>
+        </span>
+        <span class="map-legend-item">
+          <span class="swatch red" aria-hidden="true"></span>
+          <span>35–50</span>
+        </span>
+      </div>
+      <span class="map-legend-source" data-cnbc-year>CNBC {dataYear}</span>
+    </div>
+
+    <p class="embed-open-link">
+      <a href={site.href} target="_blank" rel="noopener noreferrer">Open full StateCompass →</a>
+    </p>
+  </main>
+
+  <script>
+    import { initMap } from "../../scripts/map.js";
+    import { initMapSidebar } from "../../scripts/mapSidebar.js";
+
+    initMap({ embed: true })
+      .then((stateData) => {
+        initMapSidebar(stateData);
+      })
+      .catch((error) => {
+        console.error(error);
+        const defaultText = document.getElementById("tooltip-default");
+        if (defaultText) {
+          defaultText.textContent = "Unable to load map data. Please refresh the page.";
+        }
+      });
+  </script>
+</EmbedLayout>

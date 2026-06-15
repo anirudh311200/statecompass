@@ -1,0 +1,66 @@
+{
+  "apiVersion": "1",
+  "documentation": "https://statecompass.app/partners#api",
+  "year": 2024,
+  "abbreviation": "CT",
+  "state": {
+    "name": "Connecticut",
+    "slug": "connecticut",
+    "rank": 32,
+    "rawScore": 1259,
+    "score100": 79,
+    "tier": "yellow",
+    "categories": {
+      "economy": {
+        "score": 147,
+        "maxScore": 350,
+        "rank": 39
+      },
+      "infrastructure": {
+        "score": 216,
+        "maxScore": 425,
+        "rank": 29
+      },
+      "workforce": {
+        "score": 205,
+        "maxScore": 375,
+        "rank": 20
+      },
+      "costOfDoingBusiness": {
+        "score": 91,
+        "maxScore": 275,
+        "rank": 43
+      },
+      "businessFriendliness": {
+        "score": 111,
+        "maxScore": 250,
+        "rank": 39
+      },
+      "qualityOfLife": {
+        "score": 211,
+        "maxScore": 325,
+        "rank": 9
+      },
+      "technologyAndInnovation": {
+        "score": 133,
+        "maxScore": 250,
+        "rank": 25
+      },
+      "education": {
+        "score": 81,
+        "maxScore": 125,
+        "rank": 4
+      },
+      "accessToCapital": {
+        "score": 43,
+        "maxScore": 75,
+        "rank": 22
+      },
+      "costOfLiving": {
+        "score": 21,
+        "maxScore": 50,
+        "rank": 34
+      }
+    }
+  }
+}

@@ -1,0 +1,66 @@
+{
+  "apiVersion": "1",
+  "documentation": "https://statecompass.app/partners#api",
+  "year": 2024,
+  "abbreviation": "TX",
+  "state": {
+    "name": "Texas",
+    "slug": "texas",
+    "rank": 3,
+    "rawScore": 1577,
+    "score100": 99,
+    "tier": "green",
+    "categories": {
+      "economy": {
+        "score": 292,
+        "maxScore": 350,
+        "rank": 2
+      },
+      "infrastructure": {
+        "score": 224,
+        "maxScore": 425,
+        "rank": 26
+      },
+      "workforce": {
+        "score": 297,
+        "maxScore": 375,
+        "rank": 1
+      },
+      "costOfDoingBusiness": {
+        "score": 197,
+        "maxScore": 275,
+        "rank": 6
+      },
+      "businessFriendliness": {
+        "score": 144,
+        "maxScore": 250,
+        "rank": 17
+      },
+      "qualityOfLife": {
+        "score": 75,
+        "maxScore": 325,
+        "rank": 50
+      },
+      "technologyAndInnovation": {
+        "score": 207,
+        "maxScore": 250,
+        "rank": 1
+      },
+      "education": {
+        "score": 58,
+        "maxScore": 125,
+        "rank": 35
+      },
+      "accessToCapital": {
+        "score": 63,
+        "maxScore": 75,
+        "rank": 6
+      },
+      "costOfLiving": {
+        "score": 20,
+        "maxScore": 50,
+        "rank": 37
+      }
+    }
+  }
+}

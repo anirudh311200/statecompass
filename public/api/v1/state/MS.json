@@ -1,0 +1,66 @@
+{
+  "apiVersion": "1",
+  "documentation": "https://statecompass.app/partners#api",
+  "year": 2024,
+  "abbreviation": "MS",
+  "state": {
+    "name": "Mississippi",
+    "slug": "mississippi",
+    "rank": 49,
+    "rawScore": 1016,
+    "score100": 64,
+    "tier": "red",
+    "categories": {
+      "economy": {
+        "score": 90,
+        "maxScore": 350,
+        "rank": 50
+      },
+      "infrastructure": {
+        "score": 154,
+        "maxScore": 425,
+        "rank": 46
+      },
+      "workforce": {
+        "score": 150,
+        "maxScore": 375,
+        "rank": 49
+      },
+      "costOfDoingBusiness": {
+        "score": 190,
+        "maxScore": 275,
+        "rank": 10
+      },
+      "businessFriendliness": {
+        "score": 122,
+        "maxScore": 250,
+        "rank": 28
+      },
+      "qualityOfLife": {
+        "score": 136,
+        "maxScore": 325,
+        "rank": 36
+      },
+      "technologyAndInnovation": {
+        "score": 58,
+        "maxScore": 250,
+        "rank": 49
+      },
+      "education": {
+        "score": 64,
+        "maxScore": 125,
+        "rank": 22
+      },
+      "accessToCapital": {
+        "score": 21,
+        "maxScore": 75,
+        "rank": 43
+      },
+      "costOfLiving": {
+        "score": 31,
+        "maxScore": 50,
+        "rank": 14
+      }
+    }
+  }
+}

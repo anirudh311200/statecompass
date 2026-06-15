@@ -8,3 +8,10 @@ interface ImportMetaEnv {
 interface ImportMeta {
   readonly env: ImportMetaEnv;
 }
+
+interface Window {
+  plausible?: (
+    event: string,
+    options?: { props?: Record<string, string | number | boolean> }
+  ) => void;
+}

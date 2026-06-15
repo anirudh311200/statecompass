@@ -162,7 +162,8 @@ const jsonLd = {
     wireCopyButton(
       document.getElementById("copy-state-link"),
       () => window.location.href,
-      document.getElementById("state-share-status")
+      document.getElementById("state-share-status"),
+      { shareType: "state" }
     );
   </script>
 </Layout>

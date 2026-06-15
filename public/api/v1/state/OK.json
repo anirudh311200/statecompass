@@ -1,0 +1,66 @@
+{
+  "apiVersion": "1",
+  "documentation": "https://statecompass.app/partners#api",
+  "year": 2024,
+  "abbreviation": "OK",
+  "state": {
+    "name": "Oklahoma",
+    "slug": "oklahoma",
+    "rank": 26,
+    "rawScore": 1296,
+    "score100": 81,
+    "tier": "yellow",
+    "categories": {
+      "economy": {
+        "score": 194,
+        "maxScore": 350,
+        "rank": 21
+      },
+      "infrastructure": {
+        "score": 246,
+        "maxScore": 425,
+        "rank": 13
+      },
+      "workforce": {
+        "score": 187,
+        "maxScore": 375,
+        "rank": 32
+      },
+      "costOfDoingBusiness": {
+        "score": 222,
+        "maxScore": 275,
+        "rank": 1
+      },
+      "businessFriendliness": {
+        "score": 142,
+        "maxScore": 250,
+        "rank": 19
+      },
+      "qualityOfLife": {
+        "score": 85,
+        "maxScore": 325,
+        "rank": 47
+      },
+      "technologyAndInnovation": {
+        "score": 114,
+        "maxScore": 250,
+        "rank": 30
+      },
+      "education": {
+        "score": 52,
+        "maxScore": 125,
+        "rank": 40
+      },
+      "accessToCapital": {
+        "score": 22,
+        "maxScore": 75,
+        "rank": 40
+      },
+      "costOfLiving": {
+        "score": 32,
+        "maxScore": 50,
+        "rank": 12
+      }
+    }
+  }
+}

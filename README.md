@@ -13,6 +13,7 @@ Built with [Astro](https://astro.build) — static export, deployable to Vercel 
 - **Rankings** — Full 50-state table with sort, tier filter, and Founder Fit profiles
 - **State pages** — All 10 CNBC categories with sourced breakdowns and social preview cards
 - **Founder Fit** — Re-weighted rankings for tech startups, bootstrapped services, and physical ops
+- **Embed & API** — iframe widgets and read-only JSON for accelerators and portfolio sites (`/partners`)
 
 Scores come from CNBC via a verified data pipeline — never hand-edited in the UI.
 
@@ -56,7 +57,7 @@ GitHub Actions runs on every push to `main`: Python verify, then Astro build.
 | Variable | Description |
 |----------|-------------|
 | `SITE_URL` | Canonical site URL for sitemap and OG tags |
-| `PUBLIC_PLAUSIBLE_DOMAIN` | Optional Plausible analytics domain |
+| `PUBLIC_PLAUSIBLE_DOMAIN` | Optional Plausible analytics domain (tracks Compare, Share, Profile events) |
 
 ## Regenerate assets
 

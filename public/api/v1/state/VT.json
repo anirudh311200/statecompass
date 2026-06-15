@@ -1,0 +1,66 @@
+{
+  "apiVersion": "1",
+  "documentation": "https://statecompass.app/partners#api",
+  "year": 2024,
+  "abbreviation": "VT",
+  "state": {
+    "name": "Vermont",
+    "slug": "vermont",
+    "rank": 37,
+    "rawScore": 1214,
+    "score100": 76,
+    "tier": "red",
+    "categories": {
+      "economy": {
+        "score": 144,
+        "maxScore": 350,
+        "rank": 41
+      },
+      "infrastructure": {
+        "score": 185,
+        "maxScore": 425,
+        "rank": 38
+      },
+      "workforce": {
+        "score": 163,
+        "maxScore": 375,
+        "rank": 41
+      },
+      "costOfDoingBusiness": {
+        "score": 103,
+        "maxScore": 275,
+        "rank": 37
+      },
+      "businessFriendliness": {
+        "score": 122,
+        "maxScore": 250,
+        "rank": 28
+      },
+      "qualityOfLife": {
+        "score": 281,
+        "maxScore": 325,
+        "rank": 1
+      },
+      "technologyAndInnovation": {
+        "score": 110,
+        "maxScore": 250,
+        "rank": 33
+      },
+      "education": {
+        "score": 66,
+        "maxScore": 125,
+        "rank": 17
+      },
+      "accessToCapital": {
+        "score": 18,
+        "maxScore": 75,
+        "rank": 44
+      },
+      "costOfLiving": {
+        "score": 22,
+        "maxScore": 50,
+        "rank": 33
+      }
+    }
+  }
+}

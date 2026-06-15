@@ -1,0 +1,66 @@
+{
+  "apiVersion": "1",
+  "documentation": "https://statecompass.app/partners#api",
+  "year": 2024,
+  "abbreviation": "SD",
+  "state": {
+    "name": "South Dakota",
+    "slug": "south-dakota",
+    "rank": 33,
+    "rawScore": 1248,
+    "score100": 78,
+    "tier": "yellow",
+    "categories": {
+      "economy": {
+        "score": 189,
+        "maxScore": 350,
+        "rank": 23
+      },
+      "infrastructure": {
+        "score": 189,
+        "maxScore": 425,
+        "rank": 36
+      },
+      "workforce": {
+        "score": 160,
+        "maxScore": 375,
+        "rank": 44
+      },
+      "costOfDoingBusiness": {
+        "score": 174,
+        "maxScore": 275,
+        "rank": 16
+      },
+      "businessFriendliness": {
+        "score": 190,
+        "maxScore": 250,
+        "rank": 3
+      },
+      "qualityOfLife": {
+        "score": 167,
+        "maxScore": 325,
+        "rank": 28
+      },
+      "technologyAndInnovation": {
+        "score": 59,
+        "maxScore": 250,
+        "rank": 48
+      },
+      "education": {
+        "score": 62,
+        "maxScore": 125,
+        "rank": 24
+      },
+      "accessToCapital": {
+        "score": 30,
+        "maxScore": 75,
+        "rank": 32
+      },
+      "costOfLiving": {
+        "score": 28,
+        "maxScore": 50,
+        "rank": 19
+      }
+    }
+  }
+}

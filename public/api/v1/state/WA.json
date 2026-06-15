@@ -1,0 +1,66 @@
+{
+  "apiVersion": "1",
+  "documentation": "https://statecompass.app/partners#api",
+  "year": 2024,
+  "abbreviation": "WA",
+  "state": {
+    "name": "Washington",
+    "slug": "washington",
+    "rank": 10,
+    "rawScore": 1436,
+    "score100": 90,
+    "tier": "green",
+    "categories": {
+      "economy": {
+        "score": 207,
+        "maxScore": 350,
+        "rank": 18
+      },
+      "infrastructure": {
+        "score": 239,
+        "maxScore": 425,
+        "rank": 18
+      },
+      "workforce": {
+        "score": 260,
+        "maxScore": 375,
+        "rank": 5
+      },
+      "costOfDoingBusiness": {
+        "score": 100,
+        "maxScore": 275,
+        "rank": 39
+      },
+      "businessFriendliness": {
+        "score": 88,
+        "maxScore": 250,
+        "rank": 42
+      },
+      "qualityOfLife": {
+        "score": 230,
+        "maxScore": 325,
+        "rank": 5
+      },
+      "technologyAndInnovation": {
+        "score": 201,
+        "maxScore": 250,
+        "rank": 4
+      },
+      "education": {
+        "score": 55,
+        "maxScore": 125,
+        "rank": 36
+      },
+      "accessToCapital": {
+        "score": 44,
+        "maxScore": 75,
+        "rank": 20
+      },
+      "costOfLiving": {
+        "score": 12,
+        "maxScore": 50,
+        "rank": 42
+      }
+    }
+  }
+}

@@ -1,0 +1,3061 @@
+{
+  "apiVersion": "1",
+  "documentation": "https://statecompass.app/partners#api",
+  "attribution": "Scores from CNBC America's Top States for Business. Do not remove attribution when republishing.",
+  "source": "CNBC America's Top States for Business",
+  "year": 2025,
+  "maxTotalScore": 2500,
+  "maxRawScore": 1614,
+  "minRawScore": 941,
+  "methodologyUrl": "https://www.cnbc.com/2025/06/11/how-we-are-choosing-americas-top-states-for-business-in-2025.html",
+  "rankingsUrl": "https://www.cnbc.com/2025/07/10/top-states-for-business-americas-2025-the-full-rankings.html",
+  "categories": {
+    "economy": {
+      "label": "Economy",
+      "maxScore": 445
+    },
+    "infrastructure": {
+      "label": "Infrastructure",
+      "maxScore": 405
+    },
+    "workforce": {
+      "label": "Workforce",
+      "maxScore": 335
+    },
+    "costOfDoingBusiness": {
+      "label": "Cost of Doing Business",
+      "maxScore": 295
+    },
+    "businessFriendliness": {
+      "label": "Business Friendliness",
+      "maxScore": 270
+    },
+    "qualityOfLife": {
+      "label": "Quality of Life",
+      "maxScore": 265
+    },
+    "technologyAndInnovation": {
+      "label": "Technology & Innovation",
+      "maxScore": 255
+    },
+    "education": {
+      "label": "Education",
+      "maxScore": 110
+    },
+    "accessToCapital": {
+      "label": "Access to Capital",
+      "maxScore": 60
+    },
+    "costOfLiving": {
+      "label": "Cost of Living",
+      "maxScore": 60
+    }
+  },
+  "tierBreakdown": {
+    "green": "Ranks 1\u201317 \u2014 very favourable",
+    "yellow": "Ranks 18\u201334 \u2014 moderate",
+    "red": "Ranks 35\u201350 \u2014 less favourable"
+  },
+  "states": {
+    "NC": {
+      "name": "North Carolina",
+      "slug": "north-carolina",
+      "rank": 1,
+      "rawScore": 1614,
+      "score100": 100,
+      "tier": "green",
+      "categories": {
+        "economy": {
+          "score": 322,
+          "maxScore": 445,
+          "rank": 3
+        },
+        "infrastructure": {
+          "score": 240,
+          "maxScore": 405,
+          "rank": 11
+        },
+        "workforce": {
+          "score": 243,
+          "maxScore": 335,
+          "rank": 4
+        },
+        "costOfDoingBusiness": {
+          "score": 167,
+          "maxScore": 295,
+          "rank": 21
+        },
+        "businessFriendliness": {
+          "score": 195,
+          "maxScore": 270,
+          "rank": 4
+        },
+        "qualityOfLife": {
+          "score": 136,
+          "maxScore": 265,
+          "rank": 29
+        },
+        "technologyAndInnovation": {
+          "score": 159,
+          "maxScore": 255,
+          "rank": 13
+        },
+        "education": {
+          "score": 70,
+          "maxScore": 110,
+          "rank": 6
+        },
+        "accessToCapital": {
+          "score": 49,
+          "maxScore": 60,
+          "rank": 8
+        },
+        "costOfLiving": {
+          "score": 33,
+          "maxScore": 60,
+          "rank": 23
+        }
+      }
+    },
+    "TX": {
+      "name": "Texas",
+      "slug": "texas",
+      "rank": 2,
+      "rawScore": 1601,
+      "score100": 99,
+      "tier": "green",
+      "categories": {
+        "economy": {
+          "score": 348,
+          "maxScore": 445,
+          "rank": 2
+        },
+        "infrastructure": {
+          "score": 213,
+          "maxScore": 405,
+          "rank": 26
+        },
+        "workforce": {
+          "score": 272,
+          "maxScore": 335,
+          "rank": 1
+        },
+        "costOfDoingBusiness": {
+          "score": 210,
+          "maxScore": 295,
+          "rank": 5
+        },
+        "businessFriendliness": {
+          "score": 160,
+          "maxScore": 270,
+          "rank": 17
+        },
+        "qualityOfLife": {
+          "score": 72,
+          "maxScore": 265,
+          "rank": 49
+        },
+        "technologyAndInnovation": {
+          "score": 192,
+          "maxScore": 255,
+          "rank": 2
+        },
+        "education": {
+          "score": 56,
+          "maxScore": 110,
+          "rank": 24
+        },
+        "accessToCapital": {
+          "score": 56,
+          "maxScore": 60,
+          "rank": 2
+        },
+        "costOfLiving": {
+          "score": 22,
+          "maxScore": 60,
+          "rank": 39
+        }
+      }
+    },
+    "FL": {
+      "name": "Florida",
+      "slug": "florida",
+      "rank": 3,
+      "rawScore": 1588,
+      "score100": 98,
+      "tier": "green",
+      "categories": {
+        "economy": {
+          "score": 363,
+          "maxScore": 445,
+          "rank": 1
+        },
+        "infrastructure": {
+          "score": 230,
+          "maxScore": 405,
+          "rank": 16
+        },
+        "workforce": {
+          "score": 255,
+          "maxScore": 335,
+          "rank": 2
+        },
+        "costOfDoingBusiness": {
+          "score": 165,
+          "maxScore": 295,
+          "rank": 22
+        },
+        "businessFriendliness": {
+          "score": 147,
+          "maxScore": 270,
+          "rank": 23
+        },
+        "qualityOfLife": {
+          "score": 146,
+          "maxScore": 265,
+          "rank": 22
+        },
+        "technologyAndInnovation": {
+          "score": 165,
+          "maxScore": 255,
+          "rank": 12
+        },
+        "education": {
+          "score": 52,
+          "maxScore": 110,
+          "rank": 29
+        },
+        "accessToCapital": {
+          "score": 55,
+          "maxScore": 60,
+          "rank": 3
+        },
+        "costOfLiving": {
+          "score": 10,
+          "maxScore": 60,
+          "rank": 48
+        }
+      }
+    },
+    "VA": {
+      "name": "Virginia",
+      "slug": "virginia",
+      "rank": 4,
+      "rawScore": 1578,
+      "score100": 98,
+      "tier": "green",
+      "categories": {
+        "economy": {
+          "score": 266,
+          "maxScore": 445,
+          "rank": 14
+        },
+        "infrastructure": {
+          "score": 283,
+          "maxScore": 405,
+          "rank": 2
+        },
+        "workforce": {
+          "score": 205,
+          "maxScore": 335,
+          "rank": 14
+        },
+        "costOfDoingBusiness": {
+          "score": 142,
+          "maxScore": 295,
+          "rank": 31
+        },
+        "businessFriendliness": {
+          "score": 186,
+          "maxScore": 270,
+          "rank": 7
+        },
+        "qualityOfLife": {
+          "score": 167,
+          "maxScore": 265,
+          "rank": 8
+        },
+        "technologyAndInnovation": {
+          "score": 168,
+          "maxScore": 255,
+          "rank": 8
+        },
+        "education": {
+          "score": 82,
+          "maxScore": 110,
+          "rank": 1
+        },
+        "accessToCapital": {
+          "score": 45,
+          "maxScore": 60,
+          "rank": 10
+        },
+        "costOfLiving": {
+          "score": 34,
+          "maxScore": 60,
+          "rank": 21
+        }
+      }
+    },
+    "OH": {
+      "name": "Ohio",
+      "slug": "ohio",
+      "rank": 5,
+      "rawScore": 1515,
+      "score100": 94,
+      "tier": "green",
+      "categories": {
+        "economy": {
+          "score": 230,
+          "maxScore": 445,
+          "rank": 26
+        },
+        "infrastructure": {
+          "score": 284,
+          "maxScore": 405,
+          "rank": 1
+        },
+        "workforce": {
+          "score": 165,
+          "maxScore": 335,
+          "rank": 31
+        },
+        "costOfDoingBusiness": {
+          "score": 229,
+          "maxScore": 295,
+          "rank": 2
+        },
+        "businessFriendliness": {
+          "score": 140,
+          "maxScore": 270,
+          "rank": 25
+        },
+        "qualityOfLife": {
+          "score": 153,
+          "maxScore": 265,
+          "rank": 17
+        },
+        "technologyAndInnovation": {
+          "score": 169,
+          "maxScore": 255,
+          "rank": 6
+        },
+        "education": {
+          "score": 53,
+          "maxScore": 110,
+          "rank": 27
+        },
+        "accessToCapital": {
+          "score": 51,
+          "maxScore": 60,
+          "rank": 7
+        },
+        "costOfLiving": {
+          "score": 41,
+          "maxScore": 60,
+          "rank": 7
+        }
+      }
+    },
+    "MI": {
+      "name": "Michigan",
+      "slug": "michigan",
+      "rank": 6,
+      "rawScore": 1486,
+      "score100": 92,
+      "tier": "green",
+      "categories": {
+        "economy": {
+          "score": 244,
+          "maxScore": 445,
+          "rank": 18
+        },
+        "infrastructure": {
+          "score": 231,
+          "maxScore": 405,
+          "rank": 15
+        },
+        "workforce": {
+          "score": 207,
+          "maxScore": 335,
+          "rank": 13
+        },
+        "costOfDoingBusiness": {
+          "score": 212,
+          "maxScore": 295,
+          "rank": 4
+        },
+        "businessFriendliness": {
+          "score": 164,
+          "maxScore": 270,
+          "rank": 14
+        },
+        "qualityOfLife": {
+          "score": 157,
+          "maxScore": 265,
+          "rank": 14
+        },
+        "technologyAndInnovation": {
+          "score": 148,
+          "maxScore": 255,
+          "rank": 17
+        },
+        "education": {
+          "score": 44,
+          "maxScore": 110,
+          "rank": 41
+        },
+        "accessToCapital": {
+          "score": 40,
+          "maxScore": 60,
+          "rank": 13
+        },
+        "costOfLiving": {
+          "score": 39,
+          "maxScore": 60,
+          "rank": 9
+        }
+      }
+    },
+    "GA": {
+      "name": "Georgia",
+      "slug": "georgia",
+      "rank": 7,
+      "rawScore": 1480,
+      "score100": 92,
+      "tier": "green",
+      "categories": {
+        "economy": {
+          "score": 277,
+          "maxScore": 445,
+          "rank": 9
+        },
+        "infrastructure": {
+          "score": 266,
+          "maxScore": 405,
+          "rank": 4
+        },
+        "workforce": {
+          "score": 250,
+          "maxScore": 335,
+          "rank": 3
+        },
+        "costOfDoingBusiness": {
+          "score": 171,
+          "maxScore": 295,
+          "rank": 18
+        },
+        "businessFriendliness": {
+          "score": 160,
+          "maxScore": 270,
+          "rank": 17
+        },
+        "qualityOfLife": {
+          "score": 89,
+          "maxScore": 265,
+          "rank": 45
+        },
+        "technologyAndInnovation": {
+          "score": 140,
+          "maxScore": 255,
+          "rank": 22
+        },
+        "education": {
+          "score": 61,
+          "maxScore": 110,
+          "rank": 15
+        },
+        "accessToCapital": {
+          "score": 37,
+          "maxScore": 60,
+          "rank": 16
+        },
+        "costOfLiving": {
+          "score": 29,
+          "maxScore": 60,
+          "rank": 30
+        }
+      }
+    },
+    "TN": {
+      "name": "Tennessee",
+      "slug": "tennessee",
+      "rank": 8,
+      "rawScore": 1415,
+      "score100": 88,
+      "tier": "green",
+      "categories": {
+        "economy": {
+          "score": 239,
+          "maxScore": 445,
+          "rank": 21
+        },
+        "infrastructure": {
+          "score": 245,
+          "maxScore": 405,
+          "rank": 9
+        },
+        "workforce": {
+          "score": 214,
+          "maxScore": 335,
+          "rank": 10
+        },
+        "costOfDoingBusiness": {
+          "score": 199,
+          "maxScore": 295,
+          "rank": 10
+        },
+        "businessFriendliness": {
+          "score": 198,
+          "maxScore": 270,
+          "rank": 3
+        },
+        "qualityOfLife": {
+          "score": 61,
+          "maxScore": 265,
+          "rank": 50
+        },
+        "technologyAndInnovation": {
+          "score": 138,
+          "maxScore": 255,
+          "rank": 24
+        },
+        "education": {
+          "score": 59,
+          "maxScore": 110,
+          "rank": 18
+        },
+        "accessToCapital": {
+          "score": 26,
+          "maxScore": 60,
+          "rank": 28
+        },
+        "costOfLiving": {
+          "score": 36,
+          "maxScore": 60,
+          "rank": 18
+        }
+      }
+    },
+    "IN": {
+      "name": "Indiana",
+      "slug": "indiana",
+      "rank": 9,
+      "rawScore": 1408,
+      "score100": 87,
+      "tier": "green",
+      "categories": {
+        "economy": {
+          "score": 241,
+          "maxScore": 445,
+          "rank": 19
+        },
+        "infrastructure": {
+          "score": 256,
+          "maxScore": 405,
+          "rank": 6
+        },
+        "workforce": {
+          "score": 164,
+          "maxScore": 335,
+          "rank": 33
+        },
+        "costOfDoingBusiness": {
+          "score": 224,
+          "maxScore": 295,
+          "rank": 3
+        },
+        "businessFriendliness": {
+          "score": 191,
+          "maxScore": 270,
+          "rank": 5
+        },
+        "qualityOfLife": {
+          "score": 73,
+          "maxScore": 265,
+          "rank": 48
+        },
+        "technologyAndInnovation": {
+          "score": 148,
+          "maxScore": 255,
+          "rank": 17
+        },
+        "education": {
+          "score": 33,
+          "maxScore": 110,
+          "rank": 46
+        },
+        "accessToCapital": {
+          "score": 32,
+          "maxScore": 60,
+          "rank": 22
+        },
+        "costOfLiving": {
+          "score": 46,
+          "maxScore": 60,
+          "rank": 2
+        }
+      }
+    },
+    "MN": {
+      "name": "Minnesota",
+      "slug": "minnesota",
+      "rank": 10,
+      "rawScore": 1397,
+      "score100": 87,
+      "tier": "green",
+      "categories": {
+        "economy": {
+          "score": 226,
+          "maxScore": 445,
+          "rank": 28
+        },
+        "infrastructure": {
+          "score": 258,
+          "maxScore": 405,
+          "rank": 5
+        },
+        "workforce": {
+          "score": 168,
+          "maxScore": 335,
+          "rank": 30
+        },
+        "costOfDoingBusiness": {
+          "score": 122,
+          "maxScore": 295,
+          "rank": 34
+        },
+        "businessFriendliness": {
+          "score": 150,
+          "maxScore": 270,
+          "rank": 21
+        },
+        "qualityOfLife": {
+          "score": 189,
+          "maxScore": 265,
+          "rank": 4
+        },
+        "technologyAndInnovation": {
+          "score": 158,
+          "maxScore": 255,
+          "rank": 14
+        },
+        "education": {
+          "score": 63,
+          "maxScore": 110,
+          "rank": 12
+        },
+        "accessToCapital": {
+          "score": 36,
+          "maxScore": 60,
+          "rank": 18
+        },
+        "costOfLiving": {
+          "score": 27,
+          "maxScore": 60,
+          "rank": 33
+        }
+      }
+    },
+    "CO": {
+      "name": "Colorado",
+      "slug": "colorado",
+      "rank": 11,
+      "rawScore": 1388,
+      "score100": 86,
+      "tier": "green",
+      "categories": {
+        "economy": {
+          "score": 239,
+          "maxScore": 445,
+          "rank": 21
+        },
+        "infrastructure": {
+          "score": 240,
+          "maxScore": 405,
+          "rank": 11
+        },
+        "workforce": {
+          "score": 222,
+          "maxScore": 335,
+          "rank": 7
+        },
+        "costOfDoingBusiness": {
+          "score": 108,
+          "maxScore": 295,
+          "rank": 38
+        },
+        "businessFriendliness": {
+          "score": 148,
+          "maxScore": 270,
+          "rank": 22
+        },
+        "qualityOfLife": {
+          "score": 161,
+          "maxScore": 265,
+          "rank": 12
+        },
+        "technologyAndInnovation": {
+          "score": 166,
+          "maxScore": 255,
+          "rank": 9
+        },
+        "education": {
+          "score": 51,
+          "maxScore": 110,
+          "rank": 31
+        },
+        "accessToCapital": {
+          "score": 41,
+          "maxScore": 60,
+          "rank": 12
+        },
+        "costOfLiving": {
+          "score": 12,
+          "maxScore": 60,
+          "rank": 47
+        }
+      }
+    },
+    "AZ": {
+      "name": "Arizona",
+      "slug": "arizona",
+      "rank": 12,
+      "rawScore": 1383,
+      "score100": 86,
+      "tier": "green",
+      "categories": {
+        "economy": {
+          "score": 268,
+          "maxScore": 445,
+          "rank": 13
+        },
+        "infrastructure": {
+          "score": 279,
+          "maxScore": 405,
+          "rank": 3
+        },
+        "workforce": {
+          "score": 228,
+          "maxScore": 335,
+          "rank": 6
+        },
+        "costOfDoingBusiness": {
+          "score": 128,
+          "maxScore": 295,
+          "rank": 32
+        },
+        "businessFriendliness": {
+          "score": 160,
+          "maxScore": 270,
+          "rank": 17
+        },
+        "qualityOfLife": {
+          "score": 99,
+          "maxScore": 265,
+          "rank": 39
+        },
+        "technologyAndInnovation": {
+          "score": 143,
+          "maxScore": 255,
+          "rank": 20
+        },
+        "education": {
+          "score": 26,
+          "maxScore": 110,
+          "rank": 47
+        },
+        "accessToCapital": {
+          "score": 30,
+          "maxScore": 60,
+          "rank": 25
+        },
+        "costOfLiving": {
+          "score": 22,
+          "maxScore": 60,
+          "rank": 39
+        }
+      }
+    },
+    "IL": {
+      "name": "Illinois",
+      "slug": "illinois",
+      "rank": 13,
+      "rawScore": 1377,
+      "score100": 85,
+      "tier": "green",
+      "categories": {
+        "economy": {
+          "score": 188,
+          "maxScore": 445,
+          "rank": 44
+        },
+        "infrastructure": {
+          "score": 250,
+          "maxScore": 405,
+          "rank": 8
+        },
+        "workforce": {
+          "score": 193,
+          "maxScore": 335,
+          "rank": 19
+        },
+        "costOfDoingBusiness": {
+          "score": 170,
+          "maxScore": 295,
+          "rank": 19
+        },
+        "businessFriendliness": {
+          "score": 111,
+          "maxScore": 270,
+          "rank": 38
+        },
+        "qualityOfLife": {
+          "score": 143,
+          "maxScore": 265,
+          "rank": 23
+        },
+        "technologyAndInnovation": {
+          "score": 169,
+          "maxScore": 255,
+          "rank": 6
+        },
+        "education": {
+          "score": 74,
+          "maxScore": 110,
+          "rank": 3
+        },
+        "accessToCapital": {
+          "score": 53,
+          "maxScore": 60,
+          "rank": 5
+        },
+        "costOfLiving": {
+          "score": 26,
+          "maxScore": 60,
+          "rank": 34
+        }
+      }
+    },
+    "WA": {
+      "name": "Washington",
+      "slug": "washington",
+      "rank": 14,
+      "rawScore": 1374,
+      "score100": 85,
+      "tier": "green",
+      "categories": {
+        "economy": {
+          "score": 296,
+          "maxScore": 445,
+          "rank": 6
+        },
+        "infrastructure": {
+          "score": 213,
+          "maxScore": 405,
+          "rank": 26
+        },
+        "workforce": {
+          "score": 229,
+          "maxScore": 335,
+          "rank": 5
+        },
+        "costOfDoingBusiness": {
+          "score": 86,
+          "maxScore": 295,
+          "rank": 48
+        },
+        "businessFriendliness": {
+          "score": 104,
+          "maxScore": 270,
+          "rank": 41
+        },
+        "qualityOfLife": {
+          "score": 157,
+          "maxScore": 265,
+          "rank": 14
+        },
+        "technologyAndInnovation": {
+          "score": 178,
+          "maxScore": 255,
+          "rank": 4
+        },
+        "education": {
+          "score": 50,
+          "maxScore": 110,
+          "rank": 33
+        },
+        "accessToCapital": {
+          "score": 39,
+          "maxScore": 60,
+          "rank": 14
+        },
+        "costOfLiving": {
+          "score": 22,
+          "maxScore": 60,
+          "rank": 39
+        }
+      }
+    },
+    "NE": {
+      "name": "Nebraska",
+      "slug": "nebraska",
+      "rank": 15,
+      "rawScore": 1372,
+      "score100": 85,
+      "tier": "green",
+      "categories": {
+        "economy": {
+          "score": 241,
+          "maxScore": 445,
+          "rank": 19
+        },
+        "infrastructure": {
+          "score": 199,
+          "maxScore": 405,
+          "rank": 30
+        },
+        "workforce": {
+          "score": 196,
+          "maxScore": 335,
+          "rank": 17
+        },
+        "costOfDoingBusiness": {
+          "score": 177,
+          "maxScore": 295,
+          "rank": 15
+        },
+        "businessFriendliness": {
+          "score": 180,
+          "maxScore": 270,
+          "rank": 8
+        },
+        "qualityOfLife": {
+          "score": 167,
+          "maxScore": 265,
+          "rank": 8
+        },
+        "technologyAndInnovation": {
+          "score": 111,
+          "maxScore": 255,
+          "rank": 32
+        },
+        "education": {
+          "score": 52,
+          "maxScore": 110,
+          "rank": 29
+        },
+        "accessToCapital": {
+          "score": 17,
+          "maxScore": 60,
+          "rank": 41
+        },
+        "costOfLiving": {
+          "score": 32,
+          "maxScore": 60,
+          "rank": 24
+        }
+      }
+    },
+    "UT": {
+      "name": "Utah",
+      "slug": "utah",
+      "rank": 16,
+      "rawScore": 1369,
+      "score100": 85,
+      "tier": "green",
+      "categories": {
+        "economy": {
+          "score": 279,
+          "maxScore": 445,
+          "rank": 8
+        },
+        "infrastructure": {
+          "score": 245,
+          "maxScore": 405,
+          "rank": 9
+        },
+        "workforce": {
+          "score": 215,
+          "maxScore": 335,
+          "rank": 9
+        },
+        "costOfDoingBusiness": {
+          "score": 147,
+          "maxScore": 295,
+          "rank": 28
+        },
+        "businessFriendliness": {
+          "score": 174,
+          "maxScore": 270,
+          "rank": 10
+        },
+        "qualityOfLife": {
+          "score": 87,
+          "maxScore": 265,
+          "rank": 46
+        },
+        "technologyAndInnovation": {
+          "score": 125,
+          "maxScore": 255,
+          "rank": 27
+        },
+        "education": {
+          "score": 36,
+          "maxScore": 110,
+          "rank": 44
+        },
+        "accessToCapital": {
+          "score": 33,
+          "maxScore": 60,
+          "rank": 20
+        },
+        "costOfLiving": {
+          "score": 28,
+          "maxScore": 60,
+          "rank": 31
+        }
+      }
+    },
+    "PA": {
+      "name": "Pennsylvania",
+      "slug": "pennsylvania",
+      "rank": 17,
+      "rawScore": 1350,
+      "score100": 84,
+      "tier": "green",
+      "categories": {
+        "economy": {
+          "score": 253,
+          "maxScore": 445,
+          "rank": 16
+        },
+        "infrastructure": {
+          "score": 224,
+          "maxScore": 405,
+          "rank": 17
+        },
+        "workforce": {
+          "score": 157,
+          "maxScore": 335,
+          "rank": 37
+        },
+        "costOfDoingBusiness": {
+          "score": 153,
+          "maxScore": 295,
+          "rank": 25
+        },
+        "businessFriendliness": {
+          "score": 107,
+          "maxScore": 270,
+          "rank": 40
+        },
+        "qualityOfLife": {
+          "score": 143,
+          "maxScore": 265,
+          "rank": 23
+        },
+        "technologyAndInnovation": {
+          "score": 166,
+          "maxScore": 255,
+          "rank": 9
+        },
+        "education": {
+          "score": 63,
+          "maxScore": 110,
+          "rank": 12
+        },
+        "accessToCapital": {
+          "score": 46,
+          "maxScore": 60,
+          "rank": 9
+        },
+        "costOfLiving": {
+          "score": 38,
+          "maxScore": 60,
+          "rank": 12
+        }
+      }
+    },
+    "SC": {
+      "name": "South Carolina",
+      "slug": "south-carolina",
+      "rank": 18,
+      "rawScore": 1349,
+      "score100": 84,
+      "tier": "yellow",
+      "categories": {
+        "economy": {
+          "score": 274,
+          "maxScore": 445,
+          "rank": 10
+        },
+        "infrastructure": {
+          "score": 218,
+          "maxScore": 405,
+          "rank": 21
+        },
+        "workforce": {
+          "score": 208,
+          "maxScore": 335,
+          "rank": 12
+        },
+        "costOfDoingBusiness": {
+          "score": 147,
+          "maxScore": 295,
+          "rank": 28
+        },
+        "businessFriendliness": {
+          "score": 138,
+          "maxScore": 270,
+          "rank": 28
+        },
+        "qualityOfLife": {
+          "score": 99,
+          "maxScore": 265,
+          "rank": 39
+        },
+        "technologyAndInnovation": {
+          "score": 141,
+          "maxScore": 255,
+          "rank": 21
+        },
+        "education": {
+          "score": 62,
+          "maxScore": 110,
+          "rank": 14
+        },
+        "accessToCapital": {
+          "score": 25,
+          "maxScore": 60,
+          "rank": 30
+        },
+        "costOfLiving": {
+          "score": 37,
+          "maxScore": 60,
+          "rank": 16
+        }
+      }
+    },
+    "AL": {
+      "name": "Alabama",
+      "slug": "alabama",
+      "rank": 19,
+      "rawScore": 1337,
+      "score100": 83,
+      "tier": "yellow",
+      "categories": {
+        "economy": {
+          "score": 237,
+          "maxScore": 445,
+          "rank": 23
+        },
+        "infrastructure": {
+          "score": 211,
+          "maxScore": 405,
+          "rank": 28
+        },
+        "workforce": {
+          "score": 199,
+          "maxScore": 335,
+          "rank": 16
+        },
+        "costOfDoingBusiness": {
+          "score": 170,
+          "maxScore": 295,
+          "rank": 19
+        },
+        "businessFriendliness": {
+          "score": 167,
+          "maxScore": 270,
+          "rank": 13
+        },
+        "qualityOfLife": {
+          "score": 92,
+          "maxScore": 265,
+          "rank": 44
+        },
+        "technologyAndInnovation": {
+          "score": 140,
+          "maxScore": 255,
+          "rank": 22
+        },
+        "education": {
+          "score": 60,
+          "maxScore": 110,
+          "rank": 16
+        },
+        "accessToCapital": {
+          "score": 18,
+          "maxScore": 60,
+          "rank": 40
+        },
+        "costOfLiving": {
+          "score": 43,
+          "maxScore": 60,
+          "rank": 6
+        }
+      }
+    },
+    "MA": {
+      "name": "Massachusetts",
+      "slug": "massachusetts",
+      "rank": 20,
+      "rawScore": 1308,
+      "score100": 81,
+      "tier": "yellow",
+      "categories": {
+        "economy": {
+          "score": 263,
+          "maxScore": 445,
+          "rank": 15
+        },
+        "infrastructure": {
+          "score": 190,
+          "maxScore": 405,
+          "rank": 35
+        },
+        "workforce": {
+          "score": 185,
+          "maxScore": 335,
+          "rank": 23
+        },
+        "costOfDoingBusiness": {
+          "score": 73,
+          "maxScore": 295,
+          "rank": 49
+        },
+        "businessFriendliness": {
+          "score": 98,
+          "maxScore": 270,
+          "rank": 42
+        },
+        "qualityOfLife": {
+          "score": 167,
+          "maxScore": 265,
+          "rank": 8
+        },
+        "technologyAndInnovation": {
+          "score": 178,
+          "maxScore": 255,
+          "rank": 4
+        },
+        "education": {
+          "score": 80,
+          "maxScore": 110,
+          "rank": 2
+        },
+        "accessToCapital": {
+          "score": 53,
+          "maxScore": 60,
+          "rank": 5
+        },
+        "costOfLiving": {
+          "score": 21,
+          "maxScore": 60,
+          "rank": 43
+        }
+      }
+    },
+    "WI": {
+      "name": "Wisconsin",
+      "slug": "wisconsin",
+      "rank": 21,
+      "rawScore": 1304,
+      "score100": 81,
+      "tier": "yellow",
+      "categories": {
+        "economy": {
+          "score": 226,
+          "maxScore": 445,
+          "rank": 28
+        },
+        "infrastructure": {
+          "score": 222,
+          "maxScore": 405,
+          "rank": 18
+        },
+        "workforce": {
+          "score": 176,
+          "maxScore": 335,
+          "rank": 27
+        },
+        "costOfDoingBusiness": {
+          "score": 193,
+          "maxScore": 295,
+          "rank": 13
+        },
+        "businessFriendliness": {
+          "score": 129,
+          "maxScore": 270,
+          "rank": 32
+        },
+        "qualityOfLife": {
+          "score": 108,
+          "maxScore": 265,
+          "rank": 38
+        },
+        "technologyAndInnovation": {
+          "score": 129,
+          "maxScore": 255,
+          "rank": 26
+        },
+        "education": {
+          "score": 49,
+          "maxScore": 110,
+          "rank": 35
+        },
+        "accessToCapital": {
+          "score": 34,
+          "maxScore": 60,
+          "rank": 20
+        },
+        "costOfLiving": {
+          "score": 38,
+          "maxScore": 60,
+          "rank": 12
+        }
+      }
+    },
+    "CA": {
+      "name": "California",
+      "slug": "california",
+      "rank": 22,
+      "rawScore": 1303,
+      "score100": 81,
+      "tier": "yellow",
+      "categories": {
+        "economy": {
+          "score": 271,
+          "maxScore": 445,
+          "rank": 12
+        },
+        "infrastructure": {
+          "score": 214,
+          "maxScore": 405,
+          "rank": 25
+        },
+        "workforce": {
+          "score": 191,
+          "maxScore": 335,
+          "rank": 20
+        },
+        "costOfDoingBusiness": {
+          "score": 105,
+          "maxScore": 295,
+          "rank": 40
+        },
+        "businessFriendliness": {
+          "score": 75,
+          "maxScore": 270,
+          "rank": 48
+        },
+        "qualityOfLife": {
+          "score": 128,
+          "maxScore": 265,
+          "rank": 32
+        },
+        "technologyAndInnovation": {
+          "score": 202,
+          "maxScore": 255,
+          "rank": 1
+        },
+        "education": {
+          "score": 51,
+          "maxScore": 110,
+          "rank": 31
+        },
+        "accessToCapital": {
+          "score": 60,
+          "maxScore": 60,
+          "rank": 1
+        },
+        "costOfLiving": {
+          "score": 6,
+          "maxScore": 60,
+          "rank": 50
+        }
+      }
+    },
+    "NY": {
+      "name": "New York",
+      "slug": "new-york",
+      "rank": 23,
+      "rawScore": 1298,
+      "score100": 80,
+      "tier": "yellow",
+      "categories": {
+        "economy": {
+          "score": 298,
+          "maxScore": 445,
+          "rank": 5
+        },
+        "infrastructure": {
+          "score": 252,
+          "maxScore": 405,
+          "rank": 7
+        },
+        "workforce": {
+          "score": 140,
+          "maxScore": 335,
+          "rank": 44
+        },
+        "costOfDoingBusiness": {
+          "score": 98,
+          "maxScore": 295,
+          "rank": 45
+        },
+        "businessFriendliness": {
+          "score": 30,
+          "maxScore": 270,
+          "rank": 50
+        },
+        "qualityOfLife": {
+          "score": 151,
+          "maxScore": 265,
+          "rank": 18
+        },
+        "technologyAndInnovation": {
+          "score": 191,
+          "maxScore": 255,
+          "rank": 3
+        },
+        "education": {
+          "score": 65,
+          "maxScore": 110,
+          "rank": 8
+        },
+        "accessToCapital": {
+          "score": 55,
+          "maxScore": 60,
+          "rank": 3
+        },
+        "costOfLiving": {
+          "score": 18,
+          "maxScore": 60,
+          "rank": 45
+        }
+      }
+    },
+    "IA": {
+      "name": "Iowa",
+      "slug": "iowa",
+      "rank": 24,
+      "rawScore": 1297,
+      "score100": 80,
+      "tier": "yellow",
+      "categories": {
+        "economy": {
+          "score": 200,
+          "maxScore": 445,
+          "rank": 39
+        },
+        "infrastructure": {
+          "score": 221,
+          "maxScore": 405,
+          "rank": 19
+        },
+        "workforce": {
+          "score": 150,
+          "maxScore": 335,
+          "rank": 41
+        },
+        "costOfDoingBusiness": {
+          "score": 198,
+          "maxScore": 295,
+          "rank": 11
+        },
+        "businessFriendliness": {
+          "score": 143,
+          "maxScore": 270,
+          "rank": 24
+        },
+        "qualityOfLife": {
+          "score": 156,
+          "maxScore": 265,
+          "rank": 16
+        },
+        "technologyAndInnovation": {
+          "score": 123,
+          "maxScore": 255,
+          "rank": 29
+        },
+        "education": {
+          "score": 48,
+          "maxScore": 110,
+          "rank": 38
+        },
+        "accessToCapital": {
+          "score": 19,
+          "maxScore": 60,
+          "rank": 37
+        },
+        "costOfLiving": {
+          "score": 39,
+          "maxScore": 60,
+          "rank": 9
+        }
+      }
+    },
+    "KY": {
+      "name": "Kentucky",
+      "slug": "kentucky",
+      "rank": 25,
+      "rawScore": 1295,
+      "score100": 80,
+      "tier": "yellow",
+      "categories": {
+        "economy": {
+          "score": 212,
+          "maxScore": 445,
+          "rank": 34
+        },
+        "infrastructure": {
+          "score": 185,
+          "maxScore": 405,
+          "rank": 36
+        },
+        "workforce": {
+          "score": 182,
+          "maxScore": 335,
+          "rank": 25
+        },
+        "costOfDoingBusiness": {
+          "score": 204,
+          "maxScore": 295,
+          "rank": 9
+        },
+        "businessFriendliness": {
+          "score": 161,
+          "maxScore": 270,
+          "rank": 16
+        },
+        "qualityOfLife": {
+          "score": 124,
+          "maxScore": 265,
+          "rank": 33
+        },
+        "technologyAndInnovation": {
+          "score": 116,
+          "maxScore": 255,
+          "rank": 31
+        },
+        "education": {
+          "score": 54,
+          "maxScore": 110,
+          "rank": 26
+        },
+        "accessToCapital": {
+          "score": 22,
+          "maxScore": 60,
+          "rank": 35
+        },
+        "costOfLiving": {
+          "score": 35,
+          "maxScore": 60,
+          "rank": 20
+        }
+      }
+    },
+    "ND": {
+      "name": "North Dakota",
+      "slug": "north-dakota",
+      "rank": 25,
+      "rawScore": 1295,
+      "score100": 80,
+      "tier": "yellow",
+      "categories": {
+        "economy": {
+          "score": 194,
+          "maxScore": 445,
+          "rank": 43
+        },
+        "infrastructure": {
+          "score": 179,
+          "maxScore": 405,
+          "rank": 37
+        },
+        "workforce": {
+          "score": 139,
+          "maxScore": 335,
+          "rank": 46
+        },
+        "costOfDoingBusiness": {
+          "score": 172,
+          "maxScore": 295,
+          "rank": 17
+        },
+        "businessFriendliness": {
+          "score": 218,
+          "maxScore": 270,
+          "rank": 1
+        },
+        "qualityOfLife": {
+          "score": 171,
+          "maxScore": 265,
+          "rank": 7
+        },
+        "technologyAndInnovation": {
+          "score": 103,
+          "maxScore": 255,
+          "rank": 37
+        },
+        "education": {
+          "score": 55,
+          "maxScore": 110,
+          "rank": 25
+        },
+        "accessToCapital": {
+          "score": 19,
+          "maxScore": 60,
+          "rank": 37
+        },
+        "costOfLiving": {
+          "score": 45,
+          "maxScore": 60,
+          "rank": 4
+        }
+      }
+    },
+    "ID": {
+      "name": "Idaho",
+      "slug": "idaho",
+      "rank": 27,
+      "rawScore": 1289,
+      "score100": 80,
+      "tier": "yellow",
+      "categories": {
+        "economy": {
+          "score": 288,
+          "maxScore": 445,
+          "rank": 7
+        },
+        "infrastructure": {
+          "score": 178,
+          "maxScore": 405,
+          "rank": 38
+        },
+        "workforce": {
+          "score": 155,
+          "maxScore": 335,
+          "rank": 38
+        },
+        "costOfDoingBusiness": {
+          "score": 153,
+          "maxScore": 295,
+          "rank": 25
+        },
+        "businessFriendliness": {
+          "score": 174,
+          "maxScore": 270,
+          "rank": 10
+        },
+        "qualityOfLife": {
+          "score": 148,
+          "maxScore": 265,
+          "rank": 19
+        },
+        "technologyAndInnovation": {
+          "score": 135,
+          "maxScore": 255,
+          "rank": 25
+        },
+        "education": {
+          "score": 19,
+          "maxScore": 110,
+          "rank": 49
+        },
+        "accessToCapital": {
+          "score": 9,
+          "maxScore": 60,
+          "rank": 50
+        },
+        "costOfLiving": {
+          "score": 30,
+          "maxScore": 60,
+          "rank": 26
+        }
+      }
+    },
+    "CT": {
+      "name": "Connecticut",
+      "slug": "connecticut",
+      "rank": 28,
+      "rawScore": 1288,
+      "score100": 80,
+      "tier": "yellow",
+      "categories": {
+        "economy": {
+          "score": 202,
+          "maxScore": 445,
+          "rank": 38
+        },
+        "infrastructure": {
+          "score": 195,
+          "maxScore": 405,
+          "rank": 33
+        },
+        "workforce": {
+          "score": 216,
+          "maxScore": 335,
+          "rank": 8
+        },
+        "costOfDoingBusiness": {
+          "score": 99,
+          "maxScore": 295,
+          "rank": 44
+        },
+        "businessFriendliness": {
+          "score": 117,
+          "maxScore": 270,
+          "rank": 35
+        },
+        "qualityOfLife": {
+          "score": 179,
+          "maxScore": 265,
+          "rank": 5
+        },
+        "technologyAndInnovation": {
+          "score": 147,
+          "maxScore": 255,
+          "rank": 19
+        },
+        "education": {
+          "score": 73,
+          "maxScore": 110,
+          "rank": 5
+        },
+        "accessToCapital": {
+          "score": 37,
+          "maxScore": 60,
+          "rank": 16
+        },
+        "costOfLiving": {
+          "score": 23,
+          "maxScore": 60,
+          "rank": 37
+        }
+      }
+    },
+    "DE": {
+      "name": "Delaware",
+      "slug": "delaware",
+      "rank": 29,
+      "rawScore": 1287,
+      "score100": 80,
+      "tier": "yellow",
+      "categories": {
+        "economy": {
+          "score": 317,
+          "maxScore": 445,
+          "rank": 4
+        },
+        "infrastructure": {
+          "score": 197,
+          "maxScore": 405,
+          "rank": 31
+        },
+        "workforce": {
+          "score": 213,
+          "maxScore": 335,
+          "rank": 11
+        },
+        "costOfDoingBusiness": {
+          "score": 101,
+          "maxScore": 295,
+          "rank": 41
+        },
+        "businessFriendliness": {
+          "score": 96,
+          "maxScore": 270,
+          "rank": 43
+        },
+        "qualityOfLife": {
+          "score": 138,
+          "maxScore": 265,
+          "rank": 27
+        },
+        "technologyAndInnovation": {
+          "score": 117,
+          "maxScore": 255,
+          "rank": 30
+        },
+        "education": {
+          "score": 34,
+          "maxScore": 110,
+          "rank": 45
+        },
+        "accessToCapital": {
+          "score": 35,
+          "maxScore": 60,
+          "rank": 19
+        },
+        "costOfLiving": {
+          "score": 39,
+          "maxScore": 60,
+          "rank": 9
+        }
+      }
+    },
+    "NJ": {
+      "name": "New Jersey",
+      "slug": "new-jersey",
+      "rank": 30,
+      "rawScore": 1273,
+      "score100": 79,
+      "tier": "yellow",
+      "categories": {
+        "economy": {
+          "score": 221,
+          "maxScore": 445,
+          "rank": 31
+        },
+        "infrastructure": {
+          "score": 218,
+          "maxScore": 405,
+          "rank": 21
+        },
+        "workforce": {
+          "score": 205,
+          "maxScore": 335,
+          "rank": 14
+        },
+        "costOfDoingBusiness": {
+          "score": 108,
+          "maxScore": 295,
+          "rank": 38
+        },
+        "businessFriendliness": {
+          "score": 35,
+          "maxScore": 270,
+          "rank": 49
+        },
+        "qualityOfLife": {
+          "score": 201,
+          "maxScore": 265,
+          "rank": 3
+        },
+        "technologyAndInnovation": {
+          "score": 151,
+          "maxScore": 255,
+          "rank": 16
+        },
+        "education": {
+          "score": 69,
+          "maxScore": 110,
+          "rank": 7
+        },
+        "accessToCapital": {
+          "score": 42,
+          "maxScore": 60,
+          "rank": 11
+        },
+        "costOfLiving": {
+          "score": 23,
+          "maxScore": 60,
+          "rank": 37
+        }
+      }
+    },
+    "WY": {
+      "name": "Wyoming",
+      "slug": "wyoming",
+      "rank": 31,
+      "rawScore": 1269,
+      "score100": 79,
+      "tier": "yellow",
+      "categories": {
+        "economy": {
+          "score": 273,
+          "maxScore": 445,
+          "rank": 11
+        },
+        "infrastructure": {
+          "score": 166,
+          "maxScore": 405,
+          "rank": 42
+        },
+        "workforce": {
+          "score": 161,
+          "maxScore": 335,
+          "rank": 35
+        },
+        "costOfDoingBusiness": {
+          "score": 152,
+          "maxScore": 295,
+          "rank": 27
+        },
+        "businessFriendliness": {
+          "score": 168,
+          "maxScore": 270,
+          "rank": 12
+        },
+        "qualityOfLife": {
+          "score": 136,
+          "maxScore": 265,
+          "rank": 29
+        },
+        "technologyAndInnovation": {
+          "score": 92,
+          "maxScore": 255,
+          "rank": 44
+        },
+        "education": {
+          "score": 60,
+          "maxScore": 110,
+          "rank": 16
+        },
+        "accessToCapital": {
+          "score": 20,
+          "maxScore": 60,
+          "rank": 36
+        },
+        "costOfLiving": {
+          "score": 41,
+          "maxScore": 60,
+          "rank": 7
+        }
+      }
+    },
+    "MD": {
+      "name": "Maryland",
+      "slug": "maryland",
+      "rank": 32,
+      "rawScore": 1265,
+      "score100": 78,
+      "tier": "yellow",
+      "categories": {
+        "economy": {
+          "score": 230,
+          "maxScore": 445,
+          "rank": 26
+        },
+        "infrastructure": {
+          "score": 215,
+          "maxScore": 405,
+          "rank": 23
+        },
+        "workforce": {
+          "score": 189,
+          "maxScore": 335,
+          "rank": 21
+        },
+        "costOfDoingBusiness": {
+          "score": 87,
+          "maxScore": 295,
+          "rank": 46
+        },
+        "businessFriendliness": {
+          "score": 116,
+          "maxScore": 270,
+          "rank": 37
+        },
+        "qualityOfLife": {
+          "score": 138,
+          "maxScore": 265,
+          "rank": 27
+        },
+        "technologyAndInnovation": {
+          "score": 166,
+          "maxScore": 255,
+          "rank": 9
+        },
+        "education": {
+          "score": 64,
+          "maxScore": 110,
+          "rank": 11
+        },
+        "accessToCapital": {
+          "score": 39,
+          "maxScore": 60,
+          "rank": 14
+        },
+        "costOfLiving": {
+          "score": 21,
+          "maxScore": 60,
+          "rank": 43
+        }
+      }
+    },
+    "KS": {
+      "name": "Kansas",
+      "slug": "kansas",
+      "rank": 33,
+      "rawScore": 1250,
+      "score100": 77,
+      "tier": "yellow",
+      "categories": {
+        "economy": {
+          "score": 142,
+          "maxScore": 445,
+          "rank": 48
+        },
+        "infrastructure": {
+          "score": 219,
+          "maxScore": 405,
+          "rank": 20
+        },
+        "workforce": {
+          "score": 162,
+          "maxScore": 335,
+          "rank": 34
+        },
+        "costOfDoingBusiness": {
+          "score": 184,
+          "maxScore": 295,
+          "rank": 14
+        },
+        "businessFriendliness": {
+          "score": 180,
+          "maxScore": 270,
+          "rank": 8
+        },
+        "qualityOfLife": {
+          "score": 111,
+          "maxScore": 265,
+          "rank": 37
+        },
+        "technologyAndInnovation": {
+          "score": 109,
+          "maxScore": 255,
+          "rank": 34
+        },
+        "education": {
+          "score": 65,
+          "maxScore": 110,
+          "rank": 8
+        },
+        "accessToCapital": {
+          "score": 32,
+          "maxScore": 60,
+          "rank": 22
+        },
+        "costOfLiving": {
+          "score": 46,
+          "maxScore": 60,
+          "rank": 2
+        }
+      }
+    },
+    "MO": {
+      "name": "Missouri",
+      "slug": "missouri",
+      "rank": 34,
+      "rawScore": 1238,
+      "score100": 77,
+      "tier": "yellow",
+      "categories": {
+        "economy": {
+          "score": 204,
+          "maxScore": 445,
+          "rank": 37
+        },
+        "infrastructure": {
+          "score": 215,
+          "maxScore": 405,
+          "rank": 23
+        },
+        "workforce": {
+          "score": 112,
+          "maxScore": 335,
+          "rank": 48
+        },
+        "costOfDoingBusiness": {
+          "score": 209,
+          "maxScore": 295,
+          "rank": 6
+        },
+        "businessFriendliness": {
+          "score": 137,
+          "maxScore": 270,
+          "rank": 29
+        },
+        "qualityOfLife": {
+          "score": 99,
+          "maxScore": 265,
+          "rank": 39
+        },
+        "technologyAndInnovation": {
+          "score": 124,
+          "maxScore": 255,
+          "rank": 28
+        },
+        "education": {
+          "score": 65,
+          "maxScore": 110,
+          "rank": 8
+        },
+        "accessToCapital": {
+          "score": 28,
+          "maxScore": 60,
+          "rank": 26
+        },
+        "costOfLiving": {
+          "score": 45,
+          "maxScore": 60,
+          "rank": 4
+        }
+      }
+    },
+    "SD": {
+      "name": "South Dakota",
+      "slug": "south-dakota",
+      "rank": 35,
+      "rawScore": 1238,
+      "score100": 77,
+      "tier": "red",
+      "categories": {
+        "economy": {
+          "score": 209,
+          "maxScore": 445,
+          "rank": 36
+        },
+        "infrastructure": {
+          "score": 197,
+          "maxScore": 405,
+          "rank": 31
+        },
+        "workforce": {
+          "score": 127,
+          "maxScore": 335,
+          "rank": 47
+        },
+        "costOfDoingBusiness": {
+          "score": 176,
+          "maxScore": 295,
+          "rank": 16
+        },
+        "businessFriendliness": {
+          "score": 204,
+          "maxScore": 270,
+          "rank": 2
+        },
+        "qualityOfLife": {
+          "score": 136,
+          "maxScore": 265,
+          "rank": 29
+        },
+        "technologyAndInnovation": {
+          "score": 77,
+          "maxScore": 255,
+          "rank": 49
+        },
+        "education": {
+          "score": 49,
+          "maxScore": 110,
+          "rank": 35
+        },
+        "accessToCapital": {
+          "score": 26,
+          "maxScore": 60,
+          "rank": 28
+        },
+        "costOfLiving": {
+          "score": 37,
+          "maxScore": 60,
+          "rank": 16
+        }
+      }
+    },
+    "NH": {
+      "name": "New Hampshire",
+      "slug": "new-hampshire",
+      "rank": 36,
+      "rawScore": 1233,
+      "score100": 76,
+      "tier": "red",
+      "categories": {
+        "economy": {
+          "score": 237,
+          "maxScore": 445,
+          "rank": 23
+        },
+        "infrastructure": {
+          "score": 138,
+          "maxScore": 405,
+          "rank": 47
+        },
+        "workforce": {
+          "score": 180,
+          "maxScore": 335,
+          "rank": 26
+        },
+        "costOfDoingBusiness": {
+          "score": 113,
+          "maxScore": 295,
+          "rank": 37
+        },
+        "businessFriendliness": {
+          "score": 187,
+          "maxScore": 270,
+          "rank": 6
+        },
+        "qualityOfLife": {
+          "score": 166,
+          "maxScore": 265,
+          "rank": 11
+        },
+        "technologyAndInnovation": {
+          "score": 92,
+          "maxScore": 255,
+          "rank": 44
+        },
+        "education": {
+          "score": 74,
+          "maxScore": 110,
+          "rank": 3
+        },
+        "accessToCapital": {
+          "score": 16,
+          "maxScore": 60,
+          "rank": 44
+        },
+        "costOfLiving": {
+          "score": 30,
+          "maxScore": 60,
+          "rank": 26
+        }
+      }
+    },
+    "OK": {
+      "name": "Oklahoma",
+      "slug": "oklahoma",
+      "rank": 37,
+      "rawScore": 1229,
+      "score100": 76,
+      "tier": "red",
+      "categories": {
+        "economy": {
+          "score": 219,
+          "maxScore": 445,
+          "rank": 32
+        },
+        "infrastructure": {
+          "score": 191,
+          "maxScore": 405,
+          "rank": 34
+        },
+        "workforce": {
+          "score": 147,
+          "maxScore": 335,
+          "rank": 42
+        },
+        "costOfDoingBusiness": {
+          "score": 231,
+          "maxScore": 295,
+          "rank": 1
+        },
+        "businessFriendliness": {
+          "score": 151,
+          "maxScore": 270,
+          "rank": 20
+        },
+        "qualityOfLife": {
+          "score": 97,
+          "maxScore": 265,
+          "rank": 42
+        },
+        "technologyAndInnovation": {
+          "score": 97,
+          "maxScore": 255,
+          "rank": 42
+        },
+        "education": {
+          "score": 37,
+          "maxScore": 110,
+          "rank": 43
+        },
+        "accessToCapital": {
+          "score": 23,
+          "maxScore": 60,
+          "rank": 33
+        },
+        "costOfLiving": {
+          "score": 36,
+          "maxScore": 60,
+          "rank": 18
+        }
+      }
+    },
+    "VT": {
+      "name": "Vermont",
+      "slug": "vermont",
+      "rank": 38,
+      "rawScore": 1223,
+      "score100": 76,
+      "tier": "red",
+      "categories": {
+        "economy": {
+          "score": 211,
+          "maxScore": 445,
+          "rank": 35
+        },
+        "infrastructure": {
+          "score": 171,
+          "maxScore": 405,
+          "rank": 40
+        },
+        "workforce": {
+          "score": 152,
+          "maxScore": 335,
+          "rank": 40
+        },
+        "costOfDoingBusiness": {
+          "score": 119,
+          "maxScore": 295,
+          "rank": 35
+        },
+        "businessFriendliness": {
+          "score": 140,
+          "maxScore": 270,
+          "rank": 25
+        },
+        "qualityOfLife": {
+          "score": 228,
+          "maxScore": 265,
+          "rank": 1
+        },
+        "technologyAndInnovation": {
+          "score": 97,
+          "maxScore": 255,
+          "rank": 42
+        },
+        "education": {
+          "score": 58,
+          "maxScore": 110,
+          "rank": 20
+        },
+        "accessToCapital": {
+          "score": 16,
+          "maxScore": 60,
+          "rank": 44
+        },
+        "costOfLiving": {
+          "score": 31,
+          "maxScore": 60,
+          "rank": 25
+        }
+      }
+    },
+    "OR": {
+      "name": "Oregon",
+      "slug": "oregon",
+      "rank": 39,
+      "rawScore": 1199,
+      "score100": 74,
+      "tier": "red",
+      "categories": {
+        "economy": {
+          "score": 198,
+          "maxScore": 445,
+          "rank": 41
+        },
+        "infrastructure": {
+          "score": 236,
+          "maxScore": 405,
+          "rank": 14
+        },
+        "workforce": {
+          "score": 185,
+          "maxScore": 335,
+          "rank": 23
+        },
+        "costOfDoingBusiness": {
+          "score": 100,
+          "maxScore": 295,
+          "rank": 43
+        },
+        "businessFriendliness": {
+          "score": 76,
+          "maxScore": 270,
+          "rank": 47
+        },
+        "qualityOfLife": {
+          "score": 148,
+          "maxScore": 265,
+          "rank": 19
+        },
+        "technologyAndInnovation": {
+          "score": 158,
+          "maxScore": 255,
+          "rank": 14
+        },
+        "education": {
+          "score": 49,
+          "maxScore": 110,
+          "rank": 35
+        },
+        "accessToCapital": {
+          "score": 31,
+          "maxScore": 60,
+          "rank": 24
+        },
+        "costOfLiving": {
+          "score": 18,
+          "maxScore": 60,
+          "rank": 45
+        }
+      }
+    },
+    "WV": {
+      "name": "West Virginia",
+      "slug": "west-virginia",
+      "rank": 40,
+      "rawScore": 1192,
+      "score100": 74,
+      "tier": "red",
+      "categories": {
+        "economy": {
+          "score": 195,
+          "maxScore": 445,
+          "rank": 42
+        },
+        "infrastructure": {
+          "score": 164,
+          "maxScore": 405,
+          "rank": 43
+        },
+        "workforce": {
+          "score": 144,
+          "maxScore": 335,
+          "rank": 43
+        },
+        "costOfDoingBusiness": {
+          "score": 158,
+          "maxScore": 295,
+          "rank": 24
+        },
+        "businessFriendliness": {
+          "score": 163,
+          "maxScore": 270,
+          "rank": 15
+        },
+        "qualityOfLife": {
+          "score": 142,
+          "maxScore": 265,
+          "rank": 25
+        },
+        "technologyAndInnovation": {
+          "score": 92,
+          "maxScore": 255,
+          "rank": 44
+        },
+        "education": {
+          "score": 59,
+          "maxScore": 110,
+          "rank": 18
+        },
+        "accessToCapital": {
+          "score": 17,
+          "maxScore": 60,
+          "rank": 41
+        },
+        "costOfLiving": {
+          "score": 58,
+          "maxScore": 60,
+          "rank": 1
+        }
+      }
+    },
+    "AR": {
+      "name": "Arkansas",
+      "slug": "arkansas",
+      "rank": 41,
+      "rawScore": 1186,
+      "score100": 73,
+      "tier": "red",
+      "categories": {
+        "economy": {
+          "score": 224,
+          "maxScore": 445,
+          "rank": 30
+        },
+        "infrastructure": {
+          "score": 170,
+          "maxScore": 405,
+          "rank": 41
+        },
+        "workforce": {
+          "score": 159,
+          "maxScore": 335,
+          "rank": 36
+        },
+        "costOfDoingBusiness": {
+          "score": 198,
+          "maxScore": 295,
+          "rank": 11
+        },
+        "businessFriendliness": {
+          "score": 130,
+          "maxScore": 270,
+          "rank": 31
+        },
+        "qualityOfLife": {
+          "score": 95,
+          "maxScore": 265,
+          "rank": 43
+        },
+        "technologyAndInnovation": {
+          "score": 98,
+          "maxScore": 255,
+          "rank": 41
+        },
+        "education": {
+          "score": 46,
+          "maxScore": 110,
+          "rank": 40
+        },
+        "accessToCapital": {
+          "score": 28,
+          "maxScore": 60,
+          "rank": 26
+        },
+        "costOfLiving": {
+          "score": 38,
+          "maxScore": 60,
+          "rank": 12
+        }
+      }
+    },
+    "NV": {
+      "name": "Nevada",
+      "slug": "nevada",
+      "rank": 42,
+      "rawScore": 1180,
+      "score100": 73,
+      "tier": "red",
+      "categories": {
+        "economy": {
+          "score": 246,
+          "maxScore": 445,
+          "rank": 17
+        },
+        "infrastructure": {
+          "score": 239,
+          "maxScore": 405,
+          "rank": 13
+        },
+        "workforce": {
+          "score": 194,
+          "maxScore": 335,
+          "rank": 18
+        },
+        "costOfDoingBusiness": {
+          "score": 114,
+          "maxScore": 295,
+          "rank": 36
+        },
+        "businessFriendliness": {
+          "score": 126,
+          "maxScore": 270,
+          "rank": 33
+        },
+        "qualityOfLife": {
+          "score": 116,
+          "maxScore": 265,
+          "rank": 36
+        },
+        "technologyAndInnovation": {
+          "score": 77,
+          "maxScore": 255,
+          "rank": 49
+        },
+        "education": {
+          "score": 17,
+          "maxScore": 110,
+          "rank": 50
+        },
+        "accessToCapital": {
+          "score": 25,
+          "maxScore": 60,
+          "rank": 30
+        },
+        "costOfLiving": {
+          "score": 26,
+          "maxScore": 60,
+          "rank": 34
+        }
+      }
+    },
+    "ME": {
+      "name": "Maine",
+      "slug": "maine",
+      "rank": 43,
+      "rawScore": 1152,
+      "score100": 71,
+      "tier": "red",
+      "categories": {
+        "economy": {
+          "score": 214,
+          "maxScore": 445,
+          "rank": 33
+        },
+        "infrastructure": {
+          "score": 119,
+          "maxScore": 405,
+          "rank": 50
+        },
+        "workforce": {
+          "score": 155,
+          "maxScore": 335,
+          "rank": 38
+        },
+        "costOfDoingBusiness": {
+          "score": 146,
+          "maxScore": 295,
+          "rank": 30
+        },
+        "businessFriendliness": {
+          "score": 93,
+          "maxScore": 270,
+          "rank": 45
+        },
+        "qualityOfLife": {
+          "score": 207,
+          "maxScore": 265,
+          "rank": 2
+        },
+        "technologyAndInnovation": {
+          "score": 104,
+          "maxScore": 255,
+          "rank": 36
+        },
+        "education": {
+          "score": 57,
+          "maxScore": 110,
+          "rank": 22
+        },
+        "accessToCapital": {
+          "score": 23,
+          "maxScore": 60,
+          "rank": 33
+        },
+        "costOfLiving": {
+          "score": 34,
+          "maxScore": 60,
+          "rank": 21
+        }
+      }
+    },
+    "NM": {
+      "name": "New Mexico",
+      "slug": "new-mexico",
+      "rank": 44,
+      "rawScore": 1137,
+      "score100": 70,
+      "tier": "red",
+      "categories": {
+        "economy": {
+          "score": 177,
+          "maxScore": 445,
+          "rank": 46
+        },
+        "infrastructure": {
+          "score": 201,
+          "maxScore": 405,
+          "rank": 29
+        },
+        "workforce": {
+          "score": 165,
+          "maxScore": 335,
+          "rank": 31
+        },
+        "costOfDoingBusiness": {
+          "score": 162,
+          "maxScore": 295,
+          "rank": 23
+        },
+        "businessFriendliness": {
+          "score": 108,
+          "maxScore": 270,
+          "rank": 39
+        },
+        "qualityOfLife": {
+          "score": 124,
+          "maxScore": 265,
+          "rank": 33
+        },
+        "technologyAndInnovation": {
+          "score": 107,
+          "maxScore": 255,
+          "rank": 35
+        },
+        "education": {
+          "score": 48,
+          "maxScore": 110,
+          "rank": 38
+        },
+        "accessToCapital": {
+          "score": 15,
+          "maxScore": 60,
+          "rank": 46
+        },
+        "costOfLiving": {
+          "score": 30,
+          "maxScore": 60,
+          "rank": 26
+        }
+      }
+    },
+    "MS": {
+      "name": "Mississippi",
+      "slug": "mississippi",
+      "rank": 45,
+      "rawScore": 1082,
+      "score100": 67,
+      "tier": "red",
+      "categories": {
+        "economy": {
+          "score": 130,
+          "maxScore": 445,
+          "rank": 49
+        },
+        "infrastructure": {
+          "score": 155,
+          "maxScore": 405,
+          "rank": 44
+        },
+        "workforce": {
+          "score": 111,
+          "maxScore": 335,
+          "rank": 49
+        },
+        "costOfDoingBusiness": {
+          "score": 207,
+          "maxScore": 295,
+          "rank": 7
+        },
+        "businessFriendliness": {
+          "score": 119,
+          "maxScore": 270,
+          "rank": 34
+        },
+        "qualityOfLife": {
+          "score": 147,
+          "maxScore": 265,
+          "rank": 21
+        },
+        "technologyAndInnovation": {
+          "score": 100,
+          "maxScore": 255,
+          "rank": 40
+        },
+        "education": {
+          "score": 58,
+          "maxScore": 110,
+          "rank": 20
+        },
+        "accessToCapital": {
+          "score": 17,
+          "maxScore": 60,
+          "rank": 41
+        },
+        "costOfLiving": {
+          "score": 38,
+          "maxScore": 60,
+          "rank": 12
+        }
+      }
+    },
+    "LA": {
+      "name": "Louisiana",
+      "slug": "louisiana",
+      "rank": 46,
+      "rawScore": 1080,
+      "score100": 67,
+      "tier": "red",
+      "categories": {
+        "economy": {
+          "score": 173,
+          "maxScore": 445,
+          "rank": 47
+        },
+        "infrastructure": {
+          "score": 152,
+          "maxScore": 405,
+          "rank": 46
+        },
+        "workforce": {
+          "score": 140,
+          "maxScore": 335,
+          "rank": 44
+        },
+        "costOfDoingBusiness": {
+          "score": 207,
+          "maxScore": 295,
+          "rank": 7
+        },
+        "businessFriendliness": {
+          "score": 117,
+          "maxScore": 270,
+          "rank": 35
+        },
+        "qualityOfLife": {
+          "score": 87,
+          "maxScore": 265,
+          "rank": 46
+        },
+        "technologyAndInnovation": {
+          "score": 101,
+          "maxScore": 255,
+          "rank": 38
+        },
+        "education": {
+          "score": 57,
+          "maxScore": 110,
+          "rank": 22
+        },
+        "accessToCapital": {
+          "score": 24,
+          "maxScore": 60,
+          "rank": 32
+        },
+        "costOfLiving": {
+          "score": 22,
+          "maxScore": 60,
+          "rank": 39
+        }
+      }
+    },
+    "RI": {
+      "name": "Rhode Island",
+      "slug": "rhode-island",
+      "rank": 46,
+      "rawScore": 1080,
+      "score100": 67,
+      "tier": "red",
+      "categories": {
+        "economy": {
+          "score": 180,
+          "maxScore": 445,
+          "rank": 45
+        },
+        "infrastructure": {
+          "score": 173,
+          "maxScore": 405,
+          "rank": 39
+        },
+        "workforce": {
+          "score": 189,
+          "maxScore": 335,
+          "rank": 21
+        },
+        "costOfDoingBusiness": {
+          "score": 87,
+          "maxScore": 295,
+          "rank": 46
+        },
+        "businessFriendliness": {
+          "score": 87,
+          "maxScore": 270,
+          "rank": 46
+        },
+        "qualityOfLife": {
+          "score": 160,
+          "maxScore": 265,
+          "rank": 13
+        },
+        "technologyAndInnovation": {
+          "score": 110,
+          "maxScore": 255,
+          "rank": 33
+        },
+        "education": {
+          "score": 50,
+          "maxScore": 110,
+          "rank": 33
+        },
+        "accessToCapital": {
+          "score": 19,
+          "maxScore": 60,
+          "rank": 37
+        },
+        "costOfLiving": {
+          "score": 25,
+          "maxScore": 60,
+          "rank": 36
+        }
+      }
+    },
+    "MT": {
+      "name": "Montana",
+      "slug": "montana",
+      "rank": 48,
+      "rawScore": 1072,
+      "score100": 66,
+      "tier": "red",
+      "categories": {
+        "economy": {
+          "score": 237,
+          "maxScore": 445,
+          "rank": 23
+        },
+        "infrastructure": {
+          "score": 153,
+          "maxScore": 405,
+          "rank": 45
+        },
+        "workforce": {
+          "score": 103,
+          "maxScore": 335,
+          "rank": 50
+        },
+        "costOfDoingBusiness": {
+          "score": 128,
+          "maxScore": 295,
+          "rank": 32
+        },
+        "businessFriendliness": {
+          "score": 137,
+          "maxScore": 270,
+          "rank": 29
+        },
+        "qualityOfLife": {
+          "score": 117,
+          "maxScore": 265,
+          "rank": 35
+        },
+        "technologyAndInnovation": {
+          "score": 101,
+          "maxScore": 255,
+          "rank": 38
+        },
+        "education": {
+          "score": 53,
+          "maxScore": 110,
+          "rank": 27
+        },
+        "accessToCapital": {
+          "score": 15,
+          "maxScore": 60,
+          "rank": 46
+        },
+        "costOfLiving": {
+          "score": 28,
+          "maxScore": 60,
+          "rank": 31
+        }
+      }
+    },
+    "HI": {
+      "name": "Hawaii",
+      "slug": "hawaii",
+      "rank": 49,
+      "rawScore": 951,
+      "score100": 59,
+      "tier": "red",
+      "categories": {
+        "economy": {
+          "score": 200,
+          "maxScore": 445,
+          "rank": 39
+        },
+        "infrastructure": {
+          "score": 126,
+          "maxScore": 405,
+          "rank": 48
+        },
+        "workforce": {
+          "score": 170,
+          "maxScore": 335,
+          "rank": 29
+        },
+        "costOfDoingBusiness": {
+          "score": 38,
+          "maxScore": 295,
+          "rank": 50
+        },
+        "businessFriendliness": {
+          "score": 95,
+          "maxScore": 270,
+          "rank": 44
+        },
+        "qualityOfLife": {
+          "score": 173,
+          "maxScore": 265,
+          "rank": 6
+        },
+        "technologyAndInnovation": {
+          "score": 85,
+          "maxScore": 255,
+          "rank": 48
+        },
+        "education": {
+          "score": 41,
+          "maxScore": 110,
+          "rank": 42
+        },
+        "accessToCapital": {
+          "score": 14,
+          "maxScore": 60,
+          "rank": 48
+        },
+        "costOfLiving": {
+          "score": 9,
+          "maxScore": 60,
+          "rank": 49
+        }
+      }
+    },
+    "AK": {
+      "name": "Alaska",
+      "slug": "alaska",
+      "rank": 50,
+      "rawScore": 941,
+      "score100": 58,
+      "tier": "red",
+      "categories": {
+        "economy": {
+          "score": 110,
+          "maxScore": 445,
+          "rank": 50
+        },
+        "infrastructure": {
+          "score": 120,
+          "maxScore": 405,
+          "rank": 49
+        },
+        "workforce": {
+          "score": 173,
+          "maxScore": 335,
+          "rank": 28
+        },
+        "costOfDoingBusiness": {
+          "score": 101,
+          "maxScore": 295,
+          "rank": 41
+        },
+        "businessFriendliness": {
+          "score": 139,
+          "maxScore": 270,
+          "rank": 27
+        },
+        "qualityOfLife": {
+          "score": 142,
+          "maxScore": 265,
+          "rank": 25
+        },
+        "technologyAndInnovation": {
+          "score": 91,
+          "maxScore": 255,
+          "rank": 47
+        },
+        "education": {
+          "score": 24,
+          "maxScore": 110,
+          "rank": 48
+        },
+        "accessToCapital": {
+          "score": 11,
+          "maxScore": 60,
+          "rank": 49
+        },
+        "costOfLiving": {
+          "score": 30,
+          "maxScore": 60,
+          "rank": 26
+        }
+      }
+    }
+  }
+}

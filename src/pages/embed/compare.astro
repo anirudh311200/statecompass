@@ -1,0 +1,55 @@
+---
+import EmbedLayout from "../../layouts/EmbedLayout.astro";
+import YearSelector from "../../components/YearSelector.astro";
+import { dataYear } from "../../lib/states.js";
+
+const site = Astro.site ?? new URL("https://statecompass.app");
+---
+
+<EmbedLayout
+  title={`Embed compare — CNBC ${dataYear} | StateCompass`}
+  description="Embeddable side-by-side state comparison with CNBC scores. Pass ?states=TX,NC,FL in the iframe URL."
+>
+  <main class="embed-compare page-content compare-page">
+    <header class="embed-compare-header panel">
+      <h1 class="page-title">State comparison</h1>
+      <p class="page-lead">
+        Read-only embed · <span data-cnbc-year>CNBC {dataYear}</span> scores · configure via
+        <code>?states=TX,NC,FL</code>
+      </p>
+      <div class="compare-toolbar-row">
+        <YearSelector id="compare-year" />
+      </div>
+    </header>
+
+    <div id="compare-empty" class="compare-empty panel">
+      <p>Add <code>?states=</code> with 2–3 state abbreviations to the iframe URL (e.g. TX,NC,FL).</p>
+    </div>
+
+    <div id="compare-results" class="compare-results" hidden aria-live="polite">
+      <section class="panel" aria-labelledby="compare-summary-heading">
+        <h2 id="compare-summary-heading" class="panel-title">Overall</h2>
+        <div class="compare-summary-grid" id="compare-summary"></div>
+      </section>
+
+      <section class="panel" aria-labelledby="compare-categories-heading">
+        <h2 id="compare-categories-heading" class="panel-title">By category</h2>
+        <p class="panel-helper">Winner highlighted per category (best rank wins).</p>
+        <div id="compare-categories"></div>
+      </section>
+
+      <p id="compare-live-status" class="visually-hidden" aria-live="polite"></p>
+    </div>
+
+    <p class="embed-open-link">
+      <a href={`${site.href}/compare`} target="_blank" rel="noopener noreferrer">
+        Open interactive compare on StateCompass →
+      </a>
+    </p>
+  </main>
+
+  <script>
+    import { initCompare } from "../../scripts/compare.js";
+    initCompare({ embed: true }).catch((error) => console.error(error));
+  </script>
+</EmbedLayout>

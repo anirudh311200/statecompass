@@ -37,7 +37,7 @@
 | **3** | Share & be found | **Done** |
 | **4** | Founder Snapshot | **Done** |
 | **5** | Memory & time | **Done** |
-| **6** | Distribution | Pending |
+| **6** | Distribution | **Done** |
 | **7** | UI/UX overhaul *(optional)* | Pending |
 
 **Estimated scope:** Phase 0 complete. Phases 1–6 = core product. Phase 7 = polish pass after tools work.
@@ -382,10 +382,10 @@ Per state, sourced public facts:
 
 ### Deliverables
 
-- [ ] **Embeddable widget:** iframe-friendly map or compare snippet (read-only, attribution required)
-- [ ] **Public API (optional):** read-only JSON endpoints for state/compare — rate-limited static export or edge function
-- [ ] **Partner page:** "For accelerators & VCs" — how to link/embed
-- [ ] **Analytics:** Plausible events for compare, share, profile selection
+- [x] **Embeddable widget:** iframe-friendly map or compare snippet (read-only, attribution required)
+- [x] **Public API (optional):** read-only JSON endpoints for state/compare — rate-limited static export or edge function
+- [x] **Partner page:** "For accelerators & VCs" — how to link/embed
+- [x] **Analytics:** Plausible events for compare, share, profile selection
 
 ### Exit criteria
 

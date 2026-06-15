@@ -2987,3 +2987,136 @@ footer a:hover {
     align-items: flex-start;
   }
 }
+
+/* Phase 6 — embed & partners */
+
+.embed-body {
+  background: var(--bg);
+  min-height: 100vh;
+}
+
+.embed-shell {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 1rem 1rem 0.5rem;
+}
+
+.embed-attribution {
+  margin-top: 1rem;
+  padding: 0.75rem 0 1rem;
+  border-top: 1px solid var(--border);
+  text-align: center;
+  font-size: var(--text-xs);
+  color: var(--muted);
+}
+
+.embed-attribution a {
+  color: var(--accent);
+}
+
+.embed-map-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.4fr) minmax(220px, 0.9fr);
+  gap: 1rem;
+  align-items: start;
+}
+
+.embed-map-panel {
+  min-height: 320px;
+}
+
+.embed-map-heading {
+  font-size: var(--text-base);
+  margin: 0;
+}
+
+.embed-map-sidebar .info-card {
+  min-height: 280px;
+}
+
+.embed-map-legend {
+  margin-top: 0.75rem;
+}
+
+.embed-open-link {
+  text-align: center;
+  margin: 1rem 0 0;
+  font-size: var(--text-sm);
+}
+
+.embed-open-link a {
+  color: var(--accent);
+}
+
+.embed-compare-header {
+  margin-bottom: 1rem;
+}
+
+.embed-compare .compare-empty code,
+.embed-compare-header code {
+  font-size: 0.9em;
+  color: var(--accent);
+}
+
+.partners-page {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.partners-hero {
+  text-align: center;
+}
+
+.partners-section .panel-helper {
+  margin-bottom: 1rem;
+}
+
+.partners-subtitle {
+  font-size: var(--text-base);
+  margin: 1.25rem 0 0.5rem;
+  font-family: var(--font-display);
+}
+
+.partners-list {
+  margin: 0;
+  padding-left: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+}
+
+.partners-list a {
+  color: var(--accent);
+  word-break: break-all;
+}
+
+.partners-code {
+  background: var(--surface-solid);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 1rem;
+  overflow-x: auto;
+  font-size: var(--text-xs);
+  line-height: 1.5;
+  margin: 0.75rem 0 0;
+}
+
+.partners-code code {
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+
+.partners-attribution-note {
+  margin-top: 1rem;
+  padding: 0.75rem 1rem;
+  border-left: 3px solid var(--yellow);
+  background: rgba(234, 179, 8, 0.08);
+  font-size: var(--text-sm);
+}
+
+@media (max-width: 768px) {
+  .embed-map-layout {
+    grid-template-columns: 1fr;
+  }
+}
