@@ -30,7 +30,7 @@ export async function downloadComparePng(root, { abbrs, dataYear, statusEl, butt
 
     const { toPng } = await import("html-to-image");
     const dataUrl = await toPng(root, {
-      backgroundColor: "#050505",
+      backgroundColor: "#000000",
       pixelRatio: 2,
       cacheBust: true,
       filter: (node) => {

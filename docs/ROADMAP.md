@@ -492,19 +492,19 @@ Ship **one sub-section per PR** unless explicitly combined.
 
 ---
 
-### 7i — Pure dark & grayscale tiers
+### 7i — Pure dark & grayscale tiers — **Done**
 
 **Goal:** Extreme dark mode + white/gray UI; map tiers encoded by **brightness**, not traffic-light colors.
 
 **Deliverables**
 
-- [ ] Update `:root` tokens in `src/styles/styles.css` (pure black bg, surface steps, no page gradient)
-- [ ] `map.js` — `TIER_COLORS` / glows → grayscale luminance; update default state fill
-- [ ] Legend swatches, `.tier-badge`, `.score-bar-fill`, rankings tier filter labels — grayscale (keep tier **names** in copy)
-- [ ] **Movers unchanged semantically** — keep green ↑ / red ↓ for direction (optionally soften tones for pure-black bg)
-- [ ] Compare winner styling → white emphasis, not green
-- [ ] Regenerate OG cards if tier accent colors change on social previews
-- [ ] Embed layouts inherit new tokens
+- [x] Update `:root` tokens in `src/styles/styles.css` (pure black bg, surface steps, no page gradient)
+- [x] `map.js` — `TIER_COLORS` / glows → grayscale luminance; update default state fill
+- [x] Legend swatches, `.tier-badge`, `.score-bar-fill`, rankings tier filter labels — grayscale (keep tier **names** in copy)
+- [x] **Movers unchanged semantically** — keep green ↑ / red ↓ for direction (optionally soften tones for pure-black bg)
+- [x] Compare winner styling → white emphasis, not green
+- [x] Regenerate OG cards if tier accent colors change on social previews
+- [x] Embed layouts inherit new tokens
 
 **Exit criteria:** Homepage map reads top/mid/lower tiers at a glance without green/yellow/red fills; Movers still shows up/down in green/red; `npm run build` + `verify.py` green (scores untouched).
 

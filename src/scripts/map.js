@@ -1,20 +1,11 @@
 import { refreshMapSidebar } from "./mapSidebar.js";
 import { isStateSaved, toggleSavedState } from "./memory.js";
 import { buildStateDetailUrl } from "./yearData.js";
+import { TIER_GLOWS, TIER_LUMINANCE } from "./categories.js";
 
-const TIER_COLORS = {
-  green: "#22c55e",
-  yellow: "#eab308",
-  red: "#ef4444",
-};
+const TIER_COLORS = TIER_LUMINANCE;
 
-const TIER_GLOWS = {
-  green: "drop-shadow(0 0 6px rgba(34, 197, 94, 0.55))",
-  yellow: "drop-shadow(0 0 6px rgba(234, 179, 8, 0.55))",
-  red: "drop-shadow(0 0 6px rgba(239, 68, 68, 0.55))",
-};
-
-const DEFAULT_FILL = "#d1d5db";
+const DEFAULT_FILL = TIER_LUMINANCE.yellow;
 
 let stateData = {};
 let currentYear = 2025;
@@ -36,6 +27,20 @@ function getPathForAbbr(abbr) {
   return document.querySelector(`#us-map .state#${abbr}`);
 }
 
+function tierFill(tier) {
+  return TIER_COLORS[tier] ?? DEFAULT_FILL;
+}
+
+function paintState(path, abbr) {
+  const info = stateData[abbr];
+  if (!info || !path) {
+    return;
+  }
+
+  path.style.fill = tierFill(info.tier);
+  path.style.filter = "";
+}
+
 function highlightPath(path, abbr) {
   const info = stateData[abbr];
   if (!info || !path) {
@@ -43,8 +48,8 @@ function highlightPath(path, abbr) {
   }
 
   path.classList.add("is-active");
-  path.style.fill = TIER_COLORS[info.tier];
-  path.style.filter = TIER_GLOWS[info.tier];
+  path.style.fill = tierFill(info.tier);
+  path.style.filter = TIER_GLOWS[info.tier] ?? "";
 }
 
 function resetPath(path) {
@@ -53,8 +58,13 @@ function resetPath(path) {
   }
 
   path.classList.remove("is-active");
-  path.style.fill = DEFAULT_FILL;
-  path.style.filter = "";
+  paintState(path, path.id);
+}
+
+function paintAllStates() {
+  document.querySelectorAll("#us-map .state").forEach((path) => {
+    paintState(path, path.id);
+  });
 }
 
 function updateMapDimming() {
@@ -81,6 +91,8 @@ function refreshMapColors() {
     );
     if (path === pinnedPath || path === hoverPath) {
       highlightPath(path, abbr);
+    } else {
+      paintState(path, abbr);
     }
   });
 }
@@ -394,6 +406,8 @@ function deactivateHover(path) {
 }
 
 function wireStates() {
+  paintAllStates();
+
   const paths = document.querySelectorAll("#us-map .state");
 
   paths.forEach((path) => {

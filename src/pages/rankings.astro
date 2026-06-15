@@ -3,7 +3,7 @@ import Layout from "../layouts/Layout.astro";
 import FounderFitSelector from "../components/FounderFitSelector.astro";
 import YearSelector from "../components/YearSelector.astro";
 import { getStateList, dataYear } from "../lib/states.js";
-import { TIER_LABELS } from "../scripts/categories.js";
+import { TIER_LABELS, TIER_FILTER_LABELS } from "../scripts/categories.js";
 
 const stateList = getStateList().sort((a, b) => a.rank - b.rank);
 ---
@@ -33,13 +33,13 @@ const stateList = getStateList().sort((a, b) => a.rank - b.rank);
             All
           </button>
           <button type="button" class="tier-filter-btn" data-tier="green">
-            Green
+            {TIER_FILTER_LABELS.green}
           </button>
           <button type="button" class="tier-filter-btn" data-tier="yellow">
-            Yellow
+            {TIER_FILTER_LABELS.yellow}
           </button>
           <button type="button" class="tier-filter-btn" data-tier="red">
-            Red
+            {TIER_FILTER_LABELS.red}
           </button>
         </div>
       </div>

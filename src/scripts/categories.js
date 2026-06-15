@@ -34,9 +34,22 @@ export const TIER_LABELS = {
 };
 
 export const TIER_FILTER_LABELS = {
-  green: "Green — Ranks 1–17",
-  yellow: "Yellow — Ranks 18–34",
-  red: "Red — Ranks 35–50",
+  green: "Top tier — 1–17",
+  yellow: "Mid tier — 18–34",
+  red: "Lower tier — 35–50",
+};
+
+/** Grayscale map/UI encoding — data keys stay green/yellow/red. */
+export const TIER_LUMINANCE = {
+  green: "#e8e8e8",
+  yellow: "#6b6b6b",
+  red: "#2a2a2a",
+};
+
+export const TIER_GLOWS = {
+  green: "drop-shadow(0 0 8px rgba(232, 232, 232, 0.45))",
+  yellow: "drop-shadow(0 0 6px rgba(107, 107, 107, 0.5))",
+  red: "drop-shadow(0 0 4px rgba(42, 42, 42, 0.6))",
 };
 
 export function getCategoryEntries(categories) {

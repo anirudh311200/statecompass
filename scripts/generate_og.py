@@ -10,9 +10,9 @@ DATA_PATH = ROOT / "public" / "data" / "states.json"
 OUT_DIR = ROOT / "public" / "og"
 
 TIER_COLORS = {
-    "green": "#22c55e",
-    "yellow": "#eab308",
-    "red": "#ef4444",
+    "green": "#e8e8e8",
+    "yellow": "#6b6b6b",
+    "red": "#2a2a2a",
 }
 
 TAGLINE = "Site selection for founders"
@@ -21,12 +21,12 @@ TAGLINE = "Site selection for founders"
 def card_shell(year: int, eyebrow: str, title: str, subtitle: str, accent: str = "#737373") -> str:
     return f"""<?xml version="1.0" encoding="UTF-8"?>
 <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
-  <rect width="1200" height="630" fill="#050505"/>
-  <rect x="48" y="48" width="1104" height="534" rx="24" fill="#0e0e0e" stroke="#262626"/>
-  <text x="96" y="180" fill="#737373" font-family="system-ui,sans-serif" font-size="28">StateCompass · CNBC {year}</text>
-  <text x="96" y="280" fill="#f5f5f5" font-family="system-ui,sans-serif" font-size="72" font-weight="700">{title}</text>
+  <rect width="1200" height="630" fill="#000000"/>
+  <rect x="48" y="48" width="1104" height="534" rx="24" fill="#0a0a0a" stroke="#1a1a1a"/>
+  <text x="96" y="180" fill="#888888" font-family="system-ui,sans-serif" font-size="28">StateCompass · CNBC {year}</text>
+  <text x="96" y="280" fill="#fafafa" font-family="system-ui,sans-serif" font-size="72" font-weight="700">{title}</text>
   <text x="96" y="360" fill="{accent}" font-family="system-ui,sans-serif" font-size="40" font-weight="600">{subtitle}</text>
-  <text x="96" y="500" fill="#737373" font-family="system-ui,sans-serif" font-size="24">{TAGLINE}</text>
+  <text x="96" y="500" fill="#888888" font-family="system-ui,sans-serif" font-size="24">{TAGLINE}</text>
   {og_watermark()}
 </svg>"""
 
@@ -36,14 +36,14 @@ def state_card(state: dict, year: int) -> str:
     bar_width = max(12, int(state["score100"] * 4.2))
     return f"""<?xml version="1.0" encoding="UTF-8"?>
 <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
-  <rect width="1200" height="630" fill="#050505"/>
-  <rect x="48" y="48" width="1104" height="534" rx="24" fill="#0e0e0e" stroke="#262626"/>
-  <text x="96" y="180" fill="#737373" font-family="system-ui,sans-serif" font-size="28">StateCompass · CNBC {year}</text>
-  <text x="96" y="280" fill="#f5f5f5" font-family="system-ui,sans-serif" font-size="72" font-weight="700">{state["name"]}</text>
+  <rect width="1200" height="630" fill="#000000"/>
+  <rect x="48" y="48" width="1104" height="534" rx="24" fill="#0a0a0a" stroke="#1a1a1a"/>
+  <text x="96" y="180" fill="#888888" font-family="system-ui,sans-serif" font-size="28">StateCompass · CNBC {year}</text>
+  <text x="96" y="280" fill="#fafafa" font-family="system-ui,sans-serif" font-size="72" font-weight="700">{state["name"]}</text>
   <text x="96" y="360" fill="{color}" font-family="system-ui,sans-serif" font-size="48" font-weight="600">Rank #{state["rank"]} · Score {state["score100"]}/100</text>
-  <rect x="96" y="400" width="420" height="12" rx="6" fill="#262626"/>
+  <rect x="96" y="400" width="420" height="12" rx="6" fill="#1a1a1a"/>
   <rect x="96" y="400" width="{bar_width}" height="12" rx="6" fill="{color}"/>
-  <text x="96" y="500" fill="#737373" font-family="system-ui,sans-serif" font-size="24">{TAGLINE}</text>
+  <text x="96" y="500" fill="#888888" font-family="system-ui,sans-serif" font-size="24">{TAGLINE}</text>
   {og_watermark()}
 </svg>"""
 
@@ -72,7 +72,7 @@ def main():
             "StateCompass",
             "Compare states",
             "Side-by-side CNBC scores · shareable link",
-            accent="#22c55e",
+            accent="#a3a3a3",
         ),
         encoding="utf-8",
     )
