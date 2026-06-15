@@ -1,8 +1,15 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none">
   <rect width="32" height="32" rx="7.0" fill="#000000"/>
-  <g transform="translate(16.00,16.96) rotate(40)">
-    <line x1="0" y1="2.00" x2="0" y2="-8.00" stroke="#fafafa" stroke-width="2.50" stroke-linecap="round"/>
-    <line x1="0" y1="2.00" x2="0" y2="5.00" stroke="#fafafa" stroke-width="2.50" stroke-linecap="round"/>
-    <circle cx="0" cy="2.00" r="2.00" fill="#fafafa"/>
+  <g transform="translate(16.00,16.00) rotate(40)">
+    <circle cx="0" cy="0" r="11.25" fill="none" stroke="#fafafa" stroke-width="1.35" opacity="0.35"/>
+    
+    <line x1="0" y1="-11.25" x2="0" y2="-10.10" stroke="#fafafa" stroke-width="0.90" stroke-linecap="round" opacity="0.55"/>
+    <line x1="11.25" y1="0" x2="10.10" y2="0" stroke="#fafafa" stroke-width="0.75" stroke-linecap="round" opacity="0.35"/>
+    <line x1="0" y1="11.25" x2="0" y2="10.10" stroke="#fafafa" stroke-width="0.75" stroke-linecap="round" opacity="0.35"/>
+    <line x1="-11.25" y1="0" x2="-10.10" y2="0" stroke="#fafafa" stroke-width="0.75" stroke-linecap="round" opacity="0.35"/>
+    <path d="M 0,-9.75 L -3.35,-1.35 L 0,-2.15 L 3.35,-1.35 Z" fill="#fafafa"/>
+    <path d="M 0,6.25 L -2.35,1.05 L 0,0.15 L 2.35,1.05 Z" fill="#8a8a8a"/>
+    <circle cx="0" cy="0" r="2.75" fill="#fafafa"/>
+    <circle cx="0" cy="0" r="1.15" fill="#000000"/>
   </g>
 </svg>

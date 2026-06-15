@@ -2,34 +2,54 @@
 
 NEEDLE_ROT = 40
 NEEDLE = "#fafafa"
+NEEDLE_SOUTH = "#8a8a8a"
 BG = "#000000"
-
-HUB_Y = 2
-NORTH = 8
-SOUTH = 5
-HUB_R = 2
-STROKE = 2.5
+RING_OPACITY = 0.35
 
 
-def needle(cx: float, cy: float, scale: float = 1.0) -> str:
+def compass(cx: float, cy: float, scale: float = 1.0) -> str:
+    """Classic compass rose: ring, diamond needle (long north / short south), pivot hub."""
     s = scale
-    sw = STROKE * s
-    hy = HUB_Y * s
+    ring_r = 11.25 * s
+    ring_sw = 1.35 * s
+    hub_r = 2.75 * s
+    pin_r = 1.15 * s
+
+    # Diamond arms — north longer and bright, south shorter and muted (real compass convention)
+    north = f"M 0,{-9.75 * s:.2f} L {-3.35 * s:.2f},{-1.35 * s:.2f} L 0,{-2.15 * s:.2f} L {3.35 * s:.2f},{-1.35 * s:.2f} Z"
+    south = f"M 0,{6.25 * s:.2f} L {-2.35 * s:.2f},{1.05 * s:.2f} L 0,{0.15 * s:.2f} L {2.35 * s:.2f},{1.05 * s:.2f} Z"
+
+    # Cardinal ticks on the ring (subtle — helps read as “compass” at small sizes)
+    tick = 1.15 * s
+    ticks = f"""
+    <line x1="0" y1="{-ring_r:.2f}" x2="0" y2="{-ring_r + tick:.2f}" stroke="{NEEDLE}" stroke-width="{0.9 * s:.2f}" stroke-linecap="round" opacity="0.55"/>
+    <line x1="{ring_r:.2f}" y1="0" x2="{ring_r - tick:.2f}" y2="0" stroke="{NEEDLE}" stroke-width="{0.75 * s:.2f}" stroke-linecap="round" opacity="0.35"/>
+    <line x1="0" y1="{ring_r:.2f}" x2="0" y2="{ring_r - tick:.2f}" stroke="{NEEDLE}" stroke-width="{0.75 * s:.2f}" stroke-linecap="round" opacity="0.35"/>
+    <line x1="{-ring_r:.2f}" y1="0" x2="{-ring_r + tick:.2f}" y2="0" stroke="{NEEDLE}" stroke-width="{0.75 * s:.2f}" stroke-linecap="round" opacity="0.35"/>"""
+
     return f"""<g transform="translate({cx:.2f},{cy:.2f}) rotate({NEEDLE_ROT})">
-    <line x1="0" y1="{hy:.2f}" x2="0" y2="{-NORTH * s:.2f}" stroke="{NEEDLE}" stroke-width="{sw:.2f}" stroke-linecap="round"/>
-    <line x1="0" y1="{hy:.2f}" x2="0" y2="{SOUTH * s:.2f}" stroke="{NEEDLE}" stroke-width="{sw:.2f}" stroke-linecap="round"/>
-    <circle cx="0" cy="{hy:.2f}" r="{HUB_R * s:.2f}" fill="{NEEDLE}"/>
+    <circle cx="0" cy="0" r="{ring_r:.2f}" fill="none" stroke="{NEEDLE}" stroke-width="{ring_sw:.2f}" opacity="{RING_OPACITY}"/>
+    {ticks}
+    <path d="{north}" fill="{NEEDLE}"/>
+    <path d="{south}" fill="{NEEDLE_SOUTH}"/>
+    <circle cx="0" cy="0" r="{hub_r:.2f}" fill="{NEEDLE}"/>
+    <circle cx="0" cy="0" r="{pin_r:.2f}" fill="{BG}"/>
   </g>"""
 
 
+# Back-compat alias used by generate_logo.py
+def needle(cx: float, cy: float, scale: float = 1.0) -> str:
+    return compass(cx, cy, scale)
+
+
 def favicon_block(size: int = 32) -> str:
-    """Rounded square + needle (for favicon or scaled touch icon)."""
+    """Rounded square + compass mark (for favicon or scaled touch icon)."""
     rx = round(7 * size / 32, 2)
     cx = size / 2
-    cy = size / 2 + size * 0.03
+    cy = size / 2
     scale = size / 32
     return f"""<rect width="{size}" height="{size}" rx="{rx}" fill="{BG}"/>
-  {needle(cx, cy, scale)}"""
+  {compass(cx, cy, scale)}"""
 
 
 def og_watermark() -> str:

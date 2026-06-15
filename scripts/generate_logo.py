@@ -18,11 +18,11 @@ def favicon_svg(size: int = 32) -> str:
 
 
 def logo_svg() -> str:
-    icon_cx, icon_cy = 14, 20
-    icon_scale = 28 / 32
-    return f"""<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 40" fill="none" aria-hidden="true">
+    icon_cx, icon_cy = 16, 20
+    icon_scale = 30 / 32
+    return f"""<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 210 40" fill="none" aria-hidden="true">
   {needle(icon_cx, icon_cy, icon_scale)}
-  <text x="44" y="27" font-family="Sora, system-ui, sans-serif" font-size="22" font-weight="600" fill="{NEEDLE}" letter-spacing="-0.03em">StateCompass</text>
+  <text x="48" y="27" font-family="Sora, system-ui, sans-serif" font-size="22" font-weight="600" fill="{NEEDLE}" letter-spacing="-0.03em">StateCompass</text>
 </svg>
 """
 

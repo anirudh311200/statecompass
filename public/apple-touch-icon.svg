@@ -1,8 +1,15 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 180" fill="none">
   <rect width="180" height="180" rx="39.38" fill="#000000"/>
-  <g transform="translate(90.00,95.40) rotate(40)">
-    <line x1="0" y1="11.25" x2="0" y2="-45.00" stroke="#fafafa" stroke-width="14.06" stroke-linecap="round"/>
-    <line x1="0" y1="11.25" x2="0" y2="28.12" stroke="#fafafa" stroke-width="14.06" stroke-linecap="round"/>
-    <circle cx="0" cy="11.25" r="11.25" fill="#fafafa"/>
+  <g transform="translate(90.00,90.00) rotate(40)">
+    <circle cx="0" cy="0" r="63.28" fill="none" stroke="#fafafa" stroke-width="7.59" opacity="0.35"/>
+    
+    <line x1="0" y1="-63.28" x2="0" y2="-56.81" stroke="#fafafa" stroke-width="5.06" stroke-linecap="round" opacity="0.55"/>
+    <line x1="63.28" y1="0" x2="56.81" y2="0" stroke="#fafafa" stroke-width="4.22" stroke-linecap="round" opacity="0.35"/>
+    <line x1="0" y1="63.28" x2="0" y2="56.81" stroke="#fafafa" stroke-width="4.22" stroke-linecap="round" opacity="0.35"/>
+    <line x1="-63.28" y1="0" x2="-56.81" y2="0" stroke="#fafafa" stroke-width="4.22" stroke-linecap="round" opacity="0.35"/>
+    <path d="M 0,-54.84 L -18.84,-7.59 L 0,-12.09 L 18.84,-7.59 Z" fill="#fafafa"/>
+    <path d="M 0,35.16 L -13.22,5.91 L 0,0.84 L 13.22,5.91 Z" fill="#8a8a8a"/>
+    <circle cx="0" cy="0" r="15.47" fill="#fafafa"/>
+    <circle cx="0" cy="0" r="6.47" fill="#000000"/>
   </g>
 </svg>
