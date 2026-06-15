@@ -60,8 +60,13 @@
   --direction-up-dot: rgba(134, 239, 172, 0.72);
   --direction-down-dot: rgba(252, 165, 165, 0.68);
 
-  --font-display: "Sora", system-ui, sans-serif;
-  --font-body: "Inter", system-ui, sans-serif;
+  --font-family: "Sora", system-ui, sans-serif;
+  --font-display: var(--font-family);
+  --font-body: var(--font-family);
+  --weight-display: 700;
+  --weight-heading: 600;
+  --weight-ui: 500;
+  --weight-body: 400;
 
   --text-xs: 0.75rem;
   --text-sm: 0.85rem;
@@ -76,10 +81,27 @@
 body {
   margin: 0;
   min-height: 100vh;
-  font-family: var(--font-body);
+  font-family: var(--font-family);
+  font-weight: var(--weight-body);
   background-color: var(--bg);
   color: var(--text);
   line-height: 1.5;
+}
+
+button,
+input,
+select,
+textarea {
+  font-family: inherit;
+}
+
+.year-select,
+.movers-year-select,
+.movers-category-select,
+.rankings-sort-select,
+.state-search-input,
+.email-notify-input {
+  font-weight: var(--weight-ui);
 }
 
 .page {
@@ -133,9 +155,8 @@ body {
 
 .site-header--compact .subtitle {
   margin-bottom: 0;
-  font-family: var(--font-display);
   font-size: var(--text-sm);
-  font-weight: 600;
+  font-weight: var(--weight-ui);
   letter-spacing: -0.02em;
   line-height: 1.4;
 }
@@ -154,9 +175,8 @@ body {
   border-radius: 8px;
   color: var(--muted);
   text-decoration: none;
-  font-family: var(--font-display);
   font-size: var(--text-sm);
-  font-weight: 600;
+  font-weight: var(--weight-heading);
   letter-spacing: -0.02em;
   transition: color 0.15s ease, background 0.15s ease;
 }
@@ -197,9 +217,8 @@ body {
 .subtitle {
   margin: 0 0 1.25rem;
   color: var(--muted);
-  font-family: var(--font-display);
   font-size: var(--text-lg);
-  font-weight: 600;
+  font-weight: var(--weight-ui);
   letter-spacing: -0.02em;
   max-width: 36rem;
   margin-inline: auto;
@@ -374,13 +393,13 @@ body {
 }
 
 .search-result-name {
-  font-weight: 500;
+  font-weight: var(--weight-ui);
 }
 
 .search-result-abbr {
   font-size: var(--text-xs);
   color: var(--muted);
-  font-weight: 600;
+  font-weight: var(--weight-heading);
   letter-spacing: 0.04em;
 }
 
@@ -598,12 +617,11 @@ body {
 
 .info-card h2 {
   margin: 0;
-  font-family: var(--font-body);
   font-size: var(--text-sm);
   text-transform: uppercase;
   letter-spacing: 0.1em;
   color: var(--accent);
-  font-weight: 600;
+  font-weight: var(--weight-heading);
 }
 
 .clear-pin-btn {
@@ -638,6 +656,7 @@ body {
   display: flex;
   align-items: flex-start;
   gap: 0.6rem;
+  font-weight: var(--weight-body);
 }
 
 .tooltip-prompt-copy {
@@ -744,9 +763,8 @@ body {
 
 .state-name {
   margin: 0 0 0.35rem;
-  font-family: var(--font-display);
   font-size: var(--text-2xl);
-  font-weight: 700;
+  font-weight: var(--weight-display);
   letter-spacing: -0.03em;
 }
 
@@ -765,14 +783,6 @@ body {
   outline: 2px solid var(--accent);
   outline-offset: 3px;
   border-radius: 4px;
-}
-
-.map-detail-link {
-  display: inline-block;
-  font-size: var(--text-sm);
-  font-weight: 600;
-  color: var(--accent);
-  text-decoration: none;
 }
 
 .map-detail-link:hover {
@@ -810,6 +820,7 @@ body {
   font-size: var(--text-sm);
   line-height: 1.5;
   color: var(--muted);
+  font-weight: var(--weight-body);
 }
 
 .search-hint {
@@ -817,6 +828,7 @@ body {
   font-size: var(--text-xs);
   color: var(--dim);
   line-height: 1.4;
+  font-weight: var(--weight-body);
 }
 
 /* Score bar */
@@ -836,11 +848,11 @@ body {
   font-size: var(--text-sm);
   color: var(--muted);
   margin-right: auto;
+  font-weight: var(--weight-ui);
 }
 
 .score-value {
-  font-family: var(--font-display);
-  font-weight: 700;
+  font-weight: var(--weight-display);
   font-size: var(--text-xl);
   letter-spacing: -0.02em;
 }
@@ -889,8 +901,7 @@ body {
 
 .rank-row span {
   color: var(--text);
-  font-weight: 700;
-  font-family: var(--font-display);
+  font-weight: var(--weight-display);
 }
 
 .rank-footnote {
@@ -898,6 +909,7 @@ body {
   font-size: var(--text-xs);
   color: var(--dim);
   line-height: 1.4;
+  font-weight: var(--weight-body);
 }
 
 .rank-footnote[hidden] {
@@ -967,7 +979,7 @@ body {
 .category-details-summary {
   padding: 0.85rem 0 0.5rem;
   font-size: var(--text-xs);
-  font-weight: 600;
+  font-weight: var(--weight-heading);
   text-transform: uppercase;
   letter-spacing: 0.06em;
   color: var(--muted);
@@ -998,12 +1010,11 @@ body {
 
 .category-heading {
   margin: 0 0 0.5rem;
-  font-family: var(--font-body);
   font-size: var(--text-xs);
   text-transform: uppercase;
   letter-spacing: 0.08em;
   color: var(--muted);
-  font-weight: 600;
+  font-weight: var(--weight-heading);
 }
 
 .category-list {
@@ -1025,11 +1036,12 @@ body {
 
 .category-name {
   color: var(--text);
+  font-weight: var(--weight-body);
 }
 
 .category-rank {
   flex-shrink: 0;
-  font-weight: 600;
+  font-weight: var(--weight-heading);
   font-variant-numeric: tabular-nums;
 }
 
@@ -1046,6 +1058,7 @@ body {
   font-size: var(--text-xs);
   color: var(--dim);
   line-height: 1.45;
+  font-weight: var(--weight-body);
 }
 
 .category-methodology a {
@@ -1118,6 +1131,7 @@ footer {
   text-align: center;
   color: var(--muted);
   font-size: var(--text-sm);
+  font-weight: var(--weight-body);
   opacity: 0.7;
 }
 
@@ -1162,9 +1176,8 @@ footer a:hover {
 
 .page-title {
   margin: 0 0 0.35rem;
-  font-family: var(--font-display);
   font-size: var(--text-2xl);
-  font-weight: 700;
+  font-weight: var(--weight-display);
   letter-spacing: -0.03em;
 }
 
@@ -1173,6 +1186,7 @@ footer a:hover {
   color: var(--muted);
   font-size: var(--text-base);
   max-width: 40rem;
+  font-weight: var(--weight-body);
 }
 
 .panel {
@@ -1187,18 +1201,18 @@ footer a:hover {
 
 .panel-title {
   margin: 0 0 0.35rem;
-  font-family: var(--font-body);
   font-size: var(--text-sm);
   text-transform: uppercase;
   letter-spacing: 0.1em;
   color: var(--accent);
-  font-weight: 600;
+  font-weight: var(--weight-heading);
 }
 
 .panel-helper {
   margin: 0 0 1rem;
   font-size: var(--text-sm);
   color: var(--muted);
+  font-weight: var(--weight-body);
 }
 
 /* Breadcrumbs */
@@ -1447,9 +1461,8 @@ footer a:hover {
 
 .state-hero-title {
   margin: 0 0 0.75rem;
-  font-family: var(--font-display);
   font-size: clamp(1.75rem, 4vw, 2.25rem);
-  font-weight: 700;
+  font-weight: var(--weight-display);
   letter-spacing: -0.03em;
 }
 
@@ -1497,9 +1510,8 @@ footer a:hover {
 
 .snapshot-fact-label {
   margin: 0 0 0.35rem;
-  font-family: var(--font-body);
   font-size: var(--text-sm);
-  font-weight: 600;
+  font-weight: var(--weight-heading);
   color: var(--text);
 }
 
@@ -1508,6 +1520,7 @@ footer a:hover {
   font-size: var(--text-sm);
   line-height: 1.55;
   color: var(--gray);
+  font-weight: var(--weight-body);
 }
 
 .snapshot-fact-source {
@@ -1573,9 +1586,8 @@ footer a:hover {
 
 .snapshot-heads-up-row-label {
   margin: 0 0 0.35rem;
-  font-family: var(--font-body);
   font-size: var(--text-xs);
-  font-weight: 600;
+  font-weight: var(--weight-heading);
   text-transform: uppercase;
   letter-spacing: 0.07em;
   color: var(--accent);
@@ -1716,9 +1728,8 @@ footer a:hover {
 
 .compare-state-name {
   margin: 0 0 0.5rem;
-  font-family: var(--font-display);
   font-size: var(--text-lg);
-  font-weight: 700;
+  font-weight: var(--weight-display);
 }
 
 .compare-score-row {
@@ -1732,13 +1743,14 @@ footer a:hover {
   margin: 0.5rem 0;
   font-size: var(--text-sm);
   color: var(--muted);
+  font-weight: var(--weight-body);
 }
 
 .compare-detail-link,
 .map-detail-link {
   display: inline-block;
   font-size: var(--text-sm);
-  font-weight: 600;
+  font-weight: var(--weight-heading);
   color: var(--accent);
   text-decoration: none;
 }
@@ -2047,6 +2059,7 @@ footer a:hover {
   font-size: var(--text-xs);
   color: var(--muted);
   line-height: 1.45;
+  font-weight: var(--weight-body);
 }
 
 .founder-fit-weights-link {
@@ -2077,7 +2090,7 @@ footer a:hover {
   color: var(--muted);
   font: inherit;
   font-size: var(--text-xs);
-  font-weight: 500;
+  font-weight: var(--weight-ui);
   cursor: pointer;
   transition:
     color 0.15s ease,
@@ -2094,6 +2107,7 @@ footer a:hover {
   color: var(--text);
   background: rgba(255, 255, 255, 0.1);
   border-color: #525252;
+  font-weight: var(--weight-heading);
 }
 
 .founder-fit-pill:focus-visible {
@@ -2136,7 +2150,7 @@ footer a:hover {
   display: block;
   margin-bottom: 0.4rem;
   font-size: var(--text-xs);
-  font-weight: 600;
+  font-weight: var(--weight-heading);
   color: var(--muted);
   text-transform: uppercase;
   letter-spacing: 0.06em;
@@ -2156,7 +2170,7 @@ footer a:hover {
   color: var(--muted);
   font: inherit;
   font-size: var(--text-xs);
-  font-weight: 500;
+  font-weight: var(--weight-ui);
   cursor: pointer;
 }
 
@@ -2222,7 +2236,7 @@ footer a:hover {
   text-transform: uppercase;
   letter-spacing: 0.06em;
   color: var(--muted);
-  font-weight: 600;
+  font-weight: var(--weight-heading);
   background: rgba(255, 255, 255, 0.02);
 }
 
@@ -2242,18 +2256,19 @@ footer a:hover {
 }
 
 .rankings-rank {
-  font-weight: 600;
+  font-weight: var(--weight-heading);
   font-variant-numeric: tabular-nums;
   width: 5rem;
 }
 
 .rankings-name {
-  font-weight: 500;
+  font-weight: var(--weight-ui);
 }
 
 .rankings-score {
   font-variant-numeric: tabular-nums;
   color: var(--muted);
+  font-weight: var(--weight-body);
 }
 
 .rankings-empty {
@@ -2554,7 +2569,7 @@ footer a:hover {
   color: var(--muted);
   font: inherit;
   font-size: var(--text-xs);
-  font-weight: 500;
+  font-weight: var(--weight-ui);
   white-space: nowrap;
   cursor: pointer;
   transition:
@@ -2572,6 +2587,7 @@ footer a:hover {
   background: rgba(255, 255, 255, 0.1);
   color: var(--text);
   box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.08);
+  font-weight: var(--weight-heading);
 }
 
 .year-toggle-btn:focus-visible {
@@ -2627,8 +2643,8 @@ footer a:hover {
 
 .saved-panel-title {
   margin: 0;
-  font-family: var(--font-display);
   font-size: var(--text-lg);
+  font-weight: var(--weight-heading);
   display: flex;
   align-items: center;
   gap: 0.5rem;
@@ -2652,6 +2668,7 @@ footer a:hover {
   margin: 0;
   font-size: var(--text-sm);
   color: var(--muted);
+  font-weight: var(--weight-body);
 }
 
 .saved-chip-list {
@@ -2848,7 +2865,6 @@ footer a:hover {
 
 .movers-dumbbell-panel-title {
   margin: 0;
-  font-family: var(--font-display);
   font-size: var(--text-sm);
   font-weight: 600;
   letter-spacing: 0.01em;
@@ -2998,7 +3014,7 @@ footer a:hover {
 }
 
 .movers-dumbbell-rank-label {
-  font-family: var(--font-body);
+  font-family: var(--font-family);
   font-size: 8px;
   fill: var(--dim);
 }
@@ -3403,6 +3419,7 @@ footer a:hover {
   text-align: center;
   font-size: var(--text-xs);
   color: var(--muted);
+  font-weight: var(--weight-body);
 }
 
 .embed-attribution a {
@@ -3499,7 +3516,6 @@ footer a:hover {
 .partners-subtitle {
   font-size: var(--text-base);
   margin: 1.25rem 0 0.5rem;
-  font-family: var(--font-display);
 }
 
 .partners-list {
