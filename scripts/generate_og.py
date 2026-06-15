@@ -1,7 +1,11 @@
 import json
+import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT / "scripts"))
+
+from brand_mark import og_watermark  # noqa: E402
 DATA_PATH = ROOT / "public" / "data" / "states.json"
 OUT_DIR = ROOT / "public" / "og"
 
@@ -23,6 +27,7 @@ def card_shell(year: int, eyebrow: str, title: str, subtitle: str, accent: str =
   <text x="96" y="280" fill="#f5f5f5" font-family="system-ui,sans-serif" font-size="72" font-weight="700">{title}</text>
   <text x="96" y="360" fill="{accent}" font-family="system-ui,sans-serif" font-size="40" font-weight="600">{subtitle}</text>
   <text x="96" y="500" fill="#737373" font-family="system-ui,sans-serif" font-size="24">{TAGLINE}</text>
+  {og_watermark()}
 </svg>"""
 
 
@@ -39,6 +44,7 @@ def state_card(state: dict, year: int) -> str:
   <rect x="96" y="400" width="420" height="12" rx="6" fill="#262626"/>
   <rect x="96" y="400" width="{bar_width}" height="12" rx="6" fill="{color}"/>
   <text x="96" y="500" fill="#737373" font-family="system-ui,sans-serif" font-size="24">{TAGLINE}</text>
+  {og_watermark()}
 </svg>"""
 
 

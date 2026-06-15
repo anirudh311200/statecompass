@@ -1,7 +1,7 @@
 # StateCompass Roadmap
 
 > **Product:** Site selection for founders — compare where to build and operate your business, powered by CNBC.  
-> **How to use in Cursor:** *"Read `docs/ROADMAP.md`. Phase 0 is done — implement Phase 1 only."* Update the phase status table as you finish each phase.
+> **How to use in Cursor:** *"Read `docs/ROADMAP.md`. Phases 0–6 are done — implement Phase 7g only."* Update the phase status table as you finish each phase.
 
 ---
 
@@ -38,9 +38,9 @@
 | **4** | Founder Snapshot | **Done** |
 | **5** | Memory & time | **Done** |
 | **6** | Distribution | **Done** |
-| **7** | UI/UX overhaul *(optional)* | Pending |
+| **7** | UI/UX overhaul — presentation layer | **Planned** (implement next) |
 
-**Estimated scope:** Phase 0 complete. Phases 1–6 = core product. Phase 7 = polish pass after tools work.
+**Estimated scope:** Phases 0–6 = core product (complete). Phase 7 = identity, pure-dark visual system, homepage choreography, and polish — ship as vertical slices **7g → 7i → 7h → 7b → …** (see below).
 
 ---
 
@@ -153,6 +153,8 @@ Lower layers must stay trustworthy before upper layers ship.
 
 ```
 ┌─────────────────────────────────────────┐
+│  Phase 7 — Presentation (identity, UX)    │
+├─────────────────────────────────────────┤
 │  Phase 6 — Distribution (embed, API)    │
 ├─────────────────────────────────────────┤
 │  Phase 5 — Memory (multi-year, alerts)  │
@@ -396,17 +398,276 @@ Per state, sourced public facts:
 
 ---
 
-## Phase 7 — UI/UX overhaul *(optional)*
+## Phase 7 — UI/UX overhaul — presentation layer
 
-**Goal:** Visual and interaction polish **after** decision tools work — not before.
+**Goal:** Redesign the **outer model** — how StateCompass presents itself — after Phases 0–6 made the tools work. Founders should open the homepage and immediately see the full US map (no “where is TX?”), trust the B&W brand in the browser tab, and feel an Apple-esque level of restraint: **black stage, white needle, gray evidence, CNBC sourced.**
 
-- Full design pass (typography, spacing, motion)
-- `prefers-reduced-motion` respected
-- Map pin transitions, optional search pulse
-- Brand consistency audit
-- May merge with Phase 3 items if done incrementally
+**Depends on:** Phases 0–6 complete. Trust principles unchanged — scores still sacred, CNBC attributed, disclaimers intact.
 
-**Exit criteria:** Cohesive founder-grade visual identity; no regression in trust or data display.
+**Out of scope for Phase 7:** New data features, accounts, AI chat, light mode, UI sounds (no autoplay audio — ever).
+
+### Design rules (lock before building)
+
+| Rule | Choice |
+|------|--------|
+| **Brand** | Black & white only — compass needle mark, no green in logo/favicon |
+| **Wordmark** | **StateCompass** in Sora 600 (Linear-style casing; domain stays `statecompass.app`) |
+| **Body UI** | Inter — do not replace; shorten copy where chrome competes with the map |
+| **Level** (how good is a state?) | **Luminance** on map, badges, legend — bright / mid / dark gray tiers |
+| **Direction** (did rank go up or down?) | **Green ↑ / red ↓ on Movers only** — hue means movement, not tier |
+| **Compare winner** | White emphasis (stroke, weight, brightness) — not green |
+| **One-liner** | *Hue is for movement. Level is luminance. Brand is black and white.* |
+
+### Color zones
+
+```
+┌─────────────────────────────────────────┐
+│  BRAND        Logo, favicon, nav chrome   B&W only      │
+├─────────────────────────────────────────┤
+│  LEVEL        Map fills, tier badges      Grayscale tiers │
+├─────────────────────────────────────────┤
+│  DIRECTION    Movers dumbbells, YoY Δ     Green ↑ Red ↓   │
+├─────────────────────────────────────────┤
+│  COMPARE      Category winner highlight   White emphasis  │
+└─────────────────────────────────────────┘
+```
+
+**Pure dark tokens (target):**
+
+| Token | Value |
+|-------|-------|
+| `--bg` | `#000000` (flat — remove radial gradient haze) |
+| `--surface` | `#0a0a0a` |
+| `--surface-raised` | `#111111` |
+| `--border` | `#1a1a1a` |
+| `--text` | `#fafafa` |
+| `--muted` | `#888888` |
+| Tier top (ranks 1–17) | `#e8e8e8` |
+| Tier mid (18–34) | `#6b6b6b` |
+| Tier lower (35–50) | `#2a2a2a` |
+
+CNBC tier **logic** (1–17 / 18–34 / 35–50) stays; only the **encoding** shifts from green/yellow/red to grayscale on the map and badges.
+
+### Recommended build order
+
+```mermaid
+flowchart LR
+  G[7g Brand] --> I[7i Color]
+  I --> H[7h Homepage]
+  H --> B[7b Map reveal]
+  G --> A[7a Tokens]
+  A --> C[7c Pages]
+  B --> E[7e Motion]
+  C --> E
+  I --> W[7w Wide layout]
+  W --> D[7d Embed]
+  E --> F[7f Trust audit]
+  D --> F
+```
+
+Ship **one sub-section per PR** unless explicitly combined.
+
+---
+
+### 7g — Brand identity (logo & favicon) — **Done**
+
+**Goal:** Replace the generic US map green silhouette with a top-notch, Apple-esque compass needle — especially in the **browser tab**, where identity matters most.
+
+**Mark spec:**
+
+- **Favicon / tab icon (32×32, must read at 16×16):** white compass needle + center hub on `#000000` rounded square (`rx ≈ 7`). ~40° NE tilt; north leg longer than south; rounded stroke caps. **No green, no gradient, no map.**
+- **Header lockup:** same needle (24–28px) + **StateCompass** wordmark in Sora 600, `#fafafa`.
+- **Retire** US silhouette from `scripts/generate_logo.py` for brand assets (map stays on the homepage; brand mark ≠ geography clipart).
+
+**Deliverables**
+
+- [x] New `assets/logo.svg` + `public/assets/logo.svg` (needle + wordmark)
+- [x] New `assets/favicon.svg` + `public/assets/favicon.svg`
+- [x] `apple-touch-icon` (180×180) — same geometry, scaled
+- [x] Update `Header.astro` brand image / alt
+- [x] OG template watermark in `scripts/generate_og.py` / `generate-og.mjs` — small needle, B&W
+- [x] Remove or repurpose `generate_logo.py` silhouette pipeline
+
+**Exit criteria:** Tab icon is readable at 16px; header and favicon use the **same** mark; zero green in brand assets.
+
+---
+
+### 7i — Pure dark & grayscale tiers
+
+**Goal:** Extreme dark mode + white/gray UI; map tiers encoded by **brightness**, not traffic-light colors.
+
+**Deliverables**
+
+- [ ] Update `:root` tokens in `src/styles/styles.css` (pure black bg, surface steps, no page gradient)
+- [ ] `map.js` — `TIER_COLORS` / glows → grayscale luminance; update default state fill
+- [ ] Legend swatches, `.tier-badge`, `.score-bar-fill`, rankings tier filter labels — grayscale (keep tier **names** in copy)
+- [ ] **Movers unchanged semantically** — keep green ↑ / red ↓ for direction (optionally soften tones for pure-black bg)
+- [ ] Compare winner styling → white emphasis, not green
+- [ ] Regenerate OG cards if tier accent colors change on social previews
+- [ ] Embed layouts inherit new tokens
+
+**Exit criteria:** Homepage map reads top/mid/lower tiers at a glance without green/yellow/red fills; Movers still shows up/down in green/red; `npm run build` + `verify.py` green (scores untouched).
+
+---
+
+### 7h — Homepage choreography (map visible on open)
+
+**Goal:** User lands on `/` and sees the **full continental US map** without scrolling — no “cool website, where’s TX?”. Search and year stay; chrome compresses.
+
+**Problems to fix (current):**
+
+- Header eats ~20–30% viewport (logo, 5 nav items, long subtitle, search, hint) before map starts.
+- `.map-legend` uses `justify-content: space-between` — tier swatches float in a wide empty bar.
+- **CNBC year shown twice:** `YearSelector` dropdown (`CNBC 2025`) + `map-legend-source` span (`CNBC 2025`) beside legend.
+
+**Deliverables**
+
+- [ ] **Short home-only subtitle** (SEO description stays long in `<meta>`), e.g. *Site selection for founders — CNBC scores & shareable compare.*
+- [ ] **Move search** from header into map toolbar row (with year + legend) — or floating strip directly above map panel
+- [ ] Search hint (`Enter to preview…`) — show on **focus only** or `title` tooltip; hide by default on mobile
+- [ ] **Compact map legend:** single left-aligned row — `CNBC 2025 ▾ · □1–17 □18–34 □35–50`; `flex-start` + tight gap; **remove** duplicate `map-legend-source` on home (year lives in dropdown once; footer still attributes CNBC)
+- [ ] Compact `YearSelector` variant for map (inline `CNBC 2025 ▾`, visually hidden label for a11y)
+- [ ] Optional: merge legend strip into bottom inset of `map-panel` (one card, saves vertical px)
+- [ ] Nav: consider **Partners** under footer or “More” on small screens to save header height
+- [ ] Target: on ~900px-tall laptop, **top ~70% of continental US visible** without scroll
+
+**Exit criteria:** No duplicate CNBC year in legend bar; map dominates first screen on desktop and mobile; search remains discoverable.
+
+---
+
+### 7w — Wide layout & whitespace
+
+**Goal:** Use horizontal space smartly on large screens — map and compare benefit from width; prose pages stay readable.
+
+**Deliverables**
+
+- [ ] **Wide shell** — `min(96vw, 1440px)` up to `1600px` at xl for map, compare, rankings, movers
+- [ ] **Reading shell** — `1200px` max for partners, long Snapshot prose
+- [ ] Homepage grid: wider map column; sidebar `300px` → `340px` at xl if needed
+- [ ] Compare 3-column grid breathes at 1400px+
+- [ ] Page padding: `1.25rem` mobile → `2rem` desktop → `2.5rem` xl
+- [ ] Optional premium: map panel **edge-to-edge** (full viewport width with ~24px inset) on home only
+- [ ] Text blocks inside wide shells still `max-width: 40rem` for leads
+
+**Exit criteria:** 1440px display shows noticeably wider map than today; no ultra-wide stretched tables or orphaned gutters.
+
+---
+
+### 7b — Map reveal (first-visit wow — not a loading screen)
+
+**Goal:** Gorgeous first impression — **not** a fake spinner or blocked UI. The wow is the **map itself** coloring in.
+
+**Concept:**
+
+- On **first visit only** (`localStorage` `statecompass:seen-intro`), states **tier-fill animate in** over ~1.0–1.2s (grayscale luminance wave or regional stagger).
+- User can **click immediately** — animation does not gate interaction.
+- **Skip:** click anywhere, Escape, or any state pin ends intro.
+- **`prefers-reduced-motion: reduce`:** skip animation; show final map state instantly.
+- After intro: optional **one** search prompt pulse when sidebar empty (respect reduced-motion).
+- **Not** on embed routes, compare, or return visits.
+
+**Deliverables**
+
+- [ ] `src/scripts/mapIntro.js` (or section in `map.js`) — intro orchestration + storage flag
+- [ ] CSS keyframes for tier fill / opacity (gated behind `prefers-reduced-motion: no-preference`)
+- [ ] Pin transition polish — `.is-pinned` subtle stroke/brightness (with reduced-motion fallback)
+
+**Exit criteria:** First visit feels premium; repeat visit is instant; map fully visible **before** intro runs (depends on 7h); Lighthouse / a11y not regressed.
+
+---
+
+### 7a — Design tokens & rhythm
+
+**Goal:** One visual language — spacing, radius, type scale, motion — so new UI does not add one-off magic numbers.
+
+**Deliverables**
+
+- [ ] Spacing scale (`--space-1` … `--space-8`)
+- [ ] Radius + shadow tokens (panel, map card, mobile bottom sheet)
+- [ ] Typography audit — Sora display, Inter body; tighten hierarchy on state detail + compare
+- [ ] Document motion durations / easings; global `@media (prefers-reduced-motion: reduce)` for `pulse`, `fadeIn`, bar width transitions (today only Movers dumbbells are fully gated)
+
+**Exit criteria:** Tokens used on at least home + compare + one component pass; reduced-motion covers all decorative animation.
+
+---
+
+### 7c — Decision pages hierarchy
+
+**Goal:** Compare, state detail, and rankings scan like board-deck evidence — especially `/compare?states=TX,NC,FL` in Slack.
+
+**Deliverables**
+
+- [ ] **Compare** — stronger winner grid, share bar grouping, print/PDF layout pass under new tokens
+- [ ] **State detail** — hero score block → `CategoryChart` → `FounderSnapshot` section rhythm
+- [ ] **Rankings** — table density, Founder Fit toggle clarity, grayscale tier filter
+- [ ] **Movers** — align chart + tables with pure-dark surfaces (keep directional green/red)
+
+**Exit criteria:** Compare readable in 3 seconds at arm’s length; print export still legible.
+
+---
+
+### 7d — Nav, embed & partners cohesion
+
+**Goal:** Distribution surfaces match main-site quality; attribution prominent.
+
+**Deliverables**
+
+- [ ] Nav layout polish (5 items: Map | Rankings | Compare | Movers | Partners) — mobile grouping if needed
+- [ ] `EmbedLayout` + `/embed/map` + `/embed/compare` — new logo, tokens, compact legend (no duplicate year)
+- [ ] Partners page — code snippet styling, copy-paste UX
+- [ ] `test-embed.html` sanity check
+
+**Exit criteria:** iframe embed looks intentional next to a portfolio site; CNBC attribution visible on every embed.
+
+---
+
+### 7e — Motion system & accessibility pass
+
+**Goal:** Delight without exclusion; no Lighthouse regression from Phase 7.
+
+**Deliverables**
+
+- [ ] Global reduced-motion policy (see 7a)
+- [ ] Focus ring audit — compare selects, bookmark, movers rows, new year control
+- [ ] Contrast check — tier badges and muted text on `#000` / `#0a0a0a`
+- [ ] `aria-live` on compare updates after visual changes
+- [ ] Re-verify Lighthouse 90+ Performance / Accessibility / SEO on home + one state page
+
+**Exit criteria:** macOS “Reduce motion” on → identical data, zero nausea; focus visible everywhere interactive.
+
+---
+
+### 7f — Trust & brand audit (ship gate)
+
+**Goal:** Cohesive founder-grade identity; **zero** data or trust regression.
+
+**Audit checklist**
+
+- [ ] CNBC attribution on every score surface (footer, methodology, year in controls — **once** per context)
+- [ ] Founder Fit disclaimer copy intact
+- [ ] Snapshot legal disclaimer visible
+- [ ] OG cards match live UI (B&W brand, grayscale or tier-appropriate accents)
+- [ ] `npm run build` + `verify.py` green — no hand-edited scores
+- [ ] **Slack test** — send compare link; recipient says “legit” not “what tool is this?”
+- [ ] **Tab test** — favicon readable among 20 tabs
+- [ ] **Map test** — TX findable without scroll on first open (after 7h)
+
+**Exit criteria:** Phase status → **Done** only when checklist passes and you would not apologize for the link.
+
+**Functional completeness after Phase 7:** product **feels** complete — same engine as Phase 6, founder-grade presentation.
+
+---
+
+### Phase 7 — what we are NOT doing
+
+| Item | Why |
+|------|-----|
+| Full-screen loading splash | Static Astro site loads fast; fake wait hurts trust |
+| UI sounds / autoplay audio | Founders open links in offices and Slack; silent = professional |
+| Light mode | Doubles OG, embed, print scope for little wedge gain |
+| Green in logo / favicon | Green reserved for Movers direction (and only there) |
+| US map in brand mark | Map **is** the product hero; needle **is** the identity |
+| New scores or Snapshot fields | Phase 7 is presentation only |
 
 ---
 
@@ -434,6 +695,8 @@ Per state, sourced public facts:
 | Scope creep | ICP check on every feature: "Would a founder send this link?" |
 | Phase 1 too large | Ship compare first, then detail pages, then rankings — vertical slices |
 | Trust damaged by stale year | Prominent year label; alert workflow in Phase 5 |
+| Phase 7 scope creep (animation, sound, light mode) | Ship vertical slices; design rules table; “presentation only” gate |
+| Grayscale map hurts tier scan | Keep rank + score visible; legend always visible; Movers keeps color for direction |
 
 ---
 
@@ -451,7 +714,19 @@ Read docs/ROADMAP.md. Phase 1 is done — implement Phase 2 only.
 Read docs/ROADMAP.md. Implement Phase 1b (compare page) only.
 ```
 
-Always implement **one phase** (or one sub-section) unless explicitly asked for more.
+```
+Read docs/ROADMAP.md. Phases 0–6 are done — implement Phase 7g (brand logo & favicon) only.
+```
+
+```
+Read docs/ROADMAP.md. Phase 7g is done — implement Phase 7h (homepage choreography) only.
+```
+
+```
+Read docs/ROADMAP.md. Phase 7i is done — implement Phase 7b (map reveal) only.
+```
+
+Always implement **one phase** (or one sub-section, e.g. **7g**, **7h**) unless explicitly asked for more.
 
 ---
 
