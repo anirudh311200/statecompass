@@ -16,12 +16,35 @@
   --dim: #525252;
   --accent: #fafafa;
 
-  /* Tier luminance (level — ranks 1–17 / 18–34 / 35–50) */
-  --tier-top: #e8e8e8;
-  --tier-mid: #6b6b6b;
-  --tier-lower: #2a2a2a;
+  /* Tier — luminous accents (light, not flat solids) */
+  --green: #4ade80;
+  --green-bright: #86efac;
+  --yellow: #facc15;
+  --yellow-bright: #fde68a;
+  --red: #f87171;
+  --red-bright: #fca5a5;
 
-  /* Direction hue (Movers + YoY only) */
+  --tier-green-glow: rgba(74, 222, 128, 0.35);
+  --tier-yellow-glow: rgba(250, 204, 21, 0.32);
+  --tier-red-glow: rgba(248, 113, 113, 0.3);
+
+  --tier-green-fill: linear-gradient(
+    135deg,
+    rgba(134, 239, 172, 0.55) 0%,
+    rgba(34, 197, 94, 0.18) 100%
+  );
+  --tier-yellow-fill: linear-gradient(
+    135deg,
+    rgba(253, 230, 138, 0.5) 0%,
+    rgba(234, 179, 8, 0.16) 100%
+  );
+  --tier-red-fill: linear-gradient(
+    135deg,
+    rgba(252, 165, 165, 0.45) 0%,
+    rgba(239, 68, 68, 0.14) 100%
+  );
+
+  /* Direction hue (Movers + YoY) */
   --direction-up: #34d399;
   --direction-down: #f87171;
 
@@ -259,8 +282,8 @@ body {
 }
 
 .state {
-  fill: var(--tier-mid);
-  stroke: #ffffff;
+  fill: rgba(234, 179, 8, 0.2);
+  stroke: rgba(255, 255, 255, 0.85);
   stroke-width: 0.75;
   cursor: pointer;
   transition:
@@ -425,7 +448,8 @@ body {
   width: 8px;
   height: 8px;
   border-radius: 50%;
-  background: var(--text);
+  background: var(--green);
+  box-shadow: 0 0 8px var(--tier-green-glow);
   flex-shrink: 0;
   animation: pulse 2s ease-in-out infinite;
 }
@@ -500,9 +524,10 @@ body {
 }
 
 .bookmark-btn.is-saved {
-  color: var(--text);
-  border-color: rgba(250, 250, 250, 0.35);
-  background: rgba(255, 255, 255, 0.08);
+  color: var(--green-bright);
+  border-color: rgba(74, 222, 128, 0.4);
+  background: linear-gradient(135deg, rgba(134, 239, 172, 0.12) 0%, rgba(34, 197, 94, 0.05) 100%);
+  box-shadow: 0 0 12px var(--tier-green-glow);
 }
 
 .bookmark-icon {
@@ -635,15 +660,18 @@ body {
 }
 
 .score-bar-fill.green {
-  background: var(--tier-top);
+  background: var(--tier-green-fill);
+  box-shadow: 0 0 12px var(--tier-green-glow);
 }
 
 .score-bar-fill.yellow {
-  background: var(--tier-mid);
+  background: var(--tier-yellow-fill);
+  box-shadow: 0 0 10px var(--tier-yellow-glow);
 }
 
 .score-bar-fill.red {
-  background: var(--tier-lower);
+  background: var(--tier-red-fill);
+  box-shadow: 0 0 10px var(--tier-red-glow);
 }
 
 .rank-row {
@@ -698,21 +726,24 @@ body {
 }
 
 .tier-badge.green {
-  background: rgba(232, 232, 232, 0.1);
-  color: var(--tier-top);
-  border-left-color: var(--tier-top);
+  background: linear-gradient(135deg, rgba(134, 239, 172, 0.18) 0%, rgba(34, 197, 94, 0.08) 100%);
+  color: var(--green-bright);
+  border-left-color: var(--green);
+  box-shadow: inset 0 0 20px rgba(74, 222, 128, 0.06);
 }
 
 .tier-badge.yellow {
-  background: rgba(107, 107, 107, 0.15);
-  color: var(--tier-mid);
-  border-left-color: var(--tier-mid);
+  background: linear-gradient(135deg, rgba(253, 230, 138, 0.16) 0%, rgba(234, 179, 8, 0.07) 100%);
+  color: var(--yellow-bright);
+  border-left-color: var(--yellow);
+  box-shadow: inset 0 0 20px rgba(250, 204, 21, 0.05);
 }
 
 .tier-badge.red {
-  background: rgba(42, 42, 42, 0.6);
-  color: var(--gray);
-  border-left-color: var(--tier-lower);
+  background: linear-gradient(135deg, rgba(252, 165, 165, 0.14) 0%, rgba(239, 68, 68, 0.06) 100%);
+  color: var(--red-bright);
+  border-left-color: var(--red);
+  box-shadow: inset 0 0 20px rgba(248, 113, 113, 0.05);
 }
 
 /* Category breakdown */
@@ -796,11 +827,11 @@ body {
 }
 
 .category-list--strength .category-rank {
-  color: var(--text);
+  color: var(--green-bright);
 }
 
 .category-list--weakness .category-rank {
-  color: var(--muted);
+  color: var(--red-bright);
 }
 
 .category-methodology {
@@ -842,18 +873,23 @@ body {
   height: 10px;
   border-radius: 999px;
   flex-shrink: 0;
+  box-shadow: 0 0 10px currentColor;
+  opacity: 0.9;
 }
 
 .swatch.green {
-  background: var(--tier-top);
+  background: var(--tier-green-fill);
+  color: var(--tier-green-glow);
 }
 
 .swatch.yellow {
-  background: var(--tier-mid);
+  background: var(--tier-yellow-fill);
+  color: var(--tier-yellow-glow);
 }
 
 .swatch.red {
-  background: var(--tier-lower);
+  background: var(--tier-red-fill);
+  color: var(--tier-red-glow);
 }
 
 .legend-label {
@@ -1096,7 +1132,8 @@ footer a:hover {
 }
 
 .category-bar-fill.is-winner {
-  background: var(--text);
+  background: linear-gradient(90deg, rgba(134, 239, 172, 0.75), rgba(34, 197, 94, 0.35));
+  box-shadow: 0 0 10px var(--tier-green-glow);
 }
 
 /* State detail */
@@ -1455,15 +1492,15 @@ footer a:hover {
 }
 
 .tier-border-green {
-  border-left-color: var(--tier-top);
+  border-left-color: var(--green);
 }
 
 .tier-border-yellow {
-  border-left-color: var(--tier-mid);
+  border-left-color: var(--yellow);
 }
 
 .tier-border-red {
-  border-left-color: var(--tier-lower);
+  border-left-color: var(--red);
 }
 
 .compare-state-name {
@@ -1540,8 +1577,9 @@ footer a:hover {
 }
 
 .compare-category-bar-wrap.is-winner {
-  border-color: rgba(250, 250, 250, 0.35);
-  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(74, 222, 128, 0.35);
+  background: linear-gradient(135deg, rgba(134, 239, 172, 0.1) 0%, rgba(34, 197, 94, 0.04) 100%);
+  box-shadow: 0 0 16px rgba(74, 222, 128, 0.08);
 }
 
 .compare-bar-header {
@@ -1575,12 +1613,13 @@ footer a:hover {
 .compare-winner-badge {
   padding: 0.1rem 0.4rem;
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.14);
-  color: var(--text);
+  background: linear-gradient(135deg, rgba(134, 239, 172, 0.25) 0%, rgba(34, 197, 94, 0.12) 100%);
+  color: var(--green-bright);
   font-weight: 600;
   font-size: 0.65rem;
   text-transform: uppercase;
   letter-spacing: 0.04em;
+  box-shadow: 0 0 8px var(--tier-green-glow);
 }
 
 /* Compare — Founder Snapshot */
@@ -1917,15 +1956,15 @@ footer a:hover {
 }
 
 .tier-filter-btn[data-tier="green"] {
-  border-left: 3px solid var(--tier-top);
+  border-left: 3px solid var(--green);
 }
 
 .tier-filter-btn[data-tier="yellow"] {
-  border-left: 3px solid var(--tier-mid);
+  border-left: 3px solid var(--yellow);
 }
 
 .tier-filter-btn[data-tier="red"] {
-  border-left: 3px solid var(--tier-lower);
+  border-left: 3px solid var(--red);
 }
 
 .tier-filter-btn:focus-visible {
@@ -2216,8 +2255,8 @@ footer a:hover {
   }
 
   .compare-category-bar-wrap.is-winner {
-    border-color: rgba(250, 250, 250, 0.35);
-    background: rgba(255, 255, 255, 0.06);
+    border-color: rgba(74, 222, 128, 0.35);
+    background: linear-gradient(135deg, rgba(134, 239, 172, 0.1) 0%, rgba(34, 197, 94, 0.04) 100%);
   }
 
   .tier-badge,
@@ -2319,15 +2358,18 @@ footer a:hover {
 }
 
 .saved-chip--green {
-  border-color: rgba(232, 232, 232, 0.35);
+  border-color: rgba(74, 222, 128, 0.35);
+  box-shadow: 0 0 12px rgba(74, 222, 128, 0.08);
 }
 
 .saved-chip--yellow {
-  border-color: rgba(107, 107, 107, 0.45);
+  border-color: rgba(250, 204, 21, 0.35);
+  box-shadow: 0 0 10px rgba(250, 204, 21, 0.07);
 }
 
 .saved-chip--red {
-  border-color: rgba(42, 42, 42, 0.8);
+  border-color: rgba(248, 113, 113, 0.35);
+  box-shadow: 0 0 10px rgba(248, 113, 113, 0.07);
 }
 
 .saved-chip-link {
@@ -2353,15 +2395,18 @@ footer a:hover {
 }
 
 .saved-chip--green .saved-chip-dot {
-  background: var(--tier-top);
+  background: linear-gradient(135deg, var(--green-bright), var(--green));
+  box-shadow: 0 0 6px var(--tier-green-glow);
 }
 
 .saved-chip--yellow .saved-chip-dot {
-  background: var(--tier-mid);
+  background: linear-gradient(135deg, var(--yellow-bright), var(--yellow));
+  box-shadow: 0 0 6px var(--tier-yellow-glow);
 }
 
 .saved-chip--red .saved-chip-dot {
-  background: var(--tier-lower);
+  background: linear-gradient(135deg, var(--red-bright), var(--red));
+  box-shadow: 0 0 6px var(--tier-red-glow);
 }
 
 .saved-chip-meta {
@@ -3175,7 +3220,7 @@ footer a:hover {
 
 .partners-copy-icon--done {
   display: none;
-  color: var(--direction-up);
+  color: var(--green-bright);
 }
 
 .partners-copy-btn.is-copied .partners-copy-icon--copy {

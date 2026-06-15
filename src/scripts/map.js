@@ -1,11 +1,49 @@
 import { refreshMapSidebar } from "./mapSidebar.js";
 import { isStateSaved, toggleSavedState } from "./memory.js";
 import { buildStateDetailUrl } from "./yearData.js";
-import { TIER_GLOWS, TIER_LUMINANCE } from "./categories.js";
+import { TIER_GLOWS, TIER_GLOWS_ACTIVE, TIER_GRADIENTS, TIER_MAP_FILLS } from "./categories.js";
 
-const TIER_COLORS = TIER_LUMINANCE;
+const TIER_COLORS = TIER_MAP_FILLS;
 
-const DEFAULT_FILL = TIER_LUMINANCE.yellow;
+const DEFAULT_FILL = TIER_MAP_FILLS.yellow;
+
+const SVG_NS = "http://www.w3.org/2000/svg";
+
+function injectTierGradients(svg) {
+  if (!svg) {
+    return;
+  }
+
+  let defs = svg.querySelector("defs");
+  if (!defs) {
+    defs = document.createElementNS(SVG_NS, "defs");
+    svg.prepend(defs);
+  }
+
+  Object.values(TIER_GRADIENTS).forEach(({ id, hi, lo, hiOp, loOp }) => {
+    defs.querySelector(`#${id}`)?.remove();
+
+    const grad = document.createElementNS(SVG_NS, "linearGradient");
+    grad.id = id;
+    grad.setAttribute("x1", "0%");
+    grad.setAttribute("y1", "0%");
+    grad.setAttribute("x2", "100%");
+    grad.setAttribute("y2", "100%");
+
+    const stopHi = document.createElementNS(SVG_NS, "stop");
+    stopHi.setAttribute("offset", "0%");
+    stopHi.setAttribute("stop-color", hi);
+    stopHi.setAttribute("stop-opacity", String(hiOp));
+
+    const stopLo = document.createElementNS(SVG_NS, "stop");
+    stopLo.setAttribute("offset", "100%");
+    stopLo.setAttribute("stop-color", lo);
+    stopLo.setAttribute("stop-opacity", String(loOp));
+
+    grad.append(stopHi, stopLo);
+    defs.appendChild(grad);
+  });
+}
 
 let stateData = {};
 let currentYear = 2025;
@@ -49,7 +87,7 @@ function highlightPath(path, abbr) {
 
   path.classList.add("is-active");
   path.style.fill = tierFill(info.tier);
-  path.style.filter = TIER_GLOWS[info.tier] ?? "";
+  path.style.filter = TIER_GLOWS_ACTIVE[info.tier] ?? TIER_GLOWS[info.tier] ?? "";
 }
 
 function resetPath(path) {
@@ -517,6 +555,7 @@ export async function initMap(options = {}) {
   if (svg) {
     svg.id = "us-map";
     svg.setAttribute("aria-labelledby", "map-title map-desc");
+    injectTierGradients(svg);
   }
 
   wireStates();

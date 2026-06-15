@@ -34,22 +34,35 @@ export const TIER_LABELS = {
 };
 
 export const TIER_FILTER_LABELS = {
-  green: "Top tier — 1–17",
-  yellow: "Mid tier — 18–34",
-  red: "Lower tier — 35–50",
+  green: "Green — 1–17",
+  yellow: "Yellow — 18–34",
+  red: "Red — 35–50",
 };
 
-/** Grayscale map/UI encoding — data keys stay green/yellow/red. */
-export const TIER_LUMINANCE = {
-  green: "#e8e8e8",
-  yellow: "#6b6b6b",
-  red: "#2a2a2a",
+/** SVG gradient ids — injected into #us-map at runtime. */
+export const TIER_MAP_FILLS = {
+  green: "url(#tier-green)",
+  yellow: "url(#tier-yellow)",
+  red: "url(#tier-red)",
+};
+
+/** Gradient stops for map SVG defs (luminous, not flat). */
+export const TIER_GRADIENTS = {
+  green: { id: "tier-green", hi: "#86efac", lo: "#22c55e", hiOp: 0.72, loOp: 0.22 },
+  yellow: { id: "tier-yellow", hi: "#fde68a", lo: "#eab308", hiOp: 0.68, loOp: 0.2 },
+  red: { id: "tier-red", hi: "#fca5a5", lo: "#ef4444", hiOp: 0.62, loOp: 0.18 },
 };
 
 export const TIER_GLOWS = {
-  green: "drop-shadow(0 0 8px rgba(232, 232, 232, 0.45))",
-  yellow: "drop-shadow(0 0 6px rgba(107, 107, 107, 0.5))",
-  red: "drop-shadow(0 0 4px rgba(42, 42, 42, 0.6))",
+  green: "drop-shadow(0 0 8px rgba(74, 222, 128, 0.35))",
+  yellow: "drop-shadow(0 0 7px rgba(250, 204, 21, 0.32))",
+  red: "drop-shadow(0 0 7px rgba(248, 113, 113, 0.3))",
+};
+
+export const TIER_GLOWS_ACTIVE = {
+  green: "drop-shadow(0 0 14px rgba(110, 231, 183, 0.7))",
+  yellow: "drop-shadow(0 0 12px rgba(253, 224, 71, 0.65))",
+  red: "drop-shadow(0 0 12px rgba(252, 165, 165, 0.6))",
 };
 
 export function getCategoryEntries(categories) {
