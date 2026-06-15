@@ -22,14 +22,19 @@ const isMap = variant === "map";
     autocomplete="off"
     spellcheck="false"
   />
-  <ul id="state-search-list" class="state-search-list" role="listbox" hidden />
   {
     isMap ? (
-      <p class="search-hint search-hint--focus" id="state-search-hint">
-        Enter to preview on map · Ctrl+Enter for full state page
-      </p>
+      <div class="search-dropdown" id="state-search-dropdown">
+        <ul id="state-search-list" class="state-search-list" role="listbox" hidden />
+        <p class="search-hint search-hint--dropdown" id="state-search-hint">
+          Enter to preview on map · Ctrl+Enter for full state page
+        </p>
+      </div>
     ) : (
-      <p class="search-hint">Enter to preview on map · Ctrl+Enter for full state page</p>
+      <>
+        <ul id="state-search-list" class="state-search-list" role="listbox" hidden />
+        <p class="search-hint">Enter to preview on map · Ctrl+Enter for full state page</p>
+      </>
     )
   }
 </div>

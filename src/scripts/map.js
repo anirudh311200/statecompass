@@ -1,6 +1,6 @@
 import { refreshMapSidebar } from "./mapSidebar.js";
 import { isStateSaved, toggleSavedState } from "./memory.js";
-import { buildStateDetailUrl } from "./yearData.js";
+import { buildStateDetailUrl, wireYearPicker } from "./yearData.js";
 import { TIER_GLOWS, TIER_GLOWS_ACTIVE, TIER_GRADIENTS, TIER_MAP_FILLS } from "./categories.js";
 
 const TIER_COLORS = TIER_MAP_FILLS;
@@ -203,36 +203,32 @@ function wireBookmarkControl() {
 }
 
 function wireYearControl() {
-  const select = document.querySelector("[data-year-select]");
-  if (!select || !yearIndex) {
+  const root =
+    document.querySelector("[data-year-menu]") ||
+    document.querySelector("select[data-year-select]");
+  if (!root || !yearIndex) {
     return;
   }
 
-  select.innerHTML = "";
-  yearIndex.availableYears.forEach((year) => {
-    const option = document.createElement("option");
-    option.value = String(year);
-    option.textContent = `CNBC ${year}`;
-    select.appendChild(option);
-  });
-  select.value = String(currentYear);
+  wireYearPicker(root, {
+    index: yearIndex,
+    initialYear: currentYear,
+    onChange: async (year) => {
+      const response = await fetch(`/data/states-${year}.json`);
+      if (!response.ok) {
+        return;
+      }
+      const payload = await response.json();
+      applyYearPayload(payload, year);
 
-  select.addEventListener("change", async () => {
-    const year = Number(select.value);
-    const response = await fetch(`/data/states-${year}.json`);
-    if (!response.ok) {
-      return;
-    }
-    const payload = await response.json();
-    applyYearPayload(payload, year);
-
-    const url = new URL(window.location.href);
-    if (year === yearIndex.defaultYear) {
-      url.searchParams.delete("year");
-    } else {
-      url.searchParams.set("year", String(year));
-    }
-    history.replaceState(null, "", url);
+      const url = new URL(window.location.href);
+      if (year === yearIndex.defaultYear) {
+        url.searchParams.delete("year");
+      } else {
+        url.searchParams.set("year", String(year));
+      }
+      history.replaceState(null, "", url);
+    },
   });
 }
 

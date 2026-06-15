@@ -93,6 +93,103 @@ export function wireYearSelector(select, { index, initialYear, onChange }) {
   });
 }
 
+export function wireYearPicker(root, { index, initialYear, onChange }) {
+  if (!root || !index) {
+    return;
+  }
+
+  const select = root.matches?.("select[data-year-select]")
+    ? root
+    : root.querySelector?.("select[data-year-select]");
+
+  if (select) {
+    wireYearSelector(select, { index, initialYear, onChange });
+    return;
+  }
+
+  const menu = root.matches?.("[data-year-menu]")
+    ? root
+    : root.querySelector?.("[data-year-menu]");
+  if (!menu) {
+    return;
+  }
+
+  const trigger = menu.querySelector("[data-year-menu-trigger]");
+  const panel = menu.querySelector("[data-year-menu-panel]");
+  const list = menu.querySelector("[data-year-menu-list]");
+  const valueEl = menu.querySelector("[data-year-menu-value]");
+  if (!trigger || !panel || !list || !valueEl) {
+    return;
+  }
+
+  let activeYear = initialYear;
+  let open = false;
+
+  function setOpen(next) {
+    open = next;
+    trigger.setAttribute("aria-expanded", open ? "true" : "false");
+    panel.hidden = !open;
+    menu.classList.toggle("is-open", open);
+  }
+
+  function renderOptions() {
+    list.innerHTML = "";
+    index.availableYears.forEach((year) => {
+      const item = document.createElement("li");
+      item.className = "year-menu-option";
+      item.setAttribute("role", "option");
+      item.dataset.year = String(year);
+      item.textContent = `CNBC ${year}`;
+      item.setAttribute("aria-selected", year === activeYear ? "true" : "false");
+      item.classList.toggle("is-selected", year === activeYear);
+      item.addEventListener("click", () => {
+        if (year === activeYear) {
+          setOpen(false);
+          return;
+        }
+        activeYear = year;
+        valueEl.textContent = `CNBC ${year}`;
+        renderOptions();
+        setOpen(false);
+        onChange(year);
+      });
+      list.appendChild(item);
+    });
+    valueEl.textContent = `CNBC ${activeYear}`;
+  }
+
+  trigger.addEventListener("click", (event) => {
+    event.stopPropagation();
+    setOpen(!open);
+  });
+
+  trigger.addEventListener("keydown", (event) => {
+    if (event.key === "Escape" && open) {
+      event.preventDefault();
+      setOpen(false);
+      return;
+    }
+    if ((event.key === "ArrowDown" || event.key === "Enter" || event.key === " ") && !open) {
+      event.preventDefault();
+      setOpen(true);
+    }
+  });
+
+  document.addEventListener("click", (event) => {
+    if (!menu.contains(event.target)) {
+      setOpen(false);
+    }
+  });
+
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape") {
+      setOpen(false);
+    }
+  });
+
+  renderOptions();
+}
+
 export function getPriorYear(year, index) {
   const years = [...(index?.availableYears ?? [])].sort((a, b) => a - b);
   const idx = years.indexOf(year);

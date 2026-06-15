@@ -22,11 +22,14 @@ import SavedPanel from "../components/SavedPanel.astro";
         <div id="map-container" aria-hidden="false"></div>
 
         <div class="map-toolbar" aria-label="Map controls">
-          <StateSearch variant="map" />
+          <div class="map-toolbar-controls">
+            <StateSearch variant="map" />
+            <YearSelector id="map-year" variant="compact" class="map-year-select" />
+          </div>
+
+          <span class="map-legend-sep map-legend-sep--toolbar" aria-hidden="true">·</span>
 
           <div class="map-legend map-legend--inline" aria-label="Map color legend">
-            <YearSelector id="map-year" variant="compact" class="map-year-select" />
-            <span class="map-legend-sep" aria-hidden="true">·</span>
             <div class="map-legend-items">
               <span class="map-legend-item">
                 <span class="swatch green" aria-hidden="true"></span>

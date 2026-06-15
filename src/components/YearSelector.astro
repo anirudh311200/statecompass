@@ -14,17 +14,48 @@ const {
 } = Astro.props;
 
 const isCompact = variant === "compact";
+const menuListId = `${id}-list`;
 ---
 
-<div class:list={["year-select-wrap", className, { "year-select-wrap--compact": isCompact }]}>
-  <label
-    class:list={[{ "visually-hidden": isCompact, "toolbar-label": !isCompact }]}
-    for={id}
-  >
-    {label}
-  </label>
-  <select id={id} class:list={["year-select", { "year-select--compact": isCompact }]} data-year-select>
-    <option value="2025">CNBC 2025</option>
-    <option value="2024">CNBC 2024</option>
-  </select>
-</div>
+{
+  isCompact ? (
+    <div class:list={["year-menu", className]} data-year-menu>
+      <label class="visually-hidden" for={`${id}-trigger`}>
+        {label}
+      </label>
+      <button
+        type="button"
+        id={`${id}-trigger`}
+        class="year-menu-trigger"
+        data-year-menu-trigger
+        aria-haspopup="listbox"
+        aria-expanded="false"
+        aria-controls={menuListId}
+      >
+        <span class="year-menu-value" data-year-menu-value>
+          CNBC 2025
+        </span>
+        <span class="year-menu-chevron" aria-hidden="true" />
+      </button>
+      <div class="year-menu-panel" data-year-menu-panel hidden>
+        <ul
+          id={menuListId}
+          class="year-menu-list"
+          role="listbox"
+          data-year-menu-list
+          tabindex="-1"
+        />
+      </div>
+    </div>
+  ) : (
+    <div class:list={["year-select-wrap", className]}>
+      <label class="toolbar-label" for={id}>
+        {label}
+      </label>
+      <select id={id} class="year-select" data-year-select>
+        <option value="2025">CNBC 2025</option>
+        <option value="2024">CNBC 2024</option>
+      </select>
+    </div>
+  )
+}
