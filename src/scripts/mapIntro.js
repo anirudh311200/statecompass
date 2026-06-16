@@ -1,28 +1,13 @@
-const STORAGE_KEY = "statecompass:seen-intro";
-const INTRO_DURATION_MS = 1100;
-const MAX_STAGGER_MS = 420;
+const INTRO_DURATION_MS = 2600;
+const MAX_STAGGER_MS = 1000;
+const SKIP_GRACE_MS = 500;
 
 let introActive = false;
+let introCompletedThisPage = false;
 let cleanupFns = [];
 
 function prefersReducedMotion() {
   return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-}
-
-function hasSeenIntro() {
-  try {
-    return Boolean(localStorage.getItem(STORAGE_KEY));
-  } catch {
-    return true;
-  }
-}
-
-export function markIntroSeen() {
-  try {
-    localStorage.setItem(STORAGE_KEY, "1");
-  } catch {
-    /* storage unavailable */
-  }
 }
 
 export function isMapIntroActive() {
@@ -30,13 +15,13 @@ export function isMapIntroActive() {
 }
 
 function shouldRunIntro() {
+  if (introCompletedThisPage) {
+    return false;
+  }
   if (prefersReducedMotion()) {
     return false;
   }
   if (document.body.classList.contains("embed-body")) {
-    return false;
-  }
-  if (hasSeenIntro()) {
     return false;
   }
   const params = new URLSearchParams(window.location.search);
@@ -80,6 +65,7 @@ function maybePulseSearch() {
 
 function clearIntroStyles(mapPanel) {
   mapPanel.classList.remove("is-map-intro", "is-map-intro-animate", "is-map-intro-skipped");
+  mapPanel.style.removeProperty("--intro-duration");
   mapPanel.querySelectorAll(".map-intro-state").forEach((path) => {
     path.classList.remove("map-intro-state");
     path.style.fillOpacity = "";
@@ -93,11 +79,11 @@ function finishIntro(mapPanel, { pulseSearch = true } = {}) {
   }
 
   introActive = false;
+  introCompletedThisPage = true;
   cleanupFns.forEach((fn) => fn());
   cleanupFns = [];
 
   clearIntroStyles(mapPanel);
-  markIntroSeen();
 
   if (pulseSearch) {
     maybePulseSearch();
@@ -115,39 +101,7 @@ function skipIntro(mapPanel) {
   finishIntro(mapPanel, { pulseSearch: false });
 }
 
-export function startMapIntro(mapPanel) {
-  if (!mapPanel || !shouldRunIntro()) {
-    return;
-  }
-
-  const svg = mapPanel.querySelector("#us-map");
-  if (!svg) {
-    return;
-  }
-
-  introActive = true;
-  mapPanel.classList.add("is-map-intro");
-
-  svg.querySelectorAll(".state").forEach((path) => {
-    path.style.setProperty("--intro-delay", `${computeStaggerDelay(path, svg)}ms`);
-    path.classList.add("map-intro-state");
-    path.style.fillOpacity = "0";
-  });
-
-  requestAnimationFrame(() => {
-    requestAnimationFrame(() => {
-      if (introActive) {
-        mapPanel.classList.add("is-map-intro-animate");
-      }
-    });
-  });
-
-  const completeTimer = window.setTimeout(
-    () => finishIntro(mapPanel),
-    INTRO_DURATION_MS + MAX_STAGGER_MS + 80
-  );
-  cleanupFns.push(() => window.clearTimeout(completeTimer));
-
+function wireSkipHandlers(mapPanel) {
   const onSkipInteraction = () => skipIntro(mapPanel);
   const onKeyDown = (event) => {
     if (event.key !== "Escape") {
@@ -168,4 +122,42 @@ export function startMapIntro(mapPanel) {
     document.removeEventListener("keydown", onKeyDown, true);
     document.removeEventListener("statecompass:pin", onPin);
   });
+}
+
+export function startMapIntro(mapPanel) {
+  if (!mapPanel || !shouldRunIntro()) {
+    return;
+  }
+
+  const svg = mapPanel.querySelector("#us-map");
+  if (!svg) {
+    return;
+  }
+
+  introActive = true;
+  mapPanel.classList.add("is-map-intro");
+  mapPanel.style.setProperty("--intro-duration", `${INTRO_DURATION_MS}ms`);
+
+  svg.querySelectorAll(".state").forEach((path) => {
+    path.style.setProperty("--intro-delay", `${computeStaggerDelay(path, svg)}ms`);
+    path.classList.add("map-intro-state");
+    path.style.fillOpacity = "0";
+  });
+
+  requestAnimationFrame(() => {
+    requestAnimationFrame(() => {
+      if (introActive) {
+        mapPanel.classList.add("is-map-intro-animate");
+      }
+    });
+  });
+
+  const completeTimer = window.setTimeout(
+    () => finishIntro(mapPanel),
+    INTRO_DURATION_MS + MAX_STAGGER_MS + 120
+  );
+  cleanupFns.push(() => window.clearTimeout(completeTimer));
+
+  const skipGraceTimer = window.setTimeout(() => wireSkipHandlers(mapPanel), SKIP_GRACE_MS);
+  cleanupFns.push(() => window.clearTimeout(skipGraceTimer));
 }
