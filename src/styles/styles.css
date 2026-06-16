@@ -326,6 +326,10 @@ textarea {
     transform: none;
     transition: opacity 0.01s ease, visibility 0.01s ease;
   }
+
+  .prompt-dot {
+    animation: none;
+  }
 }
 
 .state-search-input {
@@ -479,6 +483,67 @@ textarea {
 .state.is-pinned {
   stroke: #ffffff;
   stroke-width: 1.5;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .state.is-pinned {
+    filter: brightness(1.1);
+    transition:
+      fill 0.25s cubic-bezier(0.4, 0, 0.2, 1),
+      opacity 0.25s cubic-bezier(0.4, 0, 0.2, 1),
+      stroke 0.25s cubic-bezier(0.4, 0, 0.2, 1),
+      stroke-width 0.25s cubic-bezier(0.4, 0, 0.2, 1),
+      filter 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .state.is-pinned {
+    filter: none;
+  }
+}
+
+/* Map intro — first-visit tier reveal (Phase 7b) */
+
+@media (prefers-reduced-motion: no-preference) {
+  .map-panel.is-map-intro-animate .map-intro-state {
+    animation: map-intro-tier-fill 1.1s cubic-bezier(0.33, 1, 0.38, 1) forwards;
+    animation-delay: var(--intro-delay, 0ms);
+  }
+
+  .map-panel.is-map-intro-skipped .map-intro-state {
+    animation: none;
+    fill-opacity: 1;
+  }
+}
+
+@keyframes map-intro-tier-fill {
+  from {
+    fill-opacity: 0;
+  }
+
+  to {
+    fill-opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .search-wrap--map.search-prompt-pulse .state-search-input {
+    animation: search-prompt-pulse 1.6s ease-in-out 2;
+  }
+}
+
+@keyframes search-prompt-pulse {
+  0%,
+  100% {
+    border-color: var(--border);
+    box-shadow: none;
+  }
+
+  50% {
+    border-color: rgba(250, 250, 250, 0.45);
+    box-shadow: 0 0 0 3px rgba(250, 250, 250, 0.12);
+  }
 }
 
 .map-panel.is-dimmed .state:not(.is-active) {

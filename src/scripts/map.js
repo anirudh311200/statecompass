@@ -2,6 +2,7 @@ import { refreshMapSidebar } from "./mapSidebar.js";
 import { isStateSaved, toggleSavedState } from "./memory.js";
 import { buildStateDetailUrl, wireYearPicker } from "./yearData.js";
 import { TIER_GLOWS, TIER_GLOWS_ACTIVE, TIER_GRADIENTS, TIER_MAP_FILLS } from "./categories.js";
+import { isMapIntroActive, startMapIntro } from "./mapIntro.js";
 
 const TIER_COLORS = TIER_MAP_FILLS;
 
@@ -491,6 +492,9 @@ function applyUrlState() {
 
 function wireGlobalControls() {
   document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape" && isMapIntroActive()) {
+      return;
+    }
     if (event.key === "Escape" && pinnedAbbr) {
       event.preventDefault();
       clearPin();
@@ -561,6 +565,10 @@ export async function initMap(options = {}) {
     wireBookmarkControl();
   }
   applyUrlState();
+
+  if (!embedMode) {
+    startMapIntro(mapPanel);
+  }
 
   return stateData;
 }

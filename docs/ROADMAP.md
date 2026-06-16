@@ -553,7 +553,7 @@ Ship **one sub-section per PR** unless explicitly combined.
 
 ---
 
-### 7b — Map reveal (first-visit wow — not a loading screen)
+### 7b — Map reveal (first-visit wow — not a loading screen) — **Done**
 
 **Goal:** Gorgeous first impression — **not** a fake spinner or blocked UI. The wow is the **map itself** coloring in.
 
@@ -568,9 +568,9 @@ Ship **one sub-section per PR** unless explicitly combined.
 
 **Deliverables**
 
-- [ ] `src/scripts/mapIntro.js` (or section in `map.js`) — intro orchestration + storage flag
-- [ ] CSS keyframes for tier fill / opacity (gated behind `prefers-reduced-motion: no-preference`)
-- [ ] Pin transition polish — `.is-pinned` subtle stroke/brightness (with reduced-motion fallback)
+- [x] `src/scripts/mapIntro.js` (or section in `map.js`) — intro orchestration + storage flag
+- [x] CSS keyframes for tier fill / opacity (gated behind `prefers-reduced-motion: no-preference`)
+- [x] Pin transition polish — `.is-pinned` subtle stroke/brightness (with reduced-motion fallback)
 
 **Exit criteria:** First visit feels premium; repeat visit is instant; map fully visible **before** intro runs (depends on 7h); Lighthouse / a11y not regressed.
 
