@@ -2627,6 +2627,11 @@ footer a:hover {
     overflow: hidden;
   }
 
+  body.is-mobile-sheet-dragging #map-container,
+  body.is-mobile-sheet-dragging #us-map {
+    pointer-events: none;
+  }
+
 }
 
 @media print {

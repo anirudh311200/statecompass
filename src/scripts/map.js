@@ -56,6 +56,20 @@ let hoverPath = null;
 let pinnedAbbr = null;
 let pinnedPath = null;
 let mobileSheetBackdrop = null;
+let suppressMapPinUntil = 0;
+let sheetTouchActive = false;
+
+function isMapPinSuppressed() {
+  return Date.now() < suppressMapPinUntil;
+}
+
+function armMapPinSuppression(durationMs = 700) {
+  suppressMapPinUntil = Date.now() + durationMs;
+}
+
+function setMapInteractionLocked(locked) {
+  document.body.classList.toggle("is-mobile-sheet-dragging", locked);
+}
 
 function isMobileMapLayout() {
   return window.matchMedia(MOBILE_MAP_MQ).matches;
@@ -162,19 +176,21 @@ function resetMobileSheetChrome() {
 let sheetDrag = null;
 let sheetSwipeWired = false;
 
-const SHEET_DISMISS_THRESHOLD = 40;
+const SHEET_DISMISS_THRESHOLD = 28;
 const SHEET_EXPAND_THRESHOLD = 32;
-const SHEET_COLLAPSE_THRESHOLD = 40;
-const SHEET_DISMISS_FROM_EXPANDED = 72;
 
 function dismissMobileSheet() {
+  armMapPinSuppression();
+  hoverPath = null;
+  sheetDrag = null;
+  sheetTouchActive = false;
+  setMapInteractionLocked(false);
+
   if (!pinnedAbbr) {
     resetMobileSheetChrome();
     return;
   }
 
-  hoverPath = null;
-  sheetDrag = null;
   clearPin();
 }
 
@@ -188,7 +204,7 @@ function wireMobileSheetSwipe() {
 
   sheetSwipeWired = true;
 
-  const dragZoneMatches = (target) => {
+  const isDragChromeTarget = (target) => {
     if (!target || !(target instanceof Element)) {
       return false;
     }
@@ -225,52 +241,98 @@ function wireMobileSheetSwipe() {
     card.style.transform = lift < 0 ? `translateY(${lift}px)` : "";
   };
 
-  const finishDrag = (dragState) => {
-    const { maxDownDy, minDy, fromDragZone } = dragState;
-    const expanded = card.classList.contains("is-sheet-expanded");
+  const finishSheetGesture = ({ maxDownDy, minDy }) => {
+    setMapInteractionLocked(false);
+    card.classList.remove("is-sheet-dragging");
+
+    if (maxDownDy >= SHEET_DISMISS_THRESHOLD) {
+      dismissMobileSheet();
+      return;
+    }
 
     card.style.transition = "transform 0.18s ease, max-height 0.28s ease";
     resetSwipeStyles();
 
-    if (maxDownDy >= SHEET_DISMISS_FROM_EXPANDED) {
-      dismissMobileSheet();
-      return;
-    }
-
-    if (maxDownDy >= SHEET_DISMISS_THRESHOLD && !expanded) {
-      dismissMobileSheet();
-      return;
-    }
-
-    if (maxDownDy >= SHEET_COLLAPSE_THRESHOLD && expanded) {
-      collapseMobileSheetPeek();
-      return;
-    }
-
-    if (minDy <= -SHEET_EXPAND_THRESHOLD && !expanded) {
+    if (minDy <= -SHEET_EXPAND_THRESHOLD && !card.classList.contains("is-sheet-expanded")) {
       expandMobileSheet();
-      return;
-    }
-
-    if (fromDragZone && maxDownDy === 0 && minDy === 0) {
-      if (expanded) {
-        collapseMobileSheetPeek();
-      } else {
-        expandMobileSheet();
-      }
     }
   };
 
+  const dragSurfaces = [grabber, header].filter(Boolean);
+  dragSurfaces.forEach((surface) => {
+    let startY = 0;
+    let maxDownDy = 0;
+    let minDy = 0;
+    let tracking = false;
+
+    surface.addEventListener(
+      "touchstart",
+      (event) => {
+        if (!isMobileMapLayout() || !pinnedAbbr || event.touches.length !== 1) {
+          return;
+        }
+        if (!isDragChromeTarget(event.target)) {
+          return;
+        }
+
+        sheetTouchActive = true;
+        tracking = true;
+        startY = event.touches[0].clientY;
+        maxDownDy = 0;
+        minDy = 0;
+        setMapInteractionLocked(true);
+        card.classList.add("is-sheet-dragging");
+        card.style.transition = "none";
+      },
+      { passive: true }
+    );
+
+    surface.addEventListener(
+      "touchmove",
+      (event) => {
+        if (!tracking || !pinnedAbbr) {
+          return;
+        }
+
+        const dy = event.touches[0].clientY - startY;
+        if (dy > 0) {
+          maxDownDy = Math.max(maxDownDy, dy);
+          event.preventDefault();
+          applyDismissOffset(dy);
+          return;
+        }
+
+        if (dy < 0 && !card.classList.contains("is-sheet-expanded")) {
+          minDy = Math.min(minDy, dy);
+          event.preventDefault();
+          applyExpandLift(dy);
+        }
+      },
+      { passive: false }
+    );
+
+    const endTouch = () => {
+      if (!tracking) {
+        return;
+      }
+
+      tracking = false;
+      sheetTouchActive = false;
+      finishSheetGesture({ maxDownDy, minDy });
+    };
+
+    surface.addEventListener("touchend", endTouch, { passive: true });
+    surface.addEventListener("touchcancel", endTouch, { passive: true });
+  });
+
   const onPointerDown = (event) => {
-    if (!isMobileMapLayout() || !pinnedAbbr) {
+    if (sheetTouchActive || !isMobileMapLayout() || !pinnedAbbr) {
       return;
     }
     if (event.pointerType === "mouse" && event.button !== 0) {
       return;
     }
-
-    const fromDragZone = dragZoneMatches(event.target);
-    if (!fromDragZone) {
+    if (!isDragChromeTarget(event.target)) {
       return;
     }
 
@@ -280,9 +342,9 @@ function wireMobileSheetSwipe() {
       startY: event.clientY,
       maxDownDy: 0,
       minDy: 0,
-      fromDragZone,
     };
 
+    setMapInteractionLocked(true);
     card.setPointerCapture(event.pointerId);
     card.classList.add("is-sheet-dragging");
     card.style.transition = "none";
@@ -295,13 +357,12 @@ function wireMobileSheetSwipe() {
     }
     if (!isMobileMapLayout() || !pinnedAbbr) {
       sheetDrag = null;
+      setMapInteractionLocked(false);
       resetSwipeStyles();
       return;
     }
 
     const dy = event.clientY - sheetDrag.startY;
-    const expanded = card.classList.contains("is-sheet-expanded");
-
     event.preventDefault();
 
     if (dy > 0) {
@@ -310,11 +371,9 @@ function wireMobileSheetSwipe() {
       return;
     }
 
-    if (dy < 0) {
+    if (dy < 0 && !card.classList.contains("is-sheet-expanded")) {
       sheetDrag.minDy = Math.min(sheetDrag.minDy, dy);
-      if (!expanded) {
-        applyExpandLift(dy);
-      }
+      applyExpandLift(dy);
     }
   };
 
@@ -330,8 +389,7 @@ function wireMobileSheetSwipe() {
       card.releasePointerCapture(event.pointerId);
     }
 
-    card.classList.remove("is-sheet-dragging");
-    finishDrag(dragState);
+    finishSheetGesture(dragState);
   };
 
   card.addEventListener("pointerdown", onPointerDown);
@@ -823,6 +881,10 @@ function wireStates() {
         if (!isMobileMapLayout() || !isTouchLikePointer(event)) {
           return;
         }
+        if (isMapPinSuppressed()) {
+          event.preventDefault();
+          return;
+        }
         if (event.button !== 0) {
           return;
         }
@@ -834,6 +896,10 @@ function wireStates() {
     );
 
     path.addEventListener("click", (event) => {
+      if (isMapPinSuppressed()) {
+        event.preventDefault();
+        return;
+      }
       if (Date.now() < suppressClickUntil) {
         event.preventDefault();
         return;
