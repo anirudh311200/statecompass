@@ -1,8 +1,8 @@
-"""Generate StateCompass brand assets — B&W compass needle mark (Phase 7g)."""
+"""Generate StateCompass brand assets — wordmark logo + compass favicon."""
 
 from pathlib import Path
 
-from brand_mark import NEEDLE, favicon_block, needle
+from brand_mark import NEEDLE, favicon_block
 
 ROOT = Path(__file__).resolve().parents[1]
 ASSETS = ROOT / "assets"
@@ -18,11 +18,8 @@ def favicon_svg(size: int = 32) -> str:
 
 
 def logo_svg() -> str:
-    icon_cx, icon_cy = 16, 20
-    icon_scale = 30 / 32
-    return f"""<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 210 40" fill="none" aria-hidden="true">
-  {needle(icon_cx, icon_cy, icon_scale)}
-  <text x="48" y="27" font-family="Sora, system-ui, sans-serif" font-size="22" font-weight="600" fill="{NEEDLE}" letter-spacing="-0.03em">StateCompass</text>
+    return f"""<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 170 40" fill="none" aria-hidden="true">
+  <text x="0" y="27" font-family="Sora, system-ui, sans-serif" font-size="22" font-weight="600" fill="{NEEDLE}" letter-spacing="-0.03em">StateCompass</text>
 </svg>
 """
 
