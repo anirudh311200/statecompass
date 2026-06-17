@@ -127,12 +127,7 @@ export function renderDumbbellCharts(
     <figure class="movers-dumbbell-figure">
       <figcaption class="visually-hidden">
         Dumbbell charts of CNBC rank changes from ${priorYear} to ${currentYear} for top risers and fallers.
-        Rank scale #1 to #50; lower rank number is better.
       </figcaption>
-      <div class="movers-dumbbell-axis movers-dumbbell-axis--shared" aria-hidden="true">
-        <span>#1</span>
-        <span>#50</span>
-      </div>
       <div class="movers-dumbbell-grid">
         ${renderPanel("Top risers", "up", topRisers, { priorYear, currentYear })}
         ${renderPanel("Top fallers", "down", topFallers, { priorYear, currentYear })}
