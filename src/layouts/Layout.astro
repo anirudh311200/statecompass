@@ -6,16 +6,11 @@ import "@fontsource/sora/400.css";
 import "@fontsource/sora/500.css";
 import "@fontsource/sora/600.css";
 import "@fontsource/sora/700.css";
-import "@fontsource/inter/400.css";
-import "@fontsource/inter/500.css";
-import "@fontsource/inter/600.css";
 
 interface Props {
   title?: string;
   description?: string;
   homePage?: boolean;
-  wide?: boolean;
-  reading?: boolean;
   subtitle?: string;
   ogImage?: string;
   ogImageAlt?: string;
@@ -27,8 +22,6 @@ const {
   title = "StateCompass",
   description = "Compare US states for HQ and expansion — CNBC scores, Founder Snapshot operational context, and shareable compare links for founders.",
   homePage = false,
-  wide = false,
-  reading = false,
   subtitle,
   ogImage = "/og/default.svg",
   ogImageAlt = "StateCompass — site selection for founders",
@@ -75,12 +68,7 @@ const plausibleDomain = import.meta.env.PUBLIC_PLAUSIBLE_DOMAIN;
     }
   </head>
   <body>
-    <div
-      class:list={[
-        "page",
-        { "page--home": homePage, "page--wide": wide, "page--reading": reading },
-      ]}
-    >
+    <div class:list={["page", { "page--home": homePage }]}>
       <Header compact={homePage} subtitle={subtitle} />
       <slot />
       <Footer />

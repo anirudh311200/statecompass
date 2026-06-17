@@ -6,7 +6,6 @@ import { dataYear } from "../lib/states.js";
 ---
 
 <Layout
-  wide
   title={`Compare States — CNBC ${dataYear} | StateCompass`}
   description="Compare 2–3 US states side by side on CNBC scores, category rankings, and Founder Snapshot operational context. Shareable link for co-founders and board decks."
   subtitle="Compare up to 3 states — CNBC scores, categories, and Founder Snapshot."
@@ -52,34 +51,28 @@ import { dataYear } from "../lib/states.js";
       <div class="compare-chips" id="compare-chips" hidden></div>
 
       <div class="share-bar" id="compare-share-bar" hidden>
-        <div class="share-bar-actions">
-          <div class="share-bar-group" role="group" aria-label="Share">
-            <button
-              type="button"
-              class="btn btn-secondary"
-              id="copy-compare-link"
-              data-default-label="Copy compare link"
-            >
-              Copy compare link
-            </button>
-            <button type="button" class="btn btn-secondary" id="save-comparison">
-              Save comparison
-            </button>
-          </div>
-          <div class="share-bar-group" role="group" aria-label="Export">
-            <button type="button" class="btn btn-secondary" id="print-compare">
-              Print / save PDF
-            </button>
-            <button
-              type="button"
-              class="btn btn-secondary"
-              id="download-compare-png"
-              data-default-label="Save as PNG"
-            >
-              Save as PNG
-            </button>
-          </div>
-        </div>
+        <button
+          type="button"
+          class="btn btn-secondary"
+          id="copy-compare-link"
+          data-default-label="Copy compare link"
+        >
+          Copy compare link
+        </button>
+        <button type="button" class="btn btn-secondary" id="save-comparison">
+          Save comparison
+        </button>
+        <button type="button" class="btn btn-secondary" id="print-compare">
+          Print / save PDF
+        </button>
+        <button
+          type="button"
+          class="btn btn-secondary"
+          id="download-compare-png"
+          data-default-label="Save as PNG"
+        >
+          Save as PNG
+        </button>
         <p id="compare-share-status" class="share-status" role="status" aria-live="polite"></p>
       </div>
     </div>

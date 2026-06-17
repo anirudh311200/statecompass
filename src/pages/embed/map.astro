@@ -66,27 +66,23 @@ const site = Astro.site ?? new URL("https://statecompass.app");
       </aside>
     </div>
 
-    <div class="embed-map-toolbar map-toolbar" aria-label="Map controls">
-      <YearSelector id="map-year" variant="compact" class="map-year-select" />
-
-      <span class="map-legend-sep map-legend-sep--toolbar" aria-hidden="true">·</span>
-
-      <div class="map-legend map-legend--inline" aria-label="Map color legend">
-        <div class="map-legend-items">
-          <span class="map-legend-item">
-            <span class="swatch green" aria-hidden="true"></span>
-            <span>1–17</span>
-          </span>
-          <span class="map-legend-item">
-            <span class="swatch yellow" aria-hidden="true"></span>
-            <span>18–34</span>
-          </span>
-          <span class="map-legend-item">
-            <span class="swatch red" aria-hidden="true"></span>
-            <span>35–50</span>
-          </span>
-        </div>
+    <div class="embed-map-legend map-legend" aria-label="Map color legend">
+      <YearSelector id="map-year" class="map-year-select" />
+      <div class="map-legend-items">
+        <span class="map-legend-item">
+          <span class="swatch green" aria-hidden="true"></span>
+          <span>1–17</span>
+        </span>
+        <span class="map-legend-item">
+          <span class="swatch yellow" aria-hidden="true"></span>
+          <span>18–34</span>
+        </span>
+        <span class="map-legend-item">
+          <span class="swatch red" aria-hidden="true"></span>
+          <span>35–50</span>
+        </span>
       </div>
+      <span class="map-legend-source" data-cnbc-year>CNBC {dataYear}</span>
     </div>
 
     <p class="embed-open-link">

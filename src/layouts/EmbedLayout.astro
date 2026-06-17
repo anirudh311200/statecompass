@@ -4,9 +4,6 @@ import "@fontsource/sora/400.css";
 import "@fontsource/sora/500.css";
 import "@fontsource/sora/600.css";
 import "@fontsource/sora/700.css";
-import "@fontsource/inter/400.css";
-import "@fontsource/inter/500.css";
-import "@fontsource/inter/600.css";
 import { dataYear } from "../lib/states.js";
 import { CNBC_RANKINGS_URL, cnbcSourceLabel } from "../lib/site.js";
 
@@ -38,23 +35,6 @@ const canonical = new URL(Astro.url.pathname, site).href;
   </head>
   <body class="embed-body">
     <div class="embed-shell">
-      <header class="embed-brand">
-        <a
-          href={site.href}
-          class="embed-brand-link"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <img
-            src="/assets/favicon.svg"
-            alt=""
-            class="embed-brand-mark"
-            width="24"
-            height="24"
-          />
-          <span class="embed-brand-wordmark">StateCompass</span>
-        </a>
-      </header>
       <slot />
       <footer class="embed-attribution">
         <p>
