@@ -5,7 +5,7 @@
         font-family: 'Sora';
         font-style: normal;
         font-weight: 700;
-        src: url('./fonts/sora-latin-700-normal.woff2') format('woff2');
+        src: url('/assets/fonts/sora-latin-700-normal.woff2') format('woff2');
       }
     </style>
     <linearGradient id="sc-dazzle" x1="0%" y1="0%" x2="100%" y2="100%">

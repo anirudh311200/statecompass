@@ -1,4 +1,6 @@
 ---
+import { BRAND_VERSION } from "../lib/site.js";
+
 interface Props {
   compact?: boolean;
   subtitle?: string;
@@ -19,14 +21,19 @@ const navItems = [
     href: "/partners",
     label: "Partners",
     match: (p) => p.startsWith("/partners"),
-    hideOnMobile: true,
   },
 ];
 ---
 
 <header class:list={["site-header", { "site-header--compact": compact }]}>
   <a href="/" class="brand" aria-label="StateCompass home">
-    <img src="/assets/logo.svg" alt="StateCompass" class="brand-logo" width="278" height="54" />
+    <img
+      src={`/assets/logo.svg?v=${BRAND_VERSION}`}
+      alt="StateCompass"
+      class="brand-logo"
+      width="278"
+      height="54"
+    />
   </a>
 
   <nav class="site-nav" aria-label="Main">
@@ -36,7 +43,7 @@ const navItems = [
           href={item.href}
           class:list={[
             "nav-link",
-            { "is-active": item.match(path), "nav-link--partners": item.hideOnMobile },
+            { "is-active": item.match(path) },
           ]}
           aria-current={item.match(path) ? "page" : undefined}
         >
