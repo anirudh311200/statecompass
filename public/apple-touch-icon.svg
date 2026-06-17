@@ -9,9 +9,9 @@
       }
     </style>
     <linearGradient id="sc-dazzle" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.92"/>
-      <stop offset="52%" stop-color="#fafafa" stop-opacity="0.78"/>
-      <stop offset="100%" stop-color="#525252" stop-opacity="0.36"/>
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.94"/>
+      <stop offset="52%" stop-color="#fafafa" stop-opacity="0.8"/>
+      <stop offset="100%" stop-color="#525252" stop-opacity="0.38"/>
     </linearGradient>
     <filter id="sc-glow" x="-100%" y="-100%" width="300%" height="300%" color-interpolation-filters="sRGB">
       <feGaussianBlur in="SourceAlpha" stdDeviation="7.59" result="blur"/>
@@ -24,5 +24,5 @@
     </filter>
   </defs>
   <rect x="2.81" y="2.81" width="174.38" height="174.38" rx="56.25" fill="#0a0a0a" stroke="#1a1a1a" stroke-width="5.62"/>
-  <text x="92.16" y="90.00" font-family="Sora, system-ui, sans-serif" font-size="63.9" font-weight="700" text-anchor="middle" dominant-baseline="central" letter-spacing="-0.055em" fill="url(#sc-dazzle)" filter="url(#sc-glow)">SC</text>
+  <text x="92.16" y="90.00" font-family="Sora, system-ui, sans-serif" font-size="70.2" font-weight="700" text-anchor="middle" dominant-baseline="central" letter-spacing="-0.055em" fill="url(#sc-dazzle)" filter="url(#sc-glow)">SC</text>
 </svg>
