@@ -6,30 +6,41 @@ NEEDLE_SOUTH = "#8a8a8a"
 BG = "#000000"
 SURFACE = "#0a0a0a"
 BORDER = "#1a1a1a"
+WHITE_GLOW = 0.38
 
 # Soft squircle-ish corners (32px tile baseline)
 TILE_RX_RATIO = 10.5 / 32
 
-# SC glyph box (path coordinates); optical center after kerning tweak
-SC_OPTICAL_X = 9.35
-SC_OPTICAL_Y = 7.05
+
+def sc_dazzle_defs(prefix: str = "sc", size: int = 32) -> str:
+    """Luminous B&W gradient + glow — mirrors tier fills on the map."""
+    blur = round(1.35 * size / 32, 2)
+    flood_opacity = round(WHITE_GLOW * min(1.15, 32 / max(size, 1)), 2)
+    return f"""<linearGradient id="{prefix}-dazzle" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.92"/>
+      <stop offset="52%" stop-color="#fafafa" stop-opacity="0.78"/>
+      <stop offset="100%" stop-color="#525252" stop-opacity="0.36"/>
+    </linearGradient>
+    <filter id="{prefix}-glow" x="-100%" y="-100%" width="300%" height="300%" color-interpolation-filters="sRGB">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="{blur}" result="blur"/>
+      <feFlood flood-color="#ffffff" flood-opacity="{flood_opacity}" result="glowColor"/>
+      <feComposite in="glowColor" in2="blur" operator="in" result="softGlow"/>
+      <feMerge>
+        <feMergeNode in="softGlow"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>"""
 
 
-def sc_letter_paths() -> str:
-    """Bold geometric S and C — filled paths for crisp 16px tab rendering."""
-    return f"""<path fill="{NEEDLE}" d="M 5.6 1.1 C 2.1 1.1 0.3 2.9 0.3 5.1 C 0.3 6.6 1.2 7.7 3.1 8.1 L 5.7 8.6 C 7.4 8.9 8.1 9.7 8.1 10.9 C 8.1 12.6 6.5 13.9 4.1 13.9 C 2.1 13.9 0.7 12.9 0.1 11.3 L 2.1 10.5 C 2.5 11.5 3.3 12.1 4.3 12.1 C 5.5 12.1 6.2 11.3 6.2 10.3 C 6.2 9.3 5.5 8.7 3.9 8.3 L 1.5 7.7 C 0.1 7.3 0 6.1 0 5.1 C 0 2.9 2 1.1 5.2 1.1 C 7.2 1.1 8.6 1.9 9.2 3.3 L 7.2 3.7 C 6.8 2.7 6.2 1.1 5.6 1.1 Z"/>
-    <path fill="{NEEDLE}" d="M 14.3 1.4 C 10.3 1.4 8.3 3.9 8.3 7.1 C 8.3 10.3 10.3 12.7 14.3 12.7 C 15.8 12.7 17 12.1 17.8 11.1 L 16 10.1 C 15.4 10.7 14.6 11.1 13.8 11.1 C 11.6 11.1 10.6 9.3 10.6 7.1 C 10.6 4.9 11.6 3.1 13.8 3.1 C 14.8 3.1 15.6 3.5 16.2 4.1 L 18 2.7 C 17 1.7 15.6 1.4 14.3 1.4 Z"/>"""
+def sc_monogram(cx: float, cy: float, size: int = 32, prefix: str = "sc") -> str:
+    """Sora SC monogram — optically centered, luminous B&W dazzle."""
+    font_size = round(size * 0.355, 2)
+    # Tiny optical nudge — open C reads heavy on the right.
+    ox = round(size * 0.012, 2)
+    return f"""<text x="{cx + ox:.2f}" y="{cy:.2f}" font-family="Sora, system-ui, sans-serif" font-size="{font_size}" font-weight="700" text-anchor="middle" dominant-baseline="central" letter-spacing="-0.055em" fill="url(#{prefix}-dazzle)" filter="url(#{prefix}-glow)">SC</text>"""
 
 
-def sc_monogram(cx: float, cy: float, size: int = 32) -> str:
-    """Optically centered SC mark for a square tile of the given pixel size."""
-    glyph_scale = size / 32
-    return f"""<g transform="translate({cx:.2f},{cy:.2f}) scale({glyph_scale:.4f}) translate({-SC_OPTICAL_X:.2f},{-SC_OPTICAL_Y:.2f})">
-    {sc_letter_paths()}
-  </g>"""
-
-
-def brand_tile(size: int = 32) -> str:
+def brand_tile(size: int = 32, prefix: str = "sc") -> str:
     """Raised dark tile — surface fill + border so mark does not vanish on #000 pages."""
     rx = round(TILE_RX_RATIO * size, 2)
     sw = round(size / 32, 2)
@@ -39,7 +50,7 @@ def brand_tile(size: int = 32) -> str:
     cx = size / 2
     cy = size / 2
     return f"""<rect x="{inset:.2f}" y="{inset:.2f}" width="{dim:.2f}" height="{dim:.2f}" rx="{inner_rx:.2f}" fill="{SURFACE}" stroke="{BORDER}" stroke-width="{sw:.2f}"/>
-  {sc_monogram(cx, cy, size)}"""
+  {sc_monogram(cx, cy, size, prefix)}"""
 
 
 def compass(cx: float, cy: float, scale: float = 1.0) -> str:
@@ -74,22 +85,26 @@ def needle(cx: float, cy: float, scale: float = 1.0) -> str:
     return compass(cx, cy, scale)
 
 
-def favicon_block(size: int = 32) -> str:
+def favicon_block(size: int = 32, prefix: str = "sc") -> str:
     """Rounded square + SC monogram (favicon / touch icon)."""
-    return brand_tile(size)
+    return brand_tile(size, prefix)
 
 
-def logo_mark(size: int = 32, y_offset: float = 0) -> str:
-    """SC tile for the header lockup; y_offset centers 32px tile in a 40px-tall logo."""
+def logo_mark(size: int = 32, y_offset: float = 0, prefix: str = "sc") -> str:
+    """SC tile for the header lockup; y_offset centers tile in the logo height."""
     return f"""<g transform="translate(0,{y_offset:.2f})">
-    {brand_tile(size)}
+    {brand_tile(size, prefix)}
   </g>"""
 
 
 def og_watermark() -> str:
     """Small B&W mark for OG card corner (48px tile)."""
-    return f"""<g transform="translate(1104, 534)" opacity="0.85">
+    prefix = "og-sc"
+    return f"""<defs>
+    {sc_dazzle_defs(prefix, 48)}
+  </defs>
+  <g transform="translate(1104, 534)" opacity="0.85">
   <g transform="translate(-56, -56)">
-    {favicon_block(48)}
+    {favicon_block(48, prefix)}
   </g>
 </g>"""
