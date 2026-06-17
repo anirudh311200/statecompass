@@ -87,7 +87,136 @@ function setMobileSheetOpen(open) {
   const backdrop = ensureMobileSheetBackdrop();
   if (backdrop) {
     backdrop.hidden = !open;
+    backdrop.style.opacity = "";
   }
+}
+
+function getSheetPeekAnchor() {
+  const profileChip = document.getElementById("profile-chip");
+  if (profileChip && !profileChip.hidden) {
+    return profileChip;
+  }
+  return document.getElementById("tier-badge");
+}
+
+function syncMobileSheetPeek() {
+  const card = document.getElementById("info-card");
+  if (!card) {
+    return;
+  }
+
+  if (!isMobileMapLayout() || !pinnedAbbr) {
+    card.style.removeProperty("--mobile-sheet-peek");
+    return;
+  }
+
+  const anchor = getSheetPeekAnchor();
+  if (!anchor || anchor.hidden) {
+    return;
+  }
+
+  card.style.removeProperty("--mobile-sheet-peek");
+  const cardTop = card.getBoundingClientRect().top;
+  const peekBottom = anchor.getBoundingClientRect().bottom - cardTop + 28;
+  const cap = Math.min(window.innerHeight * 0.62, 540);
+  const floor = Math.min(window.innerHeight * 0.46, 420);
+  card.style.setProperty("--mobile-sheet-peek", `${Math.min(cap, Math.max(floor, peekBottom))}px`);
+}
+
+function resetMobileSheetChrome() {
+  const card = document.getElementById("info-card");
+  if (card) {
+    card.style.removeProperty("--mobile-sheet-peek");
+    card.style.removeProperty("transform");
+    card.style.removeProperty("transition");
+  }
+  if (mobileSheetBackdrop) {
+    mobileSheetBackdrop.style.opacity = "";
+  }
+}
+
+let sheetSwipe = null;
+
+function wireMobileSheetSwipe() {
+  const card = document.getElementById("info-card");
+  if (!card || sheetSwipe) {
+    return;
+  }
+
+  sheetSwipe = { startY: 0, lastY: 0, dragging: false };
+
+  const finishSwipe = () => {
+    if (!sheetSwipe.dragging) {
+      return;
+    }
+
+    const dy = sheetSwipe.lastY - sheetSwipe.startY;
+    sheetSwipe.dragging = false;
+    card.style.transition = "transform 0.22s ease";
+
+    if (dy > 72) {
+      card.style.transform = "translateY(100%)";
+      window.setTimeout(() => {
+        clearPin();
+        resetMobileSheetChrome();
+      }, 180);
+      return;
+    }
+
+    card.style.transform = "";
+    if (mobileSheetBackdrop) {
+      mobileSheetBackdrop.style.opacity = "";
+    }
+  };
+
+  card.addEventListener(
+    "touchstart",
+    (event) => {
+      if (!isMobileMapLayout() || !pinnedAbbr || event.touches.length !== 1) {
+        return;
+      }
+      sheetSwipe.startY = event.touches[0].clientY;
+      sheetSwipe.lastY = sheetSwipe.startY;
+      sheetSwipe.dragging = true;
+      card.style.transition = "none";
+    },
+    { passive: true }
+  );
+
+  card.addEventListener(
+    "touchmove",
+    (event) => {
+      if (!sheetSwipe.dragging || !isMobileMapLayout() || !pinnedAbbr) {
+        return;
+      }
+
+      const y = event.touches[0].clientY;
+      const dy = y - sheetSwipe.startY;
+      sheetSwipe.lastY = y;
+
+      if (card.scrollTop > 0) {
+        sheetSwipe.dragging = false;
+        card.style.transform = "";
+        return;
+      }
+
+      if (dy <= 0) {
+        card.style.transform = "";
+        return;
+      }
+
+      event.preventDefault();
+      const offset = Math.min(dy * 0.9, 280);
+      card.style.transform = `translateY(${offset}px)`;
+      if (mobileSheetBackdrop) {
+        mobileSheetBackdrop.style.opacity = String(Math.max(0.18, 0.45 - offset / 360));
+      }
+    },
+    { passive: false }
+  );
+
+  card.addEventListener("touchend", finishSwipe);
+  card.addEventListener("touchcancel", finishSwipe);
 }
 
 function normalizeAbbr(value) {
@@ -338,6 +467,11 @@ function updateSidebar(abbr, info) {
   }
 
   syncSidebarSelectionState(abbr);
+  if (pinnedAbbr === abbr) {
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => syncMobileSheetPeek());
+    });
+  }
 }
 
 function hideSidebar() {
@@ -359,6 +493,7 @@ function hideSidebar() {
     bookmarkBtn.hidden = true;
   }
   syncSidebarSelectionState(null);
+  resetMobileSheetChrome();
 }
 
 function syncUrl(abbr) {
@@ -616,12 +751,15 @@ function wireGlobalControls() {
   clearBtn?.addEventListener("click", () => clearPin());
 
   ensureMobileSheetBackdrop();
+  wireMobileSheetSwipe();
   window.addEventListener("resize", () => {
     if (!isMobileMapLayout()) {
       setMobileSheetOpen(false);
+      resetMobileSheetChrome();
       return;
     }
     setMobileSheetOpen(Boolean(pinnedAbbr));
+    syncMobileSheetPeek();
   });
 
   document.addEventListener("statecompass:pin", (event) => {
@@ -629,6 +767,13 @@ function wireGlobalControls() {
     document.querySelectorAll("#us-map .state").forEach((path) => {
       path.setAttribute("aria-pressed", path.id === abbr ? "true" : "false");
     });
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => syncMobileSheetPeek());
+    });
+  });
+
+  document.addEventListener("statecompass:sidebar-render", () => {
+    requestAnimationFrame(() => syncMobileSheetPeek());
   });
 
   document.addEventListener("statecompass:clear", () => {

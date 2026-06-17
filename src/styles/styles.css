@@ -2487,25 +2487,6 @@ footer a:hover {
     max-width: none;
   }
 
-  .map-panel {
-    display: flex;
-    flex-direction: column;
-  }
-
-  #map-container {
-    order: 2;
-  }
-
-  .map-toolbar {
-    order: 1;
-    flex-direction: column;
-    align-items: stretch;
-    margin-top: 0;
-    padding-top: 0.15rem;
-    border-top: none;
-    border-bottom: 1px solid var(--border);
-  }
-
   .layout--home .sidebar:not(.has-selection) .info-card {
     display: none;
   }
@@ -2525,9 +2506,26 @@ footer a:hover {
     display: none;
   }
 
-  .map-toolbar-controls {
+  .map-toolbar {
     flex-direction: column;
     align-items: stretch;
+  }
+
+  .map-toolbar-controls {
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+    gap: 0.35rem;
+  }
+
+  .map-toolbar-controls .search-wrap--map {
+    flex: 1 1 0;
+    min-width: 0;
+  }
+
+  .map-year-select,
+  .map-toolbar-controls .year-toggle {
+    flex-shrink: 0;
   }
 
   .map-legend-sep--toolbar {
@@ -2564,11 +2562,12 @@ footer a:hover {
     border-radius: 16px 16px 0 0;
     border-bottom: none;
     box-shadow: 0 -12px 40px rgba(0, 0, 0, 0.55);
-    max-height: min(40vh, 380px);
+    max-height: var(--mobile-sheet-peek, min(56vh, 500px));
     overflow-y: auto;
     overscroll-behavior: contain;
     -webkit-overflow-scrolling: touch;
     padding-bottom: calc(1.25rem + env(safe-area-inset-bottom, 0px));
+    touch-action: pan-y;
   }
 
   .sidebar.has-selection .info-card::before {
@@ -2580,6 +2579,7 @@ footer a:hover {
     border-radius: 999px;
     background: #3f3f3f;
     flex-shrink: 0;
+    touch-action: none;
   }
 
 }

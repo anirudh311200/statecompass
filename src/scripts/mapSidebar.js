@@ -149,6 +149,7 @@ function applySidebarLens(abbr, info) {
   });
 
   renderCategories(info);
+  document.dispatchEvent(new CustomEvent("statecompass:sidebar-render"));
 }
 
 function setProfile(profileId) {
