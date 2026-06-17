@@ -155,6 +155,7 @@ function updateMethodologyNote(index, priorYear, currentYear) {
 
   note.innerHTML = `
     <strong>How to read YoY movers:</strong>
+    Rank #1 is top of 50 — lower number is better. Leftward on the chart means climbed; rightward means fell.
     CNBC reweights categories and metrics each year. Compare ranks within the same study — point totals across years use different category caps.
     <a href="${priorUrl}" target="_blank" rel="noopener noreferrer">CNBC ${priorYear} methodology</a>
     ·

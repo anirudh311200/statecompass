@@ -3058,15 +3058,17 @@ footer a:hover {
   opacity: 0.5;
 }
 
-.movers-dumbbell-axis {
+.movers-dumbbell-axis--shared {
   display: flex;
   justify-content: space-between;
-  padding: 0 0.15rem 0.15rem;
-  margin-left: clamp(5.5rem, 28%, 7rem);
+  gap: 1rem;
+  padding: 0 0.5rem 0.35rem;
+  margin-bottom: 0.15rem;
   font-size: 0.65rem;
   color: var(--dim);
   letter-spacing: 0.02em;
   text-transform: uppercase;
+  border-bottom: 1px solid var(--border);
 }
 
 .movers-dumbbell-rows {
@@ -3538,9 +3540,8 @@ footer a:hover {
     grid-template-columns: 1fr;
   }
 
-  .movers-dumbbell-axis {
-    margin-left: 0;
-    padding-inline: 0.5rem;
+  .movers-dumbbell-axis--shared {
+    padding-inline: 0.35rem;
   }
 
   .movers-context-columns {
