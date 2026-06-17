@@ -126,6 +126,7 @@ function syncMobileSheetPeek() {
 function resetMobileSheetChrome() {
   const card = document.getElementById("info-card");
   if (card) {
+    card.classList.remove("is-sheet-dragging");
     card.style.removeProperty("--mobile-sheet-peek");
     card.style.removeProperty("transform");
     card.style.removeProperty("transition");
@@ -135,33 +136,42 @@ function resetMobileSheetChrome() {
   }
 }
 
-let sheetSwipe = null;
+let sheetDrag = null;
+let sheetSwipeWired = false;
 
-const SHEET_DISMISS_THRESHOLD = 48;
-const SHEET_HANDLE_ZONE_PX = 64;
-
-function isInSheetHandleZone(card, clientY) {
-  return clientY - card.getBoundingClientRect().top <= SHEET_HANDLE_ZONE_PX;
-}
+const SHEET_DISMISS_THRESHOLD = 40;
 
 function dismissMobileSheet() {
+  if (!pinnedAbbr) {
+    resetMobileSheetChrome();
+    return;
+  }
+
+  hoverPath = null;
+  sheetDrag = null;
   clearPin();
-  resetMobileSheetChrome();
 }
 
 function wireMobileSheetSwipe() {
   const card = document.getElementById("info-card");
-  if (!card || sheetSwipe) {
+  const grabber = document.getElementById("mobile-sheet-grabber");
+  const header = card?.querySelector(".info-card-header");
+  if (!card || sheetSwipeWired) {
     return;
   }
 
-  sheetSwipe = {
-    startY: 0,
-    lastY: 0,
-    maxDy: 0,
-    mode: null,
-    scrollTopAtStart: 0,
-    fromHandle: false,
+  sheetSwipeWired = true;
+
+  const dragZoneMatches = (target) => {
+    if (!target || !(target instanceof Element)) {
+      return false;
+    }
+    return Boolean(
+      grabber?.contains(target) ||
+        header?.contains(target) ||
+        target === grabber ||
+        target === header
+    );
   };
 
   const resetSwipeStyles = () => {
@@ -172,94 +182,110 @@ function wireMobileSheetSwipe() {
     }
   };
 
-  const finishSwipe = () => {
-    const { mode, maxDy } = sheetSwipe;
-    sheetSwipe.mode = null;
+  const applyDragOffset = (dy) => {
+    const offset = Math.min(Math.max(dy, 0), 420);
+    card.style.transform = offset > 0 ? `translateY(${offset}px)` : "";
+    if (mobileSheetBackdrop) {
+      mobileSheetBackdrop.style.opacity =
+        offset > 0 ? String(Math.max(0.12, 0.45 - offset / 320)) : "";
+    }
+  };
 
-    if (mode !== "dismiss") {
-      resetSwipeStyles();
+  const finishDrag = () => {
+    if (!sheetDrag?.active) {
       return;
     }
 
-    card.style.transition = "transform 0.18s ease";
+    const { maxDy, fromDragZone } = sheetDrag;
+    sheetDrag = null;
 
     if (maxDy >= SHEET_DISMISS_THRESHOLD) {
-      card.style.transform = "translateY(100%)";
       dismissMobileSheet();
       return;
     }
 
-    resetSwipeStyles();
+    if (fromDragZone || maxDy > 0) {
+      card.style.transition = "transform 0.18s ease";
+      resetSwipeStyles();
+    }
   };
 
-  card.addEventListener(
-    "touchstart",
-    (event) => {
-      if (!isMobileMapLayout() || !pinnedAbbr || event.touches.length !== 1) {
-        return;
-      }
+  const onPointerDown = (event) => {
+    if (!isMobileMapLayout() || !pinnedAbbr) {
+      return;
+    }
+    if (event.pointerType === "mouse" && event.button !== 0) {
+      return;
+    }
 
-      const touch = event.touches[0];
-      sheetSwipe.startY = touch.clientY;
-      sheetSwipe.lastY = touch.clientY;
-      sheetSwipe.maxDy = 0;
-      sheetSwipe.mode = null;
-      sheetSwipe.scrollTopAtStart = card.scrollTop;
-      sheetSwipe.fromHandle = isInSheetHandleZone(card, touch.clientY);
-      card.style.transition = "none";
-    },
-    { passive: true }
-  );
+    const fromDragZone = dragZoneMatches(event.target);
+    const fromTopWhenScrolled =
+      !fromDragZone && card.scrollTop <= 0 && event.clientY - card.getBoundingClientRect().top <= 96;
 
-  card.addEventListener(
-    "touchmove",
-    (event) => {
-      if (!isMobileMapLayout() || !pinnedAbbr) {
-        return;
-      }
+    if (!fromDragZone && !fromTopWhenScrolled) {
+      return;
+    }
 
-      const touch = event.touches[0];
-      const dy = touch.clientY - sheetSwipe.startY;
-      sheetSwipe.lastY = touch.clientY;
+    sheetDrag = {
+      active: true,
+      pointerId: event.pointerId,
+      startY: event.clientY,
+      maxDy: 0,
+      fromDragZone,
+    };
 
-      if (sheetSwipe.mode === null) {
-        if (dy > 8 && (sheetSwipe.fromHandle || sheetSwipe.scrollTopAtStart === 0)) {
-          sheetSwipe.mode = "dismiss";
-        } else if (dy < -8 || card.scrollTop > sheetSwipe.scrollTopAtStart) {
-          sheetSwipe.mode = "scroll";
-          resetSwipeStyles();
-          return;
-        } else {
-          return;
-        }
-      }
+    card.setPointerCapture(event.pointerId);
+    card.classList.add("is-sheet-dragging");
+    card.style.transition = "none";
+    event.preventDefault();
+  };
 
-      if (sheetSwipe.mode !== "dismiss") {
-        return;
-      }
+  const onPointerMove = (event) => {
+    if (!sheetDrag?.active || event.pointerId !== sheetDrag.pointerId) {
+      return;
+    }
+    if (!isMobileMapLayout() || !pinnedAbbr) {
+      sheetDrag = null;
+      resetSwipeStyles();
+      return;
+    }
 
-      if (dy <= 0) {
-        sheetSwipe.maxDy = 0;
-        card.style.transform = "";
-        if (mobileSheetBackdrop) {
-          mobileSheetBackdrop.style.opacity = "";
-        }
-        return;
-      }
+    const dy = event.clientY - sheetDrag.startY;
 
-      event.preventDefault();
-      sheetSwipe.maxDy = Math.max(sheetSwipe.maxDy, dy);
-      const offset = Math.min(dy * 0.92, 320);
-      card.style.transform = `translateY(${offset}px)`;
-      if (mobileSheetBackdrop) {
-        mobileSheetBackdrop.style.opacity = String(Math.max(0.15, 0.45 - offset / 340));
-      }
-    },
-    { passive: false }
-  );
+    if (!sheetDrag.fromDragZone && card.scrollTop > 0) {
+      sheetDrag = null;
+      resetSwipeStyles();
+      return;
+    }
 
-  card.addEventListener("touchend", finishSwipe);
-  card.addEventListener("touchcancel", finishSwipe);
+    if (dy <= 0) {
+      sheetDrag.maxDy = 0;
+      applyDragOffset(0);
+      return;
+    }
+
+    event.preventDefault();
+    sheetDrag.maxDy = Math.max(sheetDrag.maxDy, dy);
+    applyDragOffset(dy);
+  };
+
+  const onPointerEnd = (event) => {
+    if (!sheetDrag?.active || event.pointerId !== sheetDrag.pointerId) {
+      return;
+    }
+
+    if (card.hasPointerCapture?.(event.pointerId)) {
+      card.releasePointerCapture(event.pointerId);
+    }
+
+    card.classList.remove("is-sheet-dragging");
+    finishDrag();
+  };
+
+  card.addEventListener("pointerdown", onPointerDown);
+  card.addEventListener("pointermove", onPointerMove, { passive: false });
+  card.addEventListener("pointerup", onPointerEnd);
+  card.addEventListener("pointercancel", onPointerEnd);
 }
 
 function normalizeAbbr(value) {
@@ -616,7 +642,10 @@ export function clearPin({ skipUrl = false } = {}) {
     syncUrl(null);
   }
 
-  if (hoverPath) {
+  if (isMobileMapLayout()) {
+    hoverPath = null;
+    hideSidebar();
+  } else if (hoverPath) {
     const abbr = hoverPath.id;
     highlightPath(hoverPath, abbr);
     updateSidebar(abbr, stateData[abbr]);

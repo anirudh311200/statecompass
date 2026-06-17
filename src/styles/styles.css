@@ -2578,23 +2578,46 @@ footer a:hover {
     overscroll-behavior: contain;
     -webkit-overflow-scrolling: touch;
     padding-bottom: calc(1.25rem + env(safe-area-inset-bottom, 0px));
-    touch-action: manipulation;
+    touch-action: pan-y;
+  }
+
+  .mobile-sheet-grabber {
+    display: none;
+  }
+
+  .sidebar.has-selection .mobile-sheet-grabber {
+    display: block;
+    flex-shrink: 0;
+    padding: 0.5rem 0 0.2rem;
+    touch-action: none;
+    -webkit-user-select: none;
+    user-select: none;
+    cursor: grab;
+  }
+
+  .mobile-sheet-grabber-bar {
+    display: block;
+    width: 2.5rem;
+    height: 0.25rem;
+    margin: 0 auto;
+    border-radius: 999px;
+    background: #3f3f3f;
   }
 
   .sidebar.has-selection .info-card-header {
     touch-action: none;
+    -webkit-user-select: none;
+    user-select: none;
+    cursor: grab;
   }
 
   .sidebar.has-selection .info-card::before {
-    content: "";
-    display: block;
-    width: 2.5rem;
-    height: 0.25rem;
-    margin: -0.35rem auto 0.85rem;
-    border-radius: 999px;
-    background: #3f3f3f;
-    flex-shrink: 0;
+    display: none;
+  }
+
+  .sidebar.has-selection .info-card.is-sheet-dragging {
     touch-action: none;
+    overflow: hidden;
   }
 
 }

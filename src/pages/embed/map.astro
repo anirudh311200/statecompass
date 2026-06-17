@@ -22,6 +22,9 @@ const site = Astro.site ?? new URL("https://statecompass.app");
 
       <aside class="embed-map-sidebar sidebar" id="sidebar">
         <div class="info-card" id="info-card" aria-live="polite">
+          <div class="mobile-sheet-grabber" id="mobile-sheet-grabber" aria-hidden="true">
+            <span class="mobile-sheet-grabber-bar"></span>
+          </div>
           <div class="info-card-header">
             <h2 class="embed-map-heading">State preview</h2>
             <button type="button" id="clear-pin" class="clear-pin-btn" hidden>
