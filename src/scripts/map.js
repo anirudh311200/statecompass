@@ -137,36 +137,59 @@ function resetMobileSheetChrome() {
 
 let sheetSwipe = null;
 
+const SHEET_DISMISS_THRESHOLD = 48;
+const SHEET_HANDLE_ZONE_PX = 64;
+
+function isInSheetHandleZone(card, clientY) {
+  return clientY - card.getBoundingClientRect().top <= SHEET_HANDLE_ZONE_PX;
+}
+
+function dismissMobileSheet() {
+  clearPin();
+  resetMobileSheetChrome();
+}
+
 function wireMobileSheetSwipe() {
   const card = document.getElementById("info-card");
   if (!card || sheetSwipe) {
     return;
   }
 
-  sheetSwipe = { startY: 0, lastY: 0, dragging: false };
+  sheetSwipe = {
+    startY: 0,
+    lastY: 0,
+    maxDy: 0,
+    mode: null,
+    scrollTopAtStart: 0,
+    fromHandle: false,
+  };
 
-  const finishSwipe = () => {
-    if (!sheetSwipe.dragging) {
-      return;
-    }
-
-    const dy = sheetSwipe.lastY - sheetSwipe.startY;
-    sheetSwipe.dragging = false;
-    card.style.transition = "transform 0.22s ease";
-
-    if (dy > 72) {
-      card.style.transform = "translateY(100%)";
-      window.setTimeout(() => {
-        clearPin();
-        resetMobileSheetChrome();
-      }, 180);
-      return;
-    }
-
+  const resetSwipeStyles = () => {
     card.style.transform = "";
+    card.style.transition = "";
     if (mobileSheetBackdrop) {
       mobileSheetBackdrop.style.opacity = "";
     }
+  };
+
+  const finishSwipe = () => {
+    const { mode, maxDy } = sheetSwipe;
+    sheetSwipe.mode = null;
+
+    if (mode !== "dismiss") {
+      resetSwipeStyles();
+      return;
+    }
+
+    card.style.transition = "transform 0.18s ease";
+
+    if (maxDy >= SHEET_DISMISS_THRESHOLD) {
+      card.style.transform = "translateY(100%)";
+      dismissMobileSheet();
+      return;
+    }
+
+    resetSwipeStyles();
   };
 
   card.addEventListener(
@@ -175,9 +198,14 @@ function wireMobileSheetSwipe() {
       if (!isMobileMapLayout() || !pinnedAbbr || event.touches.length !== 1) {
         return;
       }
-      sheetSwipe.startY = event.touches[0].clientY;
-      sheetSwipe.lastY = sheetSwipe.startY;
-      sheetSwipe.dragging = true;
+
+      const touch = event.touches[0];
+      sheetSwipe.startY = touch.clientY;
+      sheetSwipe.lastY = touch.clientY;
+      sheetSwipe.maxDy = 0;
+      sheetSwipe.mode = null;
+      sheetSwipe.scrollTopAtStart = card.scrollTop;
+      sheetSwipe.fromHandle = isInSheetHandleZone(card, touch.clientY);
       card.style.transition = "none";
     },
     { passive: true }
@@ -186,30 +214,45 @@ function wireMobileSheetSwipe() {
   card.addEventListener(
     "touchmove",
     (event) => {
-      if (!sheetSwipe.dragging || !isMobileMapLayout() || !pinnedAbbr) {
+      if (!isMobileMapLayout() || !pinnedAbbr) {
         return;
       }
 
-      const y = event.touches[0].clientY;
-      const dy = y - sheetSwipe.startY;
-      sheetSwipe.lastY = y;
+      const touch = event.touches[0];
+      const dy = touch.clientY - sheetSwipe.startY;
+      sheetSwipe.lastY = touch.clientY;
 
-      if (card.scrollTop > 0) {
-        sheetSwipe.dragging = false;
-        card.style.transform = "";
+      if (sheetSwipe.mode === null) {
+        if (dy > 8 && (sheetSwipe.fromHandle || sheetSwipe.scrollTopAtStart === 0)) {
+          sheetSwipe.mode = "dismiss";
+        } else if (dy < -8 || card.scrollTop > sheetSwipe.scrollTopAtStart) {
+          sheetSwipe.mode = "scroll";
+          resetSwipeStyles();
+          return;
+        } else {
+          return;
+        }
+      }
+
+      if (sheetSwipe.mode !== "dismiss") {
         return;
       }
 
       if (dy <= 0) {
+        sheetSwipe.maxDy = 0;
         card.style.transform = "";
+        if (mobileSheetBackdrop) {
+          mobileSheetBackdrop.style.opacity = "";
+        }
         return;
       }
 
       event.preventDefault();
-      const offset = Math.min(dy * 0.9, 280);
+      sheetSwipe.maxDy = Math.max(sheetSwipe.maxDy, dy);
+      const offset = Math.min(dy * 0.92, 320);
       card.style.transform = `translateY(${offset}px)`;
       if (mobileSheetBackdrop) {
-        mobileSheetBackdrop.style.opacity = String(Math.max(0.18, 0.45 - offset / 360));
+        mobileSheetBackdrop.style.opacity = String(Math.max(0.15, 0.45 - offset / 340));
       }
     },
     { passive: false }

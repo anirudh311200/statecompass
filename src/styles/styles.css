@@ -2509,9 +2509,19 @@ footer a:hover {
   .map-toolbar {
     flex-direction: column;
     align-items: stretch;
+    gap: 0.25rem;
+    margin-top: 0.2rem;
+    padding-top: 0.1rem;
+    padding-bottom: 0.1rem;
+  }
+
+  .page--home .map-toolbar {
+    margin-top: 0.2rem;
+    padding-top: 0.1rem;
   }
 
   .map-toolbar-controls {
+    flex: 0 0 auto;
     flex-direction: row;
     flex-wrap: nowrap;
     align-items: center;
@@ -2533,6 +2543,7 @@ footer a:hover {
   }
 
   .map-legend--inline {
+    flex: 0 0 auto;
     flex-wrap: wrap;
   }
 
@@ -2567,7 +2578,11 @@ footer a:hover {
     overscroll-behavior: contain;
     -webkit-overflow-scrolling: touch;
     padding-bottom: calc(1.25rem + env(safe-area-inset-bottom, 0px));
-    touch-action: pan-y;
+    touch-action: manipulation;
+  }
+
+  .sidebar.has-selection .info-card-header {
+    touch-action: none;
   }
 
   .sidebar.has-selection .info-card::before {
