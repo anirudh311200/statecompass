@@ -2579,6 +2579,13 @@ footer a:hover {
     -webkit-overflow-scrolling: touch;
     padding-bottom: calc(1.25rem + env(safe-area-inset-bottom, 0px));
     touch-action: pan-y;
+    transition:
+      max-height 0.28s cubic-bezier(0.32, 0.72, 0, 1),
+      transform 0.18s ease;
+  }
+
+  .sidebar.has-selection .info-card.is-sheet-expanded {
+    max-height: min(88dvh, calc(100dvh - 3.25rem));
   }
 
   .mobile-sheet-grabber {

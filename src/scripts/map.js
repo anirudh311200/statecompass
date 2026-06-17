@@ -110,6 +110,10 @@ function syncMobileSheetPeek() {
     return;
   }
 
+  if (card.classList.contains("is-sheet-expanded")) {
+    return;
+  }
+
   const anchor = getSheetPeekAnchor();
   if (!anchor || anchor.hidden) {
     return;
@@ -123,10 +127,29 @@ function syncMobileSheetPeek() {
   card.style.setProperty("--mobile-sheet-peek", `${Math.min(cap, Math.max(floor, peekBottom))}px`);
 }
 
+function expandMobileSheet() {
+  const card = document.getElementById("info-card");
+  if (!card || !isMobileMapLayout() || !pinnedAbbr) {
+    return;
+  }
+  card.classList.add("is-sheet-expanded");
+  card.scrollTop = 0;
+}
+
+function collapseMobileSheetPeek() {
+  const card = document.getElementById("info-card");
+  if (!card) {
+    return;
+  }
+  card.classList.remove("is-sheet-expanded");
+  card.scrollTop = 0;
+  syncMobileSheetPeek();
+}
+
 function resetMobileSheetChrome() {
   const card = document.getElementById("info-card");
   if (card) {
-    card.classList.remove("is-sheet-dragging");
+    card.classList.remove("is-sheet-dragging", "is-sheet-expanded");
     card.style.removeProperty("--mobile-sheet-peek");
     card.style.removeProperty("transform");
     card.style.removeProperty("transition");
@@ -140,6 +163,9 @@ let sheetDrag = null;
 let sheetSwipeWired = false;
 
 const SHEET_DISMISS_THRESHOLD = 40;
+const SHEET_EXPAND_THRESHOLD = 32;
+const SHEET_COLLAPSE_THRESHOLD = 40;
+const SHEET_DISMISS_FROM_EXPANDED = 72;
 
 function dismissMobileSheet() {
   if (!pinnedAbbr) {
@@ -166,6 +192,9 @@ function wireMobileSheetSwipe() {
     if (!target || !(target instanceof Element)) {
       return false;
     }
+    if (target.closest("#clear-pin, .clear-pin-btn, .bookmark-btn, .state-name-link")) {
+      return false;
+    }
     return Boolean(
       grabber?.contains(target) ||
         header?.contains(target) ||
@@ -182,7 +211,7 @@ function wireMobileSheetSwipe() {
     }
   };
 
-  const applyDragOffset = (dy) => {
+  const applyDismissOffset = (dy) => {
     const offset = Math.min(Math.max(dy, 0), 420);
     card.style.transform = offset > 0 ? `translateY(${offset}px)` : "";
     if (mobileSheetBackdrop) {
@@ -191,22 +220,44 @@ function wireMobileSheetSwipe() {
     }
   };
 
-  const finishDrag = () => {
-    if (!sheetDrag?.active) {
-      return;
-    }
+  const applyExpandLift = (dy) => {
+    const lift = Math.max(dy * 0.5, -80);
+    card.style.transform = lift < 0 ? `translateY(${lift}px)` : "";
+  };
 
-    const { maxDy, fromDragZone } = sheetDrag;
-    sheetDrag = null;
+  const finishDrag = (dragState) => {
+    const { maxDownDy, minDy, fromDragZone } = dragState;
+    const expanded = card.classList.contains("is-sheet-expanded");
 
-    if (maxDy >= SHEET_DISMISS_THRESHOLD) {
+    card.style.transition = "transform 0.18s ease, max-height 0.28s ease";
+    resetSwipeStyles();
+
+    if (maxDownDy >= SHEET_DISMISS_FROM_EXPANDED) {
       dismissMobileSheet();
       return;
     }
 
-    if (fromDragZone || maxDy > 0) {
-      card.style.transition = "transform 0.18s ease";
-      resetSwipeStyles();
+    if (maxDownDy >= SHEET_DISMISS_THRESHOLD && !expanded) {
+      dismissMobileSheet();
+      return;
+    }
+
+    if (maxDownDy >= SHEET_COLLAPSE_THRESHOLD && expanded) {
+      collapseMobileSheetPeek();
+      return;
+    }
+
+    if (minDy <= -SHEET_EXPAND_THRESHOLD && !expanded) {
+      expandMobileSheet();
+      return;
+    }
+
+    if (fromDragZone && maxDownDy === 0 && minDy === 0) {
+      if (expanded) {
+        collapseMobileSheetPeek();
+      } else {
+        expandMobileSheet();
+      }
     }
   };
 
@@ -219,10 +270,7 @@ function wireMobileSheetSwipe() {
     }
 
     const fromDragZone = dragZoneMatches(event.target);
-    const fromTopWhenScrolled =
-      !fromDragZone && card.scrollTop <= 0 && event.clientY - card.getBoundingClientRect().top <= 96;
-
-    if (!fromDragZone && !fromTopWhenScrolled) {
+    if (!fromDragZone) {
       return;
     }
 
@@ -230,7 +278,8 @@ function wireMobileSheetSwipe() {
       active: true,
       pointerId: event.pointerId,
       startY: event.clientY,
-      maxDy: 0,
+      maxDownDy: 0,
+      minDy: 0,
       fromDragZone,
     };
 
@@ -251,22 +300,22 @@ function wireMobileSheetSwipe() {
     }
 
     const dy = event.clientY - sheetDrag.startY;
-
-    if (!sheetDrag.fromDragZone && card.scrollTop > 0) {
-      sheetDrag = null;
-      resetSwipeStyles();
-      return;
-    }
-
-    if (dy <= 0) {
-      sheetDrag.maxDy = 0;
-      applyDragOffset(0);
-      return;
-    }
+    const expanded = card.classList.contains("is-sheet-expanded");
 
     event.preventDefault();
-    sheetDrag.maxDy = Math.max(sheetDrag.maxDy, dy);
-    applyDragOffset(dy);
+
+    if (dy > 0) {
+      sheetDrag.maxDownDy = Math.max(sheetDrag.maxDownDy, dy);
+      applyDismissOffset(dy);
+      return;
+    }
+
+    if (dy < 0) {
+      sheetDrag.minDy = Math.min(sheetDrag.minDy, dy);
+      if (!expanded) {
+        applyExpandLift(dy);
+      }
+    }
   };
 
   const onPointerEnd = (event) => {
@@ -274,12 +323,15 @@ function wireMobileSheetSwipe() {
       return;
     }
 
+    const dragState = { ...sheetDrag };
+    sheetDrag = null;
+
     if (card.hasPointerCapture?.(event.pointerId)) {
       card.releasePointerCapture(event.pointerId);
     }
 
     card.classList.remove("is-sheet-dragging");
-    finishDrag();
+    finishDrag(dragState);
   };
 
   card.addEventListener("pointerdown", onPointerDown);
@@ -607,6 +659,11 @@ export function pinState(abbr, { skipUrl = false, focusSidebar = false } = {}) {
   pinnedPath = path;
   path.classList.add("is-pinned");
   highlightPath(path, normalized);
+
+  if (isMobileMapLayout()) {
+    document.getElementById("info-card")?.classList.remove("is-sheet-expanded");
+  }
+
   updateSidebar(normalized, stateData[normalized]);
   updateMapDimming();
 
