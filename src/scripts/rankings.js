@@ -16,17 +16,31 @@ import {
   buildStateDetailUrl,
 } from "./yearData.js";
 
+const SORT_DEFAULT_DIR = {
+  rank: "asc",
+  score: "desc",
+  name: "asc",
+  cnbc: "asc",
+};
+
+const SORT_LABELS = {
+  rank: "Rank",
+  score: "Score",
+  name: "State",
+  cnbc: "CNBC rank",
+};
+
 export async function initRankings() {
   const tbody = document.getElementById("rankings-body");
   const emptyMsg = document.getElementById("rankings-empty");
-  const sortSelect = document.getElementById("rankings-sort");
   const filterButtons = document.querySelectorAll(".tier-filter-btn");
+  const sortButtons = document.querySelectorAll(".rankings-sort-btn");
   const profileSelect = document.querySelector("[data-founder-fit-select]");
   const disclaimer = document.querySelector("[data-founder-fit-disclaimer]");
   const modeLabel = document.getElementById("rankings-mode-label");
   const rankHeader = document.getElementById("rankings-rank-header");
   const scoreHeader = document.getElementById("rankings-score-header");
-  const cnbcHeader = document.getElementById("rankings-cnbc-header");
+  const cnbcHeaderCol = document.getElementById("rankings-cnbc-header-col");
   const yearSelect = document.querySelector("[data-year-select]");
 
   if (!tbody) {
@@ -42,6 +56,7 @@ export async function initRankings() {
   const rows = Array.from(tbody.querySelectorAll(".rankings-row"));
   let activeTier = "all";
   let sortKey = "rank";
+  let sortDir = SORT_DEFAULT_DIR.rank;
   let activeProfile = getProfileFromUrl();
 
   function populateRowsFromYear() {
@@ -111,19 +126,31 @@ export async function initRankings() {
 
     if (modeLabel) {
       modeLabel.textContent = isFounderFit
-        ? `Founder Fit: ${profileLabel} — CNBC ${currentYear}, derived from category scores. Click a row for the full breakdown.`
-        : `CNBC America's Top States for Business, ${currentYear} — click a row for the full breakdown.`;
+        ? `Founder Fit: ${profileLabel} — CNBC ${currentYear}, derived from category scores. Click a column header to sort; click a row for the full breakdown.`
+        : `CNBC America's Top States for Business, ${currentYear} — click a column header to sort; click a row for the full breakdown.`;
     }
 
-    if (rankHeader) {
-      rankHeader.textContent = isFounderFit ? "Fit rank" : "Rank";
+    const rankLabel = rankHeader?.querySelector(".rankings-sort-label");
+    const scoreLabel = scoreHeader?.querySelector(".rankings-sort-label");
+    if (rankLabel) {
+      rankLabel.textContent = isFounderFit ? "Fit rank" : "Rank";
     }
-    if (scoreHeader) {
-      scoreHeader.textContent = isFounderFit ? "Fit score" : "Score";
+    if (scoreLabel) {
+      scoreLabel.textContent = isFounderFit ? "Fit score" : "Score";
     }
-    if (cnbcHeader) {
-      cnbcHeader.hidden = !isFounderFit;
+
+    if (cnbcHeaderCol) {
+      cnbcHeaderCol.hidden = !isFounderFit;
     }
+
+    rows.forEach((row) => {
+      const cnbcCell = row.querySelector(".rankings-cnbc");
+      if (cnbcCell) {
+        cnbcCell.hidden = !isFounderFit;
+      }
+    });
+
+    updateSortIndicators();
   }
 
   function applyProfileToRows(profileId) {
@@ -148,6 +175,7 @@ export async function initRankings() {
         scoreCell.textContent = `${fit.founderFitScore100}/100`;
         if (cnbcCell) {
           cnbcCell.textContent = `#${cnbcRank}`;
+          cnbcCell.hidden = false;
         }
       } else {
         row.dataset.rank = cnbcRank;
@@ -156,6 +184,7 @@ export async function initRankings() {
         scoreCell.textContent = `${cnbcScore}/100`;
         if (cnbcCell) {
           cnbcCell.textContent = "";
+          cnbcCell.hidden = true;
         }
       }
 
@@ -171,20 +200,61 @@ export async function initRankings() {
   }
 
   function compareRows(a, b) {
+    let result = 0;
+
     if (sortKey === "name") {
-      return a.dataset.name.localeCompare(b.dataset.name);
+      result = a.dataset.name.localeCompare(b.dataset.name);
+    } else if (sortKey === "score") {
+      result = Number(a.dataset.score) - Number(b.dataset.score);
+    } else if (sortKey === "cnbc") {
+      result = Number(a.dataset.cnbcRank) - Number(b.dataset.cnbcRank);
+    } else {
+      result = Number(a.dataset.rank) - Number(b.dataset.rank);
     }
-    if (sortKey === "score") {
-      return Number(b.dataset.score) - Number(a.dataset.score);
-    }
-    if (sortKey === "tier") {
-      const tierOrder = { green: 0, yellow: 1, red: 2 };
-      return tierOrder[a.dataset.tier] - tierOrder[b.dataset.tier];
-    }
-    if (sortKey === "cnbc") {
-      return Number(a.dataset.cnbcRank) - Number(b.dataset.cnbcRank);
-    }
-    return Number(a.dataset.rank) - Number(b.dataset.rank);
+
+    return sortDir === "desc" ? -result : result;
+  }
+
+  function updateSortIndicators() {
+    sortButtons.forEach((button) => {
+      const key = button.dataset.sort;
+      const active = key === sortKey;
+      const indicator = button.querySelector(".rankings-sort-indicator");
+      const th = button.closest("th");
+
+      button.classList.toggle("is-sorted", active);
+
+      if (indicator) {
+        indicator.textContent = active ? (sortDir === "asc" ? "▲" : "▼") : "";
+      }
+
+      if (th) {
+        th.setAttribute(
+          "aria-sort",
+          active ? (sortDir === "asc" ? "ascending" : "descending") : "none"
+        );
+      }
+
+      const columnLabel =
+        key === "rank"
+          ? (rankHeader?.querySelector(".rankings-sort-label")?.textContent ?? SORT_LABELS.rank)
+          : key === "score"
+            ? (scoreHeader?.querySelector(".rankings-sort-label")?.textContent ?? SORT_LABELS.score)
+            : (SORT_LABELS[key] ?? key);
+
+      const directionLabel = active
+        ? sortDir === "asc"
+          ? "ascending"
+          : "descending"
+        : "not sorted";
+
+      button.setAttribute(
+        "aria-label",
+        active
+          ? `Sort by ${columnLabel}, ${directionLabel}. Click to reverse.`
+          : `Sort by ${columnLabel}`
+      );
+    });
   }
 
   function applyView() {
@@ -207,6 +277,17 @@ export async function initRankings() {
     }
   }
 
+  function setSort(key) {
+    if (sortKey === key) {
+      sortDir = sortDir === "asc" ? "desc" : "asc";
+    } else {
+      sortKey = key;
+      sortDir = SORT_DEFAULT_DIR[key] ?? "asc";
+    }
+    updateSortIndicators();
+    applyView();
+  }
+
   function setProfile(profileId) {
     activeProfile = profileId;
     if (profileSelect) {
@@ -225,9 +306,10 @@ export async function initRankings() {
     });
   });
 
-  sortSelect?.addEventListener("change", () => {
-    sortKey = sortSelect.value;
-    applyView();
+  sortButtons.forEach((button) => {
+    button.addEventListener("click", () => {
+      setSort(button.dataset.sort);
+    });
   });
 
   tbody.addEventListener("click", (event) => {
@@ -263,5 +345,6 @@ export async function initRankings() {
     profileSelect.value = activeProfile;
   }
   applyProfileToRows(activeProfile);
+  updateSortIndicators();
   applyView();
 }

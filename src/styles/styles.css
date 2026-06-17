@@ -2255,6 +2255,9 @@ footer a:hover {
 }
 
 .tier-filter-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
   padding: 0.4rem 0.75rem;
   border: 1px solid var(--border);
   border-radius: 8px;
@@ -2264,6 +2267,29 @@ footer a:hover {
   font-size: var(--text-xs);
   font-weight: var(--weight-ui);
   cursor: pointer;
+}
+
+.tier-filter-swatch {
+  width: 14px;
+  height: 6px;
+  border-radius: 999px;
+  flex-shrink: 0;
+  box-shadow: 0 0 8px currentColor;
+}
+
+.tier-filter-swatch.green {
+  background: var(--tier-green-fill);
+  color: var(--tier-green-glow);
+}
+
+.tier-filter-swatch.yellow {
+  background: var(--tier-yellow-fill);
+  color: var(--tier-yellow-glow);
+}
+
+.tier-filter-swatch.red {
+  background: var(--tier-red-fill);
+  color: var(--tier-red-glow);
 }
 
 .tier-filter-btn.is-active {
@@ -2330,6 +2356,45 @@ footer a:hover {
   color: var(--muted);
   font-weight: var(--weight-heading);
   background: rgba(255, 255, 255, 0.02);
+  vertical-align: bottom;
+}
+
+.rankings-sort-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0;
+  border: none;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+  letter-spacing: inherit;
+  text-transform: inherit;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.rankings-sort-btn:hover {
+  color: var(--text);
+}
+
+.rankings-sort-btn.is-sorted {
+  color: var(--text);
+}
+
+.rankings-sort-btn:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.rankings-sort-indicator {
+  display: inline-block;
+  min-width: 0.65rem;
+  font-size: 0.65rem;
+  line-height: 1;
+  color: var(--accent);
 }
 
 .rankings-row {

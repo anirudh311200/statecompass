@@ -6,6 +6,12 @@ import { getStateList, dataYear } from "../lib/states.js";
 import { TIER_LABELS, TIER_FILTER_LABELS } from "../scripts/categories.js";
 
 const stateList = getStateList().sort((a, b) => a.rank - b.rank);
+
+const tierFilters = [
+  { tier: "green", label: TIER_FILTER_LABELS.green },
+  { tier: "yellow", label: TIER_FILTER_LABELS.yellow },
+  { tier: "red", label: TIER_FILTER_LABELS.red },
+] as const;
 ---
 
 <Layout
@@ -32,26 +38,15 @@ const stateList = getStateList().sort((a, b) => a.rank - b.rank);
           <button type="button" class="tier-filter-btn is-active" data-tier="all">
             All
           </button>
-          <button type="button" class="tier-filter-btn" data-tier="green">
-            {TIER_FILTER_LABELS.green}
-          </button>
-          <button type="button" class="tier-filter-btn" data-tier="yellow">
-            {TIER_FILTER_LABELS.yellow}
-          </button>
-          <button type="button" class="tier-filter-btn" data-tier="red">
-            {TIER_FILTER_LABELS.red}
-          </button>
+          {
+            tierFilters.map(({ tier, label }) => (
+              <button type="button" class="tier-filter-btn" data-tier={tier}>
+                <span class={`tier-filter-swatch ${tier}`} aria-hidden="true" />
+                <span>{label}</span>
+              </button>
+            ))
+          }
         </div>
-      </div>
-
-      <div class="rankings-sort">
-        <label class="toolbar-label" for="rankings-sort">Sort by</label>
-        <select id="rankings-sort" class="rankings-sort-select">
-          <option value="rank">Rank (default)</option>
-          <option value="score">Score</option>
-          <option value="name">State name</option>
-          <option value="cnbc">CNBC rank</option>
-        </select>
       </div>
     </div>
 
@@ -59,10 +54,35 @@ const stateList = getStateList().sort((a, b) => a.rank - b.rank);
       <table class="rankings-table" id="rankings-table">
         <thead>
           <tr>
-            <th scope="col" id="rankings-rank-header" class="is-sorted">Rank</th>
-            <th scope="col">State</th>
-            <th scope="col" id="rankings-score-header">Score</th>
-            <th scope="col" id="rankings-cnbc-header" hidden>CNBC rank</th>
+            <th scope="col" aria-sort="ascending">
+              <button
+                type="button"
+                class="rankings-sort-btn is-sorted"
+                data-sort="rank"
+                id="rankings-rank-header"
+              >
+                <span class="rankings-sort-label">Rank</span>
+                <span class="rankings-sort-indicator" aria-hidden="true">▲</span>
+              </button>
+            </th>
+            <th scope="col" aria-sort="none">
+              <button type="button" class="rankings-sort-btn" data-sort="name" id="rankings-name-header">
+                <span class="rankings-sort-label">State</span>
+                <span class="rankings-sort-indicator" aria-hidden="true"></span>
+              </button>
+            </th>
+            <th scope="col" aria-sort="none">
+              <button type="button" class="rankings-sort-btn" data-sort="score" id="rankings-score-header">
+                <span class="rankings-sort-label">Score</span>
+                <span class="rankings-sort-indicator" aria-hidden="true"></span>
+              </button>
+            </th>
+            <th scope="col" id="rankings-cnbc-header-col" hidden aria-sort="none">
+              <button type="button" class="rankings-sort-btn" data-sort="cnbc" id="rankings-cnbc-header">
+                <span class="rankings-sort-label">CNBC rank</span>
+                <span class="rankings-sort-indicator" aria-hidden="true"></span>
+              </button>
+            </th>
             <th scope="col">Tier</th>
           </tr>
         </thead>

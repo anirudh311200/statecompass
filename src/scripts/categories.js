@@ -34,9 +34,9 @@ export const TIER_LABELS = {
 };
 
 export const TIER_FILTER_LABELS = {
-  green: "Green — 1–17",
-  yellow: "Yellow — 18–34",
-  red: "Red — 35–50",
+  green: "Very favourable · 1–17",
+  yellow: "Moderate · 18–34",
+  red: "Less favourable · 35–50",
 };
 
 /** SVG gradient ids — injected into #us-map at runtime. */
