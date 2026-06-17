@@ -165,11 +165,20 @@ function renderSummary(abbrs) {
   container.replaceChildren();
   const showFounderFit = activeProfile !== FOUNDER_FIT_OVERALL && founderFitLookup;
 
+  let bestRank = Infinity;
+  abbrs.forEach((abbr) => {
+    const rank = stateData[abbr].rank;
+    if (rank < bestRank) {
+      bestRank = rank;
+    }
+  });
+
   abbrs.forEach((abbr) => {
     const info = stateData[abbr];
     const fit = showFounderFit ? founderFitLookup[abbr] : null;
     const card = document.createElement("div");
-    card.className = `compare-summary-card tier-border-${info.tier}`;
+    const isLeading = info.rank === bestRank;
+    card.className = `compare-summary-card tier-border-${info.tier}${isLeading ? " is-leading" : ""}`;
     card.innerHTML = `
       <h3 class="compare-state-name">${info.name}</h3>
       <div class="compare-score-row">

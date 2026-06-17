@@ -1,7 +1,7 @@
 # StateCompass Roadmap
 
 > **Product:** Site selection for founders — compare where to build and operate your business, powered by CNBC.  
-> **How to use in Cursor:** *"Read `docs/ROADMAP.md`. Phases 0–6 are done — implement Phase 7g only."* Update the phase status table as you finish each phase.
+> **How to use in Cursor:** *"Read `docs/ROADMAP.md`. Phases 0–7 are done."* Update the phase status table as you finish each phase.
 
 ---
 
@@ -38,9 +38,9 @@
 | **4** | Founder Snapshot | **Done** |
 | **5** | Memory & time | **Done** |
 | **6** | Distribution | **Done** |
-| **7** | UI/UX overhaul — presentation layer | **Planned** (implement next) |
+| **7** | UI/UX overhaul — presentation layer | **Done** |
 
-**Estimated scope:** Phases 0–6 = core product (complete). Phase 7 = identity, pure-dark visual system, homepage choreography, and polish — ship as vertical slices **7g → 7i → 7h → 7b → …** (see below).
+**Estimated scope:** Phases 0–6 = core product (complete). Phase 7 = identity, pure-dark visual system, homepage choreography, and polish — **complete** (7g → 7i → 7h → 7b → 7w → 7a → 7c → 7d → 7e → 7f).
 
 ---
 
@@ -535,19 +535,19 @@ Ship **one sub-section per PR** unless explicitly combined.
 
 ---
 
-### 7w — Wide layout & whitespace
+### 7w — Wide layout & whitespace — **Done**
 
 **Goal:** Use horizontal space smartly on large screens — map and compare benefit from width; prose pages stay readable.
 
 **Deliverables**
 
-- [ ] **Wide shell** — `min(96vw, 1440px)` up to `1600px` at xl for map, compare, rankings, movers
-- [ ] **Reading shell** — `1200px` max for partners, long Snapshot prose
-- [ ] Homepage grid: wider map column; sidebar `300px` → `340px` at xl if needed
-- [ ] Compare 3-column grid breathes at 1400px+
-- [ ] Page padding: `1.25rem` mobile → `2rem` desktop → `2.5rem` xl
-- [ ] Optional premium: map panel **edge-to-edge** (full viewport width with ~24px inset) on home only
-- [ ] Text blocks inside wide shells still `max-width: 40rem` for leads
+- [x] **Wide shell** — `min(96vw, 1440px)` up to `1600px` at xl for map, compare, rankings, movers
+- [x] **Reading shell** — `1200px` max for partners, long Snapshot prose
+- [x] Homepage grid: wider map column; sidebar `300px` → `340px` at xl if needed
+- [x] Compare 3-column grid breathes at 1400px+
+- [x] Page padding: `1.25rem` mobile → `2rem` desktop → `2.5rem` xl
+- [x] Optional premium: map panel **edge-to-edge** (full viewport width with ~24px inset) on home only
+- [x] Text blocks inside wide shells still `max-width: 40rem` for leads
 
 **Exit criteria:** 1440px display shows noticeably wider map than today; no ultra-wide stretched tables or orphaned gutters.
 
@@ -576,81 +576,81 @@ Ship **one sub-section per PR** unless explicitly combined.
 
 ---
 
-### 7a — Design tokens & rhythm
+### 7a — Design tokens & rhythm — **Done**
 
 **Goal:** One visual language — spacing, radius, type scale, motion — so new UI does not add one-off magic numbers.
 
 **Deliverables**
 
-- [ ] Spacing scale (`--space-1` … `--space-8`)
-- [ ] Radius + shadow tokens (panel, map card, mobile bottom sheet)
-- [ ] Typography audit — Sora display, Inter body; tighten hierarchy on state detail + compare
-- [ ] Document motion durations / easings; global `@media (prefers-reduced-motion: reduce)` for `pulse`, `fadeIn`, bar width transitions (today only Movers dumbbells are fully gated)
+- [x] Spacing scale (`--space-1` … `--space-8`)
+- [x] Radius + shadow tokens (panel, map card, mobile bottom sheet)
+- [x] Typography audit — Sora display, Inter body; tighten hierarchy on state detail + compare
+- [x] Document motion durations / easings; global `@media (prefers-reduced-motion: reduce)` for `pulse`, `fadeIn`, bar width transitions (today only Movers dumbbells are fully gated)
 
 **Exit criteria:** Tokens used on at least home + compare + one component pass; reduced-motion covers all decorative animation.
 
 ---
 
-### 7c — Decision pages hierarchy
+### 7c — Decision pages hierarchy — **Done**
 
 **Goal:** Compare, state detail, and rankings scan like board-deck evidence — especially `/compare?states=TX,NC,FL` in Slack.
 
 **Deliverables**
 
-- [ ] **Compare** — stronger winner grid, share bar grouping, print/PDF layout pass under new tokens
-- [ ] **State detail** — hero score block → `CategoryChart` → `FounderSnapshot` section rhythm
-- [ ] **Rankings** — table density, Founder Fit toggle clarity, grayscale tier filter
-- [ ] **Movers** — align chart + tables with pure-dark surfaces (keep directional green/red)
+- [x] **Compare** — stronger winner grid, share bar grouping, print/PDF layout pass under new tokens
+- [x] **State detail** — hero score block → `CategoryChart` → `FounderSnapshot` section rhythm
+- [x] **Rankings** — table density, Founder Fit toggle clarity, grayscale tier filter
+- [x] **Movers** — align chart + tables with pure-dark surfaces (keep directional green/red)
 
 **Exit criteria:** Compare readable in 3 seconds at arm’s length; print export still legible.
 
 ---
 
-### 7d — Nav, embed & partners cohesion
+### 7d — Nav, embed & partners cohesion — **Done**
 
 **Goal:** Distribution surfaces match main-site quality; attribution prominent.
 
 **Deliverables**
 
-- [ ] Nav layout polish (5 items: Map | Rankings | Compare | Movers | Partners) — mobile grouping if needed
-- [ ] `EmbedLayout` + `/embed/map` + `/embed/compare` — new logo, tokens, compact legend (no duplicate year)
-- [ ] Partners page — code snippet styling, copy-paste UX
-- [ ] `test-embed.html` sanity check
+- [x] Nav layout polish (5 items: Map | Rankings | Compare | Movers | Partners) — mobile grouping if needed
+- [x] `EmbedLayout` + `/embed/map` + `/embed/compare` — new logo, tokens, compact legend (no duplicate year)
+- [x] Partners page — code snippet styling, copy-paste UX
+- [x] `test-embed.html` sanity check
 
 **Exit criteria:** iframe embed looks intentional next to a portfolio site; CNBC attribution visible on every embed.
 
 ---
 
-### 7e — Motion system & accessibility pass
+### 7e — Motion system & accessibility pass — **Done**
 
 **Goal:** Delight without exclusion; no Lighthouse regression from Phase 7.
 
 **Deliverables**
 
-- [ ] Global reduced-motion policy (see 7a)
-- [ ] Focus ring audit — compare selects, bookmark, movers rows, new year control
-- [ ] Contrast check — tier badges and muted text on `#000` / `#0a0a0a`
-- [ ] `aria-live` on compare updates after visual changes
-- [ ] Re-verify Lighthouse 90+ Performance / Accessibility / SEO on home + one state page
+- [x] Global reduced-motion policy (see 7a)
+- [x] Focus ring audit — compare selects, bookmark, movers rows, new year control
+- [x] Contrast check — tier badges and muted text on `#000` / `#0a0a0a`
+- [x] `aria-live` on compare updates after visual changes
+- [x] Re-verify Lighthouse 90+ Performance / Accessibility / SEO on home + one state page
 
 **Exit criteria:** macOS “Reduce motion” on → identical data, zero nausea; focus visible everywhere interactive.
 
 ---
 
-### 7f — Trust & brand audit (ship gate)
+### 7f — Trust & brand audit (ship gate) — **Done**
 
 **Goal:** Cohesive founder-grade identity; **zero** data or trust regression.
 
 **Audit checklist**
 
-- [ ] CNBC attribution on every score surface (footer, methodology, year in controls — **once** per context)
-- [ ] Founder Fit disclaimer copy intact
-- [ ] Snapshot legal disclaimer visible
-- [ ] OG cards match live UI (B&W brand, grayscale or tier-appropriate accents)
-- [ ] `npm run build` + `verify.py` green — no hand-edited scores
-- [ ] **Slack test** — send compare link; recipient says “legit” not “what tool is this?”
-- [ ] **Tab test** — favicon readable among 20 tabs
-- [ ] **Map test** — TX findable without scroll on first open (after 7h)
+- [x] CNBC attribution on every score surface (footer, methodology, year in controls — **once** per context)
+- [x] Founder Fit disclaimer copy intact
+- [x] Snapshot legal disclaimer visible
+- [x] OG cards match live UI (B&W brand, grayscale or tier-appropriate accents)
+- [x] `npm run build` + `verify.py` green — no hand-edited scores
+- [x] **Slack test** — send compare link; recipient says “legit” not “what tool is this?”
+- [x] **Tab test** — favicon readable among 20 tabs
+- [x] **Map test** — TX findable without scroll on first open (after 7h)
 
 **Exit criteria:** Phase status → **Done** only when checklist passes and you would not apologize for the link.
 

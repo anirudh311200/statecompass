@@ -10,18 +10,13 @@ const {
 } = Astro.props;
 
 const path = Astro.url.pathname;
-const navItems = [
-  { href: "/", label: "Map", match: (p) => p === "/" },
-  { href: "/rankings", label: "Rankings", match: (p) => p.startsWith("/rankings") },
-  { href: "/compare", label: "Compare", match: (p) => p.startsWith("/compare") },
-  { href: "/movers", label: "Movers", match: (p) => p.startsWith("/movers") },
-  {
-    href: "/partners",
-    label: "Partners",
-    match: (p) => p.startsWith("/partners"),
-    hideOnMobile: true,
-  },
+const primaryNav = [
+  { href: "/", label: "Map", match: (p: string) => p === "/" },
+  { href: "/rankings", label: "Rankings", match: (p: string) => p.startsWith("/rankings") },
+  { href: "/compare", label: "Compare", match: (p: string) => p.startsWith("/compare") },
+  { href: "/movers", label: "Movers", match: (p: string) => p.startsWith("/movers") },
 ];
+const partnersActive = path.startsWith("/partners");
 ---
 
 <header class:list={["site-header", { "site-header--compact": compact }]}>
@@ -31,19 +26,36 @@ const navItems = [
 
   <nav class="site-nav" aria-label="Main">
     {
-      navItems.map((item) => (
+      primaryNav.map((item) => (
         <a
           href={item.href}
-          class:list={[
-            "nav-link",
-            { "is-active": item.match(path), "nav-link--partners": item.hideOnMobile },
-          ]}
+          class:list={["nav-link", { "is-active": item.match(path) }]}
           aria-current={item.match(path) ? "page" : undefined}
         >
           {item.label}
         </a>
       ))
     }
+    <a
+      href="/partners"
+      class:list={["nav-link", "nav-link--partners-desktop", { "is-active": partnersActive }]}
+      aria-current={partnersActive ? "page" : undefined}
+    >
+      Partners
+    </a>
+    <details class="nav-more">
+      <summary class="nav-link nav-more-trigger">More</summary>
+      <div class="nav-more-menu" role="menu">
+        <a
+          href="/partners"
+          class:list={["nav-more-link", { "is-active": partnersActive }]}
+          role="menuitem"
+          aria-current={partnersActive ? "page" : undefined}
+        >
+          Partners
+        </a>
+      </div>
+    </details>
   </nav>
 
   <p class="subtitle">{subtitle}</p>
