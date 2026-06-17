@@ -1006,6 +1006,22 @@ textarea {
   font-weight: var(--weight-body);
 }
 
+.rank-footnote-direction {
+  font-weight: 700;
+}
+
+.rank-footnote-direction.is-up,
+.rank-footnote.is-up .rank-footnote-direction.is-up {
+  color: var(--green-bright);
+  text-shadow: 0 0 10px var(--tier-green-glow);
+}
+
+.rank-footnote-direction.is-down,
+.rank-footnote.is-down .rank-footnote-direction.is-down {
+  color: var(--red-bright);
+  text-shadow: 0 0 10px var(--tier-red-glow);
+}
+
 .rank-footnote[hidden] {
   display: none;
 }
@@ -2449,6 +2465,14 @@ footer a:hover {
     overflow-y: auto;
   }
 
+  .sidebar.has-selection::before {
+    content: "";
+    display: block;
+    height: var(--info-card-spacer, 0);
+    flex-shrink: 0;
+    pointer-events: none;
+  }
+
 }
 
 @media print {
@@ -2852,17 +2876,19 @@ footer a:hover {
 }
 
 .saved-count {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
+  display: inline-grid;
+  place-items: center;
   min-width: 1.35rem;
   height: 1.35rem;
-  padding: 0 0.35rem;
+  padding: 0 0.3rem;
   border-radius: 999px;
   background: rgba(255, 255, 255, 0.08);
   color: var(--muted);
   font-size: var(--type-caption);
   font-weight: 600;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+  box-sizing: border-box;
 }
 
 .compare-toolbar-row {

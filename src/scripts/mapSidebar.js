@@ -26,13 +26,19 @@ let focusedAbbr = null;
 function formatOverallFootnote(cnbcRank, fitRank) {
   const delta = cnbcRank - fitRank;
   if (delta === 0) {
-    return `Same as #${cnbcRank} overall`;
+    return { html: `Same as #${cnbcRank} overall` };
   }
   if (delta > 0) {
-    return `↑ ${delta} spot${delta > 1 ? "s" : ""} vs #${cnbcRank} overall`;
+    return {
+      html: `<span class="rank-footnote-direction is-up" aria-hidden="true">↑</span> ${delta} spot${delta > 1 ? "s" : ""} vs #${cnbcRank} overall`,
+      direction: "up",
+    };
   }
   const drop = Math.abs(delta);
-  return `↓ ${drop} spot${drop > 1 ? "s" : ""} vs #${cnbcRank} overall`;
+  return {
+    html: `<span class="rank-footnote-direction is-down" aria-hidden="true">↓</span> ${drop} spot${drop > 1 ? "s" : ""} vs #${cnbcRank} overall`,
+    direction: "down",
+  };
 }
 
 function syncMapUrl() {
@@ -119,9 +125,16 @@ function applySidebarLens(abbr, info) {
   }
   if (footnote) {
     if (isProfile) {
-      footnote.textContent = formatOverallFootnote(info.rank, fit.founderFitRank);
+      const note = formatOverallFootnote(info.rank, fit.founderFitRank);
+      footnote.innerHTML = note.html;
+      footnote.classList.remove("is-up", "is-down");
+      if (note.direction) {
+        footnote.classList.add(`is-${note.direction}`);
+      }
       footnote.hidden = false;
     } else {
+      footnote.innerHTML = "";
+      footnote.classList.remove("is-up", "is-down");
       footnote.hidden = true;
     }
   }

@@ -252,14 +252,37 @@ function updateDetailLinks(abbr, info) {
   }
 }
 
+function syncMobileSidebarSpacer(show) {
+  const sidebar = document.getElementById("sidebar");
+  const infoCard = document.getElementById("info-card");
+  if (!sidebar || !infoCard) {
+    return;
+  }
+
+  const isMobile = window.matchMedia("(max-width: 860px)").matches;
+  if (!isMobile) {
+    sidebar.style.removeProperty("--info-card-spacer");
+    return;
+  }
+
+  if (show) {
+    sidebar.style.setProperty("--info-card-spacer", `${infoCard.offsetHeight}px`);
+  } else {
+    sidebar.style.removeProperty("--info-card-spacer");
+  }
+}
+
 function updateSidebar(abbr, info) {
   const content = document.getElementById("tooltip-content");
   const defaultText = document.getElementById("tooltip-default");
   const clearBtn = document.getElementById("clear-pin");
+  const wasShowingDefault = defaultText && !defaultText.hidden;
 
-  content.hidden = true;
-  void content.offsetWidth;
-  content.hidden = false;
+  if (wasShowingDefault) {
+    content.hidden = true;
+    void content.offsetWidth;
+    content.hidden = false;
+  }
 
   updateDetailLinks(abbr, info);
   refreshMapSidebar(abbr, info);
@@ -273,6 +296,7 @@ function updateSidebar(abbr, info) {
   }
 
   document.querySelector(".info-card")?.classList.add("has-selection");
+  syncMobileSidebarSpacer(true);
   document.querySelector(".sidebar")?.classList.add("has-selection");
 }
 
@@ -296,6 +320,7 @@ function hideSidebar() {
   }
   document.querySelector(".info-card")?.classList.remove("has-selection");
   document.querySelector(".sidebar")?.classList.remove("has-selection");
+  syncMobileSidebarSpacer(false);
 }
 
 function syncUrl(abbr) {
@@ -399,8 +424,12 @@ export function focusSidebarPanel() {
   }
 
   infoCard.setAttribute("tabindex", "-1");
-  infoCard.focus({ preventScroll: false });
-  sidebar.scrollIntoView({ behavior: "smooth", block: "nearest" });
+  infoCard.focus({ preventScroll: true });
+
+  const isMobile = window.matchMedia("(max-width: 860px)").matches;
+  if (isMobile) {
+    sidebar.scrollIntoView({ behavior: "smooth", block: "nearest" });
+  }
 }
 
 function activateHover(path, abbr) {
@@ -460,9 +489,18 @@ function wireStates() {
     );
     path.setAttribute("aria-pressed", "false");
 
+    path.addEventListener("mousedown", (event) => {
+      if (event.button === 0) {
+        event.preventDefault();
+      }
+    });
     path.addEventListener("mouseenter", () => activateHover(path, abbr));
     path.addEventListener("mouseleave", () => deactivateHover(path));
-    path.addEventListener("focus", () => activateHover(path, abbr));
+    path.addEventListener("focus", (event) => {
+      if (event.target.matches(":focus-visible")) {
+        activateHover(path, abbr);
+      }
+    });
     path.addEventListener("blur", () => deactivateHover(path));
     path.addEventListener("click", () => pinState(abbr));
     path.addEventListener("dblclick", () => {
