@@ -18,6 +18,7 @@ const tierFilters = [
   title={`State Rankings — CNBC ${dataYear} | StateCompass`}
   description="Full CNBC America's Top States for Business 2025 rankings. Sort and filter all 50 states by rank, score, or tier — or re-rank by founder business profile."
   subtitle="Overall CNBC rankings or Founder Fit for your business type."
+  rankingsPage
 >
   <main class="page-content rankings-page">
     <header class="rankings-header">
@@ -42,7 +43,10 @@ const tierFilters = [
             tierFilters.map(({ tier, label }) => (
               <button type="button" class="tier-filter-btn" data-tier={tier}>
                 <span class={`tier-filter-swatch ${tier}`} aria-hidden="true" />
-                <span>{label}</span>
+                <span class="tier-filter-label tier-filter-label--long">{label}</span>
+                <span class="tier-filter-label tier-filter-label--short">
+                  {TIER_LABELS[tier]}
+                </span>
               </button>
             ))
           }
@@ -83,7 +87,7 @@ const tierFilters = [
                 <span class="rankings-sort-indicator" aria-hidden="true"></span>
               </button>
             </th>
-            <th scope="col">Tier</th>
+            <th scope="col" class="rankings-tier-col">Tier</th>
           </tr>
         </thead>
         <tbody id="rankings-body">
@@ -101,13 +105,13 @@ const tierFilters = [
                 data-slug={state.slug}
                 tabindex="0"
                 role="link"
-                aria-label={`${state.name}, rank ${state.rank}, score ${state.score100} out of 100`}
+                aria-label={`${state.name}, rank ${state.rank}, ${TIER_LABELS[state.tier]}, score ${state.score100} out of 100`}
               >
                 <td class="rankings-rank">#{state.rank}</td>
                 <td class="rankings-name">{state.name}</td>
                 <td class="rankings-score">{state.score100}/100</td>
                 <td class="rankings-cnbc" hidden></td>
-                <td>
+                <td class="rankings-tier-col">
                   <span class={`tier-badge tier-badge--sm ${state.tier}`}>
                     {TIER_LABELS[state.tier]}
                   </span>

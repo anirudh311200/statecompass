@@ -2320,6 +2320,10 @@ footer a:hover {
   outline-offset: 2px;
 }
 
+.tier-filter-label--short {
+  display: none;
+}
+
 .rankings-sort-select {
   min-width: 10rem;
   padding: 0.45rem 0.65rem;
@@ -2469,6 +2473,59 @@ footer a:hover {
   .rankings-toolbar {
     flex-direction: column;
     align-items: stretch;
+  }
+
+  .page--rankings .site-header {
+    margin-bottom: 0.65rem;
+    padding-bottom: 0.5rem;
+  }
+
+  .page--rankings .page-content {
+    gap: 0.75rem;
+  }
+
+  .page--rankings .rankings-header {
+    margin-bottom: 0;
+  }
+
+  .rankings-page .tier-filter-group {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .rankings-page .tier-filter-btn {
+    width: 100%;
+    justify-content: flex-start;
+  }
+
+  .rankings-page .tier-filter-label--long {
+    display: none;
+  }
+
+  .rankings-page .tier-filter-label--short {
+    display: inline;
+  }
+
+  .rankings-table .rankings-tier-col {
+    display: none;
+  }
+
+  .rankings-row[data-tier="green"] .rankings-name {
+    color: var(--green-bright);
+    font-weight: var(--weight-heading);
+    text-shadow: 0 0 10px var(--tier-green-glow);
+  }
+
+  .rankings-row[data-tier="yellow"] .rankings-name {
+    color: var(--yellow-bright);
+    font-weight: var(--weight-heading);
+    text-shadow: 0 0 10px var(--tier-yellow-glow);
+  }
+
+  .rankings-row[data-tier="red"] .rankings-name {
+    color: var(--red-bright);
+    font-weight: var(--weight-heading);
+    text-shadow: 0 0 10px var(--tier-red-glow);
   }
 
   .rankings-sort-select {

@@ -30,6 +30,11 @@ const SORT_LABELS = {
   cnbc: "CNBC rank",
 };
 
+function formatRowAriaLabel(name, rank, score, tier) {
+  const tierLabel = TIER_LABELS[tier] ?? tier;
+  return `${name}, rank ${rank}, ${tierLabel}, score ${score} out of 100`;
+}
+
 export async function initRankings() {
   const tbody = document.getElementById("rankings-body");
   const emptyMsg = document.getElementById("rankings-empty");
@@ -75,7 +80,7 @@ export async function initRankings() {
       row.dataset.name = state.name;
       row.setAttribute(
         "aria-label",
-        `${state.name}, rank ${state.rank}, score ${state.score100} out of 100`
+        formatRowAriaLabel(state.name, state.rank, state.score100, state.tier)
       );
     });
   }
@@ -194,6 +199,16 @@ export async function initRankings() {
         tierCell.className = `tier-badge tier-badge--sm ${tier}`;
         tierCell.textContent = TIER_LABELS[tier] ?? tier;
       }
+
+      row.setAttribute(
+        "aria-label",
+        formatRowAriaLabel(
+          row.dataset.name,
+          row.dataset.rank,
+          row.dataset.score,
+          row.dataset.tier
+        )
+      );
     });
 
     updateHeaders(profileId);
