@@ -723,13 +723,15 @@ function updateSidebar(abbr, info) {
   if (wasShowingDefault) {
     content.hidden = true;
     void content.offsetWidth;
-    content.hidden = false;
   }
 
   updateDetailLinks(abbr, info);
   refreshMapSidebar(abbr, info);
   updateBookmarkButton(abbr);
 
+  if (content) {
+    content.hidden = false;
+  }
   if (defaultText) {
     defaultText.hidden = true;
   }
@@ -751,7 +753,7 @@ function hideSidebar() {
   }
   const defaultText = document.getElementById("tooltip-default");
   if (defaultText) {
-    defaultText.hidden = isMobileMapLayout();
+    defaultText.hidden = false;
   }
   const clearBtn = document.getElementById("clear-pin");
   if (clearBtn) {

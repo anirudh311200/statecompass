@@ -802,6 +802,10 @@ textarea {
   display: none;
 }
 
+#tooltip-default[hidden] {
+  display: none !important;
+}
+
 .info-card:has(#tooltip-content:not([hidden])) #tooltip-default {
   display: none;
 }
