@@ -11,6 +11,7 @@ export const CNBC_RANKINGS_URL = RANKINGS_URLS[dataYear] ?? RANKINGS_URLS[2025];
 
 export const SITE_NAME = "StateCompass";
 export const BRAND_VERSION = "2";
+export const SEARCH_FAVICON_PNG = "/favicon-192x192.png";
 export const SITE_TAGLINE =
   "Compare US states for HQ and expansion — CNBC business climate scores, ranked and sourced.";
 

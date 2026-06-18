@@ -77,16 +77,24 @@ def touch_icon_svg(size: int = 180) -> str:
 
 
 def write_apple_touch_png(size: int = 180) -> None:
+    img = render_sc_icon_png(size)
+    if img is None:
+        return
+    img.save(PUBLIC / "apple-touch-icon.png", format="PNG")
+    print("Wrote apple-touch-icon.png")
+
+
+def render_sc_icon_png(size: int):
     try:
         from fontTools.ttLib import woff2
         from PIL import Image, ImageDraw, ImageFont
     except ImportError:
-        print("Skipped apple-touch-icon.png (Pillow/fonttools unavailable)")
-        return
+        print(f"Skipped {size}px icon PNG (Pillow/fonttools unavailable)")
+        return None
 
     if not SORA_SRC.is_file():
-        print("Skipped apple-touch-icon.png (Sora font missing)")
-        return
+        print(f"Skipped {size}px icon PNG (Sora font missing)")
+        return None
 
     img = Image.new("RGBA", (size, size), (0, 0, 0, 255))
     draw = ImageDraw.Draw(img)
@@ -133,8 +141,33 @@ def write_apple_touch_png(size: int = 180) -> None:
     y = (size - text_h) / 2 - bbox[1]
     draw.text((x, y), text, font=font, fill=(250, 250, 250, 240))
 
-    img.save(PUBLIC / "apple-touch-icon.png", format="PNG")
-    print("Wrote apple-touch-icon.png")
+    return img
+
+
+def write_sc_icon_png(size: int, filename: str) -> None:
+    img = render_sc_icon_png(size)
+    if img is None:
+        return
+    img.save(PUBLIC / filename, format="PNG")
+    print(f"Wrote {filename}")
+
+
+def write_favicon_ico() -> None:
+    img = render_sc_icon_png(48)
+    if img is None:
+        return
+    img.save(
+        PUBLIC / "favicon.ico",
+        format="ICO",
+        sizes=[(16, 16), (32, 32), (48, 48)],
+    )
+    print("Wrote favicon.ico")
+
+
+def write_search_favicons() -> None:
+    write_sc_icon_png(48, "favicon-48x48.png")
+    write_sc_icon_png(192, "favicon-192x192.png")
+    write_favicon_ico()
 
 
 def favicon_svg(size: int = 32) -> str:
@@ -174,6 +207,7 @@ def write_brand_assets() -> None:
 
     (PUBLIC / "apple-touch-icon.svg").write_text(touch, encoding="utf-8")
     write_apple_touch_png(180)
+    write_search_favicons()
     print("Wrote logo.svg, favicon.svg, apple-touch-icon.svg")
 
 
