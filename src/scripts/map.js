@@ -2,7 +2,7 @@ import { refreshMapSidebar } from "./mapSidebar.js";
 import { isStateSaved, toggleSavedState } from "./memory.js";
 import { buildStateDetailUrl, wireYearPicker } from "./yearData.js";
 import { TIER_GLOWS, TIER_GLOWS_ACTIVE, TIER_GRADIENTS, TIER_MAP_FILLS } from "./categories.js";
-import { isMapIntroActive, startMapIntro } from "./mapIntro.js";
+import { isMapIntroActive, replayMapIntro, startMapIntro } from "./mapIntro.js";
 
 const TIER_COLORS = TIER_MAP_FILLS;
 
@@ -650,6 +650,7 @@ function wireYearControl() {
       }
       const payload = await response.json();
       applyYearPayload(payload, year);
+      replayMapIntro(mapPanel);
 
       const url = new URL(window.location.href);
       if (year === yearIndex.defaultYear) {

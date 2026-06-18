@@ -1,5 +1,7 @@
 const INTRO_DURATION_MS = 2600;
 const MAX_STAGGER_MS = 1000;
+const REPLAY_INTRO_DURATION_MS = 1400;
+const REPLAY_MAX_STAGGER_MS = 600;
 const SKIP_GRACE_MS = 500;
 
 let introActive = false;
@@ -31,14 +33,14 @@ function shouldRunIntro() {
   return true;
 }
 
-function computeStaggerDelay(path, svg) {
+function computeStaggerDelay(path, svg, maxStaggerMs = MAX_STAGGER_MS) {
   const viewBox = svg.viewBox.baseVal;
   const width = viewBox.width || svg.getBoundingClientRect().width || 1000;
   const bbox = path.getBBox();
   const centerX = bbox.x + bbox.width / 2;
   const origin = viewBox.x || 0;
   const normalized = Math.max(0, Math.min(1, (centerX - origin) / width));
-  return Math.round(normalized * MAX_STAGGER_MS);
+  return Math.round(normalized * maxStaggerMs);
 }
 
 function maybePulseSearch() {
@@ -73,13 +75,26 @@ function clearIntroStyles(mapPanel) {
   });
 }
 
-function finishIntro(mapPanel, { pulseSearch = true } = {}) {
+function cancelIntro(mapPanel) {
+  if (!introActive || !mapPanel) {
+    return;
+  }
+
+  introActive = false;
+  cleanupFns.forEach((fn) => fn());
+  cleanupFns = [];
+  clearIntroStyles(mapPanel);
+}
+
+function finishIntro(mapPanel, { pulseSearch = true, markPageComplete = true } = {}) {
   if (!introActive) {
     return;
   }
 
   introActive = false;
-  introCompletedThisPage = true;
+  if (markPageComplete) {
+    introCompletedThisPage = true;
+  }
   cleanupFns.forEach((fn) => fn());
   cleanupFns = [];
 
@@ -124,8 +139,17 @@ function wireSkipHandlers(mapPanel) {
   });
 }
 
-export function startMapIntro(mapPanel) {
-  if (!mapPanel || !shouldRunIntro()) {
+function runMapIntro(
+  mapPanel,
+  {
+    durationMs = INTRO_DURATION_MS,
+    maxStaggerMs = MAX_STAGGER_MS,
+    pulseSearch = true,
+    wireSkip = true,
+    markPageComplete = true,
+  } = {}
+) {
+  if (!mapPanel || prefersReducedMotion()) {
     return;
   }
 
@@ -134,12 +158,14 @@ export function startMapIntro(mapPanel) {
     return;
   }
 
+  cancelIntro(mapPanel);
+
   introActive = true;
   mapPanel.classList.add("is-map-intro");
-  mapPanel.style.setProperty("--intro-duration", `${INTRO_DURATION_MS}ms`);
+  mapPanel.style.setProperty("--intro-duration", `${durationMs}ms`);
 
   svg.querySelectorAll(".state").forEach((path) => {
-    path.style.setProperty("--intro-delay", `${computeStaggerDelay(path, svg)}ms`);
+    path.style.setProperty("--intro-delay", `${computeStaggerDelay(path, svg, maxStaggerMs)}ms`);
     path.classList.add("map-intro-state");
     path.style.fillOpacity = "0";
   });
@@ -153,11 +179,35 @@ export function startMapIntro(mapPanel) {
   });
 
   const completeTimer = window.setTimeout(
-    () => finishIntro(mapPanel),
-    INTRO_DURATION_MS + MAX_STAGGER_MS + 120
+    () => finishIntro(mapPanel, { pulseSearch, markPageComplete }),
+    durationMs + maxStaggerMs + 120
   );
   cleanupFns.push(() => window.clearTimeout(completeTimer));
 
-  const skipGraceTimer = window.setTimeout(() => wireSkipHandlers(mapPanel), SKIP_GRACE_MS);
-  cleanupFns.push(() => window.clearTimeout(skipGraceTimer));
+  if (wireSkip) {
+    const skipGraceTimer = window.setTimeout(() => wireSkipHandlers(mapPanel), SKIP_GRACE_MS);
+    cleanupFns.push(() => window.clearTimeout(skipGraceTimer));
+  }
+}
+
+export function startMapIntro(mapPanel) {
+  if (!mapPanel || !shouldRunIntro()) {
+    return;
+  }
+
+  runMapIntro(mapPanel);
+}
+
+export function replayMapIntro(mapPanel) {
+  if (!mapPanel || document.body.classList.contains("embed-body")) {
+    return;
+  }
+
+  runMapIntro(mapPanel, {
+    durationMs: REPLAY_INTRO_DURATION_MS,
+    maxStaggerMs: REPLAY_MAX_STAGGER_MS,
+    pulseSearch: false,
+    wireSkip: false,
+    markPageComplete: false,
+  });
 }
