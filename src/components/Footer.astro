@@ -5,21 +5,24 @@ import { CNBC_RANKINGS_URL, cnbcSourceLabel } from "../lib/site.js";
 ---
 
 <footer>
-  <p>
-    Scores from
-    <a href={CNBC_RANKINGS_URL} target="_blank" rel="noopener noreferrer">
-      {cnbcSourceLabel(dataYear)}
-    </a>
-    · Normalized to 0–100 from CNBC category point totals
+  <p class="footer-stack footer-source">
+    <span>
+      Scores from
+      <a href={CNBC_RANKINGS_URL} target="_blank" rel="noopener noreferrer">
+        {cnbcSourceLabel(dataYear)}
+      </a>
+    </span>
+    <span class="footer-stack-sep" aria-hidden="true">·</span>
+    <span>Normalized to 0–100 from CNBC category point totals</span>
   </p>
   <p class="footer-meta">
     Site selection for founders — compare, rank, share CNBC-sourced evidence, and Founder Snapshot context.
   </p>
-  <nav class="footer-links" aria-label="Site resources">
+  <nav class="footer-stack footer-links" aria-label="Site resources">
     <a class="footer-link-btn" href={METHODOLOGY_URL} target="_blank" rel="noopener noreferrer">
       CNBC methodology
     </a>
-    <span class="footer-links-sep" aria-hidden="true">·</span>
+    <span class="footer-stack-sep" aria-hidden="true">·</span>
     <a class="footer-link-btn" href="/partners">Embed &amp; API for partners</a>
   </nav>
 </footer>
