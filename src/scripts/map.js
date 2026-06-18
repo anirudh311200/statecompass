@@ -58,6 +58,7 @@ let pinnedPath = null;
 let mobileSheetBackdrop = null;
 let suppressMapPinUntil = 0;
 let sheetTouchActive = false;
+let sheetPeekRaf = 0;
 
 function isMapPinSuppressed() {
   return Date.now() < suppressMapPinUntil;
@@ -141,6 +142,16 @@ function syncMobileSheetPeek() {
   card.style.setProperty("--mobile-sheet-peek", `${Math.min(cap, Math.max(floor, peekBottom))}px`);
 }
 
+function scheduleMobileSheetPeek() {
+  if (sheetPeekRaf) {
+    cancelAnimationFrame(sheetPeekRaf);
+  }
+  sheetPeekRaf = requestAnimationFrame(() => {
+    sheetPeekRaf = 0;
+    syncMobileSheetPeek();
+  });
+}
+
 function expandMobileSheet() {
   const card = document.getElementById("info-card");
   if (!card || !isMobileMapLayout() || !pinnedAbbr) {
@@ -173,6 +184,22 @@ function resetMobileSheetChrome() {
   }
 }
 
+function releaseMobileSheetInteraction() {
+  sheetDrag = null;
+  sheetTouchActive = false;
+  setMapInteractionLocked(false);
+  resetMobileSheetChrome();
+
+  if (!isMobileMapLayout()) {
+    return;
+  }
+
+  const infoCard = document.getElementById("info-card");
+  if (infoCard && document.activeElement === infoCard) {
+    infoCard.blur();
+  }
+}
+
 let sheetDrag = null;
 let sheetSwipeWired = false;
 
@@ -182,12 +209,9 @@ const SHEET_EXPAND_THRESHOLD = 32;
 function dismissMobileSheet() {
   armMapPinSuppression();
   hoverPath = null;
-  sheetDrag = null;
-  sheetTouchActive = false;
-  setMapInteractionLocked(false);
+  releaseMobileSheetInteraction();
 
   if (!pinnedAbbr) {
-    resetMobileSheetChrome();
     if (isMobileMapLayout()) {
       hideSidebar();
       setMobileSheetOpen(false);
@@ -654,9 +678,7 @@ function updateSidebar(abbr, info) {
 
   syncSidebarSelectionState(abbr);
   if (pinnedAbbr === abbr) {
-    requestAnimationFrame(() => {
-      requestAnimationFrame(() => syncMobileSheetPeek());
-    });
+    scheduleMobileSheetPeek();
   }
 }
 
@@ -679,7 +701,11 @@ function hideSidebar() {
     bookmarkBtn.hidden = true;
   }
   syncSidebarSelectionState(null);
-  resetMobileSheetChrome();
+  if (isMobileMapLayout()) {
+    releaseMobileSheetInteraction();
+  } else {
+    resetMobileSheetChrome();
+  }
 }
 
 function syncUrl(abbr) {
@@ -769,6 +795,7 @@ export function clearPin({ skipUrl = false } = {}) {
   }
 
   if (isMobileMapLayout()) {
+    armMapPinSuppression(500);
     hoverPath = null;
     hideSidebar();
   } else if (hoverPath) {
@@ -788,6 +815,10 @@ export function getStateData() {
 }
 
 export function focusSidebarPanel() {
+  if (isMobileMapLayout()) {
+    return;
+  }
+
   const sidebar = document.getElementById("sidebar");
   const infoCard = document.getElementById("info-card");
   if (!sidebar || !infoCard) {
@@ -901,7 +932,7 @@ function wireStates() {
         }
         event.preventDefault();
         suppressClickUntil = Date.now() + 450;
-        pinState(abbr, { focusSidebar: true });
+        pinState(abbr, { focusSidebar: false });
       },
       { passive: false }
     );
@@ -915,7 +946,7 @@ function wireStates() {
         event.preventDefault();
         return;
       }
-      pinState(abbr, { focusSidebar: isMobileMapLayout() });
+      pinState(abbr, { focusSidebar: false });
     });
     path.addEventListener("dblclick", () => {
       const href = buildStateDetailUrl(info.slug, currentYear, yearIndex);
@@ -973,13 +1004,11 @@ function wireGlobalControls() {
     document.querySelectorAll("#us-map .state").forEach((path) => {
       path.setAttribute("aria-pressed", path.id === abbr ? "true" : "false");
     });
-    requestAnimationFrame(() => {
-      requestAnimationFrame(() => syncMobileSheetPeek());
-    });
+    scheduleMobileSheetPeek();
   });
 
   document.addEventListener("statecompass:sidebar-render", () => {
-    requestAnimationFrame(() => syncMobileSheetPeek());
+    scheduleMobileSheetPeek();
   });
 
   document.addEventListener("statecompass:clear", () => {
