@@ -2546,6 +2546,7 @@ footer a:hover {
 
   .layout--home .sidebar:not(.has-selection) .info-card {
     display: none;
+    pointer-events: none;
   }
 
   .mobile-sheet-backdrop {
@@ -2560,7 +2561,8 @@ footer a:hover {
   }
 
   .mobile-sheet-backdrop[hidden] {
-    display: none;
+    display: none !important;
+    pointer-events: none !important;
   }
 
   .map-toolbar {
