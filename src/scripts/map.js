@@ -61,7 +61,8 @@ let sheetTouchActive = false;
 let sheetPeekRaf = 0;
 let sheetCapturedPointerId = null;
 let mobileMapTapWired = false;
-let mobileMapTouch = null;
+
+const MOBILE_SHEET_PEEK = "min(52vh, 480px)";
 
 function isMapPinSuppressed() {
   return Date.now() < suppressMapPinUntil;
@@ -104,25 +105,35 @@ function ensureMobileSheetBackdrop() {
   return mobileSheetBackdrop;
 }
 
+function detachMobileSheetBackdrop() {
+  if (!mobileSheetBackdrop) {
+    return;
+  }
+
+  mobileSheetBackdrop.hidden = true;
+  mobileSheetBackdrop.style.pointerEvents = "none";
+  mobileSheetBackdrop.setAttribute("inert", "");
+  mobileSheetBackdrop.remove();
+  mobileSheetBackdrop = null;
+}
+
 function setMobileSheetOpen(open) {
   if (!isMobileMapLayout()) {
     return;
   }
 
+  if (!open) {
+    detachMobileSheetBackdrop();
+    return;
+  }
+
   const backdrop = ensureMobileSheetBackdrop();
   if (backdrop) {
-    backdrop.hidden = !open;
+    backdrop.hidden = false;
+    backdrop.removeAttribute("inert");
     backdrop.style.opacity = "";
-    backdrop.style.pointerEvents = open ? "" : "none";
+    backdrop.style.pointerEvents = "";
   }
-}
-
-function getSheetPeekAnchor() {
-  const profileChip = document.getElementById("profile-chip");
-  if (profileChip && !profileChip.hidden) {
-    return profileChip;
-  }
-  return document.getElementById("tier-badge");
 }
 
 function syncMobileSheetPeek() {
@@ -140,17 +151,7 @@ function syncMobileSheetPeek() {
     return;
   }
 
-  const anchor = getSheetPeekAnchor();
-  if (!anchor || anchor.hidden) {
-    return;
-  }
-
-  card.style.removeProperty("--mobile-sheet-peek");
-  const cardTop = card.getBoundingClientRect().top;
-  const peekBottom = anchor.getBoundingClientRect().bottom - cardTop + 28;
-  const cap = Math.min(window.innerHeight * 0.62, 540);
-  const floor = Math.min(window.innerHeight * 0.46, 420);
-  card.style.setProperty("--mobile-sheet-peek", `${Math.min(cap, Math.max(floor, peekBottom))}px`);
+  card.style.setProperty("--mobile-sheet-peek", MOBILE_SHEET_PEEK);
 }
 
 function scheduleMobileSheetPeek() {
@@ -217,17 +218,19 @@ function releaseMobileSheetInteraction() {
   releaseCapturedSheetPointer();
   sheetDrag = null;
   sheetTouchActive = false;
-  mobileMapTouch = null;
   unlockMapInteraction();
   resetMobileSheetChrome();
+  detachMobileSheetBackdrop();
 
   if (!isMobileMapLayout()) {
     return;
   }
 
   const infoCard = document.getElementById("info-card");
-  if (infoCard && document.activeElement === infoCard) {
-    infoCard.blur();
+  if (infoCard) {
+    if (document.activeElement === infoCard) {
+      infoCard.blur();
+    }
   }
 }
 
@@ -238,7 +241,6 @@ const SHEET_DISMISS_THRESHOLD = 28;
 const SHEET_EXPAND_THRESHOLD = 32;
 
 function dismissMobileSheet() {
-  armMapPinSuppression();
   hoverPath = null;
   releaseMobileSheetInteraction();
 
@@ -457,86 +459,28 @@ function wireMobileSheetSwipe() {
 }
 
 function wireMobileMapTaps() {
-  const container = document.getElementById("map-container");
-  if (!container || mobileMapTapWired) {
+  const map = document.getElementById("us-map");
+  if (!map || mobileMapTapWired) {
     return;
   }
 
   mobileMapTapWired = true;
 
-  container.addEventListener(
-    "touchstart",
-    (event) => {
-      if (!isMobileMapLayout() || event.touches.length !== 1) {
-        mobileMapTouch = null;
-        return;
-      }
-      if (sheetTouchActive || document.body.classList.contains("is-mobile-sheet-dragging")) {
-        mobileMapTouch = null;
-        return;
-      }
+  map.addEventListener("click", (event) => {
+    if (!isMobileMapLayout()) {
+      return;
+    }
+    if (sheetTouchActive || document.body.classList.contains("is-mobile-sheet-dragging")) {
+      return;
+    }
 
-      const path = event.target.closest("#us-map .state");
-      if (!path || !stateData[path.id]) {
-        mobileMapTouch = null;
-        return;
-      }
+    const path = event.target.closest?.(".state");
+    if (!path?.id || !stateData[path.id]) {
+      return;
+    }
 
-      const touch = event.touches[0];
-      mobileMapTouch = {
-        path,
-        startX: touch.clientX,
-        startY: touch.clientY,
-      };
-    },
-    { passive: true }
-  );
-
-  container.addEventListener(
-    "touchend",
-    (event) => {
-      if (!isMobileMapLayout() || !mobileMapTouch) {
-        return;
-      }
-      if (isMapPinSuppressed() || sheetTouchActive) {
-        mobileMapTouch = null;
-        return;
-      }
-      if (document.body.classList.contains("is-mobile-sheet-dragging")) {
-        mobileMapTouch = null;
-        return;
-      }
-
-      const { path, startX, startY } = mobileMapTouch;
-      mobileMapTouch = null;
-
-      const touch = event.changedTouches[0];
-      if (!touch) {
-        return;
-      }
-
-      const travel = Math.hypot(touch.clientX - startX, touch.clientY - startY);
-      if (travel > 14) {
-        return;
-      }
-
-      const hitPath = document.elementFromPoint(touch.clientX, touch.clientY)?.closest("#us-map .state");
-      if (!hitPath || hitPath !== path) {
-        return;
-      }
-
-      pinState(path.id, { focusSidebar: false });
-    },
-    { passive: true }
-  );
-
-  container.addEventListener(
-    "touchcancel",
-    () => {
-      mobileMapTouch = null;
-    },
-    { passive: true }
-  );
+    pinState(path.id, { focusSidebar: false });
+  });
 }
 
 function normalizeAbbr(value) {
@@ -756,10 +700,14 @@ function syncSidebarSelectionState(abbr) {
   if (showSheet) {
     infoCard?.classList.add("has-selection");
     sidebar?.classList.add("has-selection");
+    infoCard?.removeAttribute("inert");
     setMobileSheetOpen(isMobileMapLayout() && Boolean(pinnedAbbr));
   } else {
     infoCard?.classList.remove("has-selection");
     sidebar?.classList.remove("has-selection");
+    if (isMobileMapLayout()) {
+      infoCard?.setAttribute("inert", "");
+    }
     setMobileSheetOpen(false);
   }
 
@@ -1003,7 +951,7 @@ function wireStates() {
     path.setAttribute("aria-pressed", "false");
 
     path.addEventListener("mousedown", (event) => {
-      if (event.button === 0) {
+      if (!isMobileMapLayout() && event.button === 0) {
         event.preventDefault();
       }
     });

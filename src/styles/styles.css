@@ -2545,8 +2545,9 @@ footer a:hover {
   }
 
   .layout--home .sidebar:not(.has-selection) .info-card {
-    display: none;
-    pointer-events: none;
+    display: none !important;
+    pointer-events: none !important;
+    visibility: hidden;
   }
 
   .mobile-sheet-backdrop {
@@ -2610,6 +2611,7 @@ footer a:hover {
     stroke-width: 10;
     stroke: transparent;
     paint-order: stroke fill;
+    pointer-events: all;
   }
 
   #us-map .state.is-active,
@@ -2632,15 +2634,13 @@ footer a:hover {
     border-radius: 16px 16px 0 0;
     border-bottom: none;
     box-shadow: 0 -12px 40px rgba(0, 0, 0, 0.55);
-    max-height: var(--mobile-sheet-peek, min(56vh, 500px));
+    max-height: var(--mobile-sheet-peek, min(52vh, 480px));
     overflow-y: auto;
     overscroll-behavior: contain;
     -webkit-overflow-scrolling: touch;
     padding-bottom: calc(1.25rem + env(safe-area-inset-bottom, 0px));
     touch-action: pan-y;
-    transition:
-      max-height 0.28s cubic-bezier(0.32, 0.72, 0, 1),
-      transform 0.18s ease;
+    transition: transform 0.18s ease;
   }
 
   .sidebar.has-selection .info-card.is-sheet-expanded {
