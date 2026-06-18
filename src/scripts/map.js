@@ -188,6 +188,10 @@ function dismissMobileSheet() {
 
   if (!pinnedAbbr) {
     resetMobileSheetChrome();
+    if (isMobileMapLayout()) {
+      hideSidebar();
+      setMobileSheetOpen(false);
+    }
     return;
   }
 
@@ -601,6 +605,9 @@ function syncMobileSidebarSpacer() {
 }
 
 function shouldShowMobileSheet(abbr) {
+  if (!abbr) {
+    return false;
+  }
   return !isMobileMapLayout() || pinnedAbbr === abbr;
 }
 
@@ -661,7 +668,7 @@ function hideSidebar() {
   }
   const defaultText = document.getElementById("tooltip-default");
   if (defaultText) {
-    defaultText.hidden = false;
+    defaultText.hidden = isMobileMapLayout();
   }
   const clearBtn = document.getElementById("clear-pin");
   if (clearBtn) {
@@ -742,6 +749,10 @@ export function pinState(abbr, { skipUrl = false, focusSidebar = false } = {}) {
 
 export function clearPin({ skipUrl = false } = {}) {
   if (!pinnedAbbr) {
+    if (isMobileMapLayout()) {
+      hideSidebar();
+      setMobileSheetOpen(false);
+    }
     return;
   }
 
