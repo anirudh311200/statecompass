@@ -1,6 +1,7 @@
 """Generate StateCompass brand assets — SC monogram lockup + favicon."""
 
 import shutil
+import subprocess
 import tempfile
 from pathlib import Path
 
@@ -29,6 +30,10 @@ WORDMARK_SIZE = 33
 WORDMARK_Y = 39
 LOGO_WIDTH = 278
 
+LINKEDIN_W = 1200
+LINKEDIN_H = 630
+LINKEDIN_LOCKUP_W = 600
+
 
 def ensure_sora_font() -> None:
     FONTS_DIR.mkdir(parents=True, exist_ok=True)
@@ -36,13 +41,34 @@ def ensure_sora_font() -> None:
         shutil.copy2(SORA_SRC, SORA_DEST)
 
 
-def sora_font_face(*, font_url: str = "./fonts/sora-latin-700-normal.woff2") -> str:
+def ensure_sora_ttf() -> Path | None:
+    """Decompress Sora woff2 to TTF for PNG rasterizers (resvg, etc.)."""
+    dest = FONTS_DIR / "sora-latin-700-normal.ttf"
+    if dest.is_file():
+        return dest
+    if not SORA_SRC.is_file():
+        return None
+    try:
+        from fontTools.ttLib import woff2
+
+        woff2.decompress(str(SORA_SRC), str(dest))
+        return dest
+    except Exception as exc:
+        print(f"Skipped Sora TTF export ({exc})")
+        return None
+
+
+def sora_font_face(
+    *,
+    font_url: str = "./fonts/sora-latin-700-normal.woff2",
+    font_format: str = "woff2",
+) -> str:
     return f"""<style>
       @font-face {{
         font-family: 'Sora';
         font-style: normal;
         font-weight: 700;
-        src: url('{font_url}') format('woff2');
+        src: url('{font_url}') format('{font_format}');
       }}
     </style>"""
 
@@ -190,6 +216,85 @@ def logo_svg() -> str:
 """
 
 
+def linkedin_feature_svg() -> str:
+    """1200×630 brand lockup on black — LinkedIn Featured / social thumbnail."""
+    scale = LINKEDIN_LOCKUP_W / LOGO_WIDTH
+    tile = round(LOGO_TILE * scale)
+    height = round(LOGO_HEIGHT * scale)
+    gap = round(LOGO_GAP * scale)
+    wm_size = round(WORDMARK_SIZE * scale)
+    wm_x = tile + gap
+    wm_y = round(WORDMARK_Y * scale)
+    tile_y = (height - tile) / 2
+    lockup_w = round(LOGO_WIDTH * scale)
+    x = (LINKEDIN_W - lockup_w) / 2
+    y = (LINKEDIN_H - height) / 2
+
+    ttf = ensure_sora_ttf()
+    if ttf:
+        font_url = ttf.as_uri()
+        font_format = "truetype"
+    else:
+        font_url = "./fonts/sora-latin-700-normal.woff2"
+        font_format = "woff2"
+
+    return f"""<svg xmlns="http://www.w3.org/2000/svg" width="{LINKEDIN_W}" height="{LINKEDIN_H}" viewBox="0 0 {LINKEDIN_W} {LINKEDIN_H}" fill="none">
+  <defs>
+    {sora_font_face(font_url=font_url, font_format=font_format)}
+    {logo_dazzle_defs(tile, wm_size)}
+    <radialGradient id="linkedin-vignette" cx="50%" cy="0%" r="75%">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.04"/>
+      <stop offset="55%" stop-color="#ffffff" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="{LINKEDIN_W}" height="{LINKEDIN_H}" fill="#000000"/>
+  <rect width="{LINKEDIN_W}" height="{LINKEDIN_H}" fill="url(#linkedin-vignette)"/>
+  <g transform="translate({x:.2f},{y:.2f})">
+    {logo_mark(tile, tile_y)}
+    {wordmark_text(wm_x, wm_y, wm_size)}
+  </g>
+</svg>
+"""
+
+
+def render_svg_to_png(svg_path: Path, png_path: Path, width: int) -> bool:
+    script = ROOT / "scripts" / "render-svg-png.mjs"
+    if not script.is_file():
+        print(f"Skipped PNG ({script.name} missing)")
+        return False
+    try:
+        subprocess.run(
+            [
+                "node",
+                str(script),
+                str(svg_path.relative_to(ROOT)),
+                str(png_path.relative_to(ROOT)),
+                str(width),
+            ],
+            cwd=ROOT,
+            check=True,
+            capture_output=True,
+            text=True,
+        )
+        return True
+    except subprocess.CalledProcessError as exc:
+        print(f"Skipped PNG render ({exc.stderr.strip() or exc})")
+        return False
+    except FileNotFoundError:
+        print("Skipped PNG render (node unavailable)")
+        return False
+
+
+def write_linkedin_feature() -> None:
+    svg_path = ASSETS / "linkedin-feature.svg"
+    png_path = ASSETS / "linkedin-feature.png"
+    ASSETS.mkdir(parents=True, exist_ok=True)
+    svg_path.write_text(linkedin_feature_svg(), encoding="utf-8")
+    print("Wrote linkedin-feature.svg")
+    if render_svg_to_png(svg_path, png_path, LINKEDIN_W):
+        print("Wrote linkedin-feature.png")
+
+
 def write_brand_assets() -> None:
     ensure_sora_font()
     favicon = favicon_svg(32)
@@ -208,6 +313,7 @@ def write_brand_assets() -> None:
     (PUBLIC / "apple-touch-icon.svg").write_text(touch, encoding="utf-8")
     write_apple_touch_png(180)
     write_search_favicons()
+    write_linkedin_feature()
     print("Wrote logo.svg, favicon.svg, apple-touch-icon.svg")
 
 
