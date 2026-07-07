@@ -37,3 +37,31 @@ export function trackShare(type) {
 export function trackProfile(profileId) {
   trackEvent("Profile", { profile: profileId || "overall" });
 }
+
+export function trackQuizStart() {
+  trackEvent("QuizStart");
+}
+
+export function trackQuizComplete() {
+  trackEvent("QuizComplete");
+}
+
+export function trackMatchShare() {
+  trackEvent("MatchShare");
+}
+
+export function trackMatchResultClick(abbr) {
+  trackEvent("MatchResultClick", { state: abbr });
+}
+
+export function trackMatchRetake() {
+  trackEvent("MatchRetake");
+}
+
+export function trackStateFocusOpen(abbr) {
+  trackEvent("StateFocusOpen", { state: abbr });
+}
+
+export function trackMetroHighlight(stateAbbr, metroId) {
+  trackEvent("MetroHighlight", { state: stateAbbr, metro: metroId });
+}

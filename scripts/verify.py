@@ -143,7 +143,63 @@ for abbr in default_ids:
         assert bullet["sourceUrl"].startswith("https://"), (abbr, "multiStateHeadsUp", bullet_index)
         assert bullet["sourceLabel"].strip(), (abbr, "multiStateHeadsUp", bullet_index)
 
+# Feature 1 — founder match weights
+MATCH_WEIGHTS_PATH = ROOT / "public/data/founder_match_weights.json"
+match_weights = json.loads(MATCH_WEIGHTS_PATH.read_text(encoding="utf-8"))
+assert match_weights.get("disclaimer", "").strip()
+base = match_weights["baseWeights"]
+assert set(base.keys()) == EXPECTED_CATEGORIES
+base_sum = sum(base.values())
+assert abs(base_sum - 1.0) < 1e-9, ("baseWeights", base_sum)
+
+for question_id, answers in match_weights["quizModifiers"].items():
+    assert answers, question_id
+    for answer_id, deltas in answers.items():
+        assert set(deltas.keys()).issubset(EXPECTED_CATEGORIES), (question_id, answer_id)
+
+fixture = match_weights["fixtures"]["bootstrap-saas-engineer"]
+merged = dict(base)
+for qid in match_weights["quizModifiers"]:
+    ans = fixture[qid]
+    for key, delta in match_weights["quizModifiers"][qid][ans].items():
+        merged[key] = merged.get(key, 0) + delta
+for key in list(merged.keys()):
+    merged[key] = max(0, merged[key])
+norm_sum = sum(merged.values())
+assert norm_sum > 0
+for abbr, state in default_data["states"].items():
+    raw = sum(
+        (state["categories"][k]["score"] / state["categories"][k]["maxScore"]) * (merged[k] / norm_sum)
+        for k in EXPECTED_CATEGORIES
+    )
+    score100 = round(raw * 100)
+    assert 0 <= score100 <= 100, (abbr, score100)
+
+# Feature 1 — state metros
+METROS_PATH = ROOT / "public/data/state_metros.json"
+metros_payload = json.loads(METROS_PATH.read_text(encoding="utf-8"))
+assert metros_payload.get("disclaimer", "").strip()
+metro_states = metros_payload["states"]
+assert metro_states.keys() == default_ids
+for abbr, entry in metro_states.items():
+    assert entry["stateAbbr"] == abbr
+    metros = entry["metros"]
+    assert 2 <= len(metros) <= 6, (abbr, len(metros))
+    metro_ids = set()
+    for metro in metros:
+        assert metro["id"] not in metro_ids, (abbr, metro["id"])
+        metro_ids.add(metro["id"])
+        assert metro["name"].strip()
+        assert isinstance(metro["lat"], (int, float))
+        assert isinstance(metro["lng"], (int, float))
+        assert 2 <= len(metro["strengths"]) <= 5, (abbr, metro["id"])
+        assert metro["sourceUrl"].startswith("https://"), (abbr, metro["id"])
+        assert metro["sourceLabel"].strip(), (abbr, metro["id"])
+        assert metro["industryTags"]
+
 print("OK: multi-year index and payloads validated")
 print("OK: all 50 states aligned with category data per year")
 print("OK: founder fit profiles validated")
 print("OK: founder snapshots validated")
+print("OK: founder match weights validated")
+print("OK: state metros validated")

@@ -1,0 +1,93 @@
+---
+import Layout from "../layouts/Layout.astro";
+
+const params = Astro.url.searchParams;
+const quizKeys = ["stage", "model", "tax", "vc", "hiring", "talent", "col"];
+const hasQuiz = quizKeys.every((k) => params.has(k));
+const title = hasQuiz ? "Your State Match Results | StateCompass" : "Founder State Match Quiz | StateCompass";
+const description = hasQuiz
+  ? "Personalized top 3 US states for your founder profile — match scores derived from CNBC category data."
+  : "Take the 7-question founder quiz and discover your best US states for HQ with match scores and city drill-down.";
+---
+
+<Layout
+  title={title}
+  description={description}
+  subtitle="Your personalized state match — shareable results."
+  ogImage="/og/match.svg"
+  ogImageAlt="StateCompass founder state match results"
+  preloadData
+>
+  <main class="page-content match-page">
+    <section class="match-hero panel" id="match-flow" data-match-container>
+      <div data-match-hero class="match-hero-inner" hidden={hasQuiz}>
+        <h1 class="page-title">Founder State Match</h1>
+        <p class="page-lead">
+          Seven questions about your stage, model, tax priorities, and hiring — then your top 3 states with match % and reasons.
+        </p>
+        <button type="button" class="btn btn-primary btn-lg" data-start-quiz>
+          Start the quiz
+        </button>
+      </div>
+
+      <div data-match-quiz class="match-quiz" hidden={hasQuiz ? true : undefined}>
+        <div class="match-quiz-header">
+          <button type="button" class="btn btn-ghost match-quiz-back" data-quiz-back>← Back</button>
+          <a href="/" class="btn btn-ghost">Home</a>
+        </div>
+        <div
+          class="match-quiz-progress"
+          data-quiz-progress
+          role="progressbar"
+          aria-valuemin="1"
+          aria-valuemax="7"
+          aria-valuenow="1"
+        ></div>
+        <h2 class="match-quiz-title" data-quiz-title tabindex="-1"></h2>
+        <div class="match-quiz-options" data-quiz-options role="group"></div>
+      </div>
+
+      <div data-match-results class="match-results" hidden={!hasQuiz}>
+        <div class="match-results-header">
+          <h1 class="page-title">Your top 3 states</h1>
+          <div class="match-results-toolbar">
+            <button type="button" class="btn btn-secondary" data-copy-match-link data-default-label="Copy results link">
+              Copy results link
+            </button>
+            <button type="button" class="btn btn-secondary" data-edit-quiz>Edit answers</button>
+            <button type="button" class="btn btn-secondary" data-retake-quiz>Re-take quiz</button>
+            <a href="/compare" class="btn btn-secondary" data-compare-top3 hidden>Compare top 3</a>
+            <a href="/" class="btn btn-secondary">Explore map</a>
+          </div>
+          <p class="share-status" data-share-status role="status" aria-live="polite"></p>
+          <p class="match-disclaimer">{`Derived from CNBC category scores — not CNBC's official overall rank.`}</p>
+        </div>
+        <p class="visually-hidden" data-results-live aria-live="polite"></p>
+        <div class="match-result-cards" data-result-cards></div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    import { initMatchFlow } from "../scripts/matchFlow.js";
+    import { decodeQuizFromParams } from "../scripts/founderMatch.js";
+
+    async function boot() {
+      const response = await fetch("/data/states.json");
+      if (!response.ok) {
+        throw new Error("Could not load states");
+      }
+      const payload = await response.json();
+      const urlAnswers = decodeQuizFromParams(window.location.search);
+
+      initMatchFlow({
+        container: document.getElementById("match-flow"),
+        statesObject: payload.states,
+        initialAnswers: urlAnswers,
+        hasMap: false,
+      });
+    }
+
+    boot().catch(console.error);
+  </script>
+</Layout>

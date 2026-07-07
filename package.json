@@ -4,11 +4,11 @@
   "version": "1.1.0",
   "private": true,
   "scripts": {
-    "prebuild": "python scripts/generate_states.py && python scripts/build_founder_snapshots.py && python scripts/verify.py && python scripts/generate_logo.py && python scripts/generate_og.py && python scripts/generate_api.py",
+    "prebuild": "python scripts/generate_states.py && python scripts/build_founder_snapshots.py && python scripts/build_state_metros.py && python scripts/build_match_data.py && python scripts/verify.py && python scripts/generate_logo.py && python scripts/generate_og.py && python scripts/generate_api.py",
     "build": "astro build",
     "dev": "astro dev",
     "preview": "astro preview",
-    "data": "python scripts/generate_states.py && python scripts/build_founder_snapshots.py && python scripts/verify.py"
+    "data": "python scripts/generate_states.py && python scripts/build_founder_snapshots.py && python scripts/build_state_metros.py && python scripts/build_match_data.py && python scripts/verify.py"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.3.1",

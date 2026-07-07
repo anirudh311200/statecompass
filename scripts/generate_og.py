@@ -98,7 +98,18 @@ def main():
         encoding="utf-8",
     )
 
-    count = len(payload["states"]) + 2
+    (OUT_DIR / "match.svg").write_text(
+        card_shell(
+            year,
+            "Founder State Match",
+            "Your top 3 states",
+            "Personalized match % · CNBC category data",
+            accent="#fde68a",
+        ),
+        encoding="utf-8",
+    )
+
+    count = len(payload["states"]) + 3
     print(f"Wrote {count} OG images to {OUT_DIR}")
 
 

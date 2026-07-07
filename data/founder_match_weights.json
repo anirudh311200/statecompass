@@ -1,0 +1,168 @@
+{
+  "version": 1,
+  "disclaimer": "Derived from CNBC category scores — not CNBC's official overall rank.",
+  "baseWeights": {
+    "economy": 0.11,
+    "infrastructure": 0.09,
+    "workforce": 0.13,
+    "costOfDoingBusiness": 0.13,
+    "businessFriendliness": 0.11,
+    "qualityOfLife": 0.07,
+    "technologyAndInnovation": 0.11,
+    "education": 0.07,
+    "accessToCapital": 0.09,
+    "costOfLiving": 0.09
+  },
+  "quizModifiers": {
+    "stage": {
+      "pre-revenue": {
+        "accessToCapital": -0.05,
+        "costOfDoingBusiness": 0.06,
+        "costOfLiving": 0.05,
+        "technologyAndInnovation": 0.03
+      },
+      "under-500k": {
+        "costOfDoingBusiness": 0.05,
+        "businessFriendliness": 0.04,
+        "costOfLiving": 0.03
+      },
+      "500k-2m": {
+        "economy": 0.04,
+        "workforce": 0.05,
+        "infrastructure": 0.03
+      },
+      "2m-plus": {
+        "economy": 0.06,
+        "infrastructure": 0.05,
+        "accessToCapital": 0.04,
+        "workforce": 0.03
+      }
+    },
+    "model": {
+      "saas": {
+        "technologyAndInnovation": 0.08,
+        "workforce": 0.05,
+        "accessToCapital": 0.03
+      },
+      "fintech": {
+        "businessFriendliness": 0.07,
+        "economy": 0.05,
+        "technologyAndInnovation": 0.04
+      },
+      "ecommerce": {
+        "infrastructure": 0.06,
+        "costOfDoingBusiness": 0.05,
+        "economy": 0.04
+      },
+      "marketplace": {
+        "workforce": 0.05,
+        "economy": 0.05,
+        "technologyAndInnovation": 0.04
+      },
+      "other": {
+        "businessFriendliness": 0.04,
+        "economy": 0.04,
+        "qualityOfLife": 0.03
+      }
+    },
+    "tax": {
+      "critical": {
+        "costOfDoingBusiness": 0.08,
+        "costOfLiving": 0.06,
+        "businessFriendliness": 0.04
+      },
+      "somewhat": {
+        "costOfDoingBusiness": 0.04,
+        "costOfLiving": 0.03
+      },
+      "not-priority": {
+        "technologyAndInnovation": 0.04,
+        "accessToCapital": 0.04,
+        "workforce": 0.03
+      }
+    },
+    "vc": {
+      "yes": {
+        "accessToCapital": 0.1,
+        "technologyAndInnovation": 0.06,
+        "workforce": 0.03
+      },
+      "planning": {
+        "accessToCapital": 0.07,
+        "technologyAndInnovation": 0.05,
+        "economy": 0.03
+      },
+      "no": {
+        "costOfDoingBusiness": 0.07,
+        "costOfLiving": 0.06,
+        "businessFriendliness": 0.05,
+        "accessToCapital": -0.06
+      }
+    },
+    "hiring": {
+      "0-5": {
+        "costOfDoingBusiness": 0.04,
+        "businessFriendliness": 0.03
+      },
+      "5-20": {
+        "workforce": 0.07,
+        "qualityOfLife": 0.03,
+        "education": 0.03
+      },
+      "20-plus": {
+        "workforce": 0.1,
+        "education": 0.05,
+        "infrastructure": 0.04
+      }
+    },
+    "talent": {
+      "engineering": {
+        "workforce": 0.06,
+        "technologyAndInnovation": 0.07,
+        "education": 0.04
+      },
+      "finance": {
+        "economy": 0.06,
+        "accessToCapital": 0.05,
+        "workforce": 0.04
+      },
+      "healthcare": {
+        "workforce": 0.05,
+        "qualityOfLife": 0.05,
+        "education": 0.04
+      },
+      "general": {
+        "workforce": 0.04,
+        "businessFriendliness": 0.03,
+        "economy": 0.03
+      }
+    },
+    "col": {
+      "yes": {
+        "costOfLiving": 0.1,
+        "costOfDoingBusiness": 0.06,
+        "qualityOfLife": 0.03
+      },
+      "no": {
+        "technologyAndInnovation": 0.06,
+        "accessToCapital": 0.05,
+        "workforce": 0.04
+      },
+      "neutral": {
+        "economy": 0.03,
+        "qualityOfLife": 0.03
+      }
+    }
+  },
+  "fixtures": {
+    "bootstrap-saas-engineer": {
+      "stage": "pre-revenue",
+      "model": "saas",
+      "tax": "critical",
+      "vc": "no",
+      "hiring": "5-20",
+      "talent": "engineering",
+      "col": "yes"
+    }
+  }
+}
