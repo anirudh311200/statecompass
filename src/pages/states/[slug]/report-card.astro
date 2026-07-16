@@ -1,0 +1,234 @@
+---
+import Layout from "../../../layouts/Layout.astro";
+import Breadcrumbs from "../../../components/Breadcrumbs.astro";
+import { states, dataYear } from "../../../lib/states.js";
+import { buildReportCard } from "../../../lib/reportCard.js";
+import {
+  TIER_LABELS,
+  METHODOLOGY_URL,
+} from "../../../scripts/categories.js";
+import { FOUNDER_FIT_DISCLAIMER } from "../../../scripts/founderFit.js";
+import { CNBC_RANKINGS_URL, cnbcSourceLabel } from "../../../lib/site.js";
+
+export function getStaticPaths() {
+  return Object.entries(states).map(([abbr, state]) => ({
+    params: { slug: state.slug },
+    props: { abbr, state },
+  }));
+}
+
+const { abbr, state } = Astro.props;
+const card = buildReportCard(abbr, state, states, dataYear);
+
+const site = Astro.site ?? new URL("https://statecompass.app");
+const pageUrl = new URL(`/states/${state.slug}/report-card`, site).href;
+const statePageUrl = `/states/${state.slug}`;
+
+const title = `${state.name} Report Card — CNBC ${dataYear} | StateCompass`;
+const description = `One-page ${state.name} business climate report card — CNBC rank #${state.rank}, score ${state.score100}/100, category strengths, and founder fit tags. Board-deck ready.`;
+const ogImage = `/og/${state.slug}-report-card.svg`;
+const ogImageAlt = `${state.name} report card — CNBC #${state.rank}, ${state.score100}/100`;
+
+const trendArrow = card.yoy
+  ? card.yoy.direction === "up"
+    ? "↑"
+    : card.yoy.direction === "down"
+      ? "↓"
+      : "→"
+  : null;
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  name: title,
+  description,
+  url: pageUrl,
+  isPartOf: {
+    "@type": "WebSite",
+    name: "StateCompass",
+    url: site.href,
+  },
+  about: {
+    "@type": "Dataset",
+    name: `${cnbcSourceLabel(dataYear)} — ${state.name} Report Card`,
+    creator: {
+      "@type": "Organization",
+      name: "CNBC",
+      url: "https://www.cnbc.com",
+    },
+    url: CNBC_RANKINGS_URL,
+  },
+};
+---
+
+<Layout
+  title={title}
+  description={description}
+  ogImage={ogImage}
+  ogImageAlt={ogImageAlt}
+  jsonLd={jsonLd}
+>
+  <main class="page-content report-card-page">
+    <div class="report-card-toolbar panel">
+      <Breadcrumbs
+        crumbs={[
+          { label: "Map", href: "/" },
+          { label: "States", href: "/rankings" },
+          { label: state.name, href: statePageUrl },
+          { label: "Report card" },
+        ]}
+      />
+
+      <div class="report-card-actions">
+        <a href={statePageUrl} class="btn btn-secondary">Full state page</a>
+        <button type="button" class="btn btn-secondary" id="print-report-card">
+          Print / save PDF
+        </button>
+        <button
+          type="button"
+          class="btn btn-secondary"
+          id="download-report-card-png"
+          data-default-label="Save as PNG"
+        >
+          Save as PNG
+        </button>
+        <button
+          type="button"
+          class="btn btn-secondary"
+          id="copy-report-card-link"
+          data-default-label="Copy link"
+        >
+          Copy link
+        </button>
+        <p id="report-card-share-status" class="share-status" role="status" aria-live="polite"></p>
+      </div>
+    </div>
+
+    <article
+      class="report-card"
+      id="report-card-root"
+      data-state-abbr={abbr}
+      data-state-slug={state.slug}
+      data-cnbc-year={dataYear}
+    >
+      <header class="report-card-print-header" aria-hidden="true">
+        <p class="report-card-print-brand">StateCompass · CNBC {dataYear}</p>
+        <h1 class="report-card-print-title">State Report Card</h1>
+      </header>
+
+      <div class={`report-card-hero report-card-hero--${state.tier}`}>
+        <div class="report-card-hero-main">
+          <p class="report-card-eyebrow">CNBC {dataYear} · #{state.rank} of 50</p>
+          <h1 class="report-card-state-name">{state.name}</h1>
+          <span class={`tier-badge ${state.tier}`}>{TIER_LABELS[state.tier]}</span>
+          {
+            card.yoy && (
+              <p class={`report-card-trend report-card-trend--${card.yoy.direction}`}>
+                <span class="report-card-trend-arrow" aria-hidden="true">{trendArrow}</span>
+                <span>{card.yoy.label}</span>
+                <span class="report-card-trend-detail">
+                  (#{card.yoy.priorRank} → #{card.yoy.currentRank})
+                </span>
+              </p>
+            )
+          }
+        </div>
+
+        <div class="report-card-grade">
+          <span class="report-card-grade-label">Overall score</span>
+          <div class="report-card-grade-value">
+            <span class="score-value">{state.score100}</span>
+            <span class="score-max">/100</span>
+          </div>
+          <div class="score-bar-track" aria-hidden="true">
+            <div class={`score-bar-fill ${state.tier}`} style={`width: ${state.score100}%`} />
+          </div>
+          <p class="report-card-rank">Rank #{state.rank} of 50</p>
+        </div>
+      </div>
+
+      {
+        card.bestFor.length > 0 && (
+          <section class="report-card-section" aria-labelledby="report-card-best-for">
+            <h2 id="report-card-best-for" class="report-card-section-title">Best for</h2>
+            <ul class="report-card-tags">
+              {card.bestFor.map((tag) => (
+                <li class="report-card-tag">{tag}</li>
+              ))}
+            </ul>
+          </section>
+        )
+      }
+
+      <section class="report-card-section report-card-categories" aria-labelledby="report-card-strengths">
+        <h2 id="report-card-strengths" class="report-card-section-title">Category snapshot</h2>
+        <div class="report-card-category-grid">
+          <div class="report-card-category-col">
+            <h3 class="report-card-category-heading">Top strengths</h3>
+            <ul class="report-card-category-list report-card-category-list--strength">
+              {
+                card.strengths.map((item) => (
+                  <li class="report-card-category-item">
+                    <span class="report-card-category-name">{item.label}</span>
+                    <span class="report-card-category-rank">#{item.rank}</span>
+                  </li>
+                ))
+              }
+            </ul>
+          </div>
+          <div class="report-card-category-col">
+            <h3 class="report-card-category-heading">Areas to improve</h3>
+            <ul class="report-card-category-list report-card-category-list--weakness">
+              {
+                card.weaknesses.map((item) => (
+                  <li class="report-card-category-item">
+                    <span class="report-card-category-name">{item.label}</span>
+                    <span class="report-card-category-rank">#{item.rank}</span>
+                  </li>
+                ))
+              }
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      {
+        card.topFounderFit && (
+          <section class="report-card-section" aria-labelledby="report-card-founder-fit">
+            <h2 id="report-card-founder-fit" class="report-card-section-title">Founder Fit highlight</h2>
+            <p class="report-card-founder-fit-line">
+              <strong>{card.topFounderFit.label}</strong> — #{card.topFounderFit.rank} of 50
+              · {card.topFounderFit.score100}/100
+            </p>
+            <p class="report-card-derived-note">{FOUNDER_FIT_DISCLAIMER}</p>
+          </section>
+        )
+      }
+
+      <footer class="report-card-footer">
+        <p class="report-card-attribution">
+          Data: <a href={CNBC_RANKINGS_URL} target="_blank" rel="noopener noreferrer">{cnbcSourceLabel(dataYear)}</a>
+          · <a href={METHODOLOGY_URL} target="_blank" rel="noopener noreferrer">CNBC methodology</a>
+        </p>
+        <p class="report-card-url">
+          <span class="report-card-url-label">statecompass.app</span>
+          <span class="report-card-url-path">/states/{state.slug}/report-card</span>
+        </p>
+        <p class="report-card-disclaimer">
+          Informational only — not legal, tax, or compliance advice. Founder Fit and match scores are StateCompass derived, not CNBC official rankings.
+        </p>
+      </footer>
+
+      <p class="report-card-export-footer" aria-hidden="true">
+        StateCompass · CNBC {dataYear} · statecompass.app
+      </p>
+    </article>
+  </main>
+
+  <script>
+    import { initReportCard } from "../../../scripts/reportCard.js";
+
+    const root = document.getElementById("report-card-root");
+    initReportCard(root).catch((error) => console.error(error));
+  </script>
+</Layout>

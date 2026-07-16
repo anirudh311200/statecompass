@@ -671,6 +671,7 @@ function updateDetailLinks(abbr, info) {
   const href = buildStateDetailUrl(info.slug, currentYear, yearIndex);
   const nameLink = document.getElementById("state-name-link");
   const detailLink = document.getElementById("map-detail-link");
+  const reportCardLink = document.getElementById("map-report-card-link");
 
   if (nameLink) {
     nameLink.textContent = info.name;
@@ -679,6 +680,9 @@ function updateDetailLinks(abbr, info) {
   }
   if (detailLink) {
     detailLink.href = href;
+  }
+  if (reportCardLink) {
+    reportCardLink.href = `/states/${info.slug}/report-card`;
   }
 }
 
