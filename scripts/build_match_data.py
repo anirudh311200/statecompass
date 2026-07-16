@@ -8,7 +8,7 @@ ROOT = Path(__file__).resolve().parents[1]
 DATA = ROOT / "data"
 PUBLIC = ROOT / "public" / "data"
 
-FILES = ("founder_match_weights.json",)
+FILES = ("founder_match_weights.json", "expansion_readiness_config.json")
 
 
 def main() -> None:

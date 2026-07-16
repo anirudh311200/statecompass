@@ -15,6 +15,7 @@ const path = Astro.url.pathname;
 const navItems = [
   { href: "/", label: "Map", match: (p) => p === "/" },
   { href: "/match", label: "Match", match: (p) => p.startsWith("/match") },
+  { href: "/expand", label: "Expand", match: (p) => p.startsWith("/expand") },
   { href: "/rankings", label: "Rankings", match: (p) => p.startsWith("/rankings") },
   { href: "/compare", label: "Compare", match: (p) => p.startsWith("/compare") },
   { href: "/movers", label: "Movers", match: (p) => p.startsWith("/movers") },

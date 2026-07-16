@@ -1,0 +1,122 @@
+---
+import Layout from "../layouts/Layout.astro";
+
+const params = Astro.url.searchParams;
+const hasResults =
+  params.has("home") &&
+  params.has("stage") &&
+  params.has("model") &&
+  params.has("targets");
+
+const title = hasResults
+  ? "Expansion Readiness Results | StateCompass"
+  : "Expansion Readiness Score | StateCompass";
+const description = hasResults
+  ? "How ready is your company to expand from your home state into target states — derived from CNBC scores and Founder Snapshot facts."
+  : "Already operating in one state? Score how ready you are to expand into 1–3 target states with friction callouts and category deltas.";
+---
+
+<Layout
+  title={title}
+  description={description}
+  subtitle="Expansion readiness from your home state — shareable results."
+  ogImage="/og/compare.svg"
+  ogImageAlt="StateCompass expansion readiness score"
+  preloadData
+>
+  <main class="page-content expand-page">
+    <section class="expand-hero panel" id="expand-flow" data-expand-container>
+      <div data-expand-form class="expand-form" hidden={hasResults}>
+        <h1 class="page-title" tabindex="-1">Expansion Readiness</h1>
+        <p class="page-lead">
+          Already operating in one state? See how ready you are to expand into 1–3 targets — with friction scores, category deltas, and Founder Snapshot links.
+        </p>
+        <p class="expand-prefill-note panel-helper" data-expand-prefill-note hidden></p>
+
+        <form class="expand-form-grid" novalidate>
+          <div class="expand-field">
+            <label class="expand-label" for="expand-home">Home state (where you operate today)</label>
+            <select id="expand-home" class="expand-select" data-expand-home required></select>
+          </div>
+
+          <div class="expand-field">
+            <label class="expand-label" for="expand-stage">ARR / stage</label>
+            <select id="expand-stage" class="expand-select" data-expand-stage required></select>
+          </div>
+
+          <div class="expand-field">
+            <label class="expand-label" for="expand-model">Business model</label>
+            <select id="expand-model" class="expand-select" data-expand-model required></select>
+          </div>
+
+          <div class="expand-field expand-field--full">
+            <span class="expand-label">Target states (1–3)</span>
+            <div class="expand-target-slots">
+              <select id="expand-target-0" class="expand-select" data-expand-target-0 aria-label="Target state 1"></select>
+              <select id="expand-target-1" class="expand-select" data-expand-target-1 aria-label="Target state 2 (optional)"></select>
+              <select id="expand-target-2" class="expand-select" data-expand-target-2 aria-label="Target state 3 (optional)"></select>
+            </div>
+          </div>
+
+          <p class="expand-error" data-expand-error role="alert"></p>
+
+          <div class="expand-form-actions expand-field--full">
+            <button type="submit" class="btn btn-primary btn-lg" data-expand-submit>
+              Calculate readiness
+            </button>
+            <a href="/match" class="btn btn-secondary">Take the match quiz</a>
+          </div>
+        </form>
+
+        <p class="expand-disclaimer">{`StateCompass derived — not CNBC official. Based on general business climate and tax posture — not industry-specific licensing.`}</p>
+      </div>
+
+      <div data-expand-results class="expand-results" hidden={!hasResults}>
+        <div class="expand-results-header">
+          <h1 class="page-title" tabindex="-1">Expansion readiness</h1>
+          <p class="expand-summary" data-expand-summary></p>
+          <div class="expand-results-toolbar">
+            <button type="button" class="btn btn-secondary" data-copy-expand-link data-default-label="Copy results link">
+              Copy results link
+            </button>
+            <button type="button" class="btn btn-secondary" data-expand-edit>Edit inputs</button>
+            <button type="button" class="btn btn-secondary" data-expand-print>Print / save PDF</button>
+            <a href="/compare" class="btn btn-secondary" data-expand-compare-all hidden>Compare all</a>
+            <a href="/" class="btn btn-secondary">Explore map</a>
+          </div>
+          <p class="share-status" data-share-status role="status" aria-live="polite"></p>
+          <p class="expand-disclaimer">{`StateCompass derived — not CNBC official. Based on general business climate and tax posture — not industry-specific licensing.`}</p>
+        </div>
+        <p class="visually-hidden" data-expand-live aria-live="polite"></p>
+        <div class="expand-result-cards" data-expand-result-cards></div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    import { initExpandFlow } from "../scripts/expandFlow.js";
+    import { decodeExpansionFromParams } from "../scripts/expansionReadiness.js";
+
+    async function boot() {
+      const [statesRes, snapshotsRes] = await Promise.all([
+        fetch("/data/states.json"),
+        fetch("/data/founder_snapshots.json"),
+      ]);
+      if (!statesRes.ok || !snapshotsRes.ok) {
+        throw new Error("Could not load data");
+      }
+      const statesPayload = await statesRes.json();
+      const snapshotsPayload = await snapshotsRes.json();
+      const urlProfile = decodeExpansionFromParams(window.location.search);
+
+      initExpandFlow({
+        container: document.getElementById("expand-flow"),
+        statesObject: statesPayload.states,
+        snapshots: snapshotsPayload.states,
+        initialProfile: urlProfile,
+      });
+    }
+
+    boot().catch(console.error);
+  </script>
+</Layout>

@@ -1,0 +1,112 @@
+{
+  "version": 1,
+  "disclaimer": "StateCompass derived — not CNBC official. Based on general business climate and tax posture — not industry-specific licensing.",
+  "industryCaveat": "Based on general business climate and tax posture — not industry-specific licensing.",
+  "factorWeights": {
+    "climateDelta": 0.35,
+    "taxBurdenChange": 0.25,
+    "regulatoryComplexity": 0.25,
+    "talentAvailability": 0.15
+  },
+  "profileWeights": {
+    "base": {
+      "economy": 0.1,
+      "infrastructure": 0.08,
+      "workforce": 0.12,
+      "costOfDoingBusiness": 0.12,
+      "businessFriendliness": 0.14,
+      "qualityOfLife": 0.06,
+      "technologyAndInnovation": 0.12,
+      "education": 0.06,
+      "accessToCapital": 0.08,
+      "costOfLiving": 0.12
+    },
+    "model": {
+      "saas": {
+        "technologyAndInnovation": 0.06,
+        "workforce": 0.04,
+        "accessToCapital": 0.03
+      },
+      "fintech": {
+        "businessFriendliness": 0.07,
+        "economy": 0.05,
+        "costOfDoingBusiness": 0.04
+      },
+      "ecommerce": {
+        "infrastructure": 0.05,
+        "costOfDoingBusiness": 0.05,
+        "economy": 0.03
+      },
+      "marketplace": {
+        "workforce": 0.05,
+        "economy": 0.04,
+        "technologyAndInnovation": 0.03
+      },
+      "other": {
+        "businessFriendliness": 0.03,
+        "workforce": 0.03
+      }
+    },
+    "stage": {
+      "pre-revenue": {
+        "accessToCapital": -0.04,
+        "costOfDoingBusiness": 0.05,
+        "costOfLiving": 0.04,
+        "technologyAndInnovation": 0.03
+      },
+      "under-500k": {
+        "costOfDoingBusiness": 0.04,
+        "businessFriendliness": 0.04,
+        "costOfLiving": 0.03
+      },
+      "500k-2m": {
+        "economy": 0.04,
+        "workforce": 0.05,
+        "businessFriendliness": 0.04
+      },
+      "2m-plus": {
+        "economy": 0.05,
+        "infrastructure": 0.04,
+        "businessFriendliness": 0.05,
+        "workforce": 0.03
+      }
+    }
+  },
+  "stageFactorModifiers": {
+    "pre-revenue": {
+      "taxBurdenChange": 0.85,
+      "regulatoryComplexity": 0.9,
+      "talentAvailability": 1.1
+    },
+    "under-500k": {
+      "taxBurdenChange": 0.95,
+      "regulatoryComplexity": 0.95,
+      "talentAvailability": 1.05
+    },
+    "500k-2m": {
+      "taxBurdenChange": 1.0,
+      "regulatoryComplexity": 1.0,
+      "talentAvailability": 1.0
+    },
+    "2m-plus": {
+      "taxBurdenChange": 1.15,
+      "regulatoryComplexity": 1.1,
+      "talentAvailability": 0.95
+    }
+  },
+  "frictionThresholds": {
+    "low": 70,
+    "moderate": 40
+  },
+  "fixtures": {
+    "wa-fintech-500k-2m": {
+      "home": "WA",
+      "targets": ["CA", "TX"],
+      "stage": "500k-2m",
+      "model": "fintech",
+      "expectHigherThan": {
+        "TX": "CA"
+      }
+    }
+  }
+}

@@ -15,6 +15,7 @@ import { wireCopyButton } from "./share.js";
 import { downloadComparePng } from "./exportCompare.js";
 import { HEADS_UP_COMPARE_ROWS, HEADS_UP_SHARED_TITLE } from "./snapshotLabels.js";
 import { saveComparison } from "./memory.js";
+import { getStoredAnswers } from "./quizStore.js";
 import {
   loadIndex,
   getYearFromUrl,
@@ -421,6 +422,23 @@ function updateShareBar(abbrs) {
   }
 
   shareBar.hidden = abbrs.length < MIN_STATES;
+
+  const expandLink = document.getElementById("expand-readiness-link");
+  if (expandLink && abbrs.length >= MIN_STATES) {
+    const home = abbrs[0];
+    const targets = abbrs.slice(1).join(",");
+    const quiz = getStoredAnswers();
+    const params = new URLSearchParams({
+      home,
+      targets,
+      stage: quiz?.stage ?? "500k-2m",
+      model: quiz?.model ?? "saas",
+    });
+    expandLink.href = `/expand?${params.toString()}`;
+    expandLink.hidden = false;
+  } else if (expandLink) {
+    expandLink.hidden = true;
+  }
 }
 
 function renderCompare() {

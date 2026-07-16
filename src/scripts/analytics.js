@@ -65,3 +65,11 @@ export function trackStateFocusOpen(abbr) {
 export function trackMetroHighlight(stateAbbr, metroId) {
   trackEvent("MetroHighlight", { state: stateAbbr, metro: metroId });
 }
+
+export function trackExpansionComplete({ home, targets, model }) {
+  trackEvent("ExpansionComplete", { home, targets, model });
+}
+
+export function trackExpansionShare() {
+  trackEvent("ExpansionShare");
+}

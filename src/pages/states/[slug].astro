@@ -25,6 +25,7 @@ const pageUrl = new URL(`/states/${state.slug}`, site).href;
 const title = `${state.name} — #${state.rank} | StateCompass CNBC ${dataYear}`;
 const description = `${state.name} ranks #${state.rank} of 50 in CNBC America's Top States for Business ${dataYear}. Score ${state.score100}/100. Full category breakdown and Founder Snapshot — tax, registration, and compliance context for site selection.`;
 const compareHref = `/compare?states=${abbr}`;
+const expandHref = `/expand?home=${abbr}`;
 const mapHref = `/?state=${abbr}`;
 const ogImage = `/og/${state.slug}.svg`;
 const ogImageAlt = `${state.name} — CNBC rank #${state.rank}, score ${state.score100}/100`;
@@ -137,6 +138,9 @@ const jsonLd = {
       <div class="state-cta-row">
         <a href={compareHref} class="btn btn-primary" id="state-compare-link">
           Compare with other states
+        </a>
+        <a href={expandHref} class="btn btn-secondary" id="state-expand-link">
+          Expand from here
         </a>
         <a href={mapHref} class="btn btn-secondary" id="state-map-link">View on map</a>
         <button

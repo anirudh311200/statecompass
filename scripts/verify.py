@@ -197,9 +197,109 @@ for abbr, entry in metro_states.items():
         assert metro["sourceLabel"].strip(), (abbr, metro["id"])
         assert metro["industryTags"]
 
+# Feature 2 — expansion readiness config
+EXPANSION_PATH = ROOT / "public/data/expansion_readiness_config.json"
+expansion_config = json.loads(EXPANSION_PATH.read_text(encoding="utf-8"))
+assert expansion_config.get("disclaimer", "").strip()
+factor_weights = expansion_config["factorWeights"]
+assert abs(sum(factor_weights.values()) - 1.0) < 1e-9
+profile_base = expansion_config["profileWeights"]["base"]
+assert set(profile_base.keys()) == EXPECTED_CATEGORIES
+assert abs(sum(profile_base.values()) - 1.0) < 1e-9
+
+fixture = expansion_config["fixtures"]["wa-fintech-500k-2m"]
+home_abbr = fixture["home"]
+targets = fixture["targets"]
+stage = fixture["stage"]
+model = fixture["model"]
+
+
+def _expansion_profile_weights(stage_id, model_id):
+    weights = dict(expansion_config["profileWeights"]["base"])
+    for key, delta in expansion_config["profileWeights"]["model"].get(model_id, {}).items():
+        weights[key] = weights.get(key, 0) + delta
+    for key, delta in expansion_config["profileWeights"]["stage"].get(stage_id, {}).items():
+        weights[key] = weights.get(key, 0) + delta
+    for key in list(weights.keys()):
+        weights[key] = max(0, weights[key])
+    total = sum(weights.values())
+    return {k: weights[k] / total for k in weights}
+
+
+def _tax_score(text):
+    if not text:
+        return 5
+    lower = text.lower()
+    score = 5.0
+    if "no state personal income tax" in lower or "no personal income tax" in lower:
+        score -= 3
+    if "no statewide sales tax" in lower:
+        score -= 1
+    import re as _re
+
+    rates = [float(m.group(1)) for m in _re.finditer(r"(\d+(?:\.\d+)?)\s*%", lower)]
+    if rates:
+        mx = max(rates)
+        if mx >= 10:
+            score += 3
+        elif mx >= 7:
+            score += 2
+        elif mx >= 5:
+            score += 1
+    return max(0, min(10, score))
+
+
+def _readiness_score(home, target, stage_id, model_id):
+    weights = _expansion_profile_weights(stage_id, model_id)
+    home_state = default_data["states"][home]
+    target_state = default_data["states"][target]
+    home_snap = snapshot_states[home]
+    target_snap = snapshot_states[target]
+
+    def climate(state):
+        return sum(
+            (state["categories"][k]["score"] / state["categories"][k]["maxScore"]) * weights[k]
+            for k in EXPECTED_CATEGORIES
+        )
+
+    climate_delta = climate(target_state) - climate(home_state)
+    climate_factor = max(0, min(1, 0.5 + climate_delta * 2.5))
+
+    home_tax = _tax_score(home_snap["taxPosture"]["value"])
+    target_tax = _tax_score(target_snap["taxPosture"]["value"])
+    tax_factor = max(0, min(1, 0.5 + (home_tax - target_tax) / 8))
+
+    home_bf = home_state["categories"]["businessFriendliness"]["rank"]
+    target_bf = target_state["categories"]["businessFriendliness"]["rank"]
+    reg_factor = max(0, min(1, 0.5 - (target_bf - home_bf) / 40))
+
+    talent = (
+        target_state["categories"]["workforce"]["score"] / target_state["categories"]["workforce"]["maxScore"]
+        + target_state["categories"]["technologyAndInnovation"]["score"]
+        / target_state["categories"]["technologyAndInnovation"]["maxScore"]
+    ) / 2
+
+    fw = factor_weights
+    raw = (
+        climate_factor * fw["climateDelta"]
+        + tax_factor * fw["taxBurdenChange"]
+        + reg_factor * fw["regulatoryComplexity"]
+        + talent * fw["talentAvailability"]
+    )
+    return round(max(0, min(100, raw * 100)))
+
+
+scores = {t: _readiness_score(home_abbr, t, stage, model) for t in targets}
+for abbr, score in scores.items():
+    assert 0 <= score <= 100, (abbr, score)
+higher = fixture["expectHigherThan"]
+for winner, loser in higher.items():
+    assert scores[winner] > scores[loser], scores
+
 print("OK: multi-year index and payloads validated")
 print("OK: all 50 states aligned with category data per year")
 print("OK: founder fit profiles validated")
 print("OK: founder snapshots validated")
 print("OK: founder match weights validated")
 print("OK: state metros validated")
+print("OK: expansion readiness config validated")
