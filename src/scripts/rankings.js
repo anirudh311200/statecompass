@@ -1,9 +1,10 @@
 import {
   FOUNDER_FIT_OVERALL,
   getFounderFitLookup,
-  getProfileFromUrl,
-  getProfileLabel,
-  syncProfileToUrl,
+  getLensFromUrl,
+  getLensLabel,
+  syncLensToUrl,
+  tierFromLensRank,
   wireFounderFitSelector,
 } from "./founderFit.js";
 import { TIER_LABELS } from "./categories.js";
@@ -62,7 +63,7 @@ export async function initRankings() {
   let activeTier = "all";
   let sortKey = "rank";
   let sortDir = SORT_DEFAULT_DIR.rank;
-  let activeProfile = getProfileFromUrl();
+  let activeProfile = getLensFromUrl();
 
   function populateRowsFromYear() {
     rows.forEach((row) => {
@@ -126,32 +127,32 @@ export async function initRankings() {
   }
 
   function updateHeaders(profileId) {
-    const isFounderFit = profileId !== FOUNDER_FIT_OVERALL;
-    const profileLabel = getProfileLabel(profileId);
+    const isLens = profileId !== FOUNDER_FIT_OVERALL;
+    const lensLabel = getLensLabel(profileId);
 
     if (modeLabel) {
-      modeLabel.textContent = isFounderFit
-        ? `Founder Fit: ${profileLabel} — CNBC ${currentYear}, derived from category scores. Click a column header to sort; click a row for the full breakdown.`
+      modeLabel.textContent = isLens
+        ? `Founder Lens: ${lensLabel} — CNBC ${currentYear}, StateCompass derived from category scores. Click a column header to sort; click a row for the full breakdown.`
         : `CNBC America's Top States for Business, ${currentYear} — click a column header to sort; click a row for the full breakdown.`;
     }
 
     const rankLabel = rankHeader?.querySelector(".rankings-sort-label");
     const scoreLabel = scoreHeader?.querySelector(".rankings-sort-label");
     if (rankLabel) {
-      rankLabel.textContent = isFounderFit ? "Fit rank" : "Rank";
+      rankLabel.textContent = isLens ? "Lens rank" : "Rank";
     }
     if (scoreLabel) {
-      scoreLabel.textContent = isFounderFit ? "Fit score" : "Score";
+      scoreLabel.textContent = isLens ? "Lens score" : "Score";
     }
 
     if (cnbcHeaderCol) {
-      cnbcHeaderCol.hidden = !isFounderFit;
+      cnbcHeaderCol.hidden = !isLens;
     }
 
     rows.forEach((row) => {
       const cnbcCell = row.querySelector(".rankings-cnbc");
       if (cnbcCell) {
-        cnbcCell.hidden = !isFounderFit;
+        cnbcCell.hidden = !isLens;
       }
     });
 
@@ -161,7 +162,7 @@ export async function initRankings() {
   function applyProfileToRows(profileId) {
     Object.keys(lookups).forEach((key) => delete lookups[key]);
     const lookup = getLookup(profileId);
-    const isFounderFit = Boolean(lookup);
+    const isLens = Boolean(lookup);
 
     rows.forEach((row) => {
       const abbr = row.dataset.abbr;
@@ -172,7 +173,7 @@ export async function initRankings() {
       const cnbcCell = row.querySelector(".rankings-cnbc");
       const tierCell = row.querySelector(".tier-badge");
 
-      if (isFounderFit && lookup[abbr]) {
+      if (isLens && lookup[abbr]) {
         const fit = lookup[abbr];
         row.dataset.rank = String(fit.founderFitRank);
         row.dataset.score = String(fit.founderFitScore100);
@@ -194,7 +195,10 @@ export async function initRankings() {
       }
 
       if (tierCell && statesObject[abbr]) {
-        const tier = statesObject[abbr].tier;
+        const tier =
+          isLens && lookup[abbr]
+            ? tierFromLensRank(lookup[abbr].founderFitRank)
+            : statesObject[abbr].tier;
         row.dataset.tier = tier;
         tierCell.className = `tier-badge tier-badge--sm ${tier}`;
         tierCell.textContent = TIER_LABELS[tier] ?? tier;
@@ -309,7 +313,7 @@ export async function initRankings() {
       profileSelect.value = profileId;
     }
     applyProfileToRows(profileId);
-    syncProfileToUrl(profileId);
+    syncLensToUrl(profileId);
     applyView();
   }
 

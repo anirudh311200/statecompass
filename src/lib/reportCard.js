@@ -62,8 +62,7 @@ function getPriorYearFromIndex(year, index) {
 }
 
 /**
- * Rules-based "Best for" tags from CNBC category strengths and Founder Fit ranks.
- * Feature 4 Lens labels can extend this later.
+ * Rules-based "Best for" tags from CNBC category strengths and Founder Lens ranks.
  */
 export function computeBestForTags(abbr, state, statesObject) {
   const tags = [];

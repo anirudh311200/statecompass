@@ -1,32 +1,14 @@
 {
-  "version": 1,
-  "disclaimer": "Derived from CNBC 2025 category scores — not CNBC's official overall rank.",
+  "version": 2,
+  "disclaimer": "StateCompass derived from CNBC category scores — not CNBC's official overall rank.",
   "profiles": [
     {
-      "id": "tech",
-      "label": "Tech startup",
-      "description": "Emphasizes workforce talent, technology & innovation, and access to capital.",
-      "emphasized": ["workforce", "technologyAndInnovation", "accessToCapital"],
-      "weights": {
-        "workforce": 0.2,
-        "technologyAndInnovation": 0.2,
-        "accessToCapital": 0.15,
-        "economy": 0.1,
-        "infrastructure": 0.08,
-        "costOfDoingBusiness": 0.07,
-        "businessFriendliness": 0.07,
-        "qualityOfLife": 0.05,
-        "education": 0.05,
-        "costOfLiving": 0.03
-      }
-    },
-    {
-      "id": "bootstrapped",
-      "label": "Bootstrapped services",
-      "description": "Emphasizes cost of doing business, cost of living, and business friendliness.",
+      "id": "bootstrapper",
+      "label": "Bootstrapper",
+      "description": "Emphasizes cost of doing business, cost of living, and business friendliness — for founders keeping burn low.",
       "emphasized": ["costOfDoingBusiness", "costOfLiving", "businessFriendliness"],
       "weights": {
-        "costOfDoingBusiness": 0.22,
+        "costOfDoingBusiness": 0.2,
         "costOfLiving": 0.2,
         "businessFriendliness": 0.18,
         "economy": 0.1,
@@ -34,26 +16,62 @@
         "infrastructure": 0.07,
         "qualityOfLife": 0.07,
         "technologyAndInnovation": 0.04,
-        "education": 0.02,
+        "education": 0.04,
         "accessToCapital": 0.02
       }
     },
     {
-      "id": "physical-ops",
-      "label": "Physical ops / logistics",
-      "description": "Emphasizes infrastructure, economy, and workforce for operations-heavy businesses.",
-      "emphasized": ["infrastructure", "economy", "workforce"],
+      "id": "vc-backed",
+      "label": "VC-Backed",
+      "description": "Emphasizes tech ecosystem, talent pool, and access to capital — for venture-scale startups.",
+      "emphasized": ["technologyAndInnovation", "workforce", "accessToCapital"],
       "weights": {
-        "infrastructure": 0.22,
-        "economy": 0.2,
-        "workforce": 0.18,
-        "costOfDoingBusiness": 0.12,
-        "businessFriendliness": 0.08,
-        "qualityOfLife": 0.06,
-        "technologyAndInnovation": 0.05,
+        "technologyAndInnovation": 0.22,
+        "workforce": 0.2,
+        "accessToCapital": 0.18,
+        "economy": 0.1,
+        "infrastructure": 0.07,
+        "costOfDoingBusiness": 0.06,
+        "businessFriendliness": 0.06,
+        "qualityOfLife": 0.05,
         "education": 0.04,
-        "accessToCapital": 0.03,
         "costOfLiving": 0.02
+      }
+    },
+    {
+      "id": "fintech",
+      "label": "Fintech",
+      "description": "Emphasizes business friendliness and infrastructure — regulatory posture approximated from CNBC categories (derived, not licensing-specific).",
+      "emphasized": ["businessFriendliness", "infrastructure", "economy"],
+      "weights": {
+        "businessFriendliness": 0.22,
+        "infrastructure": 0.18,
+        "economy": 0.14,
+        "workforce": 0.12,
+        "costOfDoingBusiness": 0.1,
+        "technologyAndInnovation": 0.08,
+        "accessToCapital": 0.06,
+        "qualityOfLife": 0.04,
+        "education": 0.04,
+        "costOfLiving": 0.02
+      }
+    },
+    {
+      "id": "remote-first",
+      "label": "Remote-First",
+      "description": "Emphasizes infrastructure, cost of living, and talent — de-emphasizes access to capital for distributed teams.",
+      "emphasized": ["infrastructure", "costOfLiving", "workforce"],
+      "weights": {
+        "infrastructure": 0.2,
+        "costOfLiving": 0.2,
+        "workforce": 0.16,
+        "qualityOfLife": 0.12,
+        "technologyAndInnovation": 0.1,
+        "economy": 0.08,
+        "costOfDoingBusiness": 0.06,
+        "businessFriendliness": 0.04,
+        "education": 0.02,
+        "accessToCapital": 0.02
       }
     }
   ]

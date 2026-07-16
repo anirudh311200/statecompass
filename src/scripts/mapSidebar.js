@@ -7,16 +7,13 @@ import {
   FOUNDER_FIT_OVERALL,
   FOUNDER_FIT_DISCLAIMER,
   getFounderFitLookup,
-  getProfileFromUrl,
-  getProfileLabel,
-  syncProfileToUrl,
+  getLensFromUrl,
+  getLensLabel,
+  syncLensToUrl,
+  tierFromLensRank,
 } from "./founderFit.js";
 
-const TIER_FROM_RANK = (rank) => {
-  if (rank <= 17) return "green";
-  if (rank <= 34) return "yellow";
-  return "red";
-};
+const TIER_FROM_RANK = tierFromLensRank;
 
 let stateData = {};
 let activeProfile = FOUNDER_FIT_OVERALL;
@@ -45,10 +42,11 @@ function syncMapUrl() {
   const url = new URL(window.location.href);
 
   if (activeProfile && activeProfile !== FOUNDER_FIT_OVERALL) {
-    url.searchParams.set("profile", activeProfile);
+    url.searchParams.set("lens", activeProfile);
   } else {
-    url.searchParams.delete("profile");
+    url.searchParams.delete("lens");
   }
+  url.searchParams.delete("profile");
 
   if (focusedAbbr) {
     url.searchParams.set("state", focusedAbbr);
@@ -98,7 +96,7 @@ function applySidebarLens(abbr, info) {
   const displayTier = isProfile ? TIER_FROM_RANK(fit.founderFitRank) : info.tier;
 
   if (scoreLabel) {
-    scoreLabel.textContent = isProfile ? "Fit score" : "Score";
+    scoreLabel.textContent = isProfile ? "Lens score" : "Score";
   }
   if (scoreValue) {
     scoreValue.textContent = displayScore;
@@ -117,7 +115,7 @@ function applySidebarLens(abbr, info) {
   }
   if (profileChip) {
     if (isProfile) {
-      profileChip.textContent = getProfileLabel(activeProfile);
+      profileChip.textContent = getLensLabel(activeProfile);
       profileChip.hidden = false;
     } else {
       profileChip.hidden = true;
@@ -162,6 +160,12 @@ function setProfile(profileId) {
   }
 
   syncMapUrl();
+
+  document.dispatchEvent(
+    new CustomEvent("statecompass:lens", {
+      detail: { lensId: profileId, lookup: founderFitLookup },
+    })
+  );
 }
 
 function wireProfilePills() {
@@ -174,7 +178,7 @@ function wireProfilePills() {
 
 export function initMapSidebar(states) {
   stateData = states;
-  activeProfile = getProfileFromUrl();
+  activeProfile = getLensFromUrl();
   focusedAbbr =
     new URLSearchParams(window.location.search).get("state")?.trim().toUpperCase() || null;
 
@@ -183,6 +187,12 @@ export function initMapSidebar(states) {
   }
 
   wireProfilePills();
+
+  document.querySelectorAll("[data-founder-fit-pill]").forEach((pill) => {
+    const selected = pill.dataset.profile === activeProfile;
+    pill.classList.toggle("is-active", selected);
+    pill.setAttribute("aria-pressed", selected ? "true" : "false");
+  });
 
   document.addEventListener("statecompass:pin", (event) => {
     focusedAbbr = event.detail?.abbr ?? null;
@@ -212,11 +222,29 @@ export function initMapSidebar(states) {
     if (focusedAbbr && stateData[focusedAbbr]) {
       applySidebarLens(focusedAbbr, stateData[focusedAbbr]);
     }
+    document.dispatchEvent(
+      new CustomEvent("statecompass:lens", {
+        detail: { lensId: activeProfile, lookup: founderFitLookup },
+      })
+    );
+  });
+
+  document.addEventListener("statecompass:lens-suggest", (event) => {
+    const lensId = event.detail?.lensId;
+    if (lensId && lensId !== FOUNDER_FIT_OVERALL) {
+      setProfile(lensId);
+    }
   });
 
   if (focusedAbbr && stateData[focusedAbbr]) {
     applySidebarLens(focusedAbbr, stateData[focusedAbbr]);
   }
+
+  document.dispatchEvent(
+    new CustomEvent("statecompass:lens", {
+      detail: { lensId: activeProfile, lookup: founderFitLookup },
+    })
+  );
 }
 
 export function refreshMapSidebar(abbr, info) {

@@ -3,6 +3,7 @@ import { isStateSaved, toggleSavedState } from "./memory.js";
 import { buildStateDetailUrl, wireYearPicker } from "./yearData.js";
 import { TIER_GLOWS, TIER_GLOWS_ACTIVE, TIER_GRADIENTS, TIER_MAP_FILLS } from "./categories.js";
 import { isMapIntroActive, replayMapIntro, startMapIntro } from "./mapIntro.js";
+import { FOUNDER_FIT_OVERALL, tierFromLensRank } from "./founderFit.js";
 
 const TIER_COLORS = TIER_MAP_FILLS;
 
@@ -51,6 +52,8 @@ const MOBILE_MAP_MQ = "(max-width: 860px)";
 let stateData = {};
 let currentYear = 2025;
 let yearIndex = null;
+let activeLens = FOUNDER_FIT_OVERALL;
+let lensLookup = null;
 let mapPanel = null;
 let hoverPath = null;
 let pinnedAbbr = null;
@@ -499,13 +502,20 @@ function tierFill(tier) {
   return TIER_COLORS[tier] ?? DEFAULT_FILL;
 }
 
+function getDisplayTier(abbr, info) {
+  if (activeLens !== FOUNDER_FIT_OVERALL && lensLookup?.[abbr]) {
+    return tierFromLensRank(lensLookup[abbr].founderFitRank);
+  }
+  return info.tier;
+}
+
 function paintState(path, abbr) {
   const info = stateData[abbr];
   if (!info || !path) {
     return;
   }
 
-  path.style.fill = tierFill(info.tier);
+  path.style.fill = tierFill(getDisplayTier(abbr, info));
   path.style.filter = "";
 }
 
@@ -516,8 +526,9 @@ function highlightPath(path, abbr) {
   }
 
   path.classList.add("is-active");
-  path.style.fill = tierFill(info.tier);
-  path.style.filter = TIER_GLOWS_ACTIVE[info.tier] ?? TIER_GLOWS[info.tier] ?? "";
+  const displayTier = getDisplayTier(abbr, info);
+  path.style.fill = tierFill(displayTier);
+  path.style.filter = TIER_GLOWS_ACTIVE[displayTier] ?? TIER_GLOWS[displayTier] ?? "";
 }
 
 function resetPath(path) {
@@ -553,9 +564,13 @@ function refreshMapColors() {
     if (!info) {
       return;
     }
+    const rankLabel =
+      activeLens !== FOUNDER_FIT_OVERALL && lensLookup?.[abbr]
+        ? `lens rank ${lensLookup[abbr].founderFitRank}`
+        : `rank ${info.rank}`;
     path.setAttribute(
       "aria-label",
-      `${info.name}: rank ${info.rank}, score ${info.score100} out of 100`
+      `${info.name}: ${rankLabel}, score ${info.score100} out of 100`
     );
     if (path === pinnedPath || path === hoverPath) {
       highlightPath(path, abbr);
@@ -1144,6 +1159,12 @@ export async function initMap(options = {}) {
   if (!embedMode) {
     startMapIntro(mapPanel);
   }
+
+  document.addEventListener("statecompass:lens", (event) => {
+    activeLens = event.detail?.lensId ?? FOUNDER_FIT_OVERALL;
+    lensLookup = event.detail?.lookup ?? null;
+    refreshMapColors();
+  });
 
   return stateData;
 }

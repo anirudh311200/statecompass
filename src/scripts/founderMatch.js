@@ -1,5 +1,10 @@
 import weightsPayload from "../../public/data/founder_match_weights.json";
 import { CATEGORY_ORDER } from "./categories.js";
+import {
+  FOUNDER_FIT_OVERALL,
+  getLensWeights,
+  suggestLensFromQuiz,
+} from "./founderFit.js";
 
 export const MATCH_DISCLAIMER = weightsPayload.disclaimer;
 
@@ -79,14 +84,18 @@ const questionById = Object.fromEntries(QUIZ_QUESTIONS.map((q) => [q.id, q]));
 /**
  * Match engine (StateCompass derived, not CNBC official).
  *
- * 1. Start with baseWeights (sum = 1).
- * 2. For each quiz answer, add category deltas from quizModifiers[question][answer].
- * 3. Clamp each weight to >= 0, then normalize so Σ weight = 1.
- * 4. Match raw = Σ (normalized_category × weight) per state.
- * 5. Match % = round(raw × 100). Rank all 50; return top 3.
+ * Weight precedence (Feature 4.C.2):
+ * 1. Start from Founder Lens weights when a lens is explicit or quiz-suggested.
+ * 2. Otherwise use baseWeights from founder_match_weights.json.
+ * 3. Apply quizModifiers deltas per answer.
+ * 4. Clamp each weight to >= 0, then normalize so Σ weight = 1.
+ * 5. Match raw = Σ (normalized_category × weight) per state.
+ * 6. Match % = round(raw × 100). Rank all 50; return top 3.
  */
-export function buildWeightsFromQuiz(answers) {
-  const weights = { ...weightsPayload.baseWeights };
+export function buildWeightsFromQuiz(answers, lensId = null) {
+  const resolvedLens = lensId ?? suggestLensFromQuiz(answers);
+  const lensWeights = resolvedLens !== FOUNDER_FIT_OVERALL ? getLensWeights(resolvedLens) : null;
+  const weights = lensWeights ? { ...lensWeights } : { ...weightsPayload.baseWeights };
 
   for (const [questionId, answerId] of Object.entries(answers)) {
     const modifiers = weightsPayload.quizModifiers?.[questionId]?.[answerId];
@@ -232,10 +241,16 @@ export function getMatchSharePath(answers) {
   return `/match?${query}`;
 }
 
-export function getComparePathForStates(abbrs) {
+export function getComparePathForStates(abbrs, lensId = null) {
   const list = abbrs.filter(Boolean).slice(0, 3);
   if (list.length < 2) {
     return null;
   }
-  return `/compare?states=${list.join(",")}`;
+  const params = new URLSearchParams({ states: list.join(",") });
+  if (lensId && lensId !== FOUNDER_FIT_OVERALL) {
+    params.set("lens", lensId);
+  }
+  return `/compare?${params.toString()}`;
 }
+
+export { suggestLensFromQuiz };

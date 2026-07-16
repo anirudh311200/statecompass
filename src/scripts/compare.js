@@ -6,8 +6,9 @@ import {
 import {
   FOUNDER_FIT_OVERALL,
   getFounderFitLookup,
-  getProfileFromUrl,
-  getProfileLabel,
+  getLensFromUrl,
+  getLensLabel,
+  tierFromLensRank,
   wireFounderFitSelector,
 } from "./founderFit.js";
 import { trackCompare } from "./analytics.js";
@@ -87,10 +88,11 @@ function syncUrl() {
   }
 
   if (activeProfile && activeProfile !== FOUNDER_FIT_OVERALL) {
-    url.searchParams.set("profile", activeProfile);
+    url.searchParams.set("lens", activeProfile);
   } else {
-    url.searchParams.delete("profile");
+    url.searchParams.delete("lens");
   }
+  url.searchParams.delete("profile");
 
   history.replaceState(null, "", url);
 }
@@ -164,13 +166,15 @@ function renderChips() {
 function renderSummary(abbrs) {
   const container = document.getElementById("compare-summary");
   container.replaceChildren();
-  const showFounderFit = activeProfile !== FOUNDER_FIT_OVERALL && founderFitLookup;
+  const showLens = activeProfile !== FOUNDER_FIT_OVERALL && founderFitLookup;
 
   abbrs.forEach((abbr) => {
     const info = stateData[abbr];
-    const fit = showFounderFit ? founderFitLookup[abbr] : null;
+    const fit = showLens ? founderFitLookup[abbr] : null;
+    const displayTier =
+      fit != null ? tierFromLensRank(fit.founderFitRank) : info.tier;
     const card = document.createElement("div");
-    card.className = `compare-summary-card tier-border-${info.tier}`;
+    card.className = `compare-summary-card tier-border-${displayTier}`;
     card.innerHTML = `
       <h3 class="compare-state-name">${info.name}</h3>
       <div class="compare-score-row">
@@ -178,15 +182,15 @@ function renderSummary(abbrs) {
         <span class="score-max">/100</span>
       </div>
       <div class="score-bar-track" aria-hidden="true">
-        <div class="score-bar-fill ${info.tier}" style="width: ${info.score100}%"></div>
+        <div class="score-bar-fill ${displayTier}" style="width: ${info.score100}%"></div>
       </div>
       <p class="compare-meta">Overall rank <strong>#${info.rank}</strong></p>
       ${
         fit
-          ? `<p class="compare-meta compare-founder-fit-meta">Founder Fit (${getProfileLabel(activeProfile)}): <strong>#${fit.founderFitRank}</strong> · ${fit.founderFitScore100}/100</p>`
+          ? `<p class="compare-meta compare-founder-fit-meta">Founder Lens (${getLensLabel(activeProfile)}): <strong>#${fit.founderFitRank}</strong> · ${fit.founderFitScore100}/100 <span class="compare-meta-cnbc">· CNBC overall #${info.rank}</span></p>`
           : ""
       }
-      <span class="tier-badge tier-badge--sm ${info.tier}">${TIER_LABELS[info.tier]}</span>
+      <span class="tier-badge tier-badge--sm ${displayTier}">${TIER_LABELS[displayTier]}</span>
       <a href="${buildStateDetailUrl(info.slug, dataYear, yearIndex)}" class="compare-detail-link"${embedMode ? ' target="_blank" rel="noopener noreferrer"' : ""}>Full breakdown →</a>
     `;
     container.appendChild(card);
@@ -614,7 +618,7 @@ export async function initCompare(options = {}) {
 
   stateData = payload.states;
   dataYear = payload.year ?? year;
-  activeProfile = getProfileFromUrl();
+  activeProfile = getLensFromUrl();
   updateYearLabels(dataYear);
 
   wireFounderFitSelector({

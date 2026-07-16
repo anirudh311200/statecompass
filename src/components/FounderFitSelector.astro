@@ -17,9 +17,10 @@ const {
 
 const pillLabels: Record<string, string> = {
   overall: "Overall",
-  tech: "Tech",
-  bootstrapped: "Bootstrapped",
-  "physical-ops": "Ops",
+  bootstrapper: "Bootstrap",
+  "vc-backed": "VC",
+  fintech: "Fintech",
+  "remote-first": "Remote",
 };
 ---
 
@@ -29,7 +30,7 @@ const pillLabels: Record<string, string> = {
       <div
         class="founder-fit-pills"
         role="group"
-        aria-label="Business profile"
+        aria-label="Founder Lens"
         data-founder-fit-pills
       >
         <button
@@ -62,7 +63,7 @@ const pillLabels: Record<string, string> = {
     </div>
   ) : (
     <div class:list={["founder-fit-selector", className]}>
-      <label class="toolbar-label" for={id}>Business profile</label>
+      <label class="toolbar-label" for={id}>Founder Lens</label>
       <select id={id} class="founder-fit-select" data-founder-fit-select>
         <option value="overall">Overall</option>
         {profilesPayload.profiles.map((profile) => (

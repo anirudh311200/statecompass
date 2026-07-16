@@ -114,10 +114,27 @@ for profile in profiles["profiles"]:
     ranks = {abbr: index + 1 for index, (abbr, _) in enumerate(entries)}
     ranked_by_profile[profile_id] = ranks
 
-assert ranked_by_profile["tech"]["NC"] != default_data["states"]["NC"]["rank"]
-assert ranked_by_profile["tech"] != {
+assert ranked_by_profile["vc-backed"]["NC"] != default_data["states"]["NC"]["rank"]
+assert ranked_by_profile["vc-backed"] != {
     abbr: state["rank"] for abbr, state in default_data["states"].items()
 }
+
+cnbc_top10 = {
+    abbr
+    for abbr, _ in sorted(
+        ((abbr, state["rank"]) for abbr, state in default_data["states"].items()),
+        key=lambda item: item[1],
+    )[:10]
+}
+
+for lens_id in ("bootstrapper", "vc-backed", "fintech", "remote-first"):
+    lens_top10 = {
+        abbr
+        for abbr, _ in sorted(
+            ranked_by_profile[lens_id].items(), key=lambda item: item[1]
+        )[:10]
+    }
+    assert lens_top10 != cnbc_top10, (lens_id, "top-10 should differ from CNBC overall")
 
 SNAPSHOT_FIELDS = ("taxPosture", "businessRegistration", "complianceCalendar")
 SNAPSHOTS_PATH = ROOT / "public/data/founder_snapshots.json"

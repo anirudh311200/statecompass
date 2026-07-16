@@ -5,7 +5,9 @@ import {
   getMatchSharePath,
   encodeQuizToParams,
   getComparePathForStates,
+  suggestLensFromQuiz,
 } from "./founderMatch.js";
+import { getLensLabel, FOUNDER_FIT_OVERALL } from "./founderFit.js";
 import { explainMatch } from "./matchExplain.js";
 import { saveQuizProgress, saveQuizResults, clearQuizStorage, loadQuizProgress } from "./quizStore.js";
 import { wireCopyButton } from "./share.js";
@@ -109,11 +111,25 @@ export function initMatchFlow({ container, statesObject, onResultsShown, initial
     answers = validated;
     saveQuizResults(answers);
 
+    const suggestedLens = suggestLensFromQuiz(validated);
     const url = new URL(window.location.href);
     for (const q of QUIZ_QUESTIONS) {
       url.searchParams.set(q.id, answers[q.id]);
     }
+    if (suggestedLens !== FOUNDER_FIT_OVERALL) {
+      url.searchParams.set("lens", suggestedLens);
+    } else {
+      url.searchParams.delete("lens");
+    }
     history.replaceState(null, "", url);
+
+    if (suggestedLens !== FOUNDER_FIT_OVERALL) {
+      document.dispatchEvent(
+        new CustomEvent("statecompass:lens-suggest", {
+          detail: { lensId: suggestedLens },
+        })
+      );
+    }
 
     trackQuizComplete();
     renderResults();
@@ -126,10 +142,22 @@ export function initMatchFlow({ container, statesObject, onResultsShown, initial
       return;
     }
 
+    const suggestedLens = suggestLensFromQuiz(validated);
     const top3 = getTopMatches(statesObject, validated, 3);
     const cardsHost = resultsEl.querySelector("[data-result-cards]");
     const liveRegion = resultsEl.querySelector("[data-results-live]");
+    const lensNote = resultsEl.querySelector("[data-match-lens-note]");
     cardsHost?.replaceChildren();
+
+    if (lensNote) {
+      if (suggestedLens !== FOUNDER_FIT_OVERALL) {
+        lensNote.textContent = `Founder Lens: ${getLensLabel(suggestedLens)} — match scores start from this lens and fine-tune with your quiz answers.`;
+        lensNote.hidden = false;
+      } else {
+        lensNote.textContent = "";
+        lensNote.hidden = true;
+      }
+    }
 
     top3.forEach((result, index) => {
       const bullets = explainMatch(result, validated, statesObject);
@@ -191,7 +219,10 @@ export function initMatchFlow({ container, statesObject, onResultsShown, initial
       liveRegion.textContent = `Your top match is ${top3[0]?.name} at ${top3[0]?.matchScore100}%.`;
     }
 
-    const comparePath = getComparePathForStates(top3.map((r) => r.abbr));
+    const comparePath = getComparePathForStates(
+      top3.map((r) => r.abbr),
+      suggestedLens
+    );
     const compareBtn = resultsEl.querySelector("[data-compare-top3]");
     if (compareBtn instanceof HTMLAnchorElement && comparePath) {
       compareBtn.href = comparePath;
@@ -238,6 +269,7 @@ export function initMatchFlow({ container, statesObject, onResultsShown, initial
     stepIndex = 0;
     const url = new URL(window.location.href);
     QUIZ_QUESTIONS.forEach((q) => url.searchParams.delete(q.id));
+    url.searchParams.delete("lens");
     history.replaceState(null, "", url);
     startQuiz();
   }
