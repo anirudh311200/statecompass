@@ -1,0 +1,49 @@
+---
+import SnapshotDisclaimer from "./SnapshotDisclaimer.astro";
+import PulseCard from "./PulseCard.astro";
+import { getPulseItemsForState, pulseDisclaimer } from "../lib/pulse.js";
+
+interface Props {
+  stateAbbr: string;
+  stateName: string;
+  limit?: number;
+}
+
+const { stateAbbr, stateName, limit = 5 } = Astro.props;
+const items = getPulseItemsForState(stateAbbr, { limit });
+const pulseIndexHref = `/pulse?state=${stateAbbr}`;
+---
+
+<section class="panel regulatory-pulse-section" id="regulatory-pulse" aria-labelledby="pulse-heading">
+  <h2 id="pulse-heading" class="panel-title">Regulatory Pulse</h2>
+  <p class="panel-helper">
+    Recent regulatory changes in {stateName} — sourced public updates for founders operating here.
+  </p>
+
+  <SnapshotDisclaimer text={pulseDisclaimer} />
+
+  {
+    items.length > 0 ? (
+      <div class="pulse-card-list">
+        {items.map((item) => (
+          <PulseCard item={item} />
+        ))}
+      </div>
+    ) : (
+      <p class="pulse-empty">No pulse items for this state yet.</p>
+    )
+  }
+
+  {
+    items.length > 0 && (
+      <p class="pulse-section-footer">
+        <a href={pulseIndexHref} class="btn btn-secondary btn-sm">
+          View all {stateName} pulse items
+        </a>
+        <a href="/pulse" class="pulse-all-link">
+          Browse all states
+        </a>
+      </p>
+    )
+  }
+</section>

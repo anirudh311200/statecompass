@@ -1,0 +1,123 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Breadcrumbs from "../components/Breadcrumbs.astro";
+import SnapshotDisclaimer from "../components/SnapshotDisclaimer.astro";
+import PulseCard from "../components/PulseCard.astro";
+import {
+  filterPulseItems,
+  pulseDisclaimer,
+  pulseIndustries,
+  pulseItems,
+} from "../lib/pulse.js";
+import { states } from "../lib/states.js";
+
+const params = Astro.url.searchParams;
+const initialState = params.get("state")?.toUpperCase() ?? "";
+const initialIndustry = params.get("industry") ?? "";
+
+const stateOptions = Object.entries(states)
+  .map(([abbr, state]) => ({ abbr, name: state.name }))
+  .sort((a, b) => a.name.localeCompare(b.name));
+
+const filteredItems = filterPulseItems({
+  stateAbbr: initialState,
+  industry: initialIndustry,
+});
+
+const title = initialState
+  ? `Regulatory Pulse — ${states[initialState]?.name ?? initialState} | StateCompass`
+  : "Regulatory Pulse | StateCompass";
+const description =
+  "Sourced feed of recent regulatory changes by state — privacy, tax, employment, and compliance updates for founders.";
+---
+
+<Layout
+  title={title}
+  description={description}
+  subtitle="Recent regulatory changes by state — sourced, not legal advice."
+  ogImage="/og/compare.svg"
+  ogImageAlt="StateCompass Regulatory Pulse"
+>
+  <main class="page-content pulse-page">
+    <Breadcrumbs
+      crumbs={[
+        { label: "Map", href: "/" },
+        { label: "Regulatory Pulse" },
+      ]}
+    />
+
+    <header class="pulse-header">
+      <h1 class="page-title">Regulatory Pulse</h1>
+      <p class="page-lead">
+        Lightweight feed of recent regulatory changes — each item links to an official or reputable source.
+      </p>
+    </header>
+
+    <div class="pulse-toolbar panel">
+      <div class="pulse-toolbar-item">
+        <label class="toolbar-label" for="pulse-state-filter">State</label>
+        <select id="pulse-state-filter" class="pulse-select" data-pulse-state>
+          <option value="">All states</option>
+          {
+            stateOptions.map(({ abbr, name }) => (
+              <option value={abbr} selected={abbr === initialState}>
+                {name}
+              </option>
+            ))
+          }
+        </select>
+      </div>
+
+      <div class="pulse-toolbar-item">
+        <label class="toolbar-label" for="pulse-industry-filter">Industry</label>
+        <select id="pulse-industry-filter" class="pulse-select" data-pulse-industry>
+          <option value="">All industries</option>
+          {
+            pulseIndustries.map((tag) => (
+              <option value={tag} selected={tag === initialIndustry}>
+                {tag}
+              </option>
+            ))
+          }
+        </select>
+      </div>
+
+      <p class="pulse-count panel-helper" data-pulse-count>
+        {filteredItems.length} item{filteredItems.length === 1 ? "" : "s"}
+      </p>
+    </div>
+
+    <SnapshotDisclaimer text={pulseDisclaimer} />
+
+    <section class="panel pulse-results" aria-labelledby="pulse-results-heading">
+      <h2 id="pulse-results-heading" class="visually-hidden">Pulse items</h2>
+      <div class="pulse-card-list" data-pulse-list>
+        {
+          filteredItems.map((item) => (
+            <PulseCard
+              item={item}
+              showState
+              stateName={states[item.stateAbbr]?.name ?? item.stateAbbr}
+            />
+          ))
+        }
+      </div>
+      <p class="pulse-empty" data-pulse-empty hidden={filteredItems.length > 0}>
+        No pulse items match these filters.
+      </p>
+    </section>
+
+    <p class="pulse-digest-note panel-helper">
+      Email digest for Pulse updates is planned with Save My Profile (Feature 6).
+    </p>
+  </main>
+
+  <script define:vars={{ pulseItems, statesObject: states }}>
+    import { initPulsePage } from "../scripts/pulsePage.js";
+
+    initPulsePage({
+      items: pulseItems,
+      states: statesObject,
+    });
+  </script>
+</Layout>

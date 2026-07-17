@@ -240,7 +240,9 @@ function topCategoryDeltas(deltas, count = 3, direction = "positive") {
   return sorted.slice(0, count);
 }
 
-export function explainExpansionReadiness(result, profile, snapshots) {
+import { getExpansionPulseBullets } from "../lib/pulse.js";
+
+export function explainExpansionReadiness(result, profile, snapshots, pulseItems = []) {
   const { homeAbbr, targetAbbr, homeName, targetName, readinessScore100, factors, friction } = result;
   const homeSnapshot = snapshots[homeAbbr];
   const targetSnapshot = snapshots[targetAbbr];
@@ -291,6 +293,9 @@ export function explainExpansionReadiness(result, profile, snapshots) {
   if (profile.stage === "500k-2m" || profile.stage === "2m-plus") {
     bullets.push(INDUSTRY_CAVEAT);
   }
+
+  const pulseBullets = getExpansionPulseBullets(targetAbbr, profile, pulseItems, 2);
+  pulseBullets.forEach((text) => bullets.push(text));
 
   if (bullets.length < 3) {
     bullets.push(

@@ -73,3 +73,7 @@ export function trackExpansionComplete({ home, targets, model }) {
 export function trackExpansionShare() {
   trackEvent("ExpansionShare");
 }
+
+export function trackPulseFilter(props) {
+  trackEvent("PulseFilter", props);
+}

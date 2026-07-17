@@ -320,3 +320,49 @@ print("OK: founder snapshots validated")
 print("OK: founder match weights validated")
 print("OK: state metros validated")
 print("OK: expansion readiness config validated")
+
+# Feature 5 — regulatory pulse
+ISO_DATE_RE = re.compile(r"^\d{4}-\d{2}-\d{2}$")
+PULSE_PATH = ROOT / "public/data/regulatory_pulse.json"
+PULSE_MAJOR_STATES = ("CA", "NY", "TX", "WA", "FL")
+PULSE_REQUIRED_FIELDS = (
+    "id",
+    "stateAbbr",
+    "title",
+    "summary",
+    "effectiveDate",
+    "industries",
+    "sourceUrl",
+    "sourceLabel",
+    "publishedAt",
+)
+
+pulse_payload = json.loads(PULSE_PATH.read_text(encoding="utf-8"))
+assert pulse_payload.get("disclaimer", "").strip()
+assert pulse_payload.get("lastCuratedAt") and ISO_DATE_RE.match(pulse_payload["lastCuratedAt"])
+pulse_items = pulse_payload["items"]
+assert 50 <= len(pulse_items) <= 120, len(pulse_items)
+
+pulse_ids = set()
+state_counts = {abbr: 0 for abbr in default_ids}
+for row in pulse_items:
+    for field in PULSE_REQUIRED_FIELDS:
+        assert field in row, (row.get("id"), field)
+    row_id = row["id"]
+    assert row_id not in pulse_ids, row_id
+    pulse_ids.add(row_id)
+    abbr = row["stateAbbr"]
+    assert abbr in default_ids, abbr
+    state_counts[abbr] += 1
+    assert row["title"].strip()
+    assert row["summary"].strip()
+    assert ISO_DATE_RE.match(row["effectiveDate"]), row_id
+    assert ISO_DATE_RE.match(row["publishedAt"]), row_id
+    assert row["sourceUrl"].startswith("https://"), row_id
+    assert row["sourceLabel"].strip(), row_id
+    assert row["industries"], row_id
+
+for major in PULSE_MAJOR_STATES:
+    assert state_counts[major] >= 5, (major, state_counts[major])
+
+print("OK: regulatory pulse validated")

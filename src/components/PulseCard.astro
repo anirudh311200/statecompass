@@ -1,0 +1,61 @@
+---
+import { formatPulseDate } from "../lib/pulse.js";
+
+interface PulseItem {
+  id: string;
+  stateAbbr: string;
+  title: string;
+  summary: string;
+  effectiveDate: string;
+  industries: string[];
+  sourceUrl: string;
+  sourceLabel: string;
+  publishedAt: string;
+}
+
+interface Props {
+  item: PulseItem;
+  showState?: boolean;
+  stateName?: string;
+}
+
+const { item, showState = false, stateName = item.stateAbbr } = Astro.props;
+---
+
+<article class="pulse-card" data-pulse-id={item.id}>
+  <header class="pulse-card-header">
+    {
+      showState && (
+        <p class="pulse-card-state">
+          <a href={`/pulse?state=${item.stateAbbr}`}>{stateName}</a>
+        </p>
+      )
+    }
+    <h3 class="pulse-card-title">
+      <a href={item.sourceUrl} target="_blank" rel="noopener noreferrer">
+        {item.title}
+      </a>
+    </h3>
+  </header>
+  <p class="pulse-card-summary">{item.summary}</p>
+  <div class="pulse-card-meta">
+    <span class="pulse-card-date">
+      Effective {formatPulseDate(item.effectiveDate)}
+    </span>
+    <div class="pulse-card-tags" aria-label="Industry tags">
+      {
+        item.industries.map((tag) => (
+          <a href={`/pulse?industry=${encodeURIComponent(tag)}`} class="pulse-tag">
+            {tag}
+          </a>
+        ))
+      }
+    </div>
+  </div>
+  <p class="pulse-card-source">
+    Source:{" "}
+    <a href={item.sourceUrl} target="_blank" rel="noopener noreferrer">
+      {item.sourceLabel}
+    </a>
+  </p>
+</article>

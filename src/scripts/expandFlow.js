@@ -51,8 +51,8 @@ function renderCategoryDeltaSection(result) {
   return section;
 }
 
-function renderResultCard(result, profile, snapshots) {
-  const bullets = explainExpansionReadiness(result, profile, snapshots);
+function renderResultCard(result, profile, snapshots, pulseItems) {
+  const bullets = explainExpansionReadiness(result, profile, snapshots, pulseItems);
   const card = document.createElement("article");
   card.className = "expand-result-card";
   card.dataset.target = result.targetAbbr;
@@ -82,6 +82,7 @@ function renderResultCard(result, profile, snapshots) {
   links.className = "expand-result-links";
   links.innerHTML = `
     <a href="/states/${result.targetSlug}" class="btn btn-secondary btn-sm">Founder Snapshot — ${result.targetName}</a>
+    <a href="/pulse?state=${result.targetAbbr}" class="btn btn-secondary btn-sm">Regulatory Pulse — ${result.targetAbbr}</a>
     <a href="/compare?states=${result.homeAbbr},${result.targetAbbr}" class="btn btn-secondary btn-sm">Compare ${result.homeAbbr} vs ${result.targetAbbr}</a>
   `;
   card.appendChild(links);
@@ -95,6 +96,7 @@ export function initExpandFlow({
   container,
   statesObject,
   snapshots,
+  pulseItems = [],
   initialProfile = null,
 }) {
   if (!container || !statesObject) {
@@ -267,7 +269,7 @@ export function initExpandFlow({
 
     cardsHost?.replaceChildren();
     results.forEach((result) => {
-      cardsHost?.appendChild(renderResultCard(result, profile, snapshots));
+      cardsHost?.appendChild(renderResultCard(result, profile, snapshots, pulseItems));
     });
 
     if (liveRegion) {

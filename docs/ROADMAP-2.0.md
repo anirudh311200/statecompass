@@ -281,7 +281,7 @@
 
 # Feature 5 — Regulatory Pulse
 
-**Status:** Not started · **Depends on:** v1 state pages; optional surfacing in Feature 1 sidebar and Feature 2 expansion results
+**Status:** Shipped · **Depends on:** v1 state pages; optional surfacing in Feature 1 sidebar and Feature 2 expansion results
 
 **Goal:** Lightweight **sourced feed** of recent regulatory changes per state — the bridge from site *selection* to *operating* intelligence.
 
@@ -374,7 +374,7 @@
 | 2 — Expansion Readiness | Shipped | Jul 2026 | Jul 2026 |
 | 3 — State Report Card | Not started | | |
 | 4 — Founder Lens | Not started | | |
-| 5 — Regulatory Pulse | Not started | | |
+| 5 — Regulatory Pulse | Shipped | Jul 2026 | Jul 2026 |
 | 6 — Save My Profile | Not started | | |
 
 Update this table as each feature ships.

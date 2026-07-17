@@ -3,6 +3,7 @@ import Layout from "../../layouts/Layout.astro";
 import Breadcrumbs from "../../components/Breadcrumbs.astro";
 import CategoryChart from "../../components/CategoryChart.astro";
 import FounderSnapshot from "../../components/FounderSnapshot.astro";
+import RegulatoryPulseSection from "../../components/RegulatoryPulseSection.astro";
 import YearSelector from "../../components/YearSelector.astro";
 import { states, dataYear } from "../../lib/states.js";
 import { getSnapshotForState, snapshotDisclaimer } from "../../lib/snapshots.js";
@@ -134,6 +135,8 @@ const jsonLd = {
         snapshot={snapshot}
         disclaimer={snapshotDisclaimer}
       />
+
+      <RegulatoryPulseSection stateAbbr={abbr} stateName={state.name} limit={5} />
 
       <div class="state-cta-row">
         <a href={compareHref} class="btn btn-primary" id="state-compare-link">

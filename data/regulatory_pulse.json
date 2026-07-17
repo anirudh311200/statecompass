@@ -1,0 +1,1275 @@
+{
+  "disclaimer": "Regulatory Pulse is informational only — not legal, tax, accounting, or compliance advice. Confirm requirements with qualified counsel and official agency guidance.",
+  "industries": [
+    "SaaS",
+    "Fintech",
+    "E-commerce",
+    "Healthcare",
+    "Marketplace",
+    "General"
+  ],
+  "staleAfterDays": 365,
+  "lastCuratedAt": "2026-07-17",
+  "items": [
+    {
+      "id": "co-ai-act-2024",
+      "stateAbbr": "CO",
+      "title": "Colorado AI Act (SB 24-205)",
+      "summary": "Developers and deployers of high-risk AI systems face impact assessments, disclosure, and anti-discrimination duties.",
+      "effectiveDate": "2026-02-01",
+      "industries": [
+        "SaaS",
+        "Fintech"
+      ],
+      "sourceUrl": "https://leg.colorado.gov/bills/sb24-205",
+      "sourceLabel": "Colorado General Assembly",
+      "publishedAt": "2024-05-01"
+    },
+    {
+      "id": "ca-sb261-climate-risk",
+      "stateAbbr": "CA",
+      "title": "Climate-related financial risk reporting (SB 261)",
+      "summary": "Qualifying entities must biennially report climate-related financial risks and mitigation measures under CARB oversight.",
+      "effectiveDate": "2026-01-01",
+      "industries": [
+        "Fintech",
+        "General"
+      ],
+      "sourceUrl": "https://ww2.arb.ca.gov/our-work/programs/carb-onboarding/california-climate-related-financial-risk-act-sb-261-and-greenhouse",
+      "sourceLabel": "California Air Resources Board",
+      "publishedAt": "2024-09-01"
+    },
+    {
+      "id": "ca-sb253-climate-disclosure",
+      "stateAbbr": "CA",
+      "title": "Climate corporate disclosure (SB 253)",
+      "summary": "Large U.S. companies doing business in California must disclose Scope 1–3 greenhouse gas emissions with third-party assurance phases.",
+      "effectiveDate": "2026-01-01",
+      "industries": [
+        "General"
+      ],
+      "sourceUrl": "https://ww2.arb.ca.gov/our-work/programs/carb-onboarding/california-climate-related-financial-risk-act-sb-261-and-greenhouse",
+      "sourceLabel": "California Air Resources Board",
+      "publishedAt": "2024-09-01"
+    },
+    {
+      "id": "ca-delete-act-2026",
+      "stateAbbr": "CA",
+      "title": "DELETE Act — one-stop data broker deletion (signed)",
+      "summary": "Creates a CPPA-operated mechanism for consumers to request deletion across registered data brokers, with phased compliance.",
+      "effectiveDate": "2026-01-01",
+      "industries": [
+        "SaaS",
+        "E-commerce"
+      ],
+      "sourceUrl": "https://leginfo.legislature.ca.gov/faces/billNavClient.xhtml?bill_id=202320240SB362",
+      "sourceLabel": "California Legislative Information — SB 362",
+      "publishedAt": "2023-10-01"
+    },
+    {
+      "id": "md-online-privacy-2025",
+      "stateAbbr": "MD",
+      "title": "Maryland Online Data Privacy Act (MODPA)",
+      "summary": "Maryland privacy law restricts sale of sensitive data and sets consumer rights for Maryland residents.",
+      "effectiveDate": "2025-10-01",
+      "industries": [
+        "SaaS",
+        "Healthcare"
+      ],
+      "sourceUrl": "https://www.marylandattorneygeneral.gov/Pages/IdentityTheft/data-breach.aspx",
+      "sourceLabel": "Maryland Attorney General",
+      "publishedAt": "2024-05-01"
+    },
+    {
+      "id": "mn-privacy-2025",
+      "stateAbbr": "MN",
+      "title": "Minnesota Consumer Data Privacy Act",
+      "summary": "Minnesota joins state privacy patchwork with consumer rights, consent requirements, and contractor obligations.",
+      "effectiveDate": "2025-07-31",
+      "industries": [
+        "SaaS",
+        "Healthcare"
+      ],
+      "sourceUrl": "https://www.ag.state.mn.us/Office/Privacy/DataPrivacy/",
+      "sourceLabel": "Minnesota Attorney General",
+      "publishedAt": "2024-05-01"
+    },
+    {
+      "id": "ny-data-broker-registration",
+      "stateAbbr": "NY",
+      "title": "Data broker registration (NY privacy law)",
+      "summary": "Data brokers meeting definition must register with the NY Attorney General and maintain a consumer opt-out.",
+      "effectiveDate": "2025-03-01",
+      "industries": [
+        "SaaS",
+        "E-commerce"
+      ],
+      "sourceUrl": "https://ag.ny.gov/resources/organizations/data-brokers",
+      "sourceLabel": "New York Attorney General",
+      "publishedAt": "2024-12-01"
+    },
+    {
+      "id": "de-franchise-tax",
+      "stateAbbr": "DE",
+      "title": "Delaware franchise tax & annual report",
+      "summary": "Delaware-incorporated entities owe annual franchise tax and must file reports by March 1.",
+      "effectiveDate": "2025-03-01",
+      "industries": [
+        "General",
+        "Fintech"
+      ],
+      "sourceUrl": "https://corp.delaware.gov/frtaxcalc/",
+      "sourceLabel": "Delaware Division of Corporations",
+      "publishedAt": "2025-01-01"
+    },
+    {
+      "id": "ny-prenatal-leave-2025",
+      "stateAbbr": "NY",
+      "title": "Paid prenatal personal leave",
+      "summary": "New York employees may take paid leave for prenatal healthcare appointments under the paid sick leave law.",
+      "effectiveDate": "2025-01-01",
+      "industries": [
+        "General"
+      ],
+      "sourceUrl": "https://dol.ny.gov/paid-prenatal-leave",
+      "sourceLabel": "New York Department of Labor",
+      "publishedAt": "2024-11-01"
+    },
+    {
+      "id": "mt-data-breach",
+      "stateAbbr": "MT",
+      "title": "Montana Consumer Data Privacy Act (2023)",
+      "summary": "Montana privacy law provides consumer rights including opt-out of sale and targeted advertising.",
+      "effectiveDate": "2024-10-01",
+      "industries": [
+        "SaaS"
+      ],
+      "sourceUrl": "https://dojmt.gov/consumer/data-breach/",
+      "sourceLabel": "Montana Department of Justice",
+      "publishedAt": "2023-05-01"
+    },
+    {
+      "id": "tx-business-courts",
+      "stateAbbr": "TX",
+      "title": "Texas business courts for complex commercial cases",
+      "summary": "Dedicated business court divisions handle large commercial disputes with specialized judges in major counties.",
+      "effectiveDate": "2024-09-01",
+      "industries": [
+        "General",
+        "Fintech"
+      ],
+      "sourceUrl": "https://www.txcourts.gov/business-court/",
+      "sourceLabel": "Texas Judicial Branch — Business Court",
+      "publishedAt": "2024-08-01"
+    },
+    {
+      "id": "de-general-corporation-law",
+      "stateAbbr": "DE",
+      "title": "Delaware General Corporation Law updates",
+      "summary": "Delaware regularly amends DGCL — recent changes affect stockholder rights, fiduciary duties, and entity governance.",
+      "effectiveDate": "2024-08-01",
+      "industries": [
+        "Fintech",
+        "General"
+      ],
+      "sourceUrl": "https://corp.delaware.gov/",
+      "sourceLabel": "Delaware Division of Corporations",
+      "publishedAt": "2024-07-01"
+    },
+    {
+      "id": "tx-tdpsa-2024",
+      "stateAbbr": "TX",
+      "title": "Texas Data Privacy and Security Act (TDPSA)",
+      "summary": "Texas privacy law applies to many businesses without revenue thresholds; requires privacy notices, opt-outs, and data protection assessments.",
+      "effectiveDate": "2024-07-01",
+      "industries": [
+        "SaaS",
+        "E-commerce",
+        "Fintech"
+      ],
+      "sourceUrl": "https://www.texasattorneygeneral.gov/consumer-protection/file-consumer-complaint/consumer-privacy-rights/texas-data-privacy-and-security-act",
+      "sourceLabel": "Texas Attorney General",
+      "publishedAt": "2024-06-01"
+    },
+    {
+      "id": "or-ocpa-2024",
+      "stateAbbr": "OR",
+      "title": "Oregon Consumer Privacy Act (OCPA)",
+      "summary": "Oregon privacy law includes consumer rights, universal opt-out, and DPIA requirements for high-risk processing.",
+      "effectiveDate": "2024-07-01",
+      "industries": [
+        "SaaS",
+        "E-commerce"
+      ],
+      "sourceUrl": "https://www.doj.state.or.us/consumer-protection/identity-theft-data-breaches/oregon-consumer-privacy-act/",
+      "sourceLabel": "Oregon Department of Justice",
+      "publishedAt": "2024-06-01"
+    },
+    {
+      "id": "fl-digital-bill-of-rights-2024",
+      "stateAbbr": "FL",
+      "title": "Florida Digital Bill of Rights (scaled)",
+      "summary": "Privacy rights for consumers against large tech platforms; scope narrowed from original proposal — verify applicability thresholds.",
+      "effectiveDate": "2024-07-01",
+      "industries": [
+        "SaaS",
+        "E-commerce"
+      ],
+      "sourceUrl": "https://www.flsenate.gov/Session/Bill/2024/262",
+      "sourceLabel": "Florida Senate — CS/HB 3 (2024)",
+      "publishedAt": "2024-06-01"
+    },
+    {
+      "id": "ca-fast-act-2024",
+      "stateAbbr": "CA",
+      "title": "Fast food minimum wage & council framework (AB 1228)",
+      "summary": "California fast-food workers receive a higher statewide minimum wage; sector council authority was narrowed after referendum.",
+      "effectiveDate": "2024-04-01",
+      "industries": [
+        "Marketplace",
+        "General"
+      ],
+      "sourceUrl": "https://www.dir.ca.gov/dlse/Fast-Food-Minimum-Wage-FAQ.htm",
+      "sourceLabel": "California Department of Industrial Relations",
+      "publishedAt": "2024-03-01"
+    },
+    {
+      "id": "wa-mhmda-2024",
+      "stateAbbr": "WA",
+      "title": "My Health My Data Act (MHMDA)",
+      "summary": "Broad consumer health data privacy law with consent, geofencing, and deletion rights — beyond HIPAA-covered entities.",
+      "effectiveDate": "2024-03-31",
+      "industries": [
+        "Healthcare",
+        "SaaS"
+      ],
+      "sourceUrl": "https://www.atg.wa.gov/consumer-tips/my-health-my-data-act",
+      "sourceLabel": "Washington Attorney General",
+      "publishedAt": "2024-02-01"
+    },
+    {
+      "id": "tx-franchise-tax-threshold",
+      "stateAbbr": "TX",
+      "title": "Texas franchise tax no-tax-due threshold",
+      "summary": "Entities below the annualized total revenue threshold may file a no-tax-due report instead of owing franchise tax.",
+      "effectiveDate": "2024-01-01",
+      "industries": [
+        "General"
+      ],
+      "sourceUrl": "https://comptroller.texas.gov/taxes/franchise/",
+      "sourceLabel": "Texas Comptroller of Public Accounts",
+      "publishedAt": "2024-01-01"
+    },
+    {
+      "id": "nc-unemployment-overpayment",
+      "stateAbbr": "NC",
+      "title": "NC unemployment insurance employer accounts",
+      "summary": "Employers fund unemployment insurance; new businesses register for NCUI tax accounts when hiring.",
+      "effectiveDate": "2024-01-01",
+      "industries": [
+        "General"
+      ],
+      "sourceUrl": "https://des.nc.gov/employers",
+      "sourceLabel": "North Carolina Division of Employment Security",
+      "publishedAt": "2024-01-01"
+    },
+    {
+      "id": "il-paid-leave-2024",
+      "stateAbbr": "IL",
+      "title": "Paid Leave for All Workers Act",
+      "summary": "Most Illinois employers must provide paid leave employees can use for any reason, accrued per hour worked.",
+      "effectiveDate": "2024-01-01",
+      "industries": [
+        "General",
+        "Marketplace"
+      ],
+      "sourceUrl": "https://www.illinois.gov/idol/Laws-Rules/CONSOLIDATED/paidleave.html",
+      "sourceLabel": "Illinois Department of Labor",
+      "publishedAt": "2023-12-01"
+    },
+    {
+      "id": "fl-telemarketing-cfpb",
+      "stateAbbr": "FL",
+      "title": "Florida Telemarketing Act compliance",
+      "summary": "Telephone solicitation rules require licensing, calling-hour limits, and Do Not Call compliance for covered sellers.",
+      "effectiveDate": "2024-01-01",
+      "industries": [
+        "E-commerce",
+        "General"
+      ],
+      "sourceUrl": "https://www.myfloridalegal.com/consumer-protection/telemarketing",
+      "sourceLabel": "Florida Attorney General",
+      "publishedAt": "2023-08-01"
+    },
+    {
+      "id": "ca-data-broker-registry",
+      "stateAbbr": "CA",
+      "title": "Data broker registration with CPPA",
+      "summary": "Businesses that sell personal information they did not collect directly must register with the CPPA and pay an annual fee.",
+      "effectiveDate": "2024-01-01",
+      "industries": [
+        "SaaS",
+        "E-commerce"
+      ],
+      "sourceUrl": "https://cppa.ca.gov/data_broker_registry/",
+      "sourceLabel": "California Privacy Protection Agency",
+      "publishedAt": "2023-12-01"
+    },
+    {
+      "id": "ut-ucpa-2023",
+      "stateAbbr": "UT",
+      "title": "Utah Consumer Privacy Act (UCPA)",
+      "summary": "Utah consumers may access, delete, and opt out of sale of personal data; lighter obligations than CPRA for many businesses.",
+      "effectiveDate": "2023-12-31",
+      "industries": [
+        "SaaS"
+      ],
+      "sourceUrl": "https://commerce.utah.gov/privacy/",
+      "sourceLabel": "Utah Department of Commerce",
+      "publishedAt": "2023-11-01"
+    },
+    {
+      "id": "nyc-ll144-ai-hiring",
+      "stateAbbr": "NY",
+      "title": "NYC Local Law 144 — automated employment decision tools",
+      "summary": "NYC employers using AI for hiring must conduct annual bias audits and provide candidate notices.",
+      "effectiveDate": "2023-07-05",
+      "industries": [
+        "SaaS",
+        "General"
+      ],
+      "sourceUrl": "https://www.nyc.gov/site/dca/about/automated-employment-decision-tools.page",
+      "sourceLabel": "NYC Department of Consumer and Worker Protection",
+      "publishedAt": "2023-04-01"
+    },
+    {
+      "id": "wa-cares-fund",
+      "stateAbbr": "WA",
+      "title": "WA Cares long-term care benefit",
+      "summary": "Most Washington workers contribute to a state long-term care insurance benefit; exemptions exist for out-of-state workers.",
+      "effectiveDate": "2023-07-01",
+      "industries": [
+        "General"
+      ],
+      "sourceUrl": "https://wacaresfund.wa.gov/",
+      "sourceLabel": "Washington State WA Cares Fund",
+      "publishedAt": "2023-06-01"
+    },
+    {
+      "id": "ct-ctdpa-2023",
+      "stateAbbr": "CT",
+      "title": "Connecticut Data Privacy Act (CTDPA)",
+      "summary": "Connecticut privacy law grants consumer rights and imposes controller obligations including data protection assessments.",
+      "effectiveDate": "2023-07-01",
+      "industries": [
+        "SaaS",
+        "E-commerce"
+      ],
+      "sourceUrl": "https://portal.ct.gov/AG/Sections/Privacy/The-Connecticut-Data-Privacy-Act",
+      "sourceLabel": "Connecticut Attorney General",
+      "publishedAt": "2023-06-01"
+    },
+    {
+      "id": "co-cpa-2023",
+      "stateAbbr": "CO",
+      "title": "Colorado Privacy Act (CPA)",
+      "summary": "Colorado consumers gain access, correction, deletion, and opt-out rights; controllers need privacy notices and data protection assessments.",
+      "effectiveDate": "2023-07-01",
+      "industries": [
+        "SaaS",
+        "E-commerce"
+      ],
+      "sourceUrl": "https://coag.gov/resources/colorado-privacy-act/",
+      "sourceLabel": "Colorado Attorney General",
+      "publishedAt": "2023-06-01"
+    },
+    {
+      "id": "ca-cppa-regulations-2023",
+      "stateAbbr": "CA",
+      "title": "CPPA final CPRA regulations",
+      "summary": "California Privacy Protection Agency regulations clarify opt-out signals, audits, cybersecurity, and automated decision-making disclosures.",
+      "effectiveDate": "2023-03-29",
+      "industries": [
+        "SaaS",
+        "Fintech"
+      ],
+      "sourceUrl": "https://cppa.ca.gov/regulations/",
+      "sourceLabel": "California Privacy Protection Agency",
+      "publishedAt": "2023-03-15"
+    },
+    {
+      "id": "wa-climate-commitment-act",
+      "stateAbbr": "WA",
+      "title": "Climate Commitment Act cap-and-invest",
+      "summary": "Large emitters must obtain allowances for greenhouse gas emissions; affects energy-intensive operations.",
+      "effectiveDate": "2023-01-01",
+      "industries": [
+        "General",
+        "E-commerce"
+      ],
+      "sourceUrl": "https://ecology.wa.gov/air-climate/climate-change/climate-commitment-act",
+      "sourceLabel": "Washington Department of Ecology",
+      "publishedAt": "2022-12-01"
+    },
+    {
+      "id": "va-vcdpa-2023",
+      "stateAbbr": "VA",
+      "title": "Virginia Consumer Data Protection Act (VCDPA)",
+      "summary": "Virginia consumers receive access, correction, deletion, and opt-out rights similar to other state privacy laws.",
+      "effectiveDate": "2023-01-01",
+      "industries": [
+        "SaaS",
+        "E-commerce"
+      ],
+      "sourceUrl": "https://www.oag.state.va.us/consumer-protection/index.php/consumer-privacy",
+      "sourceLabel": "Virginia Attorney General",
+      "publishedAt": "2022-12-01"
+    },
+    {
+      "id": "ca-cpra-2023",
+      "stateAbbr": "CA",
+      "title": "California Privacy Rights Act (CPRA) operational rules",
+      "summary": "CPRA expands CCPA with new consumer rights, sensitive data limits, and contractor/service-provider obligations for businesses meeting thresholds.",
+      "effectiveDate": "2023-01-01",
+      "industries": [
+        "SaaS",
+        "E-commerce",
+        "Marketplace"
+      ],
+      "sourceUrl": "https://oag.ca.gov/privacy/ccpa",
+      "sourceLabel": "California Attorney General — CCPA/CPRA",
+      "publishedAt": "2022-11-01"
+    },
+    {
+      "id": "ca-ccpa-employee-b2b-sunset",
+      "stateAbbr": "CA",
+      "title": "Employee & B2B CCPA exemptions expired",
+      "summary": "Personal information collected in employment and certain B2B contexts is fully covered by CCPA/CPRA after exemption sunset.",
+      "effectiveDate": "2023-01-01",
+      "industries": [
+        "General",
+        "SaaS"
+      ],
+      "sourceUrl": "https://oag.ca.gov/privacy/ccpa",
+      "sourceLabel": "California Attorney General — CCPA/CPRA",
+      "publishedAt": "2022-12-01"
+    },
+    {
+      "id": "fl-property-insurance-reform",
+      "stateAbbr": "FL",
+      "title": "Property insurance market reforms",
+      "summary": "Legislative packages address assignment of benefits, litigation costs, and Citizens Property Insurance eligibility.",
+      "effectiveDate": "2022-12-01",
+      "industries": [
+        "General"
+      ],
+      "sourceUrl": "https://www.flsenate.gov/Session/Bill/2023/2D",
+      "sourceLabel": "Florida Senate — Special Session SB 2-D",
+      "publishedAt": "2022-12-01"
+    },
+    {
+      "id": "fl-sales-tax-marketplace",
+      "stateAbbr": "FL",
+      "title": "Marketplace facilitator sales tax collection",
+      "summary": "Marketplace providers must collect and remit Florida sales tax on facilitated sales.",
+      "effectiveDate": "2021-07-01",
+      "industries": [
+        "Marketplace",
+        "E-commerce"
+      ],
+      "sourceUrl": "https://floridarevenue.com/taxes/taxesfees/Pages/sales_tax.aspx",
+      "sourceLabel": "Florida Department of Revenue",
+      "publishedAt": "2021-06-01"
+    },
+    {
+      "id": "ny-paid-sick-leave",
+      "stateAbbr": "NY",
+      "title": "Statewide paid sick leave",
+      "summary": "Employers must provide paid sick leave accrual based on employer size; covers diagnosis, care, and domestic violence leave.",
+      "effectiveDate": "2021-01-01",
+      "industries": [
+        "General",
+        "Marketplace"
+      ],
+      "sourceUrl": "https://dol.ny.gov/paid-sick-leave",
+      "sourceLabel": "New York Department of Labor",
+      "publishedAt": "2020-12-01"
+    },
+    {
+      "id": "ma-paid-family-leave",
+      "stateAbbr": "MA",
+      "title": "Paid Family and Medical Leave (PFML)",
+      "summary": "Massachusetts employers and workers fund paid family and medical leave benefits administered by the Department of Family and Medical Leave.",
+      "effectiveDate": "2021-01-01",
+      "industries": [
+        "General"
+      ],
+      "sourceUrl": "https://www.mass.gov/orgs/department-of-family-and-medical-leave",
+      "sourceLabel": "Massachusetts Department of Family and Medical Leave",
+      "publishedAt": "2020-12-01"
+    },
+    {
+      "id": "co-pay-transparency",
+      "stateAbbr": "CO",
+      "title": "Colorado pay transparency in job postings",
+      "summary": "Employers with Colorado employees must include compensation and benefits in public job postings.",
+      "effectiveDate": "2021-01-01",
+      "industries": [
+        "General"
+      ],
+      "sourceUrl": "https://cdle.colorado.gov/employers/recruiting-hiring/Equal-Pay-for-Equal-Work-Act",
+      "sourceLabel": "Colorado Department of Labor and Employment",
+      "publishedAt": "2020-12-01"
+    },
+    {
+      "id": "va-noncompete-ban-low-wage",
+      "stateAbbr": "VA",
+      "title": "Virginia ban on noncompetes for low-wage workers",
+      "summary": "Employers may not enter noncompete agreements with low-wage employees as defined by statute.",
+      "effectiveDate": "2020-07-01",
+      "industries": [
+        "General"
+      ],
+      "sourceUrl": "https://law.lis.virginia.gov/vacode/title40.1/chapter3/section40.1-28.7:8/",
+      "sourceLabel": "Virginia Legislative Information System",
+      "publishedAt": "2020-06-01"
+    },
+    {
+      "id": "nj-pay-equity-reporting",
+      "stateAbbr": "NJ",
+      "title": "New Jersey pay equity reporting (Diane B. Allen Act)",
+      "summary": "Certain public contractors must report employee compensation by gender, race, and job category.",
+      "effectiveDate": "2020-07-01",
+      "industries": [
+        "General"
+      ],
+      "sourceUrl": "https://www.nj.gov/treasury/contract_compliance/diane-b-allen-act.shtml",
+      "sourceLabel": "New Jersey Department of the Treasury",
+      "publishedAt": "2020-06-01"
+    },
+    {
+      "id": "ga-sales-tax-marketplace",
+      "stateAbbr": "GA",
+      "title": "Georgia marketplace facilitator sales tax",
+      "summary": "Marketplace facilitators must collect and remit Georgia sales tax on third-party sales.",
+      "effectiveDate": "2020-04-01",
+      "industries": [
+        "Marketplace",
+        "E-commerce"
+      ],
+      "sourceUrl": "https://dor.georgia.gov/taxes/sales-use-tax/marketplace-facilitators",
+      "sourceLabel": "Georgia Department of Revenue",
+      "publishedAt": "2020-03-01"
+    },
+    {
+      "id": "ny-stop-hacks-act",
+      "stateAbbr": "NY",
+      "title": "Stop Hacks and Improve Electronic Data Security (SHIELD) breach notification",
+      "summary": "Expanded breach notification and security program requirements for NY residents' private information.",
+      "effectiveDate": "2020-03-21",
+      "industries": [
+        "SaaS",
+        "Healthcare"
+      ],
+      "sourceUrl": "https://www.dfs.ny.gov/consumers/identity_theft/shield_act_faqs",
+      "sourceLabel": "New York Department of Financial Services",
+      "publishedAt": "2020-02-01"
+    },
+    {
+      "id": "ny-shield-act",
+      "stateAbbr": "NY",
+      "title": "NY SHIELD Act data security requirements",
+      "summary": "Businesses holding private information of NY residents must implement reasonable administrative, technical, and physical safeguards.",
+      "effectiveDate": "2020-03-21",
+      "industries": [
+        "SaaS",
+        "Fintech",
+        "Healthcare"
+      ],
+      "sourceUrl": "https://www.dfs.ny.gov/consumers/identity_theft/shield_act_faqs",
+      "sourceLabel": "New York Department of Financial Services",
+      "publishedAt": "2020-02-01"
+    },
+    {
+      "id": "wa-breach-notification",
+      "stateAbbr": "WA",
+      "title": "Washington data breach notification",
+      "summary": "Entities must notify affected Washington residents and the Attorney General when personal information is compromised.",
+      "effectiveDate": "2020-03-01",
+      "industries": [
+        "SaaS",
+        "Healthcare"
+      ],
+      "sourceUrl": "https://www.atg.wa.gov/data-breach-notifications",
+      "sourceLabel": "Washington Attorney General",
+      "publishedAt": "2019-11-01"
+    },
+    {
+      "id": "wa-paid-family-leave",
+      "stateAbbr": "WA",
+      "title": "Paid Family and Medical Leave (PFML)",
+      "summary": "Employers and employees fund statewide paid leave for medical and family events; reporting required for covered employers.",
+      "effectiveDate": "2020-01-01",
+      "industries": [
+        "General",
+        "Marketplace"
+      ],
+      "sourceUrl": "https://paidleave.wa.gov/employers/",
+      "sourceLabel": "Washington Paid Family & Medical Leave",
+      "publishedAt": "2019-12-01"
+    },
+    {
+      "id": "wa-noncompete-threshold",
+      "stateAbbr": "WA",
+      "title": "Noncompete agreement income thresholds",
+      "summary": "Noncompetes are void for employees below statutory earnings thresholds and banned for certain workers.",
+      "effectiveDate": "2020-01-01",
+      "industries": [
+        "General",
+        "SaaS"
+      ],
+      "sourceUrl": "https://lni.wa.gov/workers-rights/your-rights/non-compete-agreements",
+      "sourceLabel": "Washington Department of Labor & Industries",
+      "publishedAt": "2019-12-01"
+    },
+    {
+      "id": "tx-data-breach-notification",
+      "stateAbbr": "TX",
+      "title": "Texas Identity Theft Enforcement and Protection Act updates",
+      "summary": "Businesses must notify Texas residents of breaches of sensitive personal information and report large breaches to the AG.",
+      "effectiveDate": "2020-01-01",
+      "industries": [
+        "SaaS",
+        "Healthcare"
+      ],
+      "sourceUrl": "https://www.texasattorneygeneral.gov/consumer-protection/identity-theft-and-privacy/data-breaches",
+      "sourceLabel": "Texas Attorney General",
+      "publishedAt": "2019-12-01"
+    },
+    {
+      "id": "il-artificial-intelligence-video",
+      "stateAbbr": "IL",
+      "title": "AI video interview disclosure (IVAA)",
+      "summary": "Employers using AI to analyze video interviews must notify applicants and explain how AI is used.",
+      "effectiveDate": "2020-01-01",
+      "industries": [
+        "SaaS",
+        "General"
+      ],
+      "sourceUrl": "https://www.ilga.gov/legislation/ilcs/ilcs3.asp?ActID=3987",
+      "sourceLabel": "Illinois General Assembly — IVAA",
+      "publishedAt": "2019-12-01"
+    },
+    {
+      "id": "nv-privacy-opt-out",
+      "stateAbbr": "NV",
+      "title": "Nevada privacy opt-out for sale of covered information",
+      "summary": "Consumers may direct operators not to sell certain covered information; operators must provide a designated request method.",
+      "effectiveDate": "2019-10-01",
+      "industries": [
+        "SaaS",
+        "E-commerce"
+      ],
+      "sourceUrl": "https://ag.nv.gov/About/Privacy/Privacy_Requests/",
+      "sourceLabel": "Nevada Attorney General",
+      "publishedAt": "2019-09-01"
+    },
+    {
+      "id": "vt-data-breach",
+      "stateAbbr": "VT",
+      "title": "Vermont data broker regulation",
+      "summary": "Data brokers must register annually with the Vermont Secretary of State and meet minimum data security standards.",
+      "effectiveDate": "2019-01-01",
+      "industries": [
+        "SaaS",
+        "E-commerce"
+      ],
+      "sourceUrl": "https://sos.vermont.gov/data-broker/",
+      "sourceLabel": "Vermont Secretary of State",
+      "publishedAt": "2018-12-01"
+    },
+    {
+      "id": "fl-economic-nexus-tax",
+      "stateAbbr": "FL",
+      "title": "Florida corporate income tax economic nexus",
+      "summary": "Out-of-state corporations with substantial Florida sales may owe corporate income tax even without physical presence.",
+      "effectiveDate": "2019-01-01",
+      "industries": [
+        "E-commerce",
+        "SaaS"
+      ],
+      "sourceUrl": "https://floridarevenue.com/taxes/taxesfees/Pages/corporate.aspx",
+      "sourceLabel": "Florida Department of Revenue",
+      "publishedAt": "2023-01-01"
+    },
+    {
+      "id": "ma-noncompete-reform",
+      "stateAbbr": "MA",
+      "title": "Massachusetts Noncompetition Agreement Act",
+      "summary": "Noncompetes must meet garden-leave or consideration requirements and cannot exceed 12 months for most employees.",
+      "effectiveDate": "2018-10-01",
+      "industries": [
+        "General",
+        "SaaS"
+      ],
+      "sourceUrl": "https://www.mass.gov/info-details/massachusetts-noncompetition-agreement-act",
+      "sourceLabel": "Massachusetts Courts",
+      "publishedAt": "2018-09-01"
+    },
+    {
+      "id": "az-data-breach",
+      "stateAbbr": "AZ",
+      "title": "Arizona data breach notification",
+      "summary": "Entities must notify Arizona residents of unauthorized acquisition of unencrypted personal information.",
+      "effectiveDate": "2018-08-01",
+      "industries": [
+        "SaaS"
+      ],
+      "sourceUrl": "https://www.azag.gov/consumer/data-breach",
+      "sourceLabel": "Arizona Attorney General",
+      "publishedAt": "2018-07-01"
+    },
+    {
+      "id": "sd-data-breach",
+      "stateAbbr": "SD",
+      "title": "South Dakota breach notification law",
+      "summary": "Businesses must notify South Dakota residents of breaches of personal information.",
+      "effectiveDate": "2018-07-01",
+      "industries": [
+        "SaaS"
+      ],
+      "sourceUrl": "https://atg.sd.gov/Consumers/IdentityTheft/DataBreaches.aspx",
+      "sourceLabel": "South Dakota Attorney General",
+      "publishedAt": "2018-06-01"
+    },
+    {
+      "id": "al-data-breach",
+      "stateAbbr": "AL",
+      "title": "Alabama Data Breach Notification Act",
+      "summary": "Covered entities must notify Alabama residents and the Attorney General of qualifying data breaches.",
+      "effectiveDate": "2018-06-01",
+      "industries": [
+        "SaaS"
+      ],
+      "sourceUrl": "https://www.alabamaag.gov/consumercomplaint/",
+      "sourceLabel": "Alabama Attorney General",
+      "publishedAt": "2018-05-01"
+    },
+    {
+      "id": "nm-data-breach",
+      "stateAbbr": "NM",
+      "title": "New Mexico Data Breach Notification Act",
+      "summary": "Businesses must notify New Mexico residents of security breaches involving personal information.",
+      "effectiveDate": "2017-06-01",
+      "industries": [
+        "SaaS"
+      ],
+      "sourceUrl": "https://www.nmag.gov/consumer-alerts/data-breach.aspx",
+      "sourceLabel": "New Mexico Attorney General",
+      "publishedAt": "2017-05-01"
+    },
+    {
+      "id": "de-data-breach",
+      "stateAbbr": "DE",
+      "title": "Delaware data breach notification law",
+      "summary": "Persons conducting business in Delaware must notify residents and the Attorney General of qualifying breaches.",
+      "effectiveDate": "2017-04-14",
+      "industries": [
+        "SaaS"
+      ],
+      "sourceUrl": "https://attorneygeneral.delaware.gov/fraud/cpu/security_breach/",
+      "sourceLabel": "Delaware Department of Justice",
+      "publishedAt": "2017-04-01"
+    },
+    {
+      "id": "wy-data-breach",
+      "stateAbbr": "WY",
+      "title": "Wyoming data breach notification",
+      "summary": "Businesses must notify Wyoming residents of unauthorized acquisition of personal information.",
+      "effectiveDate": "2015-07-01",
+      "industries": [
+        "SaaS"
+      ],
+      "sourceUrl": "https://ag.wyo.gov/consumer-protection",
+      "sourceLabel": "Wyoming Attorney General",
+      "publishedAt": "2023-01-01"
+    },
+    {
+      "id": "ny-bitlicense",
+      "stateAbbr": "NY",
+      "title": "BitLicense virtual currency business regulation",
+      "summary": "Virtual currency businesses serving New York generally need a BitLicense or limited-purpose trust charter from NY DFS.",
+      "effectiveDate": "2015-06-24",
+      "industries": [
+        "Fintech"
+      ],
+      "sourceUrl": "https://www.dfs.ny.gov/virtual_currency_businesses",
+      "sourceLabel": "New York Department of Financial Services",
+      "publishedAt": "2015-06-01"
+    },
+    {
+      "id": "ky-data-breach",
+      "stateAbbr": "KY",
+      "title": "Kentucky data breach notification",
+      "summary": "Businesses must notify Kentucky residents of security breaches involving personal information.",
+      "effectiveDate": "2014-07-01",
+      "industries": [
+        "SaaS"
+      ],
+      "sourceUrl": "https://www.ag.ky.gov/Resources/Consumer-Resources/Identity-Theft/Pages/default.aspx",
+      "sourceLabel": "Kentucky Attorney General",
+      "publishedAt": "2023-01-01"
+    },
+    {
+      "id": "ia-data-breach",
+      "stateAbbr": "IA",
+      "title": "Iowa consumer data breach notification",
+      "summary": "Businesses must notify Iowa residents of unauthorized acquisition of personal information.",
+      "effectiveDate": "2014-07-01",
+      "industries": [
+        "SaaS"
+      ],
+      "sourceUrl": "https://www.iowaattorneygeneral.gov/for-consumers/general-consumer-information/data-breach",
+      "sourceLabel": "Iowa Attorney General",
+      "publishedAt": "2014-06-01"
+    },
+    {
+      "id": "fl-data-breach-notification",
+      "stateAbbr": "FL",
+      "title": "Florida Information Protection Act (FIPA)",
+      "summary": "Businesses must notify Floridians and regulators of data breaches involving personal information within 30 days.",
+      "effectiveDate": "2014-07-01",
+      "industries": [
+        "SaaS",
+        "Healthcare"
+      ],
+      "sourceUrl": "https://www.myfloridalegal.com/consumer-protection/data-breach",
+      "sourceLabel": "Florida Attorney General",
+      "publishedAt": "2023-01-01"
+    },
+    {
+      "id": "de-benefit-corporation",
+      "stateAbbr": "DE",
+      "title": "Public benefit corporation statutes",
+      "summary": "Delaware allows public benefit corporations with expanded director duties to stakeholders beyond stockholders.",
+      "effectiveDate": "2013-08-01",
+      "industries": [
+        "General"
+      ],
+      "sourceUrl": "https://corp.delaware.gov/benefitcorp/",
+      "sourceLabel": "Delaware Division of Corporations",
+      "publishedAt": "2023-01-01"
+    },
+    {
+      "id": "ms-data-breach",
+      "stateAbbr": "MS",
+      "title": "Mississippi data breach notification",
+      "summary": "Businesses must notify Mississippi residents of breaches of personal information.",
+      "effectiveDate": "2011-07-01",
+      "industries": [
+        "SaaS"
+      ],
+      "sourceUrl": "https://www.ago.state.ms.us/victims/data-breach/",
+      "sourceLabel": "Mississippi Attorney General",
+      "publishedAt": "2023-01-01"
+    },
+    {
+      "id": "ma-data-breach",
+      "stateAbbr": "MA",
+      "title": "Massachusetts data security regulations (201 CMR 17.00)",
+      "summary": "Businesses holding MA residents' personal information must maintain a written information security program (WISP).",
+      "effectiveDate": "2010-03-01",
+      "industries": [
+        "SaaS",
+        "Healthcare",
+        "Fintech"
+      ],
+      "sourceUrl": "https://www.mass.gov/regulations/201-CMR-1700-standards-for-the-protection-of-personal-information-of-residents-of-the-commonwealth",
+      "sourceLabel": "Massachusetts Office of Consumer Affairs",
+      "publishedAt": "2010-02-01"
+    },
+    {
+      "id": "tx-capture-or-use-biometric",
+      "stateAbbr": "TX",
+      "title": "Texas Capture or Use of Biometric Identifier Act (CUBI)",
+      "summary": "Requires informed consent before capturing biometric identifiers and limits retention and disclosure.",
+      "effectiveDate": "2009-09-01",
+      "industries": [
+        "SaaS",
+        "General"
+      ],
+      "sourceUrl": "https://statutes.capitol.texas.gov/Docs/BC/htm/BC.503.htm",
+      "sourceLabel": "Texas Legislature — Business & Commerce Code Ch. 503",
+      "publishedAt": "2009-09-01"
+    },
+    {
+      "id": "mo-data-breach",
+      "stateAbbr": "MO",
+      "title": "Missouri data breach notification",
+      "summary": "Businesses must notify Missouri residents when personal information is compromised.",
+      "effectiveDate": "2009-08-01",
+      "industries": [
+        "SaaS"
+      ],
+      "sourceUrl": "https://ago.mo.gov/docs/default-source/default-document-library/data-breach-notifications.pdf",
+      "sourceLabel": "Missouri Attorney General",
+      "publishedAt": "2023-01-01"
+    },
+    {
+      "id": "ak-data-breach",
+      "stateAbbr": "AK",
+      "title": "Alaska personal information protection Act",
+      "summary": "Businesses must notify Alaska residents of breaches of personal information.",
+      "effectiveDate": "2009-07-01",
+      "industries": [
+        "SaaS"
+      ],
+      "sourceUrl": "https://law.alaska.gov/department/civil/consumer/cp_index.html",
+      "sourceLabel": "Alaska Department of Law",
+      "publishedAt": "2023-01-01"
+    },
+    {
+      "id": "ok-data-breach",
+      "stateAbbr": "OK",
+      "title": "Oklahoma Security Breach Notification Act",
+      "summary": "Businesses must notify Oklahoma residents of unauthorized access to personal information.",
+      "effectiveDate": "2008-11-01",
+      "industries": [
+        "SaaS"
+      ],
+      "sourceUrl": "https://www.oag.ok.gov/identity-theft-and-fraud",
+      "sourceLabel": "Oklahoma Attorney General",
+      "publishedAt": "2023-01-01"
+    },
+    {
+      "id": "il-bipa",
+      "stateAbbr": "IL",
+      "title": "Biometric Information Privacy Act (BIPA)",
+      "summary": "Private entities need written consent and a retention policy before collecting fingerprints, face scans, or other biometrics.",
+      "effectiveDate": "2008-10-01",
+      "industries": [
+        "SaaS",
+        "General"
+      ],
+      "sourceUrl": "https://www.ilga.gov/legislation/ilcs/ilcs3.asp?ActID=3004",
+      "sourceLabel": "Illinois General Assembly — BIPA",
+      "publishedAt": "2008-10-01"
+    },
+    {
+      "id": "sc-data-breach",
+      "stateAbbr": "SC",
+      "title": "South Carolina Financial Identity Fraud and Identity Theft Protection Act",
+      "summary": "Businesses must notify South Carolina residents of security breaches involving personal information.",
+      "effectiveDate": "2008-01-01",
+      "industries": [
+        "SaaS"
+      ],
+      "sourceUrl": "https://www.scag.gov/civil/identity-theft-unit/",
+      "sourceLabel": "South Carolina Attorney General",
+      "publishedAt": "2023-01-01"
+    },
+    {
+      "id": "ga-film-tax-credit",
+      "stateAbbr": "GA",
+      "title": "Georgia film & digital entertainment tax credit",
+      "summary": "Qualified production companies may claim transferable tax credits — relevant for media and content startups.",
+      "effectiveDate": "2008-01-01",
+      "industries": [
+        "General"
+      ],
+      "sourceUrl": "https://georgia.org/industries/entertainment/georgia-film-tv-production",
+      "sourceLabel": "Georgia Department of Economic Development",
+      "publishedAt": "2024-01-01"
+    },
+    {
+      "id": "nd-data-breach",
+      "stateAbbr": "ND",
+      "title": "North Dakota breach notification",
+      "summary": "Businesses must notify North Dakota residents of unauthorized acquisition of personal information.",
+      "effectiveDate": "2007-08-01",
+      "industries": [
+        "SaaS"
+      ],
+      "sourceUrl": "https://www.ag.nd.gov/consumer-resources/identity-theft",
+      "sourceLabel": "North Dakota Attorney General",
+      "publishedAt": "2023-01-01"
+    },
+    {
+      "id": "oh-data-breach",
+      "stateAbbr": "OH",
+      "title": "Ohio data breach notification law",
+      "summary": "Entities must notify Ohio residents of breaches of personal information without unreasonable delay.",
+      "effectiveDate": "2007-02-01",
+      "industries": [
+        "SaaS"
+      ],
+      "sourceUrl": "https://www.ohioattorneygeneral.gov/Individuals-and-Families/Consumers/Data-Breach-Notification",
+      "sourceLabel": "Ohio Attorney General",
+      "publishedAt": "2023-01-01"
+    },
+    {
+      "id": "mi-data-breach",
+      "stateAbbr": "MI",
+      "title": "Michigan data breach notification",
+      "summary": "Businesses must notify Michigan residents and provide notice to the Attorney General for large breaches.",
+      "effectiveDate": "2007-01-01",
+      "industries": [
+        "SaaS",
+        "Healthcare"
+      ],
+      "sourceUrl": "https://www.michigan.gov/ag/initiatives/identity-theft",
+      "sourceLabel": "Michigan Attorney General",
+      "publishedAt": "2023-01-01"
+    },
+    {
+      "id": "ks-data-breach",
+      "stateAbbr": "KS",
+      "title": "Kansas breach of consumer security information",
+      "summary": "Businesses must notify Kansas residents when personal information is acquired without authorization.",
+      "effectiveDate": "2007-01-01",
+      "industries": [
+        "SaaS"
+      ],
+      "sourceUrl": "https://www.ag.ks.gov/in-your-corner-kansas/identity-theft",
+      "sourceLabel": "Kansas Attorney General",
+      "publishedAt": "2023-01-01"
+    },
+    {
+      "id": "nh-data-breach",
+      "stateAbbr": "NH",
+      "title": "New Hampshire security breach notification",
+      "summary": "Businesses must notify New Hampshire residents of unauthorized access to personal information.",
+      "effectiveDate": "2006-08-01",
+      "industries": [
+        "SaaS"
+      ],
+      "sourceUrl": "https://www.doj.nh.gov/consumer/identity-theft/index.htm",
+      "sourceLabel": "New Hampshire Department of Justice",
+      "publishedAt": "2023-01-01"
+    },
+    {
+      "id": "in-data-breach",
+      "stateAbbr": "IN",
+      "title": "Indiana disclosure of security breach",
+      "summary": "Businesses must notify Indiana residents of breaches of personal information.",
+      "effectiveDate": "2006-07-01",
+      "industries": [
+        "SaaS"
+      ],
+      "sourceUrl": "https://www.in.gov/attorneygeneral/consumer-protection-division/id-theft-prevention/data-breach/",
+      "sourceLabel": "Indiana Attorney General",
+      "publishedAt": "2023-01-01"
+    },
+    {
+      "id": "id-data-breach",
+      "stateAbbr": "ID",
+      "title": "Idaho breach notification law",
+      "summary": "Businesses must notify Idaho residents of unauthorized acquisition of personal information.",
+      "effectiveDate": "2006-07-01",
+      "industries": [
+        "SaaS"
+      ],
+      "sourceUrl": "https://www.ag.idaho.gov/office-resources/consumer-protection/",
+      "sourceLabel": "Idaho Attorney General",
+      "publishedAt": "2023-01-01"
+    },
+    {
+      "id": "hi-data-breach",
+      "stateAbbr": "HI",
+      "title": "Hawaii security breach notification",
+      "summary": "Businesses must notify Hawaii residents of unauthorized access to personal information.",
+      "effectiveDate": "2006-07-01",
+      "industries": [
+        "SaaS"
+      ],
+      "sourceUrl": "https://ag.hawaii.gov/consumer-protection/security-breach/",
+      "sourceLabel": "Hawaii Office of Consumer Protection",
+      "publishedAt": "2023-01-01"
+    },
+    {
+      "id": "ri-data-breach",
+      "stateAbbr": "RI",
+      "title": "Rhode Island Identity Theft Protection Act",
+      "summary": "Businesses must notify Rhode Island residents of breaches of personal information.",
+      "effectiveDate": "2006-06-01",
+      "industries": [
+        "SaaS"
+      ],
+      "sourceUrl": "https://riag.ri.gov/consumer-protection/identity-theft",
+      "sourceLabel": "Rhode Island Attorney General",
+      "publishedAt": "2023-01-01"
+    },
+    {
+      "id": "wi-data-breach",
+      "stateAbbr": "WI",
+      "title": "Wisconsin data breach notification",
+      "summary": "Businesses must notify Wisconsin residents of unauthorized acquisition of personal information.",
+      "effectiveDate": "2006-05-01",
+      "industries": [
+        "SaaS"
+      ],
+      "sourceUrl": "https://www.wisconsin.gov/Pages/Security/DataBreach.aspx",
+      "sourceLabel": "Wisconsin Department of Administration",
+      "publishedAt": "2023-01-01"
+    },
+    {
+      "id": "pa-breach-notification",
+      "stateAbbr": "PA",
+      "title": "Pennsylvania breach of personal information notification",
+      "summary": "Businesses must notify Pennsylvania residents when personal information is disclosed without authorization.",
+      "effectiveDate": "2006-01-01",
+      "industries": [
+        "SaaS"
+      ],
+      "sourceUrl": "https://www.attorneygeneral.gov/protect-yourself/data-breach/",
+      "sourceLabel": "Pennsylvania Office of Attorney General",
+      "publishedAt": "2023-01-01"
+    },
+    {
+      "id": "ne-data-breach",
+      "stateAbbr": "NE",
+      "title": "Nebraska Financial Data Protection and Consumer Notification of Data Security Breach Act",
+      "summary": "Businesses must notify Nebraska residents of breaches of personal information.",
+      "effectiveDate": "2006-01-01",
+      "industries": [
+        "SaaS"
+      ],
+      "sourceUrl": "https://www.nebraska.gov/ago/consumer-protection/identity-theft/",
+      "sourceLabel": "Nebraska Attorney General",
+      "publishedAt": "2023-01-01"
+    },
+    {
+      "id": "me-data-breach",
+      "stateAbbr": "ME",
+      "title": "Maine data breach notification",
+      "summary": "Businesses must notify Maine residents of security breaches involving personal information.",
+      "effectiveDate": "2006-01-01",
+      "industries": [
+        "SaaS"
+      ],
+      "sourceUrl": "https://www.maine.gov/ag/consumer/identity_theft/index.shtml",
+      "sourceLabel": "Maine Attorney General",
+      "publishedAt": "2023-01-01"
+    },
+    {
+      "id": "la-data-breach",
+      "stateAbbr": "LA",
+      "title": "Louisiana Database Security Breach Notification Law",
+      "summary": "Businesses must notify Louisiana residents of breaches of personal information.",
+      "effectiveDate": "2006-01-01",
+      "industries": [
+        "SaaS"
+      ],
+      "sourceUrl": "https://ag.louisiana.gov/Article/5/Security-Breach-Notification",
+      "sourceLabel": "Louisiana Attorney General",
+      "publishedAt": "2023-01-01"
+    },
+    {
+      "id": "il-personal-info-protection",
+      "stateAbbr": "IL",
+      "title": "Personal Information Protection Act (PIPA)",
+      "summary": "Illinois requires reasonable security measures and breach notification for personal information.",
+      "effectiveDate": "2006-01-01",
+      "industries": [
+        "SaaS",
+        "Healthcare"
+      ],
+      "sourceUrl": "https://www.illinoisattorneygeneral.gov/consumers/security_breach.html",
+      "sourceLabel": "Illinois Attorney General",
+      "publishedAt": "2023-01-01"
+    },
+    {
+      "id": "nc-data-breach",
+      "stateAbbr": "NC",
+      "title": "North Carolina Identity Theft Protection Act",
+      "summary": "Businesses must notify NC residents and the Attorney General of security breaches involving personal information.",
+      "effectiveDate": "2005-12-01",
+      "industries": [
+        "SaaS",
+        "Healthcare"
+      ],
+      "sourceUrl": "https://ncdoj.gov/protecting-consumers/data-breaches/",
+      "sourceLabel": "North Carolina Department of Justice",
+      "publishedAt": "2023-01-01"
+    },
+    {
+      "id": "ar-data-breach",
+      "stateAbbr": "AR",
+      "title": "Arkansas Personal Information Protection Act",
+      "summary": "Businesses must notify Arkansas residents of security breaches involving personal information.",
+      "effectiveDate": "2005-08-01",
+      "industries": [
+        "SaaS"
+      ],
+      "sourceUrl": "https://arkansasag.gov/resources/consumer-protection/identity-theft/",
+      "sourceLabel": "Arkansas Attorney General",
+      "publishedAt": "2023-01-01"
+    },
+    {
+      "id": "wv-data-breach",
+      "stateAbbr": "WV",
+      "title": "West Virginia consumer credit and protection act — breach notification",
+      "summary": "Businesses must notify West Virginia residents of security breaches involving personal information.",
+      "effectiveDate": "2005-07-01",
+      "industries": [
+        "SaaS"
+      ],
+      "sourceUrl": "https://ago.wv.gov/consumerprotection/Pages/Identity-Theft.aspx",
+      "sourceLabel": "West Virginia Attorney General",
+      "publishedAt": "2023-01-01"
+    },
+    {
+      "id": "tn-data-breach",
+      "stateAbbr": "TN",
+      "title": "Tennessee Identity Theft Deterrence Act",
+      "summary": "Businesses must notify Tennessee residents of unauthorized access to personal information.",
+      "effectiveDate": "2005-07-01",
+      "industries": [
+        "SaaS"
+      ],
+      "sourceUrl": "https://www.tn.gov/attorneygeneral/working-for-tennessee/consumer/data-breach.html",
+      "sourceLabel": "Tennessee Attorney General",
+      "publishedAt": "2023-01-01"
+    },
+    {
+      "id": "nj-data-breach",
+      "stateAbbr": "NJ",
+      "title": "New Jersey Identity Theft Prevention Act",
+      "summary": "Businesses must notify New Jersey residents of breaches of personal information without unreasonable delay.",
+      "effectiveDate": "2005-07-01",
+      "industries": [
+        "SaaS"
+      ],
+      "sourceUrl": "https://www.nj.gov/oag/ge/docs/FAQ-DataBreaches.pdf",
+      "sourceLabel": "New Jersey Office of the Attorney General",
+      "publishedAt": "2023-01-01"
+    },
+    {
+      "id": "ga-data-breach",
+      "stateAbbr": "GA",
+      "title": "Georgia Personal Identity Protection Act",
+      "summary": "Businesses must notify Georgia residents of unauthorized acquisition of personal information.",
+      "effectiveDate": "2005-05-01",
+      "industries": [
+        "SaaS"
+      ],
+      "sourceUrl": "https://law.georgia.gov/data-breach-notifications",
+      "sourceLabel": "Georgia Attorney General",
+      "publishedAt": "2022-01-01"
+    },
+    {
+      "id": "tx-sales-tax-saas",
+      "stateAbbr": "TX",
+      "title": "Texas sales tax on data processing & SaaS",
+      "summary": "Certain cloud, SaaS, and data processing services are taxable in Texas when provided for consideration.",
+      "effectiveDate": "2000-01-01",
+      "industries": [
+        "SaaS",
+        "E-commerce"
+      ],
+      "sourceUrl": "https://comptroller.texas.gov/taxes/publications/94-127.php",
+      "sourceLabel": "Texas Comptroller — Data Processing Services",
+      "publishedAt": "2023-06-01"
+    }
+  ]
+}

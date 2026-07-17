@@ -98,21 +98,24 @@ const description = hasResults
     import { decodeExpansionFromParams } from "../scripts/expansionReadiness.js";
 
     async function boot() {
-      const [statesRes, snapshotsRes] = await Promise.all([
+      const [statesRes, snapshotsRes, pulseRes] = await Promise.all([
         fetch("/data/states.json"),
         fetch("/data/founder_snapshots.json"),
+        fetch("/data/regulatory_pulse.json"),
       ]);
-      if (!statesRes.ok || !snapshotsRes.ok) {
+      if (!statesRes.ok || !snapshotsRes.ok || !pulseRes.ok) {
         throw new Error("Could not load data");
       }
       const statesPayload = await statesRes.json();
       const snapshotsPayload = await snapshotsRes.json();
+      const pulsePayload = await pulseRes.json();
       const urlProfile = decodeExpansionFromParams(window.location.search);
 
       initExpandFlow({
         container: document.getElementById("expand-flow"),
         statesObject: statesPayload.states,
         snapshots: snapshotsPayload.states,
+        pulseItems: pulsePayload.items ?? [],
         initialProfile: urlProfile,
       });
     }
