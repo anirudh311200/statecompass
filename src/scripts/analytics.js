@@ -77,3 +77,27 @@ export function trackExpansionShare() {
 export function trackPulseFilter(props) {
   trackEvent("PulseFilter", props);
 }
+
+export function trackProfileCreated(props = {}) {
+  trackEvent("ProfileCreated", props);
+}
+
+export function trackProfileReturn() {
+  trackEvent("ProfileReturn");
+}
+
+export function trackProfileSaveError(code) {
+  trackEvent("ProfileSaveError", { code: String(code) });
+}
+
+export function trackProfileDelete() {
+  trackEvent("ProfileDelete");
+}
+
+export function trackProfileUnsubscribe() {
+  trackEvent("ProfileUnsubscribe");
+}
+
+export function trackProfileSync() {
+  trackEvent("ProfileSync");
+}

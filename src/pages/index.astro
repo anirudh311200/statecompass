@@ -4,6 +4,7 @@ import FounderFitSelector from "../components/FounderFitSelector.astro";
 import YearSelector from "../components/YearSelector.astro";
 import StateSearch from "../components/StateSearch.astro";
 import SavedPanel from "../components/SavedPanel.astro";
+import SaveProfilePanel from "../components/SaveProfilePanel.astro";
 import { SEARCH_FAVICON_PNG, SITE_NAME } from "../lib/site.js";
 
 const site = Astro.site ?? new URL("https://statecompass.app");
@@ -44,6 +45,16 @@ const jsonLd = {
   description={homeDescription}
   jsonLd={jsonLd}
 >
+  <section class="profile-return panel" data-profile-return hidden aria-live="polite">
+    <div class="profile-return-inner">
+      <p class="profile-return-text" data-profile-return-text></p>
+      <div class="profile-return-actions">
+        <a href="#match-flow" class="btn btn-primary btn-sm" data-profile-return-cta>View my top 3</a>
+        <a href="/me" class="btn btn-secondary btn-sm">Manage profile</a>
+      </div>
+    </div>
+  </section>
+
   <section class="match-hero panel" id="match-flow" data-match-container>
     <div data-match-hero class="match-hero-inner">
       <h1 class="match-hero-title">Where should you build?</h1>
@@ -95,6 +106,7 @@ const jsonLd = {
       </div>
       <p class="visually-hidden" data-results-live aria-live="polite"></p>
       <div class="match-result-cards" data-result-cards></div>
+      <SaveProfilePanel class="match-save-profile" />
     </div>
   </section>
 
@@ -261,6 +273,48 @@ const jsonLd = {
     import { pinState } from "../scripts/map.js";
     import { loadQuizProgress } from "../scripts/quizStore.js";
     import { decodeQuizFromParams } from "../scripts/founderMatch.js";
+    import { bootstrapSavedProfile } from "../scripts/saveProfileFlow.js";
+    import { getCachedProfile, getSessionToken } from "../scripts/profileSession.js";
+    import { trackProfileReturn } from "../scripts/analytics.js";
+
+    function renderProfileReturn(profile) {
+      const banner = document.querySelector("[data-profile-return]");
+      const text = document.querySelector("[data-profile-return-text]");
+      const top = profile?.top3Snapshot?.[0];
+      if (!banner || !text || !top) {
+        return;
+      }
+
+      text.textContent = `Welcome back — your top match is ${top.name} (${top.matchScore100}%).`;
+      banner.hidden = false;
+      trackProfileReturn();
+    }
+
+    async function hydrateProfileReturn() {
+      const token = new URLSearchParams(window.location.search).get("token");
+      if (token) {
+        return;
+      }
+
+      const cached = getCachedProfile();
+      if (cached?.top3Snapshot?.length) {
+        renderProfileReturn(cached);
+        return;
+      }
+
+      if (!getSessionToken()) {
+        return;
+      }
+
+      try {
+        const profile = await bootstrapSavedProfile();
+        if (profile) {
+          renderProfileReturn(profile);
+        }
+      } catch {
+        /* profile service unavailable */
+      }
+    }
 
     async function boot() {
       await loadMetrosData();
@@ -271,6 +325,22 @@ const jsonLd = {
       initMapSidebar(stateData);
 
       const container = document.getElementById("match-flow");
+      const params = new URLSearchParams(window.location.search);
+      const tokenFromUrl = params.get("token");
+
+      if (tokenFromUrl) {
+        window.location.replace(`/me?token=${encodeURIComponent(tokenFromUrl)}`);
+        return;
+      }
+
+      if (getSessionToken()) {
+        try {
+          await bootstrapSavedProfile();
+        } catch {
+          /* profile service unavailable */
+        }
+      }
+
       const urlAnswers = decodeQuizFromParams(window.location.search);
       initMatchFlow({
         container,
@@ -281,7 +351,8 @@ const jsonLd = {
         },
       });
 
-      const params = new URLSearchParams(window.location.search);
+      await hydrateProfileReturn();
+
       const focusState = params.get("state")?.toUpperCase();
       const shouldFocus = params.get("focus") === "1";
       if (focusState && shouldFocus && urlAnswers) {

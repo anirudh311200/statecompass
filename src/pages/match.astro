@@ -1,5 +1,6 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import SaveProfilePanel from "../components/SaveProfilePanel.astro";
 
 const params = Astro.url.searchParams;
 const quizKeys = ["stage", "model", "tax", "vc", "hiring", "talent", "col"];
@@ -64,6 +65,7 @@ const description = hasQuiz
         </div>
         <p class="visually-hidden" data-results-live aria-live="polite"></p>
         <div class="match-result-cards" data-result-cards></div>
+        <SaveProfilePanel class="match-save-profile" />
       </div>
     </section>
   </main>

@@ -1,0 +1,172 @@
+---
+import Layout from "../layouts/Layout.astro";
+---
+
+<Layout
+  title="My Founder Profile | StateCompass"
+  description="Restore your saved StateCompass quiz results, manage email preferences, or delete your founder profile."
+  subtitle="Your saved founder profile"
+>
+  <main class="page-content profile-page">
+    <section class="panel profile-panel" data-profile-page>
+      <div data-profile-loading>
+        <h1 class="page-title">Loading your profile…</h1>
+      </div>
+
+      <div data-profile-empty hidden>
+        <h1 class="page-title">No saved profile</h1>
+        <p class="page-lead">
+          Take the founder quiz and save your results with email — we will email a magic link to reopen your top 3 states on any device.
+        </p>
+        <a href="/#match-flow" class="btn btn-primary">Find your state match</a>
+      </div>
+
+      <div data-profile-active hidden>
+        <h1 class="page-title">Welcome back</h1>
+        <p class="page-lead" data-profile-summary></p>
+        <div class="profile-actions">
+          <a href="/#match-flow" class="btn btn-primary" data-profile-view-results>View my top 3</a>
+          <a href="/rankings" class="btn btn-secondary" data-profile-lens-link>Rankings with my Lens</a>
+          <button type="button" class="btn btn-secondary" data-profile-retake>Edit quiz answers</button>
+        </div>
+
+        <div class="profile-manage">
+          <h2 class="panel-title">Manage profile</h2>
+          <p class="panel-helper">
+            Saved for <strong data-profile-email></strong>. Re-taking the quiz overwrites your stored answers and top 3 snapshot.
+          </p>
+          <div class="profile-manage-actions">
+            <button type="button" class="btn btn-secondary" data-profile-unsubscribe>Unsubscribe</button>
+            <button type="button" class="btn btn-ghost profile-delete-btn" data-profile-delete>Delete profile</button>
+          </div>
+          <p class="profile-status" data-profile-status role="status" aria-live="polite"></p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    import {
+      clearSessionToken,
+      deleteProfileRemote,
+      unsubscribeProfileRemote,
+      getSessionToken,
+    } from "../scripts/profileSession.js";
+    import { bootstrapSavedProfile } from "../scripts/saveProfileFlow.js";
+    import { getLensLabel } from "../scripts/founderFit.js";
+    import { trackProfileReturn, trackProfileDelete, trackProfileUnsubscribe } from "../scripts/analytics.js";
+
+    function setStatus(message, tone = "info") {
+      const el = document.querySelector("[data-profile-status]");
+      if (!el) {
+        return;
+      }
+      el.textContent = message;
+      el.dataset.tone = tone;
+    }
+
+    function showPanel(name) {
+      document.querySelector("[data-profile-loading]")?.toggleAttribute("hidden", name !== "loading");
+      document.querySelector("[data-profile-empty]")?.toggleAttribute("hidden", name !== "empty");
+      document.querySelector("[data-profile-active]")?.toggleAttribute("hidden", name !== "active");
+    }
+
+    function renderActive(profile) {
+      const top = profile.top3Snapshot?.[0];
+      const summary = document.querySelector("[data-profile-summary]");
+      const emailEl = document.querySelector("[data-profile-email]");
+      const lensLink = document.querySelector("[data-profile-lens-link]");
+
+      if (summary && top) {
+        summary.textContent = `Your top match is ${top.name} (${top.matchScore100}%). Founder Lens: ${getLensLabel(profile.defaultLens)}.`;
+      } else if (summary) {
+        summary.textContent = `Founder Lens: ${getLensLabel(profile.defaultLens)}.`;
+      }
+
+      if (emailEl) {
+        emailEl.textContent = profile.email;
+      }
+
+      if (lensLink && profile.defaultLens && profile.defaultLens !== "overall") {
+        lensLink.href = `/rankings?lens=${encodeURIComponent(profile.defaultLens)}`;
+      }
+    }
+
+    async function boot() {
+      const params = new URLSearchParams(window.location.search);
+      const tokenFromUrl = params.get("token");
+
+      if (tokenFromUrl) {
+        clearSessionToken();
+      }
+
+      let profile = null;
+
+      try {
+        profile = await bootstrapSavedProfile({ tokenFromUrl });
+      } catch {
+        profile = null;
+      }
+
+      if (tokenFromUrl && params.has("token")) {
+        params.delete("token");
+        const next = params.toString();
+        history.replaceState(null, "", next ? `/me?${next}` : "/me");
+      }
+
+      if (!profile) {
+        const token = getSessionToken();
+        if (token) {
+          try {
+            profile = await bootstrapSavedProfile();
+          } catch {
+            profile = null;
+          }
+        }
+      }
+
+      if (!profile) {
+        showPanel("empty");
+        return;
+      }
+
+      trackProfileReturn();
+      renderActive(profile);
+      showPanel("active");
+
+      document.querySelector("[data-profile-retake]")?.addEventListener("click", () => {
+        window.location.href = "/#match-flow";
+      });
+
+      document.querySelector("[data-profile-unsubscribe]")?.addEventListener("click", async () => {
+        if (!window.confirm("Unsubscribe and stop storing this profile for email restore?")) {
+          return;
+        }
+        try {
+          await unsubscribeProfileRemote();
+          trackProfileUnsubscribe();
+          setStatus("You are unsubscribed. Profile access on this device has been cleared.", "success");
+          showPanel("empty");
+        } catch (error) {
+          setStatus(error.message || "Could not unsubscribe.", "error");
+        }
+      });
+
+      document.querySelector("[data-profile-delete]")?.addEventListener("click", async () => {
+        if (!window.confirm("Delete your saved profile permanently? This cannot be undone.")) {
+          return;
+        }
+        try {
+          await deleteProfileRemote();
+          trackProfileDelete();
+          setStatus("Profile deleted.", "success");
+          showPanel("empty");
+        } catch (error) {
+          setStatus(error.message || "Could not delete profile.", "error");
+        }
+      });
+    }
+
+    boot().catch(() => showPanel("empty"));
+  </script>
+</Layout>

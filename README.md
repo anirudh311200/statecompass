@@ -58,6 +58,13 @@ GitHub Actions runs on every push to `main`: Python verify, then Astro build.
 |----------|-------------|
 | `SITE_URL` | Canonical site URL for sitemap and OG tags |
 | `PUBLIC_PLAUSIBLE_DOMAIN` | Optional Plausible analytics domain (tracks Compare, Share, Profile events) |
+| `UPSTASH_REDIS_REST_URL` | Feature 6 profile storage (Upstash Redis REST URL) |
+| `UPSTASH_REDIS_REST_TOKEN` | Feature 6 profile storage token |
+| `RESEND_API_KEY` | Magic-link emails for saved founder profiles |
+| `PROFILE_FROM_EMAIL` | Optional Resend from address (default: StateCompass hello@) |
+| `PROFILE_STATS_SECRET` | Optional secret for aggregate profile segment stats API |
+
+See `docs/PROFILE.md` for the full Feature 6 setup guide.
 
 ## Regenerate assets
 

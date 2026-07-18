@@ -322,7 +322,7 @@
 
 # Feature 6 — Save My Profile + Return Sessions
 
-**Status:** Not started · **Depends on:** Feature 1 quiz (primary profile source); enhanced by Feature 4 Lens
+**Status:** Shipped · **Depends on:** Feature 1 quiz (primary profile source); enhanced by Feature 4 Lens
 
 **Goal:** Lightweight profile (email + quiz/lens answers) so founders **return** to their personalized view — and you build an email list + segment data.
 
@@ -336,27 +336,27 @@
 
 #### A — Profile model
 
-- [ ] **6.A.1** Profile schema: email, quiz answers, default Lens, top 3 match snapshot, createdAt, updatedAt
-- [ ] **6.A.2** Backend choice documented (e.g. Supabase, Convex, or magic-link + edge KV) — static Astro site + minimal API route or serverless
-- [ ] **6.A.3** Privacy: no password MVP — magic link via email; clear privacy note on signup
+- [x] **6.A.1** Profile schema: email, quiz answers, default Lens, top 3 match snapshot, createdAt, updatedAt
+- [x] **6.A.2** Backend choice documented (e.g. Supabase, Convex, or magic-link + edge KV) — static Astro site + minimal API route or serverless
+- [x] **6.A.3** Privacy: no password MVP — magic link via email; clear privacy note on signup
 
 #### B — Save flow
 
-- [ ] **6.B.1** Post-quiz CTA: "Save my results" — email capture
-- [ ] **6.B.2** Magic link email → `/me` or `/match?token=…` restores profile + results
-- [ ] **6.B.3** Merge with localStorage saved states/comparisons where possible
+- [x] **6.B.1** Post-quiz CTA: "Save my results" — email capture
+- [x] **6.B.2** Magic link email → `/me` or `/match?token=…` restores profile + results
+- [x] **6.B.3** Merge with localStorage saved states/comparisons where possible
 
 #### C — Return experience
 
-- [ ] **6.C.1** Logged-in/anonymous token session: homepage shows personalized top 3 + last Lens
-- [ ] **6.C.2** "Update my answers" re-runs match; profile versioned or overwritten (document behavior)
+- [x] **6.C.1** Logged-in/anonymous token session: homepage shows personalized top 3 + last Lens
+- [x] **6.C.2** "Update my answers" re-runs match; profile versioned or overwritten (document behavior)
 - [ ] **6.C.3** Optional: notify when CNBC year or Pulse updates affect saved states
 
 #### D — Ops & compliance
 
-- [ ] **6.D.1** Unsubscribe / delete profile path
-- [ ] **6.D.2** Analytics: profile created, return visit, quiz retake (no PII in event payloads)
-- [ ] **6.D.3** Export segment counts for internal use (founder types, tax priority breakdown) — aggregate only
+- [x] **6.D.1** Unsubscribe / delete profile path
+- [x] **6.D.2** Analytics: profile created, return visit, quiz retake (no PII in event payloads)
+- [x] **6.D.3** Export segment counts for internal use (founder types, tax priority breakdown) — aggregate only
 
 ### Exit criteria (Feature 6 done when)
 
@@ -375,7 +375,7 @@
 | 3 — State Report Card | Not started | | |
 | 4 — Founder Lens | Not started | | |
 | 5 — Regulatory Pulse | Shipped | Jul 2026 | Jul 2026 |
-| 6 — Save My Profile | Not started | | |
+| 6 — Save My Profile | Shipped | Jul 2026 | Jul 2026 |
 
 Update this table as each feature ships.
 

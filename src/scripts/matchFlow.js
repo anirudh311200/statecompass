@@ -17,9 +17,12 @@ import {
   trackMatchShare,
   trackMatchResultClick,
   trackMatchRetake,
+  trackProfileSync,
 } from "./analytics.js";
 import { pinState, getStateData } from "./map.js";
 import { enterStateFocus } from "./stateFocus.js";
+import { initSaveProfileFlow } from "./saveProfileFlow.js";
+import { getSessionToken } from "./profileSession.js";
 
 const prefersReducedMotion =
   typeof window !== "undefined" &&
@@ -38,6 +41,16 @@ export function initMatchFlow({ container, statesObject, onResultsShown, initial
   const quizEl = container.querySelector("[data-match-quiz]");
   const resultsEl = container.querySelector("[data-match-results]");
   const mapSection = document.querySelector("[data-match-map-section]");
+  const saveProfileRoot = container.querySelector("[data-save-profile]");
+
+  const saveFlow = initSaveProfileFlow({
+    root: saveProfileRoot,
+    getAnswers: () => answers,
+    statesObject,
+    onSaved: () => {
+      saveProfileRoot?.scrollIntoView({ behavior: prefersReducedMotion ? "auto" : "smooth", block: "nearest" });
+    },
+  });
 
   function showPanel(panel) {
     heroEl?.toggleAttribute("hidden", panel !== "hero");
@@ -134,6 +147,10 @@ export function initMatchFlow({ container, statesObject, onResultsShown, initial
     trackQuizComplete();
     renderResults();
     onResultsShown?.(answers);
+
+    if (getSessionToken()) {
+      saveFlow?.syncExistingProfile?.(answers)?.then?.(() => trackProfileSync());
+    }
   }
 
   function renderResults() {
@@ -233,6 +250,10 @@ export function initMatchFlow({ container, statesObject, onResultsShown, initial
 
     showPanel("results");
     mapSection?.removeAttribute("hidden");
+
+    if (getSessionToken()) {
+      saveFlow?.syncExistingProfile?.(validated)?.then?.(() => trackProfileSync());
+    }
   }
 
   function startQuiz() {

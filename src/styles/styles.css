@@ -5053,3 +5053,107 @@ footer a:hover {
 .regulatory-pulse-section .snapshot-disclaimer {
   margin-bottom: 1rem;
 }
+
+/* Feature 6 — Save My Profile */
+
+.profile-return {
+  margin-bottom: 1rem;
+}
+
+.profile-return-inner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem 1rem;
+}
+
+.profile-return-text {
+  margin: 0;
+  font-size: var(--text-sm);
+  color: var(--text);
+}
+
+.profile-return-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+}
+
+.match-save-profile {
+  margin-top: 1.25rem;
+}
+
+.save-profile-form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+  align-items: center;
+  margin-top: 0.85rem;
+}
+
+.save-profile-input {
+  flex: 1 1 14rem;
+  min-width: min(100%, 14rem);
+}
+
+.save-profile-privacy {
+  margin: 0.65rem 0 0;
+  font-size: var(--text-xs);
+  color: var(--muted);
+  line-height: 1.45;
+}
+
+.save-profile-privacy a {
+  color: var(--accent);
+}
+
+.save-profile-status {
+  margin: 0.75rem 0 0;
+  font-size: var(--text-sm);
+  min-height: 1.25rem;
+}
+
+.save-profile-status[data-tone="success"] {
+  color: #86efac;
+}
+
+.save-profile-status[data-tone="error"] {
+  color: #fca5a5;
+}
+
+.profile-page {
+  max-width: 42rem;
+}
+
+.profile-panel .profile-actions,
+.profile-manage-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+.profile-manage {
+  margin-top: 2rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--border);
+}
+
+.profile-delete-btn {
+  color: #fca5a5;
+}
+
+.profile-status {
+  margin: 0.75rem 0 0;
+  font-size: var(--text-sm);
+  min-height: 1.25rem;
+}
+
+.profile-status[data-tone="success"] {
+  color: #86efac;
+}
+
+.profile-status[data-tone="error"] {
+  color: #fca5a5;
+}

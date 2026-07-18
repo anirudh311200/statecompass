@@ -1,0 +1,49 @@
+---
+interface Props {
+  class?: string;
+}
+
+const { class: className = "" } = Astro.props;
+---
+
+<section
+  class:list={["save-profile panel", className]}
+  data-save-profile
+  aria-labelledby="save-profile-heading"
+>
+  <div data-save-profile-form-panel>
+    <h2 id="save-profile-heading" class="panel-title">Save my results</h2>
+    <p class="panel-helper">
+      Enter your email — we will send a magic link so your top 3 states, quiz answers, and Founder Lens are waiting when you return. No password.
+    </p>
+    <p class="save-profile-privacy">
+      We store your quiz answers and match snapshot to restore your session. Not legal, tax, or compliance advice.
+      <a href="/me">Manage or delete your profile</a>.
+    </p>
+    <form class="save-profile-form" data-save-profile-form novalidate>
+      <label class="visually-hidden" for="save-profile-email">Email address</label>
+      <input
+        type="email"
+        id="save-profile-email"
+        name="email"
+        class="save-profile-input email-notify-input"
+        placeholder="you@company.com"
+        required
+        autocomplete="email"
+      />
+      <button type="submit" class="btn btn-primary" data-save-profile-submit>
+        Save my results
+      </button>
+    </form>
+  </div>
+
+  <div class="save-profile-saved" data-save-profile-saved hidden>
+    <h2 class="panel-title">Profile saved</h2>
+    <p class="panel-helper">
+      We saved results for <strong data-save-profile-email-display></strong>.
+      Check your inbox for a magic link, or return on this device anytime.
+    </p>
+  </div>
+
+  <p class="save-profile-status" data-save-profile-status role="status" aria-live="polite"></p>
+</section>
