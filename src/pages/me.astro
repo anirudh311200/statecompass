@@ -18,14 +18,23 @@ import Layout from "../layouts/Layout.astro";
         <p class="page-lead">
           Take the founder quiz and save your results with email — we will email a magic link to reopen your top 3 states on any device.
         </p>
-        <a href="/#match-flow" class="btn btn-primary">Find your state match</a>
+        <div class="flow-toolbar">
+          <a href="/match" class="btn btn-primary">Find your state match</a>
+          <a href="/" class="btn btn-secondary">Explore map</a>
+        </div>
       </div>
 
       <div data-profile-active hidden>
         <h1 class="page-title">Welcome back</h1>
         <p class="page-lead" data-profile-summary></p>
-        <div class="profile-actions">
-          <a href="/#match-flow" class="btn btn-primary" data-profile-view-results>View my top 3</a>
+
+        <div class="profile-top3" data-profile-top3 hidden>
+          <h2 class="panel-title">Your top 3 states</h2>
+          <div class="profile-top3-cards" data-profile-top3-cards></div>
+        </div>
+
+        <div class="profile-actions flow-toolbar">
+          <a href="/#match-flow" class="btn btn-primary" data-profile-view-results>View full results</a>
           <a href="/rankings" class="btn btn-secondary" data-profile-lens-link>Rankings with my Lens</a>
           <button type="button" class="btn btn-secondary" data-profile-retake>Edit quiz answers</button>
         </div>
@@ -71,6 +80,39 @@ import Layout from "../layouts/Layout.astro";
       document.querySelector("[data-profile-active]")?.toggleAttribute("hidden", name !== "active");
     }
 
+    function renderTop3Cards(top3) {
+      const section = document.querySelector("[data-profile-top3]");
+      const host = document.querySelector("[data-profile-top3-cards]");
+      if (!section || !host || !top3?.length) {
+        section?.setAttribute("hidden", "");
+        return;
+      }
+
+      section.removeAttribute("hidden");
+      host.replaceChildren();
+
+      top3.forEach((result, index) => {
+        const card = document.createElement("article");
+        card.className = "profile-top3-card";
+        card.innerHTML = `
+          <span class="profile-top3-rank">#${index + 1}</span>
+          <h3 class="profile-top3-name">${result.name}</h3>
+          <p class="profile-top3-score"><span class="match-score-value">${result.matchScore100}%</span> match</p>
+        `;
+
+        const actions = document.createElement("div");
+        actions.className = "profile-top3-actions";
+        const stateLink = document.createElement("a");
+        stateLink.className = "btn btn-secondary btn-sm";
+        stateLink.href = `/states/${result.slug}`;
+        stateLink.textContent = "State page";
+        actions.appendChild(stateLink);
+        card.appendChild(actions);
+
+        host.appendChild(card);
+      });
+    }
+
     function renderActive(profile) {
       const top = profile.top3Snapshot?.[0];
       const summary = document.querySelector("[data-profile-summary]");
@@ -90,6 +132,8 @@ import Layout from "../layouts/Layout.astro";
       if (lensLink && profile.defaultLens && profile.defaultLens !== "overall") {
         lensLink.href = `/rankings?lens=${encodeURIComponent(profile.defaultLens)}`;
       }
+
+      renderTop3Cards(profile.top3Snapshot);
     }
 
     async function boot() {

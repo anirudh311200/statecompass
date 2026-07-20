@@ -77,14 +77,20 @@ const jsonLd = {
         <button type="button" class="btn btn-ghost match-quiz-back" data-quiz-back>← Back</button>
         <button type="button" class="btn btn-ghost" data-quiz-cancel>Cancel</button>
       </div>
-      <div
-        class="match-quiz-progress"
-        data-quiz-progress
-        role="progressbar"
-        aria-valuemin="1"
-        aria-valuemax="7"
-        aria-valuenow="1"
-      ></div>
+        <div class="match-quiz-progress-wrap">
+          <div
+            class="match-quiz-progress"
+            data-quiz-progress
+            role="progressbar"
+            aria-valuemin="1"
+            aria-valuemax="7"
+            aria-valuenow="1"
+            aria-label="Quiz progress"
+          >
+            <div class="match-quiz-progress-bar" data-quiz-progress-bar></div>
+          </div>
+          <p class="match-quiz-progress-label" data-quiz-progress-label>Question 1 of 7</p>
+        </div>
       <h2 class="match-quiz-title" data-quiz-title tabindex="-1"></h2>
       <div class="match-quiz-options" data-quiz-options role="group"></div>
     </div>
@@ -92,7 +98,7 @@ const jsonLd = {
     <div data-match-results class="match-results" hidden>
       <div class="match-results-header">
         <h2 class="match-results-title">Your top 3 states</h2>
-        <div class="match-results-toolbar">
+        <div class="flow-toolbar match-results-toolbar">
           <button type="button" class="btn btn-secondary" data-copy-match-link data-default-label="Copy results link">
             Copy results link
           </button>
@@ -101,7 +107,7 @@ const jsonLd = {
           <a href="/compare" class="btn btn-secondary" data-compare-top3 hidden>Compare top 3</a>
         </div>
         <p class="share-status" data-share-status role="status" aria-live="polite"></p>
-        <p class="match-disclaimer">{`Derived from CNBC category scores — not CNBC's official overall rank.`}</p>
+        <p class="flow-disclaimer match-disclaimer">{`Derived from CNBC category scores — not CNBC's official overall rank.`}</p>
         <p class="match-lens-note founder-fit-disclaimer" data-match-lens-note hidden></p>
       </div>
       <p class="visually-hidden" data-results-live aria-live="polite"></p>

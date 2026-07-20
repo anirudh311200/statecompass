@@ -20,7 +20,7 @@ const description = hasResults
   title={title}
   description={description}
   subtitle="Expansion readiness from your home state — shareable results."
-  ogImage="/og/compare.svg"
+  ogImage="/og/expand.svg"
   ogImageAlt="StateCompass expansion readiness score"
   preloadData
 >
@@ -31,7 +31,7 @@ const description = hasResults
         <p class="page-lead">
           Already operating in one state? See how ready you are to expand into 1–3 targets — with friction scores, category deltas, and Founder Snapshot links.
         </p>
-        <p class="expand-prefill-note panel-helper" data-expand-prefill-note hidden></p>
+        <p class="expand-prefill-note flow-prefill-note panel-helper" data-expand-prefill-note hidden></p>
 
         <form class="expand-form-grid" novalidate>
           <div class="expand-field">
@@ -51,6 +51,7 @@ const description = hasResults
 
           <div class="expand-field expand-field--full">
             <span class="expand-label">Target states (1–3)</span>
+            <p class="panel-helper expand-target-hint">Pick at least one target. Targets 2 and 3 are optional.</p>
             <div class="expand-target-slots">
               <select id="expand-target-0" class="expand-select" data-expand-target-0 aria-label="Target state 1"></select>
               <select id="expand-target-1" class="expand-select" data-expand-target-1 aria-label="Target state 2 (optional)"></select>
@@ -68,14 +69,14 @@ const description = hasResults
           </div>
         </form>
 
-        <p class="expand-disclaimer">{`StateCompass derived — not CNBC official. Based on general business climate and tax posture — not industry-specific licensing.`}</p>
+        <p class="flow-disclaimer expand-disclaimer">{`StateCompass derived — not CNBC official. Based on general business climate and tax posture — not industry-specific licensing.`}</p>
       </div>
 
       <div data-expand-results class="expand-results" hidden={!hasResults}>
         <div class="expand-results-header">
           <h1 class="page-title" tabindex="-1">Expansion readiness</h1>
           <p class="expand-summary" data-expand-summary></p>
-          <div class="expand-results-toolbar">
+          <div class="flow-toolbar expand-results-toolbar">
             <button type="button" class="btn btn-secondary" data-copy-expand-link data-default-label="Copy results link">
               Copy results link
             </button>
@@ -85,7 +86,7 @@ const description = hasResults
             <a href="/" class="btn btn-secondary">Explore map</a>
           </div>
           <p class="share-status" data-share-status role="status" aria-live="polite"></p>
-          <p class="expand-disclaimer">{`StateCompass derived — not CNBC official. Based on general business climate and tax posture — not industry-specific licensing.`}</p>
+          <p class="flow-disclaimer expand-disclaimer">{`StateCompass derived — not CNBC official. Based on general business climate and tax posture — not industry-specific licensing.`}</p>
         </div>
         <p class="visually-hidden" data-expand-live aria-live="polite"></p>
         <div class="expand-result-cards" data-expand-result-cards></div>

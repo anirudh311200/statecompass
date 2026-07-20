@@ -66,14 +66,26 @@ export function initMatchFlow({ container, statesObject, onResultsShown, initial
 
     const question = QUIZ_QUESTIONS[stepIndex];
     const progress = quizEl.querySelector("[data-quiz-progress]");
+    const progressBar = quizEl.querySelector("[data-quiz-progress-bar]");
+    const progressLabel = quizEl.querySelector("[data-quiz-progress-label]");
     const title = quizEl.querySelector("[data-quiz-title]");
     const options = quizEl.querySelector("[data-quiz-options]");
     const backBtn = quizEl.querySelector("[data-quiz-back]");
 
+    const step = stepIndex + 1;
+    const total = QUIZ_QUESTIONS.length;
+    const pct = (step / total) * 100;
+
     if (progress) {
-      progress.textContent = `Question ${stepIndex + 1} of ${QUIZ_QUESTIONS.length}`;
-      progress.setAttribute("aria-valuenow", String(stepIndex + 1));
-      progress.setAttribute("aria-valuemax", String(QUIZ_QUESTIONS.length));
+      progress.setAttribute("aria-valuenow", String(step));
+      progress.setAttribute("aria-valuemax", String(total));
+      progress.setAttribute("aria-valuetext", `Question ${step} of ${total}`);
+    }
+    if (progressBar) {
+      progressBar.style.width = `${pct}%`;
+    }
+    if (progressLabel) {
+      progressLabel.textContent = `Question ${step} of ${total}`;
     }
     if (title) {
       title.textContent = question.label;
@@ -179,7 +191,7 @@ export function initMatchFlow({ container, statesObject, onResultsShown, initial
     top3.forEach((result, index) => {
       const bullets = explainMatch(result, validated, statesObject);
       const card = document.createElement("article");
-      card.className = "match-result-card";
+      card.className = `match-result-card match-result-card--${result.tier ?? "yellow"}`;
       card.dataset.abbr = result.abbr;
 
       const rankBadge = document.createElement("span");

@@ -68,7 +68,7 @@
 
 # Feature 1 — Founder State Match
 
-**Status:** Not started
+**Status:** Shipped
 
 **Goal:** Make the homepage about *you* — a short quiz produces a personalized top 3 states with match scores, plain-English explanations, and a cinematic **State Focus Mode** drill-down (state zoom → cities → best metro for your profile).
 
@@ -196,7 +196,7 @@
 
 # Feature 3 — State Report Card
 
-**Status:** Not started · **Depends on:** v1 state pages + movers data; richer with Feature 1 "Best for" tags and Feature 4 Lens labels
+**Status:** Shipped · **Depends on:** v1 state pages + movers data; richer with Feature 1 "Best for" tags and Feature 4 Lens labels
 
 **Goal:** Every state gets a **beautiful, shareable one-page summary** — grade, trend, key stats, "Best for:" tags — drop-in ready for board decks and investor updates.
 
@@ -237,7 +237,7 @@
 
 # Feature 4 — Founder Lens
 
-**Status:** Not started · **Depends on:** v1 Founder Fit (`founderFit.js`, 3 profiles); enhances Feature 1 when both live
+**Status:** Shipped · **Depends on:** v1 Founder Fit (`founderFit.js`, 3 profiles); enhances Feature 1 when both live
 
 **Goal:** Let founders toggle a **Founder Lens** that reweights rankings and compare for their context — not one-size-fits-all CNBC order.
 
@@ -370,10 +370,10 @@
 
 | Feature | Status | Started | Shipped |
 |---------|--------|---------|---------|
-| 1 — Founder State Match | Not started | | |
+| 1 — Founder State Match | Shipped | Jul 2026 | Jul 2026 |
 | 2 — Expansion Readiness | Shipped | Jul 2026 | Jul 2026 |
-| 3 — State Report Card | Not started | | |
-| 4 — Founder Lens | Not started | | |
+| 3 — State Report Card | Shipped | Jul 2026 | Jul 2026 |
+| 4 — Founder Lens | Shipped | Jul 2026 | Jul 2026 |
 | 5 — Regulatory Pulse | Shipped | Jul 2026 | Jul 2026 |
 | 6 — Save My Profile | Shipped | Jul 2026 | Jul 2026 |
 

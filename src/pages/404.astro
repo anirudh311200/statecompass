@@ -2,27 +2,22 @@
 import Layout from "../layouts/Layout.astro";
 ---
 
-<Layout title="Page not found | StateCompass" description="The page you requested could not be found.">
-  <main class="not-found">
-    <h1>404</h1>
-    <p>This page doesn't exist. Head back to the map to explore state scores.</p>
-    <p><a href="/">Back to map</a></p>
+<Layout
+  title="Page not found | StateCompass"
+  description="The page you requested could not be found."
+  subtitle="Let's get you back on track."
+>
+  <main class="page-content not-found">
+    <section class="panel not-found-panel">
+      <h1 class="page-title">Page not found</h1>
+      <p class="page-lead">
+        This page doesn't exist — but your state match might. Take the founder quiz or explore the map.
+      </p>
+      <div class="flow-toolbar not-found-actions">
+        <a href="/match" class="btn btn-primary">Find your state match</a>
+        <a href="/" class="btn btn-secondary">Explore map</a>
+        <a href="/rankings" class="btn btn-secondary">Rankings</a>
+      </div>
+    </section>
   </main>
 </Layout>
-
-<style>
-  .not-found {
-    text-align: center;
-    padding: 4rem 1rem;
-  }
-
-  .not-found h1 {
-    font-weight: var(--weight-display);
-    font-size: 4rem;
-    margin: 0 0 0.5rem;
-  }
-
-  .not-found a {
-    color: var(--accent);
-  }
-</style>

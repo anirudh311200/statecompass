@@ -80,24 +80,37 @@ export function initPulsePage({ items, states }) {
   function render() {
     const stateAbbr = stateSelect.value;
     const industry = industrySelect.value;
-    const filtered = filterItems(items, { stateAbbr, industry });
 
-    listEl.replaceChildren(...filtered.map((item) => renderPulseCard(item, states)));
+    listEl.classList.add("is-updating");
 
-    if (emptyEl) {
-      emptyEl.hidden = filtered.length > 0;
-    }
-    if (countEl) {
-      countEl.textContent = `${filtered.length} item${filtered.length === 1 ? "" : "s"}`;
-    }
+    requestAnimationFrame(() => {
+      const filtered = filterItems(items, { stateAbbr, industry });
 
-    syncUrl(stateAbbr, industry);
-    trackEvent("PulseFilter", {
-      state: stateAbbr || undefined,
-      industry: industry || undefined,
-      count: filtered.length,
+      listEl.replaceChildren(...filtered.map((item) => renderPulseCard(item, states)));
+      listEl.classList.remove("is-updating");
+
+      if (emptyEl) {
+        emptyEl.hidden = filtered.length > 0;
+      }
+      if (countEl) {
+        countEl.textContent = `${filtered.length} item${filtered.length === 1 ? "" : "s"}`;
+      }
+
+      syncUrl(stateAbbr, industry);
+      trackEvent("PulseFilter", {
+        state: stateAbbr || undefined,
+        industry: industry || undefined,
+        count: filtered.length,
+      });
     });
   }
+
+  document.querySelector("[data-pulse-clear-filters]")?.addEventListener("click", (event) => {
+    event.preventDefault();
+    stateSelect.value = "";
+    industrySelect.value = "";
+    render();
+  });
 
   stateSelect.addEventListener("change", render);
   industrySelect.addEventListener("change", render);

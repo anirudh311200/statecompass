@@ -171,7 +171,29 @@ def main():
         encoding="utf-8",
     )
 
-    count = len(payload["states"]) * 2 + 3
+    (OUT_DIR / "expand.svg").write_text(
+        card_shell(
+            year,
+            "Expansion Readiness",
+            "Expansion readiness",
+            "Home state → target · friction scores",
+            accent="#86efac",
+        ),
+        encoding="utf-8",
+    )
+
+    (OUT_DIR / "pulse.svg").write_text(
+        card_shell(
+            year,
+            "Regulatory Pulse",
+            "Regulatory Pulse",
+            "Sourced regulatory updates by state",
+            accent="#fde68a",
+        ),
+        encoding="utf-8",
+    )
+
+    count = len(payload["states"]) * 2 + 5
     print(f"Wrote {count} OG images to {OUT_DIR}")
 
 

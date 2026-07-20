@@ -20,6 +20,13 @@ function sortedStateOptions(statesObject) {
 }
 
 function renderCategoryDeltaSection(result) {
+  const details = document.createElement("details");
+  details.className = "expand-delta-details";
+
+  const summary = document.createElement("summary");
+  summary.className = "expand-delta-toggle";
+  summary.textContent = "Category comparison";
+
   const section = document.createElement("section");
   section.className = "expand-delta-panel";
   section.innerHTML = `
@@ -48,7 +55,13 @@ function renderCategoryDeltaSection(result) {
   });
 
   section.appendChild(list);
-  return section;
+  details.append(summary, section);
+
+  if (typeof window !== "undefined" && window.matchMedia("(min-width: 768px)").matches) {
+    details.open = true;
+  }
+
+  return details;
 }
 
 function renderResultCard(result, profile, snapshots, pulseItems) {
@@ -224,8 +237,8 @@ export function initExpandFlow({
     if (prefillNote) {
       prefillNote.hidden = !quizAnswers;
       if (quizAnswers) {
-        prefillNote.textContent =
-          "Pre-filled from your Founder Match quiz (stage and business model). You can change anything below.";
+        prefillNote.innerHTML =
+          '<strong>Pre-filled from your Founder Match quiz.</strong> Stage and business model were copied — edit anything below.';
       }
     }
   }

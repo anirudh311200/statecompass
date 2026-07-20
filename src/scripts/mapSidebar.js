@@ -89,7 +89,6 @@ function applySidebarLens(abbr, info) {
   const profileChip = document.getElementById("profile-chip");
   const footnote = document.getElementById("rank-footnote");
   const scoreLabel = document.getElementById("score-label");
-  const disclaimer = document.querySelector("[data-map-founder-fit-disclaimer]");
 
   const displayScore = isProfile ? fit.founderFitScore100 : info.score100;
   const displayRank = isProfile ? fit.founderFitRank : info.rank;
@@ -136,10 +135,6 @@ function applySidebarLens(abbr, info) {
       footnote.hidden = true;
     }
   }
-  if (disclaimer) {
-    disclaimer.hidden = !isProfile;
-  }
-
   document.querySelectorAll("[data-founder-fit-pill]").forEach((pill) => {
     const selected = pill.dataset.profile === activeProfile;
     pill.classList.toggle("is-active", selected);
