@@ -754,19 +754,62 @@ function mapPrefersReducedMotion() {
   return window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches ?? false;
 }
 
+function easeInOutCubic(t) {
+  return t < 0.5 ? 4 * t * t * t : 1 - (-2 * t + 2) ** 3 / 2;
+}
+
+function smoothScrollWindowTo(targetTop, durationMs = 480) {
+  const startY = window.scrollY;
+  const distance = targetTop - startY;
+
+  if (Math.abs(distance) < 2) {
+    return;
+  }
+
+  if (mapPrefersReducedMotion()) {
+    window.scrollTo({ top: targetTop, left: 0 });
+    return;
+  }
+
+  const startTime = performance.now();
+
+  function step(now) {
+    const progress = Math.min((now - startTime) / durationMs, 1);
+    window.scrollTo({ top: startY + distance * easeInOutCubic(progress), left: 0 });
+    if (progress < 1) {
+      requestAnimationFrame(step);
+    }
+  }
+
+  requestAnimationFrame(step);
+}
+
+function getHomeMapScrollTop() {
+  const homeMap = document.getElementById("home-map");
+  if (!homeMap) {
+    return window.scrollY;
+  }
+  return window.scrollY + homeMap.getBoundingClientRect().top;
+}
+
+const HOME_MAP_SCROLL_SETTLE_MS = 260;
+
 function scrollHomeMapRowIntoView() {
   const homeMap = document.getElementById("home-map");
   if (!homeMap || !isHomeMapLayout() || isMobileMapLayout()) {
     return;
   }
 
-  const behavior = mapPrefersReducedMotion() ? "auto" : "smooth";
+  const runScroll = () => {
+    smoothScrollWindowTo(getHomeMapScrollTop(), mapPrefersReducedMotion() ? 0 : 520);
+  };
 
-  requestAnimationFrame(() => {
-    requestAnimationFrame(() => {
-      homeMap.scrollIntoView({ behavior, block: "start" });
-    });
-  });
+  if (mapPrefersReducedMotion()) {
+    runScroll();
+    return;
+  }
+
+  window.setTimeout(runScroll, HOME_MAP_SCROLL_SETTLE_MS);
 }
 
 function syncSidebarSelectionState(abbr) {

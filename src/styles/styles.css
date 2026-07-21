@@ -4047,10 +4047,6 @@ footer a:hover {
   text-decoration: underline;
 }
 
-#home-map {
-  scroll-margin-top: 1rem;
-}
-
 .layout--home .sidebar.has-selection .info-card {
   animation: home-sidebar-reveal 0.22s ease;
 }
