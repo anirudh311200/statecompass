@@ -1280,6 +1280,10 @@ export async function initMap(options = {}) {
     activeLens = event.detail?.lensId ?? FOUNDER_FIT_OVERALL;
     lensLookup = event.detail?.lookup ?? null;
     refreshMapColors();
+
+    if (event.detail?.replayIntro && mapPanel && !embedMode) {
+      replayMapIntro(mapPanel);
+    }
   });
 
   return stateData;

@@ -145,7 +145,11 @@ function applySidebarLens(abbr, info) {
   document.dispatchEvent(new CustomEvent("statecompass:sidebar-render"));
 }
 
-function setProfile(profileId) {
+function setProfile(profileId, { replayIntro = false } = {}) {
+  if (profileId === activeProfile) {
+    return;
+  }
+
   activeProfile = profileId;
   founderFitLookup =
     profileId === FOUNDER_FIT_OVERALL ? null : getFounderFitLookup(stateData, profileId);
@@ -158,7 +162,7 @@ function setProfile(profileId) {
 
   document.dispatchEvent(
     new CustomEvent("statecompass:lens", {
-      detail: { lensId: profileId, lookup: founderFitLookup },
+      detail: { lensId: profileId, lookup: founderFitLookup, replayIntro },
     })
   );
 }
@@ -166,7 +170,7 @@ function setProfile(profileId) {
 function wireProfilePills() {
   document.querySelectorAll("[data-founder-fit-pill]").forEach((pill) => {
     pill.addEventListener("click", () => {
-      setProfile(pill.dataset.profile);
+      setProfile(pill.dataset.profile, { replayIntro: true });
     });
   });
 }
@@ -227,7 +231,7 @@ export function initMapSidebar(states) {
   document.addEventListener("statecompass:lens-suggest", (event) => {
     const lensId = event.detail?.lensId;
     if (lensId && lensId !== FOUNDER_FIT_OVERALL) {
-      setProfile(lensId);
+      setProfile(lensId, { replayIntro: true });
     }
   });
 
