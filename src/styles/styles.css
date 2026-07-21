@@ -451,6 +451,7 @@ textarea {
 
 .layout--home {
   gap: 0.75rem;
+  transition: grid-template-columns 0.2s ease;
 }
 
 .layout--home:not(:has(.sidebar.has-selection)) {
@@ -458,6 +459,21 @@ textarea {
 }
 
 .layout--home .sidebar:not(.has-selection) {
+  display: none;
+}
+
+.map-hover-preview {
+  margin: 0.35rem 0.15rem 0;
+  padding: 0.4rem 0.65rem;
+  font-size: var(--text-sm);
+  color: var(--gray);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--border);
+  text-align: center;
+}
+
+.map-hover-preview[hidden] {
   display: none;
 }
 

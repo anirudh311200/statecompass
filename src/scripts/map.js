@@ -591,7 +591,11 @@ function applyYearPayload(payload, year) {
   } else if (hoverPath) {
     const abbr = hoverPath.id;
     if (stateData[abbr]) {
-      updateSidebar(abbr, stateData[abbr]);
+      if (shouldUpdateSidebarForHover()) {
+        updateSidebar(abbr, stateData[abbr]);
+      } else {
+        updateHoverPreview(abbr, stateData[abbr]);
+      }
     }
   }
 
@@ -705,11 +709,45 @@ function syncMobileSidebarSpacer() {
   document.getElementById("sidebar")?.style.removeProperty("--info-card-spacer");
 }
 
+function isHomeMapLayout() {
+  return Boolean(document.querySelector(".layout--home"));
+}
+
 function shouldShowMobileSheet(abbr) {
   if (!abbr) {
     return false;
   }
+  if (isHomeMapLayout()) {
+    return Boolean(pinnedAbbr);
+  }
   return !isMobileMapLayout() || pinnedAbbr === abbr;
+}
+
+function updateHoverPreview(abbr, info) {
+  const el = document.getElementById("map-hover-preview");
+  if (!el) {
+    return;
+  }
+  if (!info || pinnedAbbr) {
+    el.hidden = true;
+    return;
+  }
+  el.textContent = `${info.name} · #${info.rank} · ${info.score100}/100 — click for details`;
+  el.hidden = false;
+}
+
+function hideHoverPreview() {
+  const el = document.getElementById("map-hover-preview");
+  if (el) {
+    el.hidden = true;
+  }
+}
+
+function shouldUpdateSidebarForHover() {
+  if (isHomeMapLayout()) {
+    return Boolean(pinnedAbbr);
+  }
+  return true;
 }
 
 function syncSidebarSelectionState(abbr) {
@@ -838,6 +876,7 @@ export function pinState(abbr, { skipUrl = false, focusSidebar = false } = {}) {
     document.getElementById("info-card")?.classList.remove("is-sheet-expanded");
   }
 
+  hideHoverPreview();
   updateSidebar(normalized, stateData[normalized]);
   updateMapDimming();
 
@@ -883,9 +922,15 @@ export function clearPin({ skipUrl = false } = {}) {
   } else if (hoverPath) {
     const abbr = hoverPath.id;
     highlightPath(hoverPath, abbr);
-    updateSidebar(abbr, stateData[abbr]);
+    if (shouldUpdateSidebarForHover()) {
+      updateSidebar(abbr, stateData[abbr]);
+    } else {
+      hideSidebar();
+      updateHoverPreview(abbr, stateData[abbr]);
+    }
   } else {
     hideSidebar();
+    hideHoverPreview();
   }
 
   updateMapDimming();
@@ -926,7 +971,12 @@ function activateHover(path, abbr) {
 
   hoverPath = path;
   highlightPath(path, abbr);
-  updateSidebar(abbr, stateData[abbr]);
+  const info = stateData[abbr];
+  if (shouldUpdateSidebarForHover()) {
+    updateSidebar(abbr, info);
+  } else {
+    updateHoverPreview(abbr, info);
+  }
   updateMapDimming();
 
   document.dispatchEvent(
@@ -945,8 +995,10 @@ function deactivateHover(path) {
   if (pinnedPath) {
     highlightPath(pinnedPath, pinnedAbbr);
     updateSidebar(pinnedAbbr, stateData[pinnedAbbr]);
-  } else {
+  } else if (shouldUpdateSidebarForHover()) {
     hideSidebar();
+  } else {
+    hideHoverPreview();
   }
 
   updateMapDimming();
