@@ -368,7 +368,7 @@ const jsonLd = {
       if (focusState && shouldFocus && urlAnswers) {
         document.getElementById("state-focus-toolbar")?.removeAttribute("hidden");
         enterStateFocus(focusState, urlAnswers);
-        pinState(focusState, { skipUrl: true, focusSidebar: true });
+        pinState(focusState, { skipUrl: true, scrollHomeMap: true });
         params.delete("focus");
         history.replaceState(null, "", `${window.location.pathname}?${params.toString()}`);
       } else if (focusState) {

@@ -88,7 +88,7 @@ export function initSearch(stateData) {
       return;
     }
 
-    pinState(abbr, { focusSidebar: true });
+    pinState(abbr, { scrollHomeMap: Boolean(document.querySelector(".layout--home")) });
     input.value = stateData[abbr].name;
     setExpanded(false);
     setActiveIndex(-1);

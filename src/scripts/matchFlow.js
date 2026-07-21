@@ -225,8 +225,7 @@ export function initMatchFlow({ container, statesObject, onResultsShown, initial
         trackMatchResultClick(result.abbr);
         if (hasMap) {
           enterStateFocus(result.abbr, validated);
-          pinState(result.abbr, { focusSidebar: true });
-          mapSection?.scrollIntoView({ behavior: prefersReducedMotion ? "auto" : "smooth" });
+          pinState(result.abbr, { scrollHomeMap: true });
         } else {
           const shareQuery = encodeQuizToParams(validated);
           window.location.href = `/?${shareQuery}&state=${result.abbr}&focus=1`;

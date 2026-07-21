@@ -4048,7 +4048,29 @@ footer a:hover {
 }
 
 #home-map {
-  scroll-margin-top: 0.75rem;
+  scroll-margin-top: 1rem;
+}
+
+.layout--home .sidebar.has-selection .info-card {
+  animation: home-sidebar-reveal 0.22s ease;
+}
+
+@keyframes home-sidebar-reveal {
+  from {
+    opacity: 0.72;
+    transform: translateX(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .layout--home .sidebar.has-selection .info-card {
+    animation: none;
+  }
 }
 
 .match-hero-title {

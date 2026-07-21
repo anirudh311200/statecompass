@@ -482,7 +482,7 @@ function wireMobileMapTaps() {
       return;
     }
 
-    pinState(path.id, { focusSidebar: false });
+    pinState(path.id, { scrollHomeMap: isHomeMapLayout() });
   });
 }
 
@@ -750,6 +750,25 @@ function shouldUpdateSidebarForHover() {
   return true;
 }
 
+function mapPrefersReducedMotion() {
+  return window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches ?? false;
+}
+
+function scrollHomeMapRowIntoView() {
+  const homeMap = document.getElementById("home-map");
+  if (!homeMap || !isHomeMapLayout() || isMobileMapLayout()) {
+    return;
+  }
+
+  const behavior = mapPrefersReducedMotion() ? "auto" : "smooth";
+
+  requestAnimationFrame(() => {
+    requestAnimationFrame(() => {
+      homeMap.scrollIntoView({ behavior, block: "start" });
+    });
+  });
+}
+
 function syncSidebarSelectionState(abbr) {
   const infoCard = document.querySelector(".info-card");
   const sidebar = document.querySelector(".sidebar");
@@ -851,7 +870,7 @@ export function navigateToStateDetail(abbr) {
   }
 }
 
-export function pinState(abbr, { skipUrl = false, focusSidebar = false } = {}) {
+export function pinState(abbr, { skipUrl = false, focusSidebar = false, scrollHomeMap = false } = {}) {
   const normalized = normalizeAbbr(abbr);
   if (!normalized) {
     return false;
@@ -884,7 +903,9 @@ export function pinState(abbr, { skipUrl = false, focusSidebar = false } = {}) {
     syncUrl(normalized);
   }
 
-  if (focusSidebar) {
+  if (scrollHomeMap) {
+    scrollHomeMapRowIntoView();
+  } else if (focusSidebar) {
     focusSidebarPanel();
   }
 
@@ -1066,7 +1087,7 @@ function wireStates() {
         }
         event.preventDefault();
         suppressClickUntil = Date.now() + 450;
-        pinState(abbr, { focusSidebar: false });
+        pinState(abbr, { scrollHomeMap: isHomeMapLayout() });
       },
       { passive: false }
     );
@@ -1083,7 +1104,7 @@ function wireStates() {
         event.preventDefault();
         return;
       }
-      pinState(abbr, { focusSidebar: false });
+      pinState(abbr, { scrollHomeMap: isHomeMapLayout() });
     });
     path.addEventListener("dblclick", () => {
       const href = buildStateDetailUrl(info.slug, currentYear, yearIndex);
@@ -1096,7 +1117,7 @@ function wireStates() {
     path.addEventListener("keydown", (event) => {
       if (event.key === "Enter" || event.key === " ") {
         event.preventDefault();
-        pinState(abbr);
+        pinState(abbr, { scrollHomeMap: isHomeMapLayout() });
       }
     });
   });
