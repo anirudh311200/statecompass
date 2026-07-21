@@ -120,8 +120,18 @@ textarea {
 }
 
 .page--home {
-  padding-top: 1rem;
+  padding-top: 0.75rem;
   padding-bottom: 2rem;
+}
+
+.page--home .site-header--compact {
+  border-bottom: none;
+  margin-bottom: 0.35rem;
+  padding-bottom: 0.25rem;
+}
+
+.page--home .site-header--compact .subtitle {
+  display: none;
 }
 
 .page--home footer {
@@ -141,12 +151,6 @@ textarea {
 .site-header--compact {
   margin-bottom: 0.75rem;
   padding-bottom: 0.65rem;
-}
-
-.page--home .site-header--compact {
-  border-bottom: none;
-  margin-bottom: 0.5rem;
-  padding-bottom: 0.35rem;
 }
 
 .site-header--compact .brand {
@@ -3960,6 +3964,79 @@ footer a:hover {
 
 .match-hero.panel {
   margin-bottom: 1rem;
+}
+
+/* Homepage — compact hero (view 1), map in view 2 */
+
+.home-intro:has([data-match-hero]:not([hidden])) {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0.65rem;
+  min-height: calc(100svh - 9.5rem);
+  margin-bottom: 0.25rem;
+}
+
+@media (max-width: 640px) {
+  .home-intro:has([data-match-hero]:not([hidden])) {
+    min-height: calc(100svh - 12.5rem);
+  }
+}
+
+.page--home .match-hero.panel:has([data-match-hero]:not([hidden])) {
+  margin-bottom: 0;
+  padding: 0.85rem 1rem;
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.page--home .match-hero.panel:has([data-match-hero]:not([hidden])) .match-hero-title {
+  font-size: clamp(1.35rem, 3.2vw, 1.65rem);
+  margin-bottom: 0.35rem;
+}
+
+.page--home .match-hero.panel:has([data-match-hero]:not([hidden])) .match-hero-lead {
+  font-size: var(--text-sm);
+  max-width: 32rem;
+  line-height: 1.45;
+}
+
+.page--home .match-hero.panel:has([data-match-hero]:not([hidden])) .match-hero-actions {
+  margin: 0.75rem 0 0.45rem;
+  align-items: center;
+}
+
+.page--home .match-hero.panel:has([data-match-hero]:not([hidden])) .match-hero-note {
+  font-size: var(--text-xs);
+  margin: 0;
+}
+
+.page--home .match-hero.panel:has([data-match-hero]:not([hidden])) .btn-lg {
+  padding: 0.55rem 1.1rem;
+  font-size: var(--text-sm);
+}
+
+.match-hero-skip {
+  font-size: var(--text-sm);
+  color: var(--muted);
+  text-decoration: none;
+  padding: 0.45rem 0.15rem;
+}
+
+.match-hero-skip:hover {
+  color: var(--text);
+  text-decoration: underline;
+}
+
+.home-map-heading {
+  margin: 0 0 0.5rem;
+  font-size: var(--text-sm);
+  font-weight: var(--weight-heading);
+  color: var(--muted);
+  letter-spacing: -0.02em;
+}
+
+#home-map {
+  scroll-margin-top: 0.75rem;
 }
 
 .match-hero-title {
