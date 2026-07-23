@@ -5380,7 +5380,7 @@ body.pulse-state-dialog-open {
 
 .pulse-table {
   width: 100%;
-  table-layout: fixed;
+  table-layout: auto;
 }
 
 .pulse-col-expand {
@@ -5388,11 +5388,13 @@ body.pulse-state-dialog-open {
 }
 
 .pulse-col-pulse {
-  width: 5.25rem;
+  width: 5rem;
 }
 
-.pulse-col-count {
-  width: 10.5rem;
+.pulse-state-col,
+.pulse-state-name {
+  width: 1%;
+  white-space: nowrap;
 }
 
 .pulse-expand-col {
@@ -5401,8 +5403,9 @@ body.pulse-state-dialog-open {
 
 .pulse-heart-col,
 .pulse-heart-cell {
-  padding-left: 0.5rem;
-  padding-right: 0.5rem;
+  width: 5rem;
+  padding-left: 0.75rem;
+  padding-right: 0.75rem;
   text-align: center;
 }
 
@@ -5419,20 +5422,11 @@ body.pulse-state-dialog-open {
 
 .pulse-count-col,
 .pulse-updates-cell {
-  text-align: right;
-}
-
-.pulse-count-col {
-  padding-left: 1.25rem;
-}
-
-.pulse-count-col .rankings-sort-btn {
-  justify-content: flex-end;
-  width: 100%;
+  text-align: left;
+  padding-left: 1rem;
 }
 
 .pulse-updates-cell {
-  padding-right: 1.25rem;
   font-variant-numeric: tabular-nums;
   color: var(--muted);
   white-space: nowrap;
