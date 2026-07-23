@@ -5381,29 +5381,33 @@ body.pulse-state-dialog-open {
 .pulse-table {
   width: max-content;
   max-width: 100%;
-  table-layout: fixed;
+  table-layout: auto;
 }
 
 .pulse-col-expand {
   width: 3rem;
 }
 
-.pulse-col-state {
-  width: 13rem;
-}
-
 .pulse-col-pulse {
-  width: 4.5rem;
+  width: 4.25rem;
 }
 
 .pulse-col-count {
-  width: 11rem;
+  width: 9.5rem;
 }
 
 .pulse-table th,
 .pulse-table td {
+  padding: 0.75rem 1rem;
   text-align: left;
   vertical-align: middle;
+}
+
+.pulse-table .rankings-sort-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 0.35rem;
 }
 
 .pulse-table .rankings-sort-btn:not(.is-sorted) .rankings-sort-indicator {
@@ -5414,25 +5418,21 @@ body.pulse-state-dialog-open {
 .pulse-expand-cell {
   width: 3rem;
   padding-left: 0.5rem;
-  padding-right: 0.35rem;
+  padding-right: 0.25rem;
   text-align: center;
 }
 
 .pulse-state-col,
 .pulse-state-name {
+  width: 1%;
   white-space: nowrap;
 }
 
 .pulse-heart-col,
-.pulse-heart-cell {
-  padding-left: 1rem;
-  padding-right: 0.75rem;
-}
-
+.pulse-heart-cell,
 .pulse-count-col,
 .pulse-updates-cell {
-  padding-left: 1rem;
-  padding-right: 1rem;
+  text-align: left;
 }
 
 .pulse-updates-cell {
@@ -5482,10 +5482,6 @@ body.pulse-state-dialog-open {
 
 .pulse-state-name {
   font-weight: var(--weight-ui);
-}
-
-.pulse-heart-cell {
-  text-align: center;
 }
 
 .pulse-detail-row td {
