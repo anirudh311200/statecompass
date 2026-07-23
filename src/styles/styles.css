@@ -5379,51 +5379,60 @@ body.pulse-state-dialog-open {
 }
 
 .pulse-table {
-  width: 100%;
-  table-layout: auto;
+  width: max-content;
+  max-width: 100%;
+  table-layout: fixed;
 }
 
 .pulse-col-expand {
   width: 3rem;
 }
 
+.pulse-col-state {
+  width: 13rem;
+}
+
 .pulse-col-pulse {
-  width: 5rem;
+  width: 4.5rem;
+}
+
+.pulse-col-count {
+  width: 11rem;
+}
+
+.pulse-table th,
+.pulse-table td {
+  text-align: left;
+  vertical-align: middle;
+}
+
+.pulse-table .rankings-sort-btn:not(.is-sorted) .rankings-sort-indicator {
+  display: none;
+}
+
+.pulse-expand-col,
+.pulse-expand-cell {
+  width: 3rem;
+  padding-left: 0.5rem;
+  padding-right: 0.35rem;
+  text-align: center;
 }
 
 .pulse-state-col,
 .pulse-state-name {
-  width: 1%;
   white-space: nowrap;
-}
-
-.pulse-expand-col {
-  width: 3rem;
 }
 
 .pulse-heart-col,
 .pulse-heart-cell {
-  width: 5rem;
-  padding-left: 0.75rem;
+  padding-left: 1rem;
   padding-right: 0.75rem;
-  text-align: center;
-}
-
-.pulse-heart-col .rankings-sort-btn {
-  flex-direction: column;
-  align-items: center;
-  gap: 0.1rem;
-  width: 100%;
-}
-
-.pulse-heart-col .rankings-sort-btn:not(.is-sorted) .rankings-sort-indicator {
-  display: none;
 }
 
 .pulse-count-col,
 .pulse-updates-cell {
-  text-align: left;
   padding-left: 1rem;
+  padding-right: 1rem;
 }
 
 .pulse-updates-cell {
@@ -5440,11 +5449,6 @@ body.pulse-state-dialog-open {
 .pulse-state-row:hover,
 .pulse-state-row:focus-within {
   background: rgba(255, 255, 255, 0.04);
-}
-
-.pulse-expand-cell {
-  width: 3rem;
-  padding-right: 0.35rem;
 }
 
 .pulse-expand-btn {
