@@ -5392,8 +5392,23 @@ body.pulse-state-dialog-open {
 }
 
 .pulse-heart-col .rankings-sort-btn {
+  position: relative;
   justify-content: center;
   width: 100%;
+}
+
+.pulse-heart-col .rankings-sort-label {
+  text-align: center;
+}
+
+.pulse-heart-col .rankings-sort-indicator {
+  position: absolute;
+  right: 0;
+  min-width: 0;
+}
+
+.pulse-heart-col .rankings-sort-btn:not(.is-sorted) .rankings-sort-indicator {
+  display: none;
 }
 
 .pulse-state-row {
@@ -5446,6 +5461,11 @@ body.pulse-state-dialog-open {
 
 .pulse-heart-cell {
   text-align: center;
+  --pulse-heart-shift: 0.1rem;
+}
+
+.pulse-heart-cell .pulse-heart {
+  transform: rotate(-45deg) translateX(var(--pulse-heart-shift));
 }
 
 .pulse-updates-cell {
@@ -5551,19 +5571,19 @@ body.pulse-state-dialog-open {
 @keyframes pulse-heartbeat {
   0%,
   100% {
-    transform: rotate(-45deg) scale(1);
+    transform: rotate(-45deg) translateX(var(--pulse-heart-shift, 0)) scale(1);
   }
 
   14% {
-    transform: rotate(-45deg) scale(1.14);
+    transform: rotate(-45deg) translateX(var(--pulse-heart-shift, 0)) scale(1.14);
   }
 
   28% {
-    transform: rotate(-45deg) scale(1);
+    transform: rotate(-45deg) translateX(var(--pulse-heart-shift, 0)) scale(1);
   }
 
   42% {
-    transform: rotate(-45deg) scale(1.08);
+    transform: rotate(-45deg) translateX(var(--pulse-heart-shift, 0)) scale(1.08);
   }
 }
 
