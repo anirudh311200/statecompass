@@ -5076,7 +5076,7 @@ footer a:hover {
 /* Regulatory Pulse (Feature 5) */
 
 .pulse-page {
-  --pulse-block-width: 29.5rem;
+  --pulse-block-width: 31.5rem;
 }
 
 .pulse-page .pulse-header {
@@ -5409,7 +5409,7 @@ body.pulse-state-dialog-open {
 }
 
 .pulse-col-count {
-  width: 10rem;
+  width: 12rem;
 }
 
 .pulse-table th,
@@ -5490,10 +5490,21 @@ body.pulse-state-dialog-open {
 }
 
 .pulse-heart-col,
-.pulse-heart-cell,
+.pulse-heart-cell {
+  text-align: left;
+}
+
 .pulse-count-col,
 .pulse-updates-cell {
-  text-align: left;
+  text-align: center;
+}
+
+.pulse-count-col {
+  white-space: nowrap;
+}
+
+.pulse-count-col .rankings-sort-btn {
+  text-align: center;
 }
 
 .pulse-updates-cell {
