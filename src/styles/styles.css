@@ -5370,30 +5370,39 @@ body.pulse-state-dialog-open {
 }
 
 .pulse-table-wrap {
+  width: fit-content;
+  max-width: 100%;
   padding: 0;
   overflow: hidden;
 }
 
 .pulse-table-scroll {
+  width: fit-content;
+  max-width: 100%;
   overflow-x: auto;
 }
 
 .pulse-table {
-  width: max-content;
-  max-width: 100%;
-  table-layout: auto;
+  width: 29.5rem;
+  border-collapse: collapse;
+  font-size: var(--text-sm);
+  table-layout: fixed;
 }
 
 .pulse-col-expand {
   width: 3rem;
 }
 
+.pulse-col-state {
+  width: 12rem;
+}
+
 .pulse-col-pulse {
-  width: 4.25rem;
+  width: 4.5rem;
 }
 
 .pulse-col-count {
-  width: 9.5rem;
+  width: 10rem;
 }
 
 .pulse-table th,
@@ -5401,13 +5410,57 @@ body.pulse-state-dialog-open {
   padding: 0.75rem 1rem;
   text-align: left;
   vertical-align: middle;
+  border-bottom: 1px solid var(--border);
+}
+
+.pulse-table th {
+  font-size: var(--text-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--muted);
+  font-weight: var(--weight-heading);
+  background: rgba(255, 255, 255, 0.02);
 }
 
 .pulse-table .rankings-sort-btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: flex-start;
-  gap: 0.35rem;
+  display: block;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  border: none;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+  letter-spacing: inherit;
+  text-transform: inherit;
+  text-align: left;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.pulse-table .rankings-sort-btn:hover {
+  color: var(--text);
+}
+
+.pulse-table .rankings-sort-btn.is-sorted {
+  color: var(--text);
+}
+
+.pulse-table .rankings-sort-btn:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.pulse-table .rankings-sort-indicator {
+  display: inline-block;
+  margin-left: 0.35rem;
+  min-width: 0.65rem;
+  font-size: 0.65rem;
+  line-height: 1;
+  color: var(--accent);
+  vertical-align: baseline;
 }
 
 .pulse-table .rankings-sort-btn:not(.is-sorted) .rankings-sort-indicator {
@@ -5418,14 +5471,15 @@ body.pulse-state-dialog-open {
 .pulse-expand-cell {
   width: 3rem;
   padding-left: 0.5rem;
-  padding-right: 0.25rem;
+  padding-right: 0.35rem;
   text-align: center;
 }
 
-.pulse-state-col,
 .pulse-state-name {
-  width: 1%;
+  font-weight: var(--weight-ui);
   white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .pulse-heart-col,
@@ -5478,10 +5532,6 @@ body.pulse-state-dialog-open {
 .pulse-expand-icon {
   font-size: 1.15rem;
   line-height: 1;
-}
-
-.pulse-state-name {
-  font-weight: var(--weight-ui);
 }
 
 .pulse-detail-row td {
