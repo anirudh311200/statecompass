@@ -50,7 +50,7 @@ const description =
   ogImage="/og/pulse.svg"
   ogImageAlt="StateCompass Regulatory Pulse"
 >
-  <main class="page-content pulse-page">
+  <main class="page-content pulse-page" data-pulse-state-options={JSON.stringify(stateOptions)}>
     <Breadcrumbs
       crumbs={[
         { label: "Map", href: "/" },
@@ -70,28 +70,20 @@ const description =
 
     <div class="pulse-filter-bar panel">
       <div class="pulse-filter-item pulse-filter-states">
-        <span class="toolbar-label" id="pulse-states-label">Compare states</span>
-        <div class="pulse-state-filter" data-pulse-state-filter aria-labelledby="pulse-states-label">
-          <div class="pulse-state-chips" data-pulse-state-chips></div>
-          <details class="pulse-state-picker">
-            <summary class="btn btn-secondary btn-sm">Select states</summary>
-            <div class="pulse-state-picker-panel">
-              <label class="visually-hidden" for="pulse-state-search">Search states</label>
-              <input
-                type="search"
-                id="pulse-state-search"
-                class="pulse-state-search"
-                data-pulse-state-search
-                placeholder="Search states…"
-                autocomplete="off"
-              />
-              <div class="pulse-state-checklist" data-pulse-state-checklist></div>
-              <button type="button" class="btn btn-ghost btn-sm" data-pulse-state-clear-all>
-                Show all 50 states
-              </button>
-            </div>
-          </details>
+        <div class="pulse-filter-states-head">
+          <span class="toolbar-label pulse-toolbar-label" id="pulse-states-label">Compare states</span>
+          <button
+            type="button"
+            class="btn btn-secondary btn-sm"
+            data-pulse-state-open
+            aria-haspopup="dialog"
+            aria-expanded="false"
+            aria-controls="pulse-state-dialog"
+          >
+            Select states
+          </button>
         </div>
+        <div class="pulse-state-chips" data-pulse-state-chips hidden></div>
       </div>
 
       <div class="pulse-filter-item">
@@ -231,17 +223,51 @@ const description =
     </p>
 
     <p class="flow-disclaimer pulse-page-disclaimer">{pulseDisclaimer}</p>
+
+    <div class="pulse-state-dialog" id="pulse-state-dialog" data-pulse-state-dialog hidden>
+      <button
+        type="button"
+        class="pulse-state-dialog-backdrop"
+        data-pulse-state-close
+        aria-label="Close state picker"
+        tabindex="-1"
+      ></button>
+      <div
+        class="pulse-state-dialog-panel"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="pulse-state-dialog-title"
+      >
+        <header class="pulse-state-dialog-header">
+          <h2 id="pulse-state-dialog-title" class="pulse-state-dialog-title">Compare states</h2>
+          <button
+            type="button"
+            class="pulse-state-dialog-close"
+            data-pulse-state-close
+            aria-label="Close"
+          >
+            ×
+          </button>
+        </header>
+        <p class="pulse-state-dialog-lead">
+          Tap abbreviations to compare — select as many as you like.
+        </p>
+        <div class="pulse-state-grid" data-pulse-state-grid></div>
+        <footer class="pulse-state-dialog-footer">
+          <button type="button" class="btn btn-ghost btn-sm" data-pulse-state-clear-all>
+            Show all 50 states
+          </button>
+          <button type="button" class="btn btn-primary btn-sm" data-pulse-state-apply>
+            Done
+          </button>
+        </footer>
+      </div>
+    </div>
   </main>
 
-  <script define:vars={{ stateOptions, initialStates, initialIndustry, initialOpen, pulseItemsData: pulseItems }}>
+  <script>
     import { initPulsePage } from "../scripts/pulsePage.js";
 
-    initPulsePage({
-      stateEntries: stateOptions,
-      initialStates,
-      initialIndustry,
-      initialOpen,
-      items: pulseItemsData,
-    });
+    initPulsePage().catch((error) => console.error("Pulse page init failed:", error));
   </script>
 </Layout>
