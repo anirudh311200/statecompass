@@ -5380,35 +5380,62 @@ body.pulse-state-dialog-open {
 
 .pulse-table {
   width: 100%;
+  table-layout: fixed;
+}
+
+.pulse-col-expand {
+  width: 3rem;
+}
+
+.pulse-col-pulse {
+  width: 5.25rem;
+}
+
+.pulse-col-count {
+  width: 10.5rem;
 }
 
 .pulse-expand-col {
   width: 3rem;
 }
 
-.pulse-heart-col {
-  width: 4.75rem;
+.pulse-heart-col,
+.pulse-heart-cell {
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
   text-align: center;
 }
 
 .pulse-heart-col .rankings-sort-btn {
-  position: relative;
-  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.1rem;
   width: 100%;
-}
-
-.pulse-heart-col .rankings-sort-label {
-  text-align: center;
-}
-
-.pulse-heart-col .rankings-sort-indicator {
-  position: absolute;
-  right: 0;
-  min-width: 0;
 }
 
 .pulse-heart-col .rankings-sort-btn:not(.is-sorted) .rankings-sort-indicator {
   display: none;
+}
+
+.pulse-count-col,
+.pulse-updates-cell {
+  text-align: right;
+}
+
+.pulse-count-col {
+  padding-left: 1.25rem;
+}
+
+.pulse-count-col .rankings-sort-btn {
+  justify-content: flex-end;
+  width: 100%;
+}
+
+.pulse-updates-cell {
+  padding-right: 1.25rem;
+  font-variant-numeric: tabular-nums;
+  color: var(--muted);
+  white-space: nowrap;
 }
 
 .pulse-state-row {
@@ -5461,17 +5488,6 @@ body.pulse-state-dialog-open {
 
 .pulse-heart-cell {
   text-align: center;
-  --pulse-heart-shift: 0.1rem;
-}
-
-.pulse-heart-cell .pulse-heart {
-  transform: rotate(-45deg) translateX(var(--pulse-heart-shift));
-}
-
-.pulse-updates-cell {
-  font-variant-numeric: tabular-nums;
-  color: var(--muted);
-  white-space: nowrap;
 }
 
 .pulse-detail-row td {
@@ -5571,19 +5587,19 @@ body.pulse-state-dialog-open {
 @keyframes pulse-heartbeat {
   0%,
   100% {
-    transform: rotate(-45deg) translateX(var(--pulse-heart-shift, 0)) scale(1);
+    transform: rotate(-45deg) scale(1);
   }
 
   14% {
-    transform: rotate(-45deg) translateX(var(--pulse-heart-shift, 0)) scale(1.14);
+    transform: rotate(-45deg) scale(1.14);
   }
 
   28% {
-    transform: rotate(-45deg) translateX(var(--pulse-heart-shift, 0)) scale(1);
+    transform: rotate(-45deg) scale(1);
   }
 
   42% {
-    transform: rotate(-45deg) translateX(var(--pulse-heart-shift, 0)) scale(1.08);
+    transform: rotate(-45deg) scale(1.08);
   }
 }
 

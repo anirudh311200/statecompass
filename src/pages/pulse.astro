@@ -105,10 +105,16 @@ const description =
       <h2 id="pulse-table-heading" class="visually-hidden">Regulatory pulse by state</h2>
       <div class="pulse-table-scroll">
         <table class="rankings-table pulse-table">
+          <colgroup>
+            <col class="pulse-col-expand" />
+            <col class="pulse-col-state" />
+            <col class="pulse-col-pulse" />
+            <col class="pulse-col-count" />
+          </colgroup>
           <thead>
             <tr>
               <th scope="col" class="pulse-expand-col"><span class="visually-hidden">Expand</span></th>
-              <th scope="col" aria-sort="ascending">
+              <th scope="col" class="pulse-state-col" aria-sort="ascending">
                 <button type="button" class="rankings-sort-btn is-sorted" data-pulse-sort="name">
                   <span class="rankings-sort-label">State</span>
                   <span class="rankings-sort-indicator" aria-hidden="true">▲</span>
@@ -120,7 +126,7 @@ const description =
                   <span class="rankings-sort-indicator" aria-hidden="true"></span>
                 </button>
               </th>
-              <th scope="col" aria-sort="none">
+              <th scope="col" class="pulse-count-col" aria-sort="none">
                 <button type="button" class="rankings-sort-btn" data-pulse-sort="count">
                   <span class="rankings-sort-label">Tracked changes</span>
                   <span class="rankings-sort-indicator" aria-hidden="true"></span>
