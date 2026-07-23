@@ -4405,6 +4405,43 @@ footer a:hover {
   margin-right: auto;
 }
 
+.match-page .match-hero.panel:has([data-match-hero]:not([hidden])) {
+  padding: 1.35rem 1.5rem;
+}
+
+.match-page .match-hero-inner {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  max-width: 42rem;
+}
+
+.match-page .match-hero-title {
+  margin: 0;
+}
+
+.match-page .match-hero-lead {
+  margin: 0;
+  line-height: 1.55;
+}
+
+.match-page .match-hero-actions {
+  margin: 0.35rem 0 0;
+}
+
+.match-page .match-hero-note {
+  margin: 0;
+  font-size: var(--text-xs);
+}
+
+.match-page .match-quiz-header:has(.match-quiz-back[hidden]) {
+  justify-content: flex-end;
+}
+
+[hidden] {
+  display: none !important;
+}
+
 /* Feature 2 — Expansion Readiness */
 .expand-page .expand-hero.panel {
   max-width: 960px;

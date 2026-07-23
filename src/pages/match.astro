@@ -21,20 +21,23 @@ const description = hasQuiz
 >
   <main class="page-content match-page">
     <section class="match-hero panel" id="match-flow" data-match-container>
-      <div data-match-hero class="match-hero-inner" hidden={hasQuiz}>
-        <h1 class="page-title">Founder State Match</h1>
-        <p class="page-lead">
+      <div data-match-hero class="match-hero-inner" hidden={hasQuiz || undefined}>
+        <h1 class="match-hero-title">Founder State Match</h1>
+        <p class="match-hero-lead">
           Seven questions about your stage, model, tax priorities, and hiring — then your top 3 states with match % and reasons.
         </p>
-        <button type="button" class="btn btn-primary btn-lg" data-start-quiz>
-          Start the quiz
-        </button>
+        <div class="match-hero-actions">
+          <button type="button" class="btn btn-primary btn-lg" data-start-quiz>
+            Start the quiz
+          </button>
+        </div>
+        <p class="match-hero-note">StateCompass derived scores — not CNBC's official overall rank.</p>
       </div>
 
-      <div data-match-quiz class="match-quiz" hidden={hasQuiz ? true : undefined}>
+      <div data-match-quiz class="match-quiz" hidden>
         <div class="match-quiz-header">
           <button type="button" class="btn btn-ghost match-quiz-back" data-quiz-back>← Back</button>
-          <a href="/" class="btn btn-ghost">Home</a>
+          <button type="button" class="btn btn-ghost" data-quiz-cancel>Cancel</button>
         </div>
         <div class="match-quiz-progress-wrap">
           <div
