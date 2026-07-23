@@ -1,13 +1,14 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import Breadcrumbs from "../components/Breadcrumbs.astro";
-import SnapshotDisclaimer from "../components/SnapshotDisclaimer.astro";
 import PulseCard from "../components/PulseCard.astro";
 import {
+  buildPulseStateOverview,
   filterPulseItems,
   pulseDisclaimer,
   pulseIndustries,
   pulseItems,
+  PULSE_ACTIVITY_LABELS,
 } from "../lib/pulse.js";
 import { states } from "../lib/states.js";
 
@@ -19,8 +20,14 @@ const stateOptions = Object.entries(states)
   .map(([abbr, state]) => ({ abbr, name: state.name }))
   .sort((a, b) => a.name.localeCompare(b.name));
 
+const stateNames = Object.fromEntries(stateOptions.map(({ abbr, name }) => [abbr, name]));
+
 const filteredItems = filterPulseItems({
   stateAbbr: initialState,
+  industry: initialIndustry,
+});
+
+const overviewRows = buildPulseStateOverview(stateOptions, undefined, {
   industry: initialIndustry,
 });
 
@@ -53,6 +60,62 @@ const description =
       </p>
     </header>
 
+    <section class="panel pulse-overview-wrap" aria-labelledby="pulse-overview-heading">
+      <h2 id="pulse-overview-heading" class="panel-title">Pulse by state</h2>
+      <p class="panel-helper pulse-overview-helper">
+        Curated items in this feed — not a complete count of every regulation. Green = lighter activity, red = more items tracked.
+      </p>
+      <div class="pulse-overview-table-wrap">
+        <table class="rankings-table pulse-overview-table">
+          <thead>
+            <tr>
+              <th scope="col" aria-sort="ascending">
+                <button type="button" class="rankings-sort-btn is-sorted" data-pulse-sort="name">
+                  <span class="rankings-sort-label">State</span>
+                  <span class="rankings-sort-indicator" aria-hidden="true">▲</span>
+                </button>
+              </th>
+              <th scope="col" aria-sort="none">
+                <button type="button" class="rankings-sort-btn" data-pulse-sort="count">
+                  <span class="rankings-sort-label">Items</span>
+                  <span class="rankings-sort-indicator" aria-hidden="true"></span>
+                </button>
+              </th>
+              <th scope="col" aria-sort="none">
+                <button type="button" class="rankings-sort-btn" data-pulse-sort="activity">
+                  <span class="rankings-sort-label">Activity</span>
+                  <span class="rankings-sort-indicator" aria-hidden="true"></span>
+                </button>
+              </th>
+            </tr>
+          </thead>
+          <tbody data-pulse-overview-body>
+            {
+              overviewRows.map((row) => (
+                <tr
+                  class:list={["pulse-overview-row", { "is-selected": row.abbr === initialState }]}
+                  data-abbr={row.abbr}
+                  data-name={row.name}
+                  data-count={row.count}
+                  data-tier={row.tier}
+                  tabindex="0"
+                  role="button"
+                  aria-label={`${row.name}, ${row.count} pulse item${row.count === 1 ? "" : "s"}, ${PULSE_ACTIVITY_LABELS[row.tier]} activity`}
+                >
+                  <td class="pulse-overview-name">{row.name}</td>
+                  <td class="pulse-overview-count">{row.count}</td>
+                  <td class="pulse-overview-activity">
+                    <span class={`pulse-heart pulse-heart--${row.tier}`} aria-hidden="true" />
+                    <span class="pulse-activity-label">{PULSE_ACTIVITY_LABELS[row.tier]}</span>
+                  </td>
+                </tr>
+              ))
+            }
+          </tbody>
+        </table>
+      </div>
+    </section>
+
     <div class="pulse-toolbar panel">
       <div class="pulse-toolbar-item">
         <label class="toolbar-label" for="pulse-state-filter">State</label>
@@ -81,15 +144,9 @@ const description =
           }
         </select>
       </div>
-
-      <p class="pulse-count panel-helper" data-pulse-count>
-        {filteredItems.length} item{filteredItems.length === 1 ? "" : "s"}
-      </p>
     </div>
 
-    <SnapshotDisclaimer text={pulseDisclaimer} />
-
-    <section class="panel pulse-results" aria-labelledby="pulse-results-heading">
+    <section class="panel pulse-results" id="pulse-feed" aria-labelledby="pulse-results-heading">
       <h2 id="pulse-results-heading" class="visually-hidden">Pulse items</h2>
       <div class="pulse-card-list" data-pulse-list>
         {
@@ -111,14 +168,19 @@ const description =
     <p class="pulse-digest-note panel-helper">
       Save your founder profile after the match quiz to get return visits — Pulse email digests coming soon.
     </p>
+
+    <p class="flow-disclaimer pulse-page-disclaimer">{pulseDisclaimer}</p>
   </main>
 
-  <script define:vars={{ pulseItems, statesObject: states }}>
+  <script define:vars={{ stateNames, stateOptions, initialState, initialIndustry, pulseItemsData: pulseItems }}>
     import { initPulsePage } from "../scripts/pulsePage.js";
 
     initPulsePage({
-      items: pulseItems,
-      states: statesObject,
+      stateNames,
+      stateEntries: stateOptions,
+      initialState,
+      initialIndustry,
+      items: pulseItemsData,
     });
   </script>
 </Layout>

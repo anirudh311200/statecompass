@@ -5110,13 +5110,144 @@ footer a:hover {
   outline-offset: 2px;
 }
 
-.pulse-count {
-  margin: 0;
-  align-self: center;
+.pulse-overview-wrap {
+  margin-bottom: 1rem;
+}
+
+.pulse-overview-helper {
+  margin-bottom: 0.75rem;
+}
+
+.pulse-overview-table-wrap {
+  overflow-x: auto;
+}
+
+.pulse-overview-table {
+  width: 100%;
+}
+
+.pulse-overview-row {
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.pulse-overview-row:hover,
+.pulse-overview-row:focus-visible {
+  background: rgba(255, 255, 255, 0.04);
+  outline: none;
+}
+
+.pulse-overview-row.is-selected {
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.pulse-overview-row.is-selected .pulse-overview-name {
+  font-weight: var(--weight-heading);
+}
+
+.pulse-overview-name {
+  font-weight: var(--weight-ui);
+}
+
+.pulse-overview-count {
+  font-variant-numeric: tabular-nums;
+  color: var(--muted);
+}
+
+.pulse-overview-activity {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.pulse-heart {
+  display: inline-block;
+  width: 0.85rem;
+  height: 0.85rem;
+  flex-shrink: 0;
+  transform: rotate(-45deg);
+  border-radius: 0 0 0 0.2rem;
+  position: relative;
+}
+
+.pulse-heart::before,
+.pulse-heart::after {
+  content: "";
+  position: absolute;
+  width: 0.85rem;
+  height: 0.85rem;
+  border-radius: 50%;
+}
+
+.pulse-heart::before {
+  top: -0.42rem;
+  left: 0;
+}
+
+.pulse-heart::after {
+  top: 0;
+  left: 0.42rem;
+}
+
+.pulse-heart--green {
+  background: var(--green-bright);
+  box-shadow: 0 0 10px var(--tier-green-glow);
+}
+
+.pulse-heart--green::before,
+.pulse-heart--green::after {
+  background: var(--green-bright);
+  box-shadow: 0 0 8px var(--tier-green-glow);
+}
+
+.pulse-heart--yellow {
+  background: var(--yellow-bright);
+  box-shadow: 0 0 10px var(--tier-yellow-glow);
+}
+
+.pulse-heart--yellow::before,
+.pulse-heart--yellow::after {
+  background: var(--yellow-bright);
+  box-shadow: 0 0 8px var(--tier-yellow-glow);
+}
+
+.pulse-heart--red {
+  background: var(--red-bright);
+  box-shadow: 0 0 10px var(--tier-red-glow);
+}
+
+.pulse-heart--red::before,
+.pulse-heart--red::after {
+  background: var(--red-bright);
+  box-shadow: 0 0 8px var(--tier-red-glow);
+}
+
+.pulse-activity-label {
+  font-size: var(--text-sm);
+  color: var(--muted);
+}
+
+.pulse-overview-row[data-tier="green"] .pulse-activity-label {
+  color: var(--green-bright);
+  text-shadow: 0 0 10px var(--tier-green-glow);
+}
+
+.pulse-overview-row[data-tier="yellow"] .pulse-activity-label {
+  color: var(--yellow-bright);
+  text-shadow: 0 0 10px var(--tier-yellow-glow);
+}
+
+.pulse-overview-row[data-tier="red"] .pulse-activity-label {
+  color: var(--red-bright);
+  text-shadow: 0 0 10px var(--tier-red-glow);
 }
 
 .pulse-results {
-  margin-top: 1rem;
+  margin-top: 0;
+}
+
+.pulse-page-disclaimer {
+  margin: 1rem 0 0;
 }
 
 .pulse-card-list {

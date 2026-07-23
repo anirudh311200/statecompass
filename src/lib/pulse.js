@@ -43,17 +43,62 @@ export function getPulseItemById(id) {
   return pulseItems.find((item) => item.id === id) ?? null;
 }
 
-export function filterPulseItems({ stateAbbr = "", industry = "" } = {}) {
-  let items = [...pulseItems];
+export function filterPulseItems(
+  { stateAbbr = "", industry = "" } = {},
+  items = pulseItems
+) {
+  let filtered = [...items];
   if (stateAbbr) {
-    items = items.filter((item) => item.stateAbbr === stateAbbr);
+    filtered = filtered.filter((item) => item.stateAbbr === stateAbbr);
   }
   if (industry) {
-    items = items.filter(
+    filtered = filtered.filter(
       (item) => item.industries.includes(industry) || item.industries.includes("General")
     );
   }
-  return items.sort((a, b) => b.effectiveDate.localeCompare(a.effectiveDate));
+  return filtered.sort((a, b) => b.effectiveDate.localeCompare(a.effectiveDate));
+}
+
+export const PULSE_ACTIVITY_LABELS = {
+  green: "Light",
+  yellow: "Moderate",
+  red: "High",
+};
+
+/** Tier bands for curated pulse item counts in the feed (not total regulatory burden). */
+export function pulseActivityTier(itemCount) {
+  if (itemCount >= 6) {
+    return "red";
+  }
+  if (itemCount >= 3) {
+    return "yellow";
+  }
+  return "green";
+}
+
+export function countPulseItemsByState(items = pulseItems, { industry = "" } = {}) {
+  const filtered = industry ? filterPulseItems({ industry }, items) : items;
+  const counts = {};
+
+  for (const item of filtered) {
+    counts[item.stateAbbr] = (counts[item.stateAbbr] ?? 0) + 1;
+  }
+
+  return counts;
+}
+
+export function buildPulseStateOverview(stateEntries, items = pulseItems, { industry = "" } = {}) {
+  const counts = countPulseItemsByState(items, { industry });
+
+  return stateEntries.map(({ abbr, name }) => {
+    const count = counts[abbr] ?? 0;
+    return {
+      abbr,
+      name,
+      count,
+      tier: pulseActivityTier(count),
+    };
+  });
 }
 
 /**
