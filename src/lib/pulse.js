@@ -44,12 +44,15 @@ export function getPulseItemById(id) {
 }
 
 export function filterPulseItems(
-  { stateAbbr = "", industry = "" } = {},
+  { stateAbbr = "", stateAbbrs = null, industry = "" } = {},
   items = pulseItems
 ) {
   let filtered = [...items];
-  if (stateAbbr) {
-    filtered = filtered.filter((item) => item.stateAbbr === stateAbbr);
+  const resolvedStates = resolveStateFilter(stateAbbr, stateAbbrs);
+
+  if (resolvedStates.length) {
+    const allowed = new Set(resolvedStates);
+    filtered = filtered.filter((item) => allowed.has(item.stateAbbr));
   }
   if (industry) {
     filtered = filtered.filter(
@@ -57,6 +60,35 @@ export function filterPulseItems(
     );
   }
   return filtered.sort((a, b) => b.effectiveDate.localeCompare(a.effectiveDate));
+}
+
+export function resolveStateFilter(stateAbbr = "", stateAbbrs = null) {
+  if (Array.isArray(stateAbbrs) && stateAbbrs.length) {
+    return stateAbbrs.map((abbr) => abbr.trim().toUpperCase()).filter(Boolean);
+  }
+  if (stateAbbr) {
+    return [stateAbbr.trim().toUpperCase()];
+  }
+  return [];
+}
+
+export function parsePulseUrlStates(searchParams) {
+  const multi = searchParams.get("states");
+  if (multi) {
+    return multi
+      .split(",")
+      .map((abbr) => abbr.trim().toUpperCase())
+      .filter(Boolean);
+  }
+  const single = searchParams.get("state")?.trim().toUpperCase();
+  return single ? [single] : [];
+}
+
+export function formatPulseUpdateCount(count) {
+  if (!count || count <= 0) {
+    return "No updates yet";
+  }
+  return `${count} update${count === 1 ? "" : "s"}`;
 }
 
 export const PULSE_ACTIVITY_LABELS = {
@@ -87,18 +119,54 @@ export function countPulseItemsByState(items = pulseItems, { industry = "" } = {
   return counts;
 }
 
-export function buildPulseStateOverview(stateEntries, items = pulseItems, { industry = "" } = {}) {
+export function buildPulseStateOverview(
+  stateEntries,
+  items = pulseItems,
+  { industry = "", stateAbbrs = null } = {}
+) {
   const counts = countPulseItemsByState(items, { industry });
+  const allowed =
+    Array.isArray(stateAbbrs) && stateAbbrs.length
+      ? new Set(stateAbbrs.map((abbr) => abbr.toUpperCase()))
+      : null;
 
-  return stateEntries.map(({ abbr, name }) => {
-    const count = counts[abbr] ?? 0;
-    return {
-      abbr,
-      name,
-      count,
-      tier: pulseActivityTier(count),
-    };
-  });
+  return stateEntries
+    .filter(({ abbr }) => !allowed || allowed.has(abbr))
+    .map(({ abbr, name }) => {
+      const count = counts[abbr] ?? 0;
+      return {
+        abbr,
+        name,
+        count,
+        tier: pulseActivityTier(count),
+      };
+    });
+}
+
+export function groupPulseItemsByState(items, stateAbbrs = []) {
+  const grouped = new Map();
+  for (const item of items) {
+    if (!grouped.has(item.stateAbbr)) {
+      grouped.set(item.stateAbbr, []);
+    }
+    grouped.get(item.stateAbbr).push(item);
+  }
+
+  for (const list of grouped.values()) {
+    list.sort((a, b) => b.effectiveDate.localeCompare(a.effectiveDate));
+  }
+
+  if (stateAbbrs.length) {
+    const ordered = new Map();
+    for (const abbr of stateAbbrs) {
+      if (grouped.has(abbr)) {
+        ordered.set(abbr, grouped.get(abbr));
+      }
+    }
+    return ordered;
+  }
+
+  return grouped;
 }
 
 /**

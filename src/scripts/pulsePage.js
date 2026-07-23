@@ -1,15 +1,18 @@
 import {
+  buildPulseStateOverview,
   filterPulseItems,
   formatPulseDate,
+  formatPulseUpdateCount,
   PULSE_ACTIVITY_LABELS,
-  buildPulseStateOverview,
 } from "../lib/pulse.js";
 import { trackEvent } from "./analytics.js";
 
-function renderPulseCard(item, stateNames) {
-  const stateName = stateNames[item.stateAbbr] ?? item.stateAbbr;
+function renderPulseCard(item, { nested = false } = {}) {
   const article = document.createElement("article");
   article.className = "pulse-card";
+  if (nested) {
+    article.classList.add("pulse-card--nested");
+  }
   article.dataset.pulseId = item.id;
 
   const tags = item.industries
@@ -21,9 +24,6 @@ function renderPulseCard(item, stateNames) {
 
   article.innerHTML = `
     <header class="pulse-card-header">
-      <p class="pulse-card-state">
-        <a href="/pulse?state=${item.stateAbbr}">${stateName}</a>
-      </p>
       <h3 class="pulse-card-title">
         <a href="${item.sourceUrl}" target="_blank" rel="noopener noreferrer">${item.title}</a>
       </h3>
@@ -41,26 +41,13 @@ function renderPulseCard(item, stateNames) {
   return article;
 }
 
-function syncUrl(stateAbbr, industry) {
-  const params = new URLSearchParams();
-  if (stateAbbr) {
-    params.set("state", stateAbbr);
-  }
-  if (industry) {
-    params.set("industry", industry);
-  }
-  const query = params.toString();
-  const next = query ? `/pulse?${query}` : "/pulse";
-  window.history.replaceState({}, "", next);
-}
-
 function compareOverviewRows(a, b, sortKey, direction) {
   let cmp = 0;
   if (sortKey === "name") {
     cmp = a.name.localeCompare(b.name);
   } else if (sortKey === "count") {
     cmp = a.count - b.count;
-  } else if (sortKey === "activity") {
+  } else if (sortKey === "pulse") {
     const tierOrder = { red: 3, yellow: 2, green: 1 };
     cmp = tierOrder[a.tier] - tierOrder[b.tier];
     if (cmp === 0) {
@@ -70,90 +57,277 @@ function compareOverviewRows(a, b, sortKey, direction) {
   return direction === "asc" ? cmp : -cmp;
 }
 
+function syncUrl(selectedStates, industry, expandedAbbrs) {
+  const params = new URLSearchParams();
+  if (selectedStates.length === 1) {
+    params.set("state", selectedStates[0]);
+  } else if (selectedStates.length > 1) {
+    params.set("states", selectedStates.join(","));
+  }
+  if (industry) {
+    params.set("industry", industry);
+  }
+  if (expandedAbbrs.size === 1) {
+    params.set("open", [...expandedAbbrs][0]);
+  } else if (expandedAbbrs.size > 1) {
+    params.set("open", [...expandedAbbrs].join(","));
+  }
+  const query = params.toString();
+  window.history.replaceState({}, "", query ? `/pulse?${query}` : "/pulse");
+}
+
 export function initPulsePage({
-  stateNames,
   stateEntries,
-  initialState = "",
+  initialStates = [],
   initialIndustry = "",
+  initialOpen = [],
   items: initialItems = [],
 }) {
-  const stateSelect = document.querySelector("[data-pulse-state]");
   const industrySelect = document.querySelector("[data-pulse-industry]");
-  const listEl = document.querySelector("[data-pulse-list]");
+  const tableBody = document.querySelector("[data-pulse-table-body]");
   const emptyEl = document.querySelector("[data-pulse-empty]");
-  const overviewBody = document.querySelector("[data-pulse-overview-body]");
   const sortButtons = document.querySelectorAll("[data-pulse-sort]");
+  const chipsEl = document.querySelector("[data-pulse-state-chips]");
+  const checklistEl = document.querySelector("[data-pulse-state-checklist]");
+  const stateSearch = document.querySelector("[data-pulse-state-search]");
+  const clearStatesBtn = document.querySelector("[data-pulse-state-clear-all]");
+  const clearFiltersLink = document.querySelector("[data-pulse-clear-filters]");
 
-  if (!stateSelect || !industrySelect || !listEl) {
+  if (!industrySelect || !tableBody) {
     return;
   }
 
   let items = Array.isArray(initialItems) ? initialItems : [];
+  let selectedStates = [...initialStates];
+  let expandedAbbrs = new Set(initialOpen);
   let sortKey = "name";
   let sortDirection = "asc";
 
-  if (initialState) {
-    stateSelect.value = initialState;
-  }
   if (initialIndustry) {
     industrySelect.value = initialIndustry;
   }
 
-  function renderOverview() {
-    if (!overviewBody) {
+  function getItemsForState(abbr) {
+    return filterPulseItems(
+      { stateAbbr: abbr, industry: industrySelect.value },
+      items
+    );
+  }
+
+  function renderStateChips() {
+    if (!chipsEl) {
       return;
     }
 
+    chipsEl.replaceChildren();
+
+    if (!selectedStates.length) {
+      const all = document.createElement("span");
+      all.className = "pulse-state-chip pulse-state-chip--all";
+      all.textContent = "All 50 states";
+      chipsEl.appendChild(all);
+      return;
+    }
+
+    selectedStates.forEach((abbr) => {
+      const entry = stateEntries.find((row) => row.abbr === abbr);
+      const chip = document.createElement("button");
+      chip.type = "button";
+      chip.className = "pulse-state-chip";
+      chip.dataset.abbr = abbr;
+      chip.setAttribute("aria-label", `Remove ${entry?.name ?? abbr} from filter`);
+      chip.innerHTML = `<span>${entry?.name ?? abbr}</span><span class="pulse-state-chip-remove" aria-hidden="true">×</span>`;
+      chip.addEventListener("click", () => {
+        selectedStates = selectedStates.filter((value) => value !== abbr);
+        expandedAbbrs.delete(abbr);
+        syncChecklist();
+        renderStateChips();
+        renderTable();
+      });
+      chipsEl.appendChild(chip);
+    });
+  }
+
+  function syncChecklist() {
+    if (!checklistEl) {
+      return;
+    }
+    checklistEl.querySelectorAll("[data-pulse-state-option]").forEach((input) => {
+      if (input instanceof HTMLInputElement) {
+        input.checked = selectedStates.includes(input.value);
+      }
+    });
+  }
+
+  function renderChecklist(filterText = "") {
+    if (!checklistEl) {
+      return;
+    }
+
+    const needle = filterText.trim().toLowerCase();
+    checklistEl.replaceChildren(
+      ...stateEntries
+        .filter(({ name, abbr }) => {
+          if (!needle) {
+            return true;
+          }
+          return name.toLowerCase().includes(needle) || abbr.toLowerCase().includes(needle);
+        })
+        .map(({ abbr, name }) => {
+          const label = document.createElement("label");
+          label.className = "pulse-state-option";
+          label.innerHTML = `
+            <input type="checkbox" value="${abbr}" data-pulse-state-option ${selectedStates.includes(abbr) ? "checked" : ""} />
+            <span>${name}</span>
+          `;
+          const input = label.querySelector("input");
+          input?.addEventListener("change", () => {
+            if (input.checked) {
+              if (!selectedStates.includes(abbr)) {
+                selectedStates.push(abbr);
+                selectedStates.sort((a, b) => {
+                  const nameA = stateEntries.find((row) => row.abbr === a)?.name ?? a;
+                  const nameB = stateEntries.find((row) => row.abbr === b)?.name ?? b;
+                  return nameA.localeCompare(nameB);
+                });
+              }
+            } else {
+              selectedStates = selectedStates.filter((value) => value !== abbr);
+              expandedAbbrs.delete(abbr);
+            }
+            renderStateChips();
+            renderTable();
+          });
+          return label;
+        })
+    );
+  }
+
+  function renderDetailRow(abbr, isExpanded) {
+    const stateItems = getItemsForState(abbr);
+    const tr = document.createElement("tr");
+    tr.className = "pulse-detail-row";
+    tr.dataset.detailFor = abbr;
+    tr.hidden = !isExpanded;
+
+    const td = document.createElement("td");
+    td.colSpan = 4;
+
+    const panel = document.createElement("div");
+    panel.className = "pulse-state-details";
+
+    if (stateItems.length) {
+      const list = document.createElement("div");
+      list.className = "pulse-card-list pulse-card-list--nested";
+      stateItems.forEach((item) => list.appendChild(renderPulseCard(item, { nested: true })));
+      panel.appendChild(list);
+    } else {
+      const empty = document.createElement("p");
+      empty.className = "pulse-state-details-empty";
+      empty.textContent = "No regulatory updates match the current industry filter.";
+      panel.appendChild(empty);
+    }
+
+    td.appendChild(panel);
+    tr.appendChild(td);
+    return tr;
+  }
+
+  function renderTable() {
     const industry = industrySelect.value;
-    const activeState = stateSelect.value;
-    const rows = buildPulseStateOverview(stateEntries, items, { industry });
+    const rows = buildPulseStateOverview(stateEntries, items, {
+      industry,
+      stateAbbrs: selectedStates.length ? selectedStates : null,
+    });
     rows.sort((a, b) => compareOverviewRows(a, b, sortKey, sortDirection));
 
-    overviewBody.replaceChildren(
-      ...rows.map((row) => {
-        const tr = document.createElement("tr");
-        tr.className = "pulse-overview-row";
-        tr.dataset.abbr = row.abbr;
-        tr.dataset.name = row.name;
-        tr.dataset.count = String(row.count);
-        tr.dataset.tier = row.tier;
-        tr.tabIndex = 0;
-        tr.setAttribute("role", "button");
-        tr.setAttribute(
-          "aria-label",
-          `${row.name}, ${row.count} pulse item${row.count === 1 ? "" : "s"}, ${PULSE_ACTIVITY_LABELS[row.tier]} activity`
-        );
+    const visibleAbbrs = new Set(rows.map((row) => row.abbr));
+    expandedAbbrs = new Set([...expandedAbbrs].filter((abbr) => visibleAbbrs.has(abbr)));
 
-        if (row.abbr === activeState) {
-          tr.classList.add("is-selected");
+    tableBody.replaceChildren();
+    const fragment = document.createDocumentFragment();
+
+    rows.forEach((row) => {
+      const isExpanded = expandedAbbrs.has(row.abbr);
+      const stateRow = document.createElement("tr");
+      stateRow.className = "pulse-state-row";
+      stateRow.dataset.abbr = row.abbr;
+      stateRow.dataset.tier = row.tier;
+      stateRow.dataset.count = String(row.count);
+
+      stateRow.innerHTML = `
+        <td class="pulse-expand-cell">
+          <button
+            type="button"
+            class="pulse-expand-btn"
+            aria-expanded="${isExpanded}"
+            aria-label="${isExpanded ? "Collapse" : "Expand"} regulatory updates for ${row.name}"
+          >
+            <span class="pulse-expand-icon" aria-hidden="true">${isExpanded ? "▾" : "▸"}</span>
+          </button>
+        </td>
+        <td class="pulse-state-name">${row.name}</td>
+        <td class="pulse-heart-cell">
+          <span
+            class="pulse-heart pulse-heart--${row.tier}"
+            aria-label="${PULSE_ACTIVITY_LABELS[row.tier]} regulatory activity"
+          ></span>
+        </td>
+        <td class="pulse-updates-cell">${formatPulseUpdateCount(row.count)}</td>
+      `;
+
+      const expandBtn = stateRow.querySelector(".pulse-expand-btn");
+      expandBtn?.addEventListener("click", (event) => {
+        event.stopPropagation();
+        toggleExpanded(row.abbr);
+      });
+
+      stateRow.addEventListener("click", (event) => {
+        if (event.target.closest(".pulse-expand-btn")) {
+          return;
         }
+        toggleExpanded(row.abbr);
+      });
 
-        tr.innerHTML = `
-          <td class="pulse-overview-name">${row.name}</td>
-          <td class="pulse-overview-count">${row.count}</td>
-          <td class="pulse-overview-activity">
-            <span class="pulse-heart pulse-heart--${row.tier}" aria-hidden="true"></span>
-            <span class="pulse-activity-label">${PULSE_ACTIVITY_LABELS[row.tier]}</span>
-          </td>
-        `;
+      stateRow.addEventListener("keydown", (event) => {
+        if (event.key === "Enter" || event.key === " ") {
+          event.preventDefault();
+          toggleExpanded(row.abbr);
+        }
+      });
 
-        const selectState = () => {
-          stateSelect.value = row.abbr;
-          renderFeed();
-          document.getElementById("pulse-feed")?.scrollIntoView({ behavior: "smooth", block: "start" });
-        };
+      fragment.appendChild(stateRow);
+      fragment.appendChild(renderDetailRow(row.abbr, isExpanded));
+    });
 
-        tr.addEventListener("click", selectState);
-        tr.addEventListener("keydown", (event) => {
-          if (event.key === "Enter" || event.key === " ") {
-            event.preventDefault();
-            selectState();
-          }
-        });
+    tableBody.appendChild(fragment);
 
-        return tr;
-      })
-    );
+    if (emptyEl) {
+      emptyEl.hidden = rows.length > 0;
+    }
+
+    syncUrl(selectedStates, industry, expandedAbbrs);
+    syncChecklist();
+    trackEvent("PulseFilter", {
+      states: selectedStates.length ? selectedStates.join(",") : undefined,
+      industry: industry || undefined,
+      count: rows.length,
+    });
+  }
+
+  function toggleExpanded(abbr) {
+    if (expandedAbbrs.has(abbr)) {
+      expandedAbbrs.delete(abbr);
+    } else {
+      expandedAbbrs.add(abbr);
+    }
+    renderTable();
+    if (expandedAbbrs.has(abbr)) {
+      tableBody.querySelector(`tr[data-detail-for="${abbr}"]`)?.scrollIntoView({
+        behavior: "smooth",
+        block: "nearest",
+      });
+    }
   }
 
   function updateSortButtons() {
@@ -165,33 +339,12 @@ export function initPulsePage({
       if (indicator) {
         indicator.textContent = active ? (sortDirection === "asc" ? "▲" : "▼") : "";
       }
-      button.closest("th")?.setAttribute("aria-sort", active ? (sortDirection === "asc" ? "ascending" : "descending") : "none");
-    });
-  }
-
-  function renderFeed() {
-    const stateAbbr = stateSelect.value;
-    const industry = industrySelect.value;
-
-    listEl.classList.add("is-updating");
-
-    requestAnimationFrame(() => {
-      const filtered = filterPulseItems({ stateAbbr, industry }, items);
-
-      listEl.replaceChildren(...filtered.map((item) => renderPulseCard(item, stateNames)));
-      listEl.classList.remove("is-updating");
-
-      if (emptyEl) {
-        emptyEl.hidden = filtered.length > 0;
-      }
-
-      renderOverview();
-      syncUrl(stateAbbr, industry);
-      trackEvent("PulseFilter", {
-        state: stateAbbr || undefined,
-        industry: industry || undefined,
-        count: filtered.length,
-      });
+      button
+        .closest("th")
+        ?.setAttribute(
+          "aria-sort",
+          active ? (sortDirection === "asc" ? "ascending" : "descending") : "none"
+        );
     });
   }
 
@@ -208,20 +361,34 @@ export function initPulsePage({
         sortDirection = key === "name" ? "asc" : "desc";
       }
       updateSortButtons();
-      renderOverview();
+      renderTable();
     });
   });
 
-  document.querySelector("[data-pulse-clear-filters]")?.addEventListener("click", (event) => {
-    event.preventDefault();
-    stateSelect.value = "";
-    industrySelect.value = "";
-    renderFeed();
+  industrySelect.addEventListener("change", renderTable);
+
+  clearStatesBtn?.addEventListener("click", () => {
+    selectedStates = [];
+    expandedAbbrs.clear();
+    renderStateChips();
+    renderTable();
   });
 
-  stateSelect.addEventListener("change", renderFeed);
-  industrySelect.addEventListener("change", renderFeed);
+  clearFiltersLink?.addEventListener("click", (event) => {
+    event.preventDefault();
+    selectedStates = [];
+    expandedAbbrs.clear();
+    industrySelect.value = "";
+    renderStateChips();
+    renderTable();
+  });
 
+  stateSearch?.addEventListener("input", () => {
+    renderChecklist(stateSearch.value);
+  });
+
+  renderChecklist();
+  renderStateChips();
   updateSortButtons();
-  renderFeed();
+  renderTable();
 }

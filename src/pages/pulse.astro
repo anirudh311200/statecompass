@@ -1,10 +1,12 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import Breadcrumbs from "../components/Breadcrumbs.astro";
-import PulseCard from "../components/PulseCard.astro";
 import {
   buildPulseStateOverview,
   filterPulseItems,
+  formatPulseDate,
+  formatPulseUpdateCount,
+  parsePulseUrlStates,
   pulseDisclaimer,
   pulseIndustries,
   pulseItems,
@@ -13,27 +15,30 @@ import {
 import { states } from "../lib/states.js";
 
 const params = Astro.url.searchParams;
-const initialState = params.get("state")?.toUpperCase() ?? "";
+const initialStates = parsePulseUrlStates(params);
 const initialIndustry = params.get("industry") ?? "";
+const initialOpen =
+  params
+    .get("open")
+    ?.split(",")
+    .map((abbr) => abbr.trim().toUpperCase())
+    .filter(Boolean) ?? (initialStates.length === 1 ? [initialStates[0]] : []);
 
 const stateOptions = Object.entries(states)
   .map(([abbr, state]) => ({ abbr, name: state.name }))
   .sort((a, b) => a.name.localeCompare(b.name));
 
-const stateNames = Object.fromEntries(stateOptions.map(({ abbr, name }) => [abbr, name]));
-
-const filteredItems = filterPulseItems({
-  stateAbbr: initialState,
-  industry: initialIndustry,
-});
-
 const overviewRows = buildPulseStateOverview(stateOptions, undefined, {
   industry: initialIndustry,
+  stateAbbrs: initialStates.length ? initialStates : null,
 });
 
-const title = initialState
-  ? `Regulatory Pulse — ${states[initialState]?.name ?? initialState} | StateCompass`
-  : "Regulatory Pulse | StateCompass";
+const title =
+  initialStates.length === 1
+    ? `Regulatory Pulse — ${states[initialStates[0]]?.name ?? initialStates[0]} | StateCompass`
+    : initialStates.length > 1
+      ? `Regulatory Pulse — ${initialStates.length} states | StateCompass`
+      : "Regulatory Pulse | StateCompass";
 const description =
   "Sourced feed of recent regulatory changes by state — privacy, tax, employment, and compliance updates for founders.";
 ---
@@ -58,80 +63,38 @@ const description =
       <p class="page-lead">
         Lightweight feed of recent regulatory changes — each item links to an official or reputable source.
       </p>
+      <p class="panel-helper pulse-legend">
+        Heart color shows relative activity in this curated feed (green → yellow → red). Expand a state to read updates.
+      </p>
     </header>
 
-    <section class="panel pulse-overview-wrap" aria-labelledby="pulse-overview-heading">
-      <h2 id="pulse-overview-heading" class="panel-title">Pulse by state</h2>
-      <p class="panel-helper pulse-overview-helper">
-        Curated items in this feed — not a complete count of every regulation. Green = lighter activity, red = more items tracked.
-      </p>
-      <div class="pulse-overview-table-wrap">
-        <table class="rankings-table pulse-overview-table">
-          <thead>
-            <tr>
-              <th scope="col" aria-sort="ascending">
-                <button type="button" class="rankings-sort-btn is-sorted" data-pulse-sort="name">
-                  <span class="rankings-sort-label">State</span>
-                  <span class="rankings-sort-indicator" aria-hidden="true">▲</span>
-                </button>
-              </th>
-              <th scope="col" aria-sort="none">
-                <button type="button" class="rankings-sort-btn" data-pulse-sort="count">
-                  <span class="rankings-sort-label">Items</span>
-                  <span class="rankings-sort-indicator" aria-hidden="true"></span>
-                </button>
-              </th>
-              <th scope="col" aria-sort="none">
-                <button type="button" class="rankings-sort-btn" data-pulse-sort="activity">
-                  <span class="rankings-sort-label">Activity</span>
-                  <span class="rankings-sort-indicator" aria-hidden="true"></span>
-                </button>
-              </th>
-            </tr>
-          </thead>
-          <tbody data-pulse-overview-body>
-            {
-              overviewRows.map((row) => (
-                <tr
-                  class:list={["pulse-overview-row", { "is-selected": row.abbr === initialState }]}
-                  data-abbr={row.abbr}
-                  data-name={row.name}
-                  data-count={row.count}
-                  data-tier={row.tier}
-                  tabindex="0"
-                  role="button"
-                  aria-label={`${row.name}, ${row.count} pulse item${row.count === 1 ? "" : "s"}, ${PULSE_ACTIVITY_LABELS[row.tier]} activity`}
-                >
-                  <td class="pulse-overview-name">{row.name}</td>
-                  <td class="pulse-overview-count">{row.count}</td>
-                  <td class="pulse-overview-activity">
-                    <span class={`pulse-heart pulse-heart--${row.tier}`} aria-hidden="true" />
-                    <span class="pulse-activity-label">{PULSE_ACTIVITY_LABELS[row.tier]}</span>
-                  </td>
-                </tr>
-              ))
-            }
-          </tbody>
-        </table>
-      </div>
-    </section>
-
-    <div class="pulse-toolbar panel">
-      <div class="pulse-toolbar-item">
-        <label class="toolbar-label" for="pulse-state-filter">State</label>
-        <select id="pulse-state-filter" class="pulse-select" data-pulse-state>
-          <option value="">All states</option>
-          {
-            stateOptions.map(({ abbr, name }) => (
-              <option value={abbr} selected={abbr === initialState}>
-                {name}
-              </option>
-            ))
-          }
-        </select>
+    <div class="pulse-filter-bar panel">
+      <div class="pulse-filter-item pulse-filter-states">
+        <span class="toolbar-label" id="pulse-states-label">Compare states</span>
+        <div class="pulse-state-filter" data-pulse-state-filter aria-labelledby="pulse-states-label">
+          <div class="pulse-state-chips" data-pulse-state-chips></div>
+          <details class="pulse-state-picker">
+            <summary class="btn btn-secondary btn-sm">Select states</summary>
+            <div class="pulse-state-picker-panel">
+              <label class="visually-hidden" for="pulse-state-search">Search states</label>
+              <input
+                type="search"
+                id="pulse-state-search"
+                class="pulse-state-search"
+                data-pulse-state-search
+                placeholder="Search states…"
+                autocomplete="off"
+              />
+              <div class="pulse-state-checklist" data-pulse-state-checklist></div>
+              <button type="button" class="btn btn-ghost btn-sm" data-pulse-state-clear-all>
+                Show all 50 states
+              </button>
+            </div>
+          </details>
+        </div>
       </div>
 
-      <div class="pulse-toolbar-item">
+      <div class="pulse-filter-item">
         <label class="toolbar-label" for="pulse-industry-filter">Industry</label>
         <select id="pulse-industry-filter" class="pulse-select" data-pulse-industry>
           <option value="">All industries</option>
@@ -146,21 +109,119 @@ const description =
       </div>
     </div>
 
-    <section class="panel pulse-results" id="pulse-feed" aria-labelledby="pulse-results-heading">
-      <h2 id="pulse-results-heading" class="visually-hidden">Pulse items</h2>
-      <div class="pulse-card-list" data-pulse-list>
-        {
-          filteredItems.map((item) => (
-            <PulseCard
-              item={item}
-              showState
-              stateName={states[item.stateAbbr]?.name ?? item.stateAbbr}
-            />
-          ))
-        }
+    <section class="panel pulse-table-wrap" aria-labelledby="pulse-table-heading">
+      <h2 id="pulse-table-heading" class="visually-hidden">Regulatory pulse by state</h2>
+      <div class="pulse-table-scroll">
+        <table class="rankings-table pulse-table">
+          <thead>
+            <tr>
+              <th scope="col" class="pulse-expand-col"><span class="visually-hidden">Expand</span></th>
+              <th scope="col" aria-sort="ascending">
+                <button type="button" class="rankings-sort-btn is-sorted" data-pulse-sort="name">
+                  <span class="rankings-sort-label">State</span>
+                  <span class="rankings-sort-indicator" aria-hidden="true">▲</span>
+                </button>
+              </th>
+              <th scope="col" aria-sort="none" class="pulse-heart-col">
+                <button type="button" class="rankings-sort-btn" data-pulse-sort="pulse">
+                  <span class="rankings-sort-label">Pulse</span>
+                  <span class="rankings-sort-indicator" aria-hidden="true"></span>
+                </button>
+              </th>
+              <th scope="col" aria-sort="none">
+                <button type="button" class="rankings-sort-btn" data-pulse-sort="count">
+                  <span class="rankings-sort-label">Tracked changes</span>
+                  <span class="rankings-sort-indicator" aria-hidden="true"></span>
+                </button>
+              </th>
+            </tr>
+          </thead>
+          <tbody data-pulse-table-body>
+            {
+              overviewRows.flatMap((row) => {
+                const isExpanded = initialOpen.includes(row.abbr);
+                const stateItems = filterPulseItems(
+                  { stateAbbr: row.abbr, industry: initialIndustry },
+                  pulseItems
+                );
+                return [
+                  <tr class="pulse-state-row" data-abbr={row.abbr} data-tier={row.tier} data-count={row.count}>
+                    <td class="pulse-expand-cell">
+                      <button
+                        type="button"
+                        class="pulse-expand-btn"
+                        aria-expanded={isExpanded}
+                        aria-label={`${isExpanded ? "Collapse" : "Expand"} regulatory updates for ${row.name}`}
+                      >
+                        <span class="pulse-expand-icon" aria-hidden="true">{isExpanded ? "▾" : "▸"}</span>
+                      </button>
+                    </td>
+                    <td class="pulse-state-name">{row.name}</td>
+                    <td class="pulse-heart-cell">
+                      <span
+                        class={`pulse-heart pulse-heart--${row.tier}`}
+                        aria-label={`${PULSE_ACTIVITY_LABELS[row.tier]} regulatory activity`}
+                      />
+                    </td>
+                    <td class="pulse-updates-cell">{formatPulseUpdateCount(row.count)}</td>
+                  </tr>,
+                  <tr class="pulse-detail-row" data-detail-for={row.abbr} hidden={!isExpanded}>
+                    <td colspan="4">
+                      <div class="pulse-state-details">
+                        {
+                          stateItems.length ? (
+                            <div class="pulse-card-list pulse-card-list--nested">
+                              {stateItems.map((item) => (
+                                <article class="pulse-card pulse-card--nested" data-pulse-id={item.id}>
+                                  <header class="pulse-card-header">
+                                    <h3 class="pulse-card-title">
+                                      <a href={item.sourceUrl} target="_blank" rel="noopener noreferrer">
+                                        {item.title}
+                                      </a>
+                                    </h3>
+                                  </header>
+                                  <p class="pulse-card-summary">{item.summary}</p>
+                                  <div class="pulse-card-meta">
+                                    <span class="pulse-card-date">
+                                      Effective {formatPulseDate(item.effectiveDate)}
+                                    </span>
+                                    <div class="pulse-card-tags" aria-label="Industry tags">
+                                      {item.industries.map((tag) => (
+                                        <a
+                                          href={`/pulse?industry=${encodeURIComponent(tag)}`}
+                                          class="pulse-tag"
+                                        >
+                                          {tag}
+                                        </a>
+                                      ))}
+                                    </div>
+                                  </div>
+                                  <p class="pulse-card-source">
+                                    Source:{" "}
+                                    <a href={item.sourceUrl} target="_blank" rel="noopener noreferrer">
+                                      {item.sourceLabel}
+                                    </a>
+                                  </p>
+                                </article>
+                              ))}
+                            </div>
+                          ) : (
+                            <p class="pulse-state-details-empty">
+                              No regulatory updates match the current industry filter.
+                            </p>
+                          )
+                        }
+                      </div>
+                    </td>
+                  </tr>,
+                ];
+              })
+            }
+          </tbody>
+        </table>
       </div>
-      <p class="pulse-empty" data-pulse-empty hidden={filteredItems.length > 0}>
-        No pulse items match these filters.
+      <p class="pulse-empty" data-pulse-empty hidden={overviewRows.length > 0}>
+        No states match these filters.
         <a href="/pulse" class="pulse-empty-link" data-pulse-clear-filters>Clear filters</a>
       </p>
     </section>
@@ -172,14 +233,14 @@ const description =
     <p class="flow-disclaimer pulse-page-disclaimer">{pulseDisclaimer}</p>
   </main>
 
-  <script define:vars={{ stateNames, stateOptions, initialState, initialIndustry, pulseItemsData: pulseItems }}>
+  <script define:vars={{ stateOptions, initialStates, initialIndustry, initialOpen, pulseItemsData: pulseItems }}>
     import { initPulsePage } from "../scripts/pulsePage.js";
 
     initPulsePage({
-      stateNames,
       stateEntries: stateOptions,
-      initialState,
+      initialStates,
       initialIndustry,
+      initialOpen,
       items: pulseItemsData,
     });
   </script>
