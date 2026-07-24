@@ -1,5 +1,6 @@
 import {
   handleOptions,
+  getRequestUrl,
   methodNotAllowed,
   badRequest,
   serviceUnavailable,
@@ -23,7 +24,7 @@ export default async function handler(request) {
     return serviceUnavailable("Profile sessions are not configured yet.");
   }
 
-  const url = new URL(request.url);
+  const url = getRequestUrl(request);
   const token = url.searchParams.get("token")?.trim();
   if (!token) {
     return badRequest("Missing session token.");

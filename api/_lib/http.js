@@ -39,6 +39,19 @@ export function handleOptions(request) {
   return null;
 }
 
+export function getRequestUrl(request) {
+  if (request.url.startsWith("http://") || request.url.startsWith("https://")) {
+    return new URL(request.url);
+  }
+
+  const host =
+    request.headers.get("x-forwarded-host") ||
+    request.headers.get("host") ||
+    "statecompass.app";
+  const proto = request.headers.get("x-forwarded-proto") || "https";
+  return new URL(request.url, `${proto}://${host}`);
+}
+
 export async function readJsonBody(request) {
   try {
     const body = await request.json();
