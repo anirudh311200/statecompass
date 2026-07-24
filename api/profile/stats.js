@@ -1,5 +1,6 @@
 import {
   handleOptions,
+  getRequestHeader,
   methodNotAllowed,
   serviceUnavailable,
   unauthorized,
@@ -9,24 +10,19 @@ import { isProfileStorageConfigured } from "../_lib/redis.js";
 import { listProfilesForStats } from "../_lib/profile.js";
 import { buildSegmentStats } from "../_lib/stats.js";
 
-export default async function handler(request) {
-  const options = handleOptions(request);
-  if (options) {
-    return options;
-  }
+export async function OPTIONS(request) {
+  return handleOptions(request) ?? methodNotAllowed();
+}
 
-  if (request.method !== "GET") {
-    return methodNotAllowed();
-  }
-
+export async function GET(request) {
   const secret = process.env.PROFILE_STATS_SECRET;
   if (!secret) {
     return serviceUnavailable("Profile stats are not configured.");
   }
 
   const provided =
-    request.headers.get("x-profile-stats-secret") ||
-    request.headers.get("authorization")?.replace(/^Bearer\s+/i, "");
+    getRequestHeader(request, "x-profile-stats-secret") ||
+    getRequestHeader(request, "authorization")?.replace(/^Bearer\s+/i, "");
 
   if (provided !== secret) {
     return unauthorized("Invalid stats secret.");

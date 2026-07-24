@@ -10,16 +10,11 @@ import {
 import { isProfileStorageConfigured } from "../_lib/redis.js";
 import { getProfileByToken, unsubscribeProfileByToken } from "../_lib/profile.js";
 
-export default async function handler(request) {
-  const options = handleOptions(request);
-  if (options) {
-    return options;
-  }
+export async function OPTIONS(request) {
+  return handleOptions(request) ?? methodNotAllowed();
+}
 
-  if (request.method !== "POST") {
-    return methodNotAllowed();
-  }
-
+export async function POST(request) {
   if (!isProfileStorageConfigured()) {
     return serviceUnavailable("Profile unsubscribe is not configured yet.");
   }

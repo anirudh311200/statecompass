@@ -10,16 +10,11 @@ import {
 import { isProfileStorageConfigured } from "../_lib/redis.js";
 import { getProfileByToken, sanitizeProfileForClient } from "../_lib/profile.js";
 
-export default async function handler(request) {
-  const options = handleOptions(request);
-  if (options) {
-    return options;
-  }
+export async function OPTIONS(request) {
+  return handleOptions(request) ?? methodNotAllowed();
+}
 
-  if (request.method !== "GET") {
-    return methodNotAllowed();
-  }
-
+export async function GET(request) {
   if (!isProfileStorageConfigured()) {
     return serviceUnavailable("Profile sessions are not configured yet.");
   }

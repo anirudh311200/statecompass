@@ -3,7 +3,6 @@ import {
   methodNotAllowed,
   badRequest,
   serviceUnavailable,
-  unauthorized,
   jsonResponse,
   readJsonBody,
 } from "../_lib/http.js";
@@ -11,16 +10,11 @@ import { isProfileStorageConfigured } from "../_lib/redis.js";
 import { saveProfile, sanitizeProfileForClient } from "../_lib/profile.js";
 import { sendMagicLinkEmail } from "../_lib/email.js";
 
-export default async function handler(request) {
-  const options = handleOptions(request);
-  if (options) {
-    return options;
-  }
+export async function OPTIONS(request) {
+  return handleOptions(request) ?? methodNotAllowed();
+}
 
-  if (request.method !== "POST") {
-    return methodNotAllowed();
-  }
-
+export async function POST(request) {
   if (!isProfileStorageConfigured()) {
     return serviceUnavailable("Profile save is not configured yet.");
   }
