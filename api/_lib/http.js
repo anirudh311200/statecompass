@@ -39,17 +39,38 @@ export function handleOptions(request) {
   return null;
 }
 
+export function getRequestHeader(request, name) {
+  const headers = request?.headers;
+  if (!headers) {
+    return null;
+  }
+
+  if (typeof headers.get === "function") {
+    return headers.get(name);
+  }
+
+  const target = name.toLowerCase();
+  for (const [key, value] of Object.entries(headers)) {
+    if (key.toLowerCase() === target) {
+      return Array.isArray(value) ? value[0] : value;
+    }
+  }
+
+  return null;
+}
+
 export function getRequestUrl(request) {
-  if (request.url.startsWith("http://") || request.url.startsWith("https://")) {
-    return new URL(request.url);
+  const raw = request.url || "/";
+  if (raw.startsWith("http://") || raw.startsWith("https://")) {
+    return new URL(raw);
   }
 
   const host =
-    request.headers.get("x-forwarded-host") ||
-    request.headers.get("host") ||
+    getRequestHeader(request, "x-forwarded-host") ||
+    getRequestHeader(request, "host") ||
     "statecompass.app";
-  const proto = request.headers.get("x-forwarded-proto") || "https";
-  return new URL(request.url, `${proto}://${host}`);
+  const proto = getRequestHeader(request, "x-forwarded-proto") || "https";
+  return new URL(raw, `${proto}://${host}`);
 }
 
 export async function readJsonBody(request) {
