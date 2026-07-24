@@ -1,0 +1,35 @@
+---
+import Layout from "../layouts/Layout.astro";
+---
+
+<Layout
+  title="Sign in | StateCompass"
+  description="Sign in to your StateCompass founder profile — saved quiz results, top states, and Founder Lens."
+  subtitle="Sign in to your account"
+>
+  <main class="page-content auth-page">
+    <section class="panel auth-panel">
+      <h1 class="page-title">Sign in</h1>
+      <p class="page-lead">Access your saved quiz results, top 3 states, and Founder Lens.</p>
+      <div class="auth-clerk-root" data-clerk-sign-in></div>
+      <p class="auth-switch">
+        New here?
+        <a href="/sign-up">Create an account</a>
+      </p>
+    </section>
+  </main>
+
+  <script>
+    import { mountClerkSignIn } from "../scripts/clerkClient.js";
+
+    const root = document.querySelector("[data-clerk-sign-in]");
+    if (root) {
+      const params = new URLSearchParams(window.location.search);
+      const redirectUrl = params.get("redirect_url") || "/me";
+      mountClerkSignIn(root, {
+        fallbackRedirectUrl: redirectUrl,
+        signUpFallbackRedirectUrl: redirectUrl,
+      });
+    }
+  </script>
+</Layout>

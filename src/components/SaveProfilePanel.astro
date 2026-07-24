@@ -11,37 +11,37 @@ const { class: className = "" } = Astro.props;
   data-save-profile
   aria-labelledby="save-profile-heading"
 >
-  <div data-save-profile-form-panel>
+  <div data-save-profile-signed-out hidden>
     <h2 id="save-profile-heading" class="panel-title">Save my results</h2>
     <p class="panel-helper">
-      Enter your email — we will send a magic link so your top 3 states, quiz answers, and Founder Lens are waiting when you return. No password.
+      Create a free account to keep your top 3 states, quiz answers, and Founder Lens synced across devices.
+    </p>
+    <div class="flow-toolbar">
+      <button type="button" class="btn btn-primary" data-save-profile-sign-in>Sign in to save</button>
+      <a href="/sign-up" class="btn btn-secondary">Create account</a>
+    </div>
+  </div>
+
+  <div data-save-profile-form-panel hidden>
+    <h2 class="panel-title">Save my results</h2>
+    <p class="panel-helper">
+      Save this quiz snapshot to your StateCompass account. Re-taking the quiz updates your stored top 3.
     </p>
     <p class="save-profile-privacy">
       We store your quiz answers and match snapshot to restore your session. Not legal, tax, or compliance advice.
-      <a href="/me">Manage or delete your profile</a>.
+      <a href="/me">Manage your profile</a>.
     </p>
     <form class="save-profile-form" data-save-profile-form novalidate>
-      <label class="visually-hidden" for="save-profile-email">Email address</label>
-      <input
-        type="email"
-        id="save-profile-email"
-        name="email"
-        class="save-profile-input email-notify-input"
-        placeholder="you@company.com"
-        required
-        autocomplete="email"
-      />
       <button type="submit" class="btn btn-primary" data-save-profile-submit>
-        Save my results
+        Save to my account
       </button>
     </form>
   </div>
 
   <div class="save-profile-saved" data-save-profile-saved hidden>
-    <h2 class="panel-title">Profile saved</h2>
+    <h2 class="panel-title">Saved to your account</h2>
     <p class="panel-helper">
-      We saved results for <strong data-save-profile-email-display></strong>.
-      Check your inbox for a magic link, or return on this device anytime.
+      Your results are linked to your StateCompass profile. Visit <a href="/me">Profile</a> anytime.
     </p>
   </div>
 

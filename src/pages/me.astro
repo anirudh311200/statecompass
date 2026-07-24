@@ -4,7 +4,7 @@ import Layout from "../layouts/Layout.astro";
 
 <Layout
   title="My Founder Profile | StateCompass"
-  description="Restore your saved StateCompass quiz results, manage email preferences, or delete your founder profile."
+  description="Your saved StateCompass quiz results, top states, Founder Lens, and account settings."
   subtitle="Your saved founder profile"
 >
   <main class="page-content profile-page">
@@ -13,14 +13,25 @@ import Layout from "../layouts/Layout.astro";
         <h1 class="page-title">Loading your profile…</h1>
       </div>
 
-      <div data-profile-empty hidden>
-        <h1 class="page-title">No saved profile</h1>
+      <div data-profile-signed-out hidden>
+        <h1 class="page-title">Sign in to your profile</h1>
         <p class="page-lead">
-          Take the founder quiz and save your results with email — we will email a magic link to reopen your top 3 states on any device.
+          Save your quiz results, top 3 states, and Founder Lens to your StateCompass account.
+        </p>
+        <div class="flow-toolbar">
+          <a href="/sign-in?redirect_url=%2Fme" class="btn btn-primary">Sign in</a>
+          <a href="/sign-up?redirect_url=%2Fme" class="btn btn-secondary">Create account</a>
+        </div>
+      </div>
+
+      <div data-profile-empty hidden>
+        <h1 class="page-title">No saved results yet</h1>
+        <p class="page-lead">
+          You are signed in, but we do not have a saved quiz snapshot yet. Take the founder match quiz, then save to your account.
         </p>
         <div class="flow-toolbar">
           <a href="/match" class="btn btn-primary">Find your state match</a>
-          <a href="/" class="btn btn-secondary">Explore map</a>
+          <a href="/#match-flow" class="btn btn-secondary">Start on homepage</a>
         </div>
       </div>
 
@@ -45,8 +56,7 @@ import Layout from "../layouts/Layout.astro";
             Saved for <strong data-profile-email></strong>. Re-taking the quiz overwrites your stored answers and top 3 snapshot.
           </p>
           <div class="profile-manage-actions">
-            <button type="button" class="btn btn-secondary" data-profile-unsubscribe>Unsubscribe</button>
-            <button type="button" class="btn btn-ghost profile-delete-btn" data-profile-delete>Delete profile</button>
+            <button type="button" class="btn btn-ghost profile-delete-btn" data-profile-delete>Delete saved data</button>
           </div>
           <p class="profile-status" data-profile-status role="status" aria-live="polite"></p>
         </div>
@@ -55,15 +65,11 @@ import Layout from "../layouts/Layout.astro";
   </main>
 
   <script>
-    import {
-      clearSessionToken,
-      deleteProfileRemote,
-      unsubscribeProfileRemote,
-      getSessionToken,
-    } from "../scripts/profileSession.js";
+    import { deleteProfileRemote } from "../scripts/profileSession.js";
     import { bootstrapSavedProfile } from "../scripts/saveProfileFlow.js";
+    import { getClerkSessionToken } from "../scripts/clerkClient.js";
     import { getLensLabel } from "../scripts/founderFit.js";
-    import { trackProfileReturn, trackProfileDelete, trackProfileUnsubscribe } from "../scripts/analytics.js";
+    import { trackProfileReturn, trackProfileDelete } from "../scripts/analytics.js";
 
     function setStatus(message, tone = "info") {
       const el = document.querySelector("[data-profile-status]");
@@ -76,6 +82,7 @@ import Layout from "../layouts/Layout.astro";
 
     function showPanel(name) {
       document.querySelector("[data-profile-loading]")?.toggleAttribute("hidden", name !== "loading");
+      document.querySelector("[data-profile-signed-out]")?.toggleAttribute("hidden", name !== "signed-out");
       document.querySelector("[data-profile-empty]")?.toggleAttribute("hidden", name !== "empty");
       document.querySelector("[data-profile-active]")?.toggleAttribute("hidden", name !== "active");
     }
@@ -137,36 +144,17 @@ import Layout from "../layouts/Layout.astro";
     }
 
     async function boot() {
-      const params = new URLSearchParams(window.location.search);
-      const tokenFromUrl = params.get("token");
-
-      if (tokenFromUrl) {
-        clearSessionToken();
+      const token = await getClerkSessionToken();
+      if (!token) {
+        showPanel("signed-out");
+        return;
       }
 
       let profile = null;
-
       try {
-        profile = await bootstrapSavedProfile({ tokenFromUrl });
+        profile = await bootstrapSavedProfile();
       } catch {
         profile = null;
-      }
-
-      if (tokenFromUrl && params.has("token")) {
-        params.delete("token");
-        const next = params.toString();
-        history.replaceState(null, "", next ? `/me?${next}` : "/me");
-      }
-
-      if (!profile) {
-        const token = getSessionToken();
-        if (token) {
-          try {
-            profile = await bootstrapSavedProfile();
-          } catch {
-            profile = null;
-          }
-        }
       }
 
       if (!profile) {
@@ -182,28 +170,14 @@ import Layout from "../layouts/Layout.astro";
         window.location.href = "/#match-flow";
       });
 
-      document.querySelector("[data-profile-unsubscribe]")?.addEventListener("click", async () => {
-        if (!window.confirm("Unsubscribe and stop storing this profile for email restore?")) {
-          return;
-        }
-        try {
-          await unsubscribeProfileRemote();
-          trackProfileUnsubscribe();
-          setStatus("You are unsubscribed. Profile access on this device has been cleared.", "success");
-          showPanel("empty");
-        } catch (error) {
-          setStatus(error.message || "Could not unsubscribe.", "error");
-        }
-      });
-
       document.querySelector("[data-profile-delete]")?.addEventListener("click", async () => {
-        if (!window.confirm("Delete your saved profile permanently? This cannot be undone.")) {
+        if (!window.confirm("Delete your saved quiz data from StateCompass? This cannot be undone.")) {
           return;
         }
         try {
           await deleteProfileRemote();
           trackProfileDelete();
-          setStatus("Profile deleted.", "success");
+          setStatus("Saved data deleted.", "success");
           showPanel("empty");
         } catch (error) {
           setStatus(error.message || "Could not delete profile.", "error");
@@ -211,6 +185,6 @@ import Layout from "../layouts/Layout.astro";
       });
     }
 
-    boot().catch(() => showPanel("empty"));
+    boot().catch(() => showPanel("signed-out"));
   </script>
 </Layout>

@@ -7,8 +7,13 @@ import {
   jsonResponse,
   readJsonBody,
 } from "../_lib/http.js";
+import { requireClerkAuth } from "../_lib/clerkAuth.js";
 import { isProfileStorageConfigured } from "../_lib/redis.js";
-import { getProfileByToken, updateProfileByToken, sanitizeProfileForClient } from "../_lib/profile.js";
+import {
+  getProfileByClerkUserId,
+  updateProfileByClerkUserId,
+  sanitizeProfileForClient,
+} from "../_lib/profile.js";
 
 export async function OPTIONS(request) {
   return handleOptions(request) ?? methodNotAllowed();
@@ -19,23 +24,23 @@ export async function POST(request) {
     return serviceUnavailable("Profile update is not configured yet.");
   }
 
+  const authResult = await requireClerkAuth(request);
+  if (authResult.error) {
+    return authResult.error;
+  }
+
   const body = await readJsonBody(request);
   if (!body) {
     return badRequest("Invalid JSON body.");
   }
 
-  const token = String(body.sessionToken ?? "").trim();
-  if (!token) {
-    return badRequest("Missing session token.");
-  }
-
-  const existing = await getProfileByToken(token);
+  const existing = await getProfileByClerkUserId(authResult.auth.userId);
   if (!existing) {
     return unauthorized("Profile not found.");
   }
 
   try {
-    const profile = await updateProfileByToken(token, {
+    const profile = await updateProfileByClerkUserId(authResult.auth.userId, {
       quizAnswers: body.quizAnswers,
       defaultLens: body.defaultLens,
       top3Snapshot: body.top3Snapshot,
@@ -46,7 +51,6 @@ export async function POST(request) {
     return jsonResponse({
       ok: true,
       profile: sanitizeProfileForClient(profile),
-      sessionToken: profile.sessionToken,
     });
   } catch (error) {
     const message = String(error?.message ?? error);

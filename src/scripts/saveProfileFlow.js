@@ -1,16 +1,17 @@
 import { getSaved } from "./memory.js";
 import { getTopMatches, suggestLensFromQuiz, validateQuizAnswers } from "./founderMatch.js";
 import {
-  getSessionToken,
   saveProfileRemote,
   updateProfileRemote,
+  fetchProfileMe,
 } from "./profileSession.js";
+import { getClerkSessionToken, whenClerkReady } from "./clerkClient.js";
 import {
   trackProfileCreated,
   trackProfileSaveError,
 } from "./analytics.js";
 
-function buildSavePayload({ email, answers, statesObject }) {
+function buildSavePayload({ answers, statesObject }) {
   const validated = validateQuizAnswers(answers);
   if (!validated) {
     return null;
@@ -28,7 +29,6 @@ function buildSavePayload({ email, answers, statesObject }) {
   const saved = getSaved();
 
   return {
-    email,
     quizAnswers: validated,
     defaultLens,
     top3Snapshot: top3,
@@ -48,11 +48,12 @@ export function initSaveProfileFlow({
   }
 
   const form = root.querySelector("[data-save-profile-form]");
-  const emailInput = root.querySelector("[data-save-profile-email]");
   const submitBtn = root.querySelector("[data-save-profile-submit]");
+  const signInBtn = root.querySelector("[data-save-profile-sign-in]");
   const statusEl = root.querySelector("[data-save-profile-status]");
   const savedState = root.querySelector("[data-save-profile-saved]");
   const formPanel = root.querySelector("[data-save-profile-form-panel]");
+  const signedOutPanel = root.querySelector("[data-save-profile-signed-out]");
 
   function setStatus(message, tone = "info") {
     if (!statusEl) {
@@ -62,36 +63,71 @@ export function initSaveProfileFlow({
     statusEl.dataset.tone = tone;
   }
 
-  function showSavedState(email) {
+  function showSavedState() {
     formPanel?.setAttribute("hidden", "");
+    signedOutPanel?.setAttribute("hidden", "");
     savedState?.removeAttribute("hidden");
-    const emailEl = savedState?.querySelector("[data-save-profile-email-display]");
-    if (emailEl) {
-      emailEl.textContent = email;
+  }
+
+  async function refreshAuthState() {
+    const token = await getClerkSessionToken();
+    if (token) {
+      signedOutPanel?.setAttribute("hidden", "");
+      formPanel?.removeAttribute("hidden");
+    } else {
+      formPanel?.setAttribute("hidden", "");
+      signedOutPanel?.removeAttribute("hidden");
+      savedState?.setAttribute("hidden", "");
+    }
+  }
+
+  async function persistProfile(payload, { updateOnly = false } = {}) {
+    submitBtn?.setAttribute("disabled", "");
+    setStatus(updateOnly ? "Updating your profile…" : "Saving to your account…");
+
+    try {
+      const result = updateOnly
+        ? await updateProfileRemote(payload)
+        : await saveProfileRemote(payload);
+
+      trackProfileCreated({ emailSent: false });
+      showSavedState();
+      setStatus("Saved to your account. Open Profile anytime to review your top states.", "success");
+      onSaved?.(result.profile);
+      return result.profile;
+    } catch (error) {
+      trackProfileSaveError(error.status ?? "unknown");
+      const message =
+        error.status === 401
+          ? "Sign in to save your results."
+          : error.status === 503
+            ? "Save is temporarily unavailable. Try again shortly."
+            : error.status === 408
+              ? "Save timed out. Check your connection and try again."
+              : error.message || "Could not save profile. Try again.";
+      setStatus(message, "error");
+      return null;
+    } finally {
+      submitBtn?.removeAttribute("disabled");
     }
   }
 
   async function syncExistingProfile(answers) {
-    const token = getSessionToken();
+    const token = await getClerkSessionToken();
     if (!token || !statesObject) {
       return;
     }
 
-    const payload = buildSavePayload({ email: "", answers, statesObject });
+    const payload = buildSavePayload({ answers, statesObject });
     if (!payload) {
       return;
     }
 
-    delete payload.email;
-
     try {
-      await updateProfileRemote({
-        quizAnswers: payload.quizAnswers,
-        defaultLens: payload.defaultLens,
-        top3Snapshot: payload.top3Snapshot,
-        savedStates: payload.savedStates,
-        savedComparison: payload.savedComparison,
-      });
+      const existing = await fetchProfileMe();
+      if (existing?.profile) {
+        await updateProfileRemote(payload);
+      }
     } catch {
       /* silent background sync */
     }
@@ -100,57 +136,46 @@ export function initSaveProfileFlow({
   form?.addEventListener("submit", async (event) => {
     event.preventDefault();
 
-    const email = emailInput?.value?.trim();
     const answers = getAnswers?.();
-    const payload = buildSavePayload({ email, answers, statesObject });
+    const payload = buildSavePayload({ answers, statesObject });
 
     if (!payload) {
       setStatus("Complete the quiz before saving.", "error");
       return;
     }
 
-    submitBtn?.setAttribute("disabled", "");
-    setStatus("Saving your profile…");
-
-    try {
-      const result = await saveProfileRemote(payload);
-      trackProfileCreated({ emailSent: Boolean(result.emailSent) });
-      showSavedState(payload.email);
-
-      if (result.emailSent) {
-        setStatus("Check your email for a magic link to reopen your results on any device.", "success");
-      } else if (result.devMagicLink) {
-        setStatus(`Dev mode: open ${result.devMagicLink}`, "success");
-      } else {
-        setStatus("Profile saved. Email delivery is not configured yet — use this browser to return.", "success");
-      }
-
-      onSaved?.(result.profile);
-    } catch (error) {
-      trackProfileSaveError(error.status ?? "unknown");
-      const message =
-        error.status === 503
-          ? "Save is temporarily unavailable. Your results link still works in this browser."
-          : error.message || "Could not save profile. Try again.";
-      setStatus(message, "error");
-    } finally {
-      submitBtn?.removeAttribute("disabled");
+    const token = await getClerkSessionToken();
+    if (!token) {
+      setStatus("Sign in to save your results.", "error");
+      return;
     }
+
+    await persistProfile(payload);
   });
 
-  return { syncExistingProfile, showSavedState };
+  signInBtn?.addEventListener("click", () => {
+    window.location.href = `/sign-in?redirect_url=${encodeURIComponent(window.location.pathname + window.location.hash)}`;
+  });
+
+  refreshAuthState();
+  whenClerkReady(() => {
+    refreshAuthState();
+  });
+
+  return { syncExistingProfile, showSavedState, refreshAuthState };
 }
 
-export async function bootstrapSavedProfile({ tokenFromUrl = null } = {}) {
-  const token = tokenFromUrl || getSessionToken();
+export async function bootstrapSavedProfile() {
+  const { getClerkSessionToken } = await import("./clerkClient.js");
+  const token = await getClerkSessionToken();
   if (!token) {
     return null;
   }
 
-  const { fetchProfileSession, mergeProfileIntoLocalStorage, applyProfileQuizToStorage } =
+  const { fetchProfileMe, mergeProfileIntoLocalStorage, applyProfileQuizToStorage } =
     await import("./profileSession.js");
 
-  const payload = await fetchProfileSession(token);
+  const payload = await fetchProfileMe();
   if (!payload?.profile) {
     return null;
   }

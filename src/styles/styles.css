@@ -209,6 +209,50 @@ textarea {
   outline-offset: 2px;
 }
 
+.site-header-auth {
+  display: flex;
+  justify-content: center;
+  margin: -0.35rem 0 0.85rem;
+}
+
+.auth-controls {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+}
+
+.auth-controls-link {
+  min-width: 5.5rem;
+}
+
+.auth-page {
+  max-width: 36rem;
+  margin-inline: auto;
+}
+
+.auth-panel {
+  padding: 1.5rem;
+}
+
+.auth-clerk-root {
+  margin-top: 1rem;
+}
+
+.auth-switch {
+  margin: 1rem 0 0;
+  color: var(--muted);
+  font-size: var(--text-sm);
+  text-align: center;
+}
+
+.auth-switch a {
+  color: var(--text);
+}
+
+.page--home .site-header--compact .site-header-auth {
+  margin: 0.15rem 0 0.45rem;
+}
+
 @media (max-width: 640px) {
   .site-nav {
     gap: 0.2rem;

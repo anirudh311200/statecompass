@@ -38,7 +38,10 @@ const plausibleDomain = import.meta.env.PUBLIC_PLAUSIBLE_DOMAIN;
 ---
 
 <!doctype html>
-<html lang="en">
+<html
+  lang="en"
+  data-clerk-publishable-key={import.meta.env.PUBLIC_CLERK_PUBLISHABLE_KEY ?? ""}
+>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -79,6 +82,16 @@ const plausibleDomain = import.meta.env.PUBLIC_PLAUSIBLE_DOMAIN;
       <slot />
       <Footer />
     </div>
+    {
+      import.meta.env.PUBLIC_CLERK_PUBLISHABLE_KEY && (
+        <script
+          async
+          crossorigin="anonymous"
+          data-clerk-publishable-key={import.meta.env.PUBLIC_CLERK_PUBLISHABLE_KEY}
+          src="https://cdn.jsdelivr.net/npm/@clerk/clerk-js@5/dist/clerk.browser.js"
+        />
+      )
+    }
     {
       plausibleDomain && (
         <script

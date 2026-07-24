@@ -284,7 +284,8 @@ const jsonLd = {
     import { loadQuizProgress } from "../scripts/quizStore.js";
     import { decodeQuizFromParams } from "../scripts/founderMatch.js";
     import { bootstrapSavedProfile } from "../scripts/saveProfileFlow.js";
-    import { getCachedProfile, getSessionToken } from "../scripts/profileSession.js";
+    import { getCachedProfile } from "../scripts/profileSession.js";
+    import { getClerkSessionToken } from "../scripts/clerkClient.js";
     import { trackProfileReturn } from "../scripts/analytics.js";
 
     function renderProfileReturn(profile) {
@@ -301,18 +302,13 @@ const jsonLd = {
     }
 
     async function hydrateProfileReturn() {
-      const token = new URLSearchParams(window.location.search).get("token");
-      if (token) {
-        return;
-      }
-
       const cached = getCachedProfile();
       if (cached?.top3Snapshot?.length) {
         renderProfileReturn(cached);
         return;
       }
 
-      if (!getSessionToken()) {
+      if (!(await getClerkSessionToken())) {
         return;
       }
 
@@ -336,14 +332,8 @@ const jsonLd = {
 
       const container = document.getElementById("match-flow");
       const params = new URLSearchParams(window.location.search);
-      const tokenFromUrl = params.get("token");
 
-      if (tokenFromUrl) {
-        window.location.replace(`/me?token=${encodeURIComponent(tokenFromUrl)}`);
-        return;
-      }
-
-      if (getSessionToken()) {
+      if (await getClerkSessionToken()) {
         try {
           await bootstrapSavedProfile();
         } catch {

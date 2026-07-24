@@ -4,6 +4,7 @@ import { getRedis } from "./redis.js";
 const PROFILE_INDEX_KEY = "profile:index";
 const EMAIL_PREFIX = "profile:email:";
 const TOKEN_PREFIX = "profile:token:";
+const CLERK_USER_PREFIX = "profile:clerk:";
 const PROFILE_PREFIX = "profile:id:";
 
 const QUIZ_KEYS = ["stage", "model", "tax", "vc", "hiring", "talent", "col"];
@@ -148,6 +149,33 @@ function tokenKey(token) {
   return `${TOKEN_PREFIX}${token}`;
 }
 
+function clerkUserKey(userId) {
+  return `${CLERK_USER_PREFIX}${userId}`;
+}
+
+export async function getProfileByClerkUserId(userId, { allowUnsubscribed = false } = {}) {
+  const redis = getRedis();
+  if (!redis || !userId) {
+    return null;
+  }
+
+  const profileId = await redis.get(clerkUserKey(userId));
+  if (!profileId) {
+    return null;
+  }
+
+  const profile = await redis.get(profileKey(profileId));
+  if (!profile) {
+    return null;
+  }
+
+  if (profile.unsubscribed && !allowUnsubscribed) {
+    return null;
+  }
+
+  return profile;
+}
+
 export async function getProfileByToken(token, { allowUnsubscribed = false } = {}) {
   const redis = getRedis();
   if (!redis || !token) {
@@ -184,6 +212,150 @@ export async function getProfileByEmail(email) {
   }
 
   return redis.get(profileKey(profileId));
+}
+
+export async function saveProfileForClerkUser({
+  clerkUserId,
+  email,
+  quizAnswers,
+  defaultLens,
+  top3Snapshot,
+  savedStates = [],
+  savedComparison = null,
+}) {
+  const redis = getRedis();
+  if (!redis) {
+    throw new Error("PROFILE_STORAGE_UNAVAILABLE");
+  }
+
+  if (!clerkUserId) {
+    throw new Error("INVALID_CLERK_USER");
+  }
+
+  const normalizedEmail = normalizeEmail(email);
+  if (!isValidEmail(normalizedEmail)) {
+    throw new Error("INVALID_EMAIL");
+  }
+
+  const validatedAnswers = validateQuizAnswers(quizAnswers);
+  if (!validatedAnswers) {
+    throw new Error("INVALID_QUIZ");
+  }
+
+  const validatedTop3 = validateTop3Snapshot(top3Snapshot);
+  if (!validatedTop3) {
+    throw new Error("INVALID_TOP3");
+  }
+
+  const validatedStates = validateSavedStates(savedStates);
+  if (validatedStates == null) {
+    throw new Error("INVALID_SAVED_STATES");
+  }
+
+  const validatedComparison = validateSavedComparison(savedComparison);
+  const lens = validateLensId(defaultLens);
+
+  const now = new Date().toISOString();
+  const existing = await getProfileByClerkUserId(clerkUserId, { allowUnsubscribed: true });
+  const profileId = existing?.id ?? randomBytes(16).toString("hex");
+
+  const profile = {
+    id: profileId,
+    clerkUserId,
+    email: normalizedEmail,
+    quizAnswers: validatedAnswers,
+    defaultLens: lens,
+    top3Snapshot: validatedTop3,
+    savedStates: validatedStates,
+    savedComparison: validatedComparison,
+    createdAt: existing?.createdAt ?? now,
+    updatedAt: now,
+    unsubscribed: false,
+    sessionToken: existing?.sessionToken ?? null,
+  };
+
+  const pipeline = redis.pipeline();
+  pipeline.set(profileKey(profileId), profile);
+  pipeline.set(clerkUserKey(clerkUserId), profileId);
+  pipeline.set(emailKey(normalizedEmail), profileId);
+  pipeline.sadd(PROFILE_INDEX_KEY, profileId);
+  await pipeline.exec();
+
+  return profile;
+}
+
+export async function updateProfileByClerkUserId(clerkUserId, payload) {
+  const redis = getRedis();
+  if (!redis) {
+    throw new Error("PROFILE_STORAGE_UNAVAILABLE");
+  }
+
+  const existing = await getProfileByClerkUserId(clerkUserId);
+  if (!existing) {
+    throw new Error("PROFILE_NOT_FOUND");
+  }
+
+  const validatedAnswers = validateQuizAnswers(payload.quizAnswers);
+  if (!validatedAnswers) {
+    throw new Error("INVALID_QUIZ");
+  }
+
+  const validatedTop3 = validateTop3Snapshot(payload.top3Snapshot);
+  if (!validatedTop3) {
+    throw new Error("INVALID_TOP3");
+  }
+
+  const validatedStates =
+    payload.savedStates == null
+      ? existing.savedStates ?? []
+      : validateSavedStates(payload.savedStates);
+  if (validatedStates == null) {
+    throw new Error("INVALID_SAVED_STATES");
+  }
+
+  const validatedComparison =
+    payload.savedComparison === undefined
+      ? existing.savedComparison ?? null
+      : validateSavedComparison(payload.savedComparison);
+
+  const profile = {
+    ...existing,
+    quizAnswers: validatedAnswers,
+    defaultLens: validateLensId(payload.defaultLens ?? existing.defaultLens),
+    top3Snapshot: validatedTop3,
+    savedStates: validatedStates,
+    savedComparison: validatedComparison,
+    updatedAt: new Date().toISOString(),
+    unsubscribed: false,
+  };
+
+  await redis.set(profileKey(profile.id), profile);
+  return profile;
+}
+
+export async function deleteProfileByClerkUserId(clerkUserId, profile = null) {
+  const redis = getRedis();
+  if (!redis) {
+    throw new Error("PROFILE_STORAGE_UNAVAILABLE");
+  }
+
+  const resolved =
+    profile ?? (await getProfileByClerkUserId(clerkUserId, { allowUnsubscribed: true }));
+  if (!resolved) {
+    throw new Error("PROFILE_NOT_FOUND");
+  }
+
+  const pipeline = redis.pipeline();
+  pipeline.del(profileKey(resolved.id));
+  pipeline.del(emailKey(resolved.email));
+  pipeline.del(clerkUserKey(clerkUserId));
+  if (resolved.sessionToken) {
+    pipeline.del(tokenKey(resolved.sessionToken));
+  }
+  pipeline.srem(PROFILE_INDEX_KEY, resolved.id);
+  await pipeline.exec();
+
+  return { deleted: true };
 }
 
 export async function saveProfile({
@@ -368,6 +540,7 @@ export function sanitizeProfileForClient(profile) {
 
   return {
     id: profile.id,
+    clerkUserId: profile.clerkUserId ?? null,
     email: profile.email,
     quizAnswers: profile.quizAnswers,
     defaultLens: profile.defaultLens,

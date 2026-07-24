@@ -22,7 +22,7 @@ import {
 import { pinState, getStateData } from "./map.js";
 import { enterStateFocus } from "./stateFocus.js";
 import { initSaveProfileFlow } from "./saveProfileFlow.js";
-import { getSessionToken } from "./profileSession.js";
+import { getClerkSessionToken } from "./clerkClient.js";
 
 const prefersReducedMotion =
   typeof window !== "undefined" &&
@@ -159,10 +159,6 @@ export function initMatchFlow({ container, statesObject, onResultsShown, initial
     trackQuizComplete();
     renderResults();
     onResultsShown?.(answers);
-
-    if (getSessionToken()) {
-      saveFlow?.syncExistingProfile?.(answers)?.then?.(() => trackProfileSync());
-    }
   }
 
   function renderResults() {
@@ -262,9 +258,11 @@ export function initMatchFlow({ container, statesObject, onResultsShown, initial
     showPanel("results");
     mapSection?.removeAttribute("hidden");
 
-    if (getSessionToken()) {
-      saveFlow?.syncExistingProfile?.(validated)?.then?.(() => trackProfileSync());
-    }
+    void getClerkSessionToken().then((token) => {
+      if (token) {
+        saveFlow?.syncExistingProfile?.(validated)?.then?.(() => trackProfileSync());
+      }
+    });
   }
 
   function startQuiz() {

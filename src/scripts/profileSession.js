@@ -1,39 +1,5 @@
-const TOKEN_KEY = "statecompass:profile-token";
 const PROFILE_CACHE_KEY = "statecompass:profile-cache";
-
-export function getSessionToken() {
-  if (typeof localStorage === "undefined") {
-    return null;
-  }
-  try {
-    return localStorage.getItem(TOKEN_KEY);
-  } catch {
-    return null;
-  }
-}
-
-export function setSessionToken(token) {
-  if (typeof localStorage === "undefined" || !token) {
-    return;
-  }
-  try {
-    localStorage.setItem(TOKEN_KEY, token);
-  } catch {
-    /* quota or private mode */
-  }
-}
-
-export function clearSessionToken() {
-  if (typeof localStorage === "undefined") {
-    return;
-  }
-  try {
-    localStorage.removeItem(TOKEN_KEY);
-    localStorage.removeItem(PROFILE_CACHE_KEY);
-  } catch {
-    /* ignore */
-  }
-}
+const SAVE_TIMEOUT_MS = 30000;
 
 export function cacheProfile(profile) {
   if (typeof localStorage === "undefined" || !profile) {
@@ -58,6 +24,17 @@ export function getCachedProfile() {
   }
 }
 
+export function clearProfileCache() {
+  if (typeof localStorage === "undefined") {
+    return;
+  }
+  try {
+    localStorage.removeItem(PROFILE_CACHE_KEY);
+  } catch {
+    /* ignore */
+  }
+}
+
 async function parseResponse(response) {
   let payload = null;
   try {
@@ -75,17 +52,47 @@ async function parseResponse(response) {
   return payload;
 }
 
-export async function fetchProfileSession(token = getSessionToken()) {
+async function fetchWithTimeout(url, options = {}, timeoutMs = SAVE_TIMEOUT_MS) {
+  const controller = new AbortController();
+  const timeoutId = window.setTimeout(() => controller.abort(), timeoutMs);
+
+  try {
+    return await fetch(url, { ...options, signal: controller.signal });
+  } catch (error) {
+    if (error?.name === "AbortError") {
+      const timeoutError = new Error("Request timed out. Try again.");
+      timeoutError.status = 408;
+      throw timeoutError;
+    }
+    throw error;
+  } finally {
+    window.clearTimeout(timeoutId);
+  }
+}
+
+async function authorizedFetch(url, options = {}) {
+  const { getClerkAuthHeaders } = await import("./clerkClient.js");
+  const headers = await getClerkAuthHeaders({
+    "Content-Type": "application/json",
+    ...(options.headers ?? {}),
+  });
+
+  return fetchWithTimeout(url, {
+    ...options,
+    headers,
+  });
+}
+
+export async function fetchProfileMe() {
+  const { getClerkSessionToken } = await import("./clerkClient.js");
+  const token = await getClerkSessionToken();
   if (!token) {
     return null;
   }
 
-  const response = await fetch(`/api/profile/session?token=${encodeURIComponent(token)}`);
+  const response = await authorizedFetch("/api/profile/me");
   const payload = await parseResponse(response);
 
-  if (payload?.sessionToken) {
-    setSessionToken(payload.sessionToken);
-  }
   if (payload?.profile) {
     cacheProfile(payload.profile);
   }
@@ -94,16 +101,12 @@ export async function fetchProfileSession(token = getSessionToken()) {
 }
 
 export async function saveProfileRemote(payload) {
-  const response = await fetch("/api/profile/save", {
+  const response = await authorizedFetch("/api/profile/save", {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
     body: JSON.stringify(payload),
   });
 
   const result = await parseResponse(response);
-  if (result?.sessionToken) {
-    setSessionToken(result.sessionToken);
-  }
   if (result?.profile) {
     cacheProfile(result.profile);
   }
@@ -111,15 +114,9 @@ export async function saveProfileRemote(payload) {
 }
 
 export async function updateProfileRemote(payload) {
-  const token = getSessionToken();
-  if (!token) {
-    throw new Error("No saved session");
-  }
-
-  const response = await fetch("/api/profile/update", {
+  const response = await authorizedFetch("/api/profile/update", {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ ...payload, sessionToken: token }),
+    body: JSON.stringify(payload),
   });
 
   const result = await parseResponse(response);
@@ -130,37 +127,18 @@ export async function updateProfileRemote(payload) {
 }
 
 export async function deleteProfileRemote() {
-  const token = getSessionToken();
-  if (!token) {
-    return { ok: true };
-  }
-
-  const response = await fetch("/api/profile/delete", {
+  const response = await authorizedFetch("/api/profile/delete", {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ sessionToken: token }),
+    body: JSON.stringify({}),
   });
 
   await parseResponse(response);
-  clearSessionToken();
+  clearProfileCache();
   return { ok: true };
 }
 
 export async function unsubscribeProfileRemote() {
-  const token = getSessionToken();
-  if (!token) {
-    throw new Error("No saved session");
-  }
-
-  const response = await fetch("/api/profile/unsubscribe", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ sessionToken: token }),
-  });
-
-  await parseResponse(response);
-  clearSessionToken();
-  return { ok: true };
+  return deleteProfileRemote();
 }
 
 export function mergeProfileIntoLocalStorage(profile) {
@@ -217,4 +195,15 @@ export function applyProfileQuizToStorage(profile) {
   } catch {
     /* ignore */
   }
+}
+
+export async function bootstrapSavedProfile() {
+  const payload = await fetchProfileMe();
+  if (!payload?.profile) {
+    return null;
+  }
+
+  applyProfileQuizToStorage(payload.profile);
+  mergeProfileIntoLocalStorage(payload.profile);
+  return payload.profile;
 }
