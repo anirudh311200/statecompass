@@ -23,6 +23,8 @@
       </feMerge>
     </filter>
   </defs>
-  <rect x="0.50" y="0.50" width="31.00" height="31.00" rx="10.00" fill="#0a0a0a" stroke="#1a1a1a" stroke-width="1.00"/>
-  <text x="16.38" y="16.00" font-family="Sora, system-ui, sans-serif" font-size="12.48" font-weight="700" text-anchor="middle" dominant-baseline="central" letter-spacing="-0.055em" fill="url(#sc-dazzle)" filter="url(#sc-glow)">SC</text>
+  <g transform="translate(2,2)">
+    <rect x="0.44" y="0.44" width="27.12" height="27.12" rx="8.75" fill="#0a0a0a" stroke="#1a1a1a" stroke-width="0.88"/>
+  <text x="14.34" y="14.00" font-family="Sora, system-ui, sans-serif" font-size="10.92" font-weight="700" text-anchor="middle" dominant-baseline="central" letter-spacing="-0.055em" fill="url(#sc-dazzle)" filter="url(#sc-glow)">SC</text>
+  </g>
 </svg>

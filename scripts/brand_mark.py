@@ -128,9 +128,38 @@ def needle(cx: float, cy: float, scale: float = 1.0) -> str:
     return compass(cx, cy, scale)
 
 
+# Padding around the SC tile on favicon canvases (matches header — no outer square).
+FAVICON_PAD_RATIO = 2 / 32
+
+
+def icon_canvas_metrics(canvas_size: int) -> dict:
+    """Centered tile layout: transparent padding, same corner ratio as header."""
+    pad = max(2, round(canvas_size * FAVICON_PAD_RATIO))
+    tile_size = canvas_size - 2 * pad
+    stroke = max(1, round(tile_size / 32))
+    inner_left = pad + stroke / 2
+    inner_dim = tile_size - stroke
+    radius = round(TILE_RX_RATIO * tile_size)
+    center = pad + tile_size / 2
+    return {
+        "pad": pad,
+        "tile_size": tile_size,
+        "stroke": stroke,
+        "radius": radius,
+        "inner_left": inner_left,
+        "inner_dim": inner_dim,
+        "center": center,
+    }
+
+
 def favicon_block(size: int = 32, prefix: str = "sc") -> str:
-    """Rounded square + SC monogram (favicon / touch icon)."""
-    return brand_tile(size, grad_id=f"{prefix}-dazzle", glow_id=f"{prefix}-glow")
+    """Rounded SC tile centered on a transparent canvas (favicon / touch icon)."""
+    metrics = icon_canvas_metrics(size)
+    pad = metrics["pad"]
+    tile_size = metrics["tile_size"]
+    return f"""<g transform="translate({pad},{pad})">
+    {brand_tile(tile_size, grad_id=f"{prefix}-dazzle", glow_id=f"{prefix}-glow")}
+  </g>"""
 
 
 def logo_mark(size: int = 32, y_offset: float = 0) -> str:

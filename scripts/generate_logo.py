@@ -9,6 +9,7 @@ from brand_mark import (
     BORDER,
     SC_FONT_RATIO,
     SURFACE,
+    icon_canvas_metrics,
     logo_dazzle_defs,
     logo_mark,
     wordmark_text,
@@ -122,21 +123,23 @@ def render_sc_icon_png(size: int):
         print(f"Skipped {size}px icon PNG (Sora font missing)")
         return None
 
-    img = Image.new("RGBA", (size, size), (0, 0, 0, 255))
+    img = Image.new("RGBA", (size, size), (0, 0, 0, 0))
     draw = ImageDraw.Draw(img)
 
-    stroke = max(1, round(size / 32))
-    inset = stroke / 2
-    radius = round(10.5 / 32 * size)
+    metrics = icon_canvas_metrics(size)
+    left = metrics["inner_left"]
+    top = metrics["inner_left"]
+    right = left + metrics["inner_dim"]
+    bottom = top + metrics["inner_dim"]
     draw.rounded_rectangle(
-        (inset, inset, size - inset, size - inset),
-        radius=radius,
+        (left, top, right, bottom),
+        radius=metrics["radius"],
         fill=SURFACE,
         outline=BORDER,
-        width=stroke,
+        width=metrics["stroke"],
     )
 
-    font_size = round(size * SC_FONT_RATIO)
+    font_size = round(metrics["tile_size"] * SC_FONT_RATIO)
     font = None
     ttf_path = None
     try:
@@ -163,8 +166,9 @@ def render_sc_icon_png(size: int):
     bbox = draw.textbbox((0, 0), text, font=font)
     text_w = bbox[2] - bbox[0]
     text_h = bbox[3] - bbox[1]
-    x = (size - text_w) / 2 + size * 0.012
-    y = (size - text_h) / 2 - bbox[1]
+    center = metrics["center"]
+    x = center - text_w / 2 + metrics["tile_size"] * 0.012
+    y = center - text_h / 2 - bbox[1]
     draw.text((x, y), text, font=font, fill=(250, 250, 250, 240))
 
     return img
