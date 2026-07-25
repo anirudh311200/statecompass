@@ -339,6 +339,25 @@ export function initMatchFlow({ container, statesObject, onResultsShown, initial
   );
   copyBtn?.addEventListener("click", () => trackMatchShare());
 
+  resultsEl?.querySelector("[data-compare-top3]")?.addEventListener("click", (event) => {
+    const validated = validateQuizAnswers(answers);
+    if (!validated) {
+      return;
+    }
+
+    const path = getComparePathForStates(
+      getTopMatches(statesObject, validated, 3).map((result) => result.abbr),
+      suggestLensFromQuiz(validated)
+    );
+    if (!path) {
+      event.preventDefault();
+      return;
+    }
+
+    event.preventDefault();
+    window.location.assign(path);
+  });
+
   function validatedAnswersForShare() {
     return validateQuizAnswers(answers);
   }

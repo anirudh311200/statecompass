@@ -621,6 +621,10 @@ export async function initCompare(options = {}) {
   activeProfile = getLensFromUrl();
   updateYearLabels(dataYear);
 
+  // Parse ?states= before wiring lens — setProfile → syncUrl() runs on lens init
+  // and would strip states from the URL if slots are still empty.
+  applyUrlToSlots();
+
   wireFounderFitSelector({
     select: document.querySelector("[data-founder-fit-select]"),
     disclaimer: document.querySelector("[data-founder-fit-disclaimer]"),
@@ -632,7 +636,6 @@ export async function initCompare(options = {}) {
     founderFitLookup = getFounderFitLookup(stateData, activeProfile);
   }
 
-  applyUrlToSlots();
   if (!embedMode) {
     populateSelects();
     updateSelectOptions();
