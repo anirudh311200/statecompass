@@ -1,21 +1,25 @@
-import {
-  whenClerkReady,
-  mountClerkUserButton,
-} from "./clerkClient.js";
+import { whenClerkReady, signOutClerk } from "./clerkClient.js";
 
 function renderSignedOut(container) {
   container.innerHTML = `
     <div class="auth-controls auth-controls--signed-out">
-      <a href="/sign-in" class="btn btn-ghost btn-sm auth-controls-link">Sign in</a>
-      <a href="/sign-up" class="btn btn-secondary btn-sm auth-controls-link">Sign up</a>
+      <a href="/sign-in" class="auth-link">Sign in</a>
+      <a href="/sign-up" class="auth-link auth-link--cta">Sign up</a>
     </div>
   `;
 }
 
 function renderSignedIn(container) {
-  container.innerHTML = `<div class="auth-controls auth-controls--signed-in"><span data-clerk-user-button></span></div>`;
-  const mountPoint = container.querySelector("[data-clerk-user-button]");
-  mountClerkUserButton(mountPoint);
+  container.innerHTML = `
+    <div class="auth-controls auth-controls--signed-in">
+      <a href="/me" class="auth-link">Profile</a>
+      <button type="button" class="auth-link auth-link--button" data-auth-sign-out>Sign out</button>
+    </div>
+  `;
+
+  container.querySelector("[data-auth-sign-out]")?.addEventListener("click", () => {
+    void signOutClerk();
+  });
 }
 
 export function initAuthHeader() {

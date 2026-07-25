@@ -30,6 +30,8 @@ const navItems = [
 ---
 
 <header class:list={["site-header", { "site-header--compact": compact }]}>
+  <div class="site-header-auth" data-auth-controls aria-label="Account"></div>
+
   <a href="/" class="brand" aria-label="StateCompass home">
     <img
       src={`/assets/logo.svg?v=${BRAND_VERSION}`}
@@ -56,8 +58,6 @@ const navItems = [
       ))
     }
   </nav>
-
-  <div class="site-header-auth" data-auth-controls aria-label="Account"></div>
 
   <p class="subtitle">{subtitle}</p>
 </header>
