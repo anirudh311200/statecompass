@@ -165,6 +165,26 @@ const CLERK_APPEARANCE = {
       backgroundColor: "#111111",
       borderColor: "#1a1a1a",
       color: "#fafafa",
+      width: "100%",
+      maxWidth: "100%",
+      boxSizing: "border-box",
+      borderRadius: "8px",
+    },
+    formFieldInputWrapper: {
+      width: "100%",
+      maxWidth: "100%",
+    },
+    formFieldRow: {
+      width: "100%",
+      maxWidth: "100%",
+    },
+    form: {
+      width: "100%",
+      maxWidth: "100%",
+    },
+    main: {
+      width: "100%",
+      maxWidth: "100%",
     },
     formFieldInputShowPasswordButton: {
       color: "#888888",
@@ -203,6 +223,10 @@ const CLERK_APPEARANCE = {
   layout: {
     socialButtonsPlacement: "top",
     socialButtonsVariant: "blockButton",
+    showOptionalFields: false,
+  },
+  options: {
+    showOptionalFields: false,
   },
 };
 
