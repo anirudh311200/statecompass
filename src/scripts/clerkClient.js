@@ -101,6 +101,111 @@ export async function signOutClerk() {
   await clerk.signOut();
 }
 
+const CLERK_APPEARANCE = {
+  variables: {
+    colorBackground: "#0a0a0a",
+    colorText: "#fafafa",
+    colorTextSecondary: "#888888",
+    colorInputBackground: "#111111",
+    colorInputText: "#fafafa",
+    colorPrimary: "#fafafa",
+    colorPrimaryText: "#000000",
+    colorDanger: "#f87171",
+    colorSuccess: "#4ade80",
+    colorNeutral: "#fafafa",
+    colorShimmer: "#1a1a1a",
+    borderRadius: "10px",
+    fontFamily: '"Sora", system-ui, sans-serif',
+    fontSize: "0.85rem",
+  },
+  elements: {
+    rootBox: {
+      width: "100%",
+      boxShadow: "none",
+    },
+    cardBox: {
+      width: "100%",
+      boxShadow: "none",
+    },
+    card: {
+      backgroundColor: "transparent",
+      boxShadow: "none",
+      border: "none",
+      padding: "0",
+      gap: "1rem",
+    },
+    header: {
+      display: "none",
+    },
+    headerTitle: {
+      display: "none",
+    },
+    headerSubtitle: {
+      display: "none",
+    },
+    footer: {
+      display: "none",
+    },
+    footerAction: {
+      display: "none",
+    },
+    footerActionLink: {
+      display: "none",
+    },
+    dividerLine: {
+      backgroundColor: "#1a1a1a",
+    },
+    dividerText: {
+      color: "#888888",
+    },
+    formFieldLabel: {
+      color: "#888888",
+    },
+    formFieldInput: {
+      backgroundColor: "#111111",
+      borderColor: "#1a1a1a",
+      color: "#fafafa",
+    },
+    formFieldInputShowPasswordButton: {
+      color: "#888888",
+    },
+    formButtonPrimary: {
+      backgroundColor: "#fafafa",
+      color: "#000000",
+      fontWeight: "600",
+      "&:hover": {
+        backgroundColor: "#e5e5e5",
+      },
+    },
+    socialButtonsBlockButton: {
+      backgroundColor: "#111111",
+      borderColor: "#1a1a1a",
+      color: "#fafafa",
+      "&:hover": {
+        backgroundColor: "rgba(255, 255, 255, 0.04)",
+        borderColor: "#525252",
+      },
+    },
+    identityPreview: {
+      backgroundColor: "#111111",
+      borderColor: "#1a1a1a",
+    },
+    identityPreviewText: {
+      color: "#fafafa",
+    },
+    formFieldAction: {
+      color: "#fafafa",
+    },
+    alertText: {
+      color: "#fafafa",
+    },
+  },
+  layout: {
+    socialButtonsPlacement: "top",
+    socialButtonsVariant: "blockButton",
+  },
+};
+
 export async function whenClerkReady(callback) {
   const clerk = await getClerk();
   if (!clerk) {
@@ -124,6 +229,7 @@ export function mountClerkSignIn(element, options = {}) {
       signUpUrl: "/sign-up",
       fallbackRedirectUrl: options.fallbackRedirectUrl ?? "/me",
       signUpFallbackRedirectUrl: options.signUpFallbackRedirectUrl ?? "/me",
+      appearance: CLERK_APPEARANCE,
       ...options,
     });
   });
@@ -139,6 +245,7 @@ export function mountClerkSignUp(element, options = {}) {
       signInUrl: "/sign-in",
       fallbackRedirectUrl: options.fallbackRedirectUrl ?? "/me",
       signInFallbackRedirectUrl: options.signInFallbackRedirectUrl ?? "/me",
+      appearance: CLERK_APPEARANCE,
       ...options,
     });
   });

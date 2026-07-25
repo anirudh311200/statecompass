@@ -12,6 +12,7 @@ interface Props {
   description?: string;
   homePage?: boolean;
   rankingsPage?: boolean;
+  authPage?: boolean;
   subtitle?: string;
   ogImage?: string;
   ogImageAlt?: string;
@@ -24,6 +25,7 @@ const {
   description = "Compare US states for HQ and expansion — CNBC scores, Founder Snapshot operational context, and shareable compare links for founders.",
   homePage = false,
   rankingsPage = false,
+  authPage = false,
   subtitle,
   ogImage = "/og/default.svg",
   ogImageAlt = "StateCompass — site selection for founders",
@@ -77,8 +79,13 @@ const plausibleDomain = import.meta.env.PUBLIC_PLAUSIBLE_DOMAIN;
     }
   </head>
   <body>
-    <div class:list={["page", { "page--home": homePage, "page--rankings": rankingsPage }]}>
-      <Header compact={homePage} subtitle={subtitle} />
+    <div
+      class:list={[
+        "page",
+        { "page--home": homePage, "page--rankings": rankingsPage, "page--auth": authPage },
+      ]}
+    >
+      <Header compact={homePage || authPage} authPage={authPage} subtitle={subtitle} />
       <slot />
       <Footer />
     </div>

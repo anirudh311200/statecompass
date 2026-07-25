@@ -3,11 +3,13 @@ import { BRAND_VERSION } from "../lib/site.js";
 
 interface Props {
   compact?: boolean;
+  authPage?: boolean;
   subtitle?: string;
 }
 
 const {
   compact = false,
+  authPage = false,
   subtitle = "Compare states for HQ and expansion — CNBC 2025 rankings.",
 } = Astro.props;
 
@@ -29,7 +31,12 @@ const navItems = [
 ];
 ---
 
-<header class:list={["site-header", { "site-header--compact": compact }]}>
+<header
+  class:list={[
+    "site-header",
+    { "site-header--compact": compact, "site-header--auth": authPage },
+  ]}
+>
   <div class="site-header-auth" data-auth-controls aria-label="Account"></div>
 
   <a href="/" class="brand" aria-label="StateCompass home">
@@ -59,7 +66,7 @@ const navItems = [
     }
   </nav>
 
-  <p class="subtitle">{subtitle}</p>
+  {!authPage && <p class="subtitle">{subtitle}</p>}
 </header>
 
 <script>
