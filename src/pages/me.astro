@@ -14,10 +14,8 @@ import Layout from "../layouts/Layout.astro";
       </div>
 
       <div data-profile-signed-out hidden>
-        <h1 class="page-title">Sign in to your profile</h1>
-        <p class="page-lead">
-          Save your quiz results, top 3 states, and Founder Lens to your StateCompass account.
-        </p>
+        <h1 class="page-title">Redirecting to sign in…</h1>
+        <p class="page-lead">Use Sign in in the top-right corner, or continue below.</p>
         <div class="flow-toolbar">
           <a href="/sign-in?redirect_url=%2Fme" class="btn btn-primary">Sign in</a>
           <a href="/sign-up?redirect_url=%2Fme" class="btn btn-secondary">Create account</a>
@@ -146,7 +144,7 @@ import Layout from "../layouts/Layout.astro";
     async function boot() {
       const token = await getClerkSessionToken();
       if (!token) {
-        showPanel("signed-out");
+        window.location.replace("/sign-in?redirect_url=%2Fme");
         return;
       }
 
