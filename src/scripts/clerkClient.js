@@ -121,11 +121,15 @@ const CLERK_APPEARANCE = {
   elements: {
     rootBox: {
       width: "100%",
+      maxWidth: "100%",
       boxShadow: "none",
+      overflow: "visible",
     },
     cardBox: {
       width: "100%",
+      maxWidth: "100%",
       boxShadow: "none",
+      overflow: "visible",
     },
     card: {
       backgroundColor: "transparent",
@@ -133,6 +137,9 @@ const CLERK_APPEARANCE = {
       border: "none",
       padding: "0",
       gap: "1rem",
+      width: "100%",
+      maxWidth: "100%",
+      overflow: "visible",
     },
     header: {
       display: "none",
@@ -173,38 +180,55 @@ const CLERK_APPEARANCE = {
     formFieldInputWrapper: {
       width: "100%",
       maxWidth: "100%",
+      overflow: "visible",
+      boxSizing: "border-box",
     },
     formFieldRow: {
       width: "100%",
       maxWidth: "100%",
+      overflow: "visible",
     },
     form: {
       width: "100%",
       maxWidth: "100%",
+      overflow: "visible",
     },
     main: {
       width: "100%",
       maxWidth: "100%",
+      overflow: "visible",
     },
-    formFieldInputShowPasswordButton: {
-      color: "#888888",
-    },
-    formButtonPrimary: {
-      backgroundColor: "#fafafa",
-      color: "#000000",
-      fontWeight: "600",
-      "&:hover": {
-        backgroundColor: "#e5e5e5",
-      },
+    socialButtons: {
+      width: "100%",
+      maxWidth: "100%",
     },
     socialButtonsBlockButton: {
       backgroundColor: "#111111",
       borderColor: "#1a1a1a",
       color: "#fafafa",
+      width: "100%",
+      maxWidth: "100%",
+      boxSizing: "border-box",
+      borderRadius: "8px",
       "&:hover": {
         backgroundColor: "rgba(255, 255, 255, 0.04)",
         borderColor: "#525252",
       },
+    },
+    formButtonPrimary: {
+      backgroundColor: "#fafafa",
+      color: "#000000",
+      fontWeight: "600",
+      width: "100%",
+      maxWidth: "100%",
+      boxSizing: "border-box",
+      borderRadius: "8px",
+      "&:hover": {
+        backgroundColor: "#e5e5e5",
+      },
+    },
+    formFieldInputShowPasswordButton: {
+      color: "#888888",
     },
     identityPreview: {
       backgroundColor: "#111111",
