@@ -85,7 +85,7 @@ const plausibleDomain = import.meta.env.PUBLIC_PLAUSIBLE_DOMAIN;
         { "page--home": homePage, "page--rankings": rankingsPage, "page--auth": authPage },
       ]}
     >
-      <Header compact={homePage || authPage} authPage={authPage} subtitle={subtitle} />
+      <Header compact authPage={authPage} subtitle={subtitle} />
       <slot />
       <Footer />
     </div>
